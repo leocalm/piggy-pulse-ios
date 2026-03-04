@@ -8,15 +8,15 @@
 
 /* Begin PBXFileReference section */
 		020853A72F5898F7004E2FD4 /* PiggyPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiggyPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02218DF02F589AA200E8DCEF /* PiggyPulseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiggyPulseApp.swift; sourceTree = "<group>"; };
+		02218DF12F589AAF00E8DCEF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		02218DF32F589AE500E8DCEF /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		02218DF42F589AEE00E8DCEF /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		02218DF62F589B0100E8DCEF /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		02218DFA2F589B2700E8DCEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		02218DFD2F589B4500E8DCEF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPeriod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		020853A92F5898F7004E2FD4 /* PiggyPulse */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PiggyPulse;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		020853A42F5898F7004E2FD4 /* Frameworks */ = {
@@ -32,7 +32,9 @@
 		0208539E2F5898F7004E2FD4 = {
 			isa = PBXGroup;
 			children = (
-				020853A92F5898F7004E2FD4 /* PiggyPulse */,
+				02218DFB2F589B3500E8DCEF /* Core */,
+				02218DF52F589AFA00E8DCEF /* Design */,
+				02218DEE2F589A6F00E8DCEF /* App */,
 				020853A82F5898F7004E2FD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +45,75 @@
 				020853A72F5898F7004E2FD4 /* PiggyPulse.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		02218DEE2F589A6F00E8DCEF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				02218DF12F589AAF00E8DCEF /* AppState.swift */,
+				02218DF02F589AA200E8DCEF /* PiggyPulseApp.swift */,
+				02218DEF2F589A9200E8DCEF /* Features */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		02218DEF2F589A9200E8DCEF /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				02218DF82F589B1600E8DCEF /* Auth */,
+				02218DF22F589ADD00E8DCEF /* Navigation */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		02218DF22F589ADD00E8DCEF /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				02218DF42F589AEE00E8DCEF /* MainTabView.swift */,
+				02218DF32F589AE500E8DCEF /* RootView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		02218DF52F589AFA00E8DCEF /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				02218DF62F589B0100E8DCEF /* Theme.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		02218DF82F589B1600E8DCEF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				02218DF92F589B1E00E8DCEF /* Views */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		02218DF92F589B1E00E8DCEF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				02218DFA2F589B2700E8DCEF /* LoginView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		02218DFB2F589B3500E8DCEF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				02218DFC2F589B3C00E8DCEF /* Models */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		02218DFC2F589B3C00E8DCEF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */,
+				02218DFD2F589B4500E8DCEF /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,9 +130,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				020853A92F5898F7004E2FD4 /* PiggyPulse */,
 			);
 			name = PiggyPulse;
 			packageProductDependencies = (
@@ -266,7 +334,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.PiggyPulse;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -298,7 +366,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.PiggyPulse;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
