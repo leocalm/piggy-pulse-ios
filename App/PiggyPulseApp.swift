@@ -9,6 +9,9 @@ struct PiggyPulseApp: App {
             RootView()
                 .environmentObject(appState)
                 .preferredColorScheme(.dark)
+                .task {
+                    await appState.checkAuth()
+                }
         }
     }
 }
