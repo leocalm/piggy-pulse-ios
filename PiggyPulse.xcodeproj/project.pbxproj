@@ -6,6 +6,22 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */; };
+		02F038A22F589EC5008DD1E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFD2F589B4500E8DCEF /* User.swift */; };
+		02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF62F589B0100E8DCEF /* Theme.swift */; };
+		02F038A42F589EC5008DD1E7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF12F589AAF00E8DCEF /* AppState.swift */; };
+		02F038A52F589EC5008DD1E7 /* PiggyPulseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF02F589AA200E8DCEF /* PiggyPulseApp.swift */; };
+		02F038A62F589EC5008DD1E7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFA2F589B2700E8DCEF /* LoginView.swift */; };
+		02F038A72F589EC5008DD1E7 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF42F589AEE00E8DCEF /* MainTabView.swift */; };
+		02F038A82F589EC5008DD1E7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF32F589AE500E8DCEF /* RootView.swift */; };
+		02F038AE2F58DFA3008DD1E7 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038AD2F58DF9E008DD1E7 /* APIError.swift */; };
+		02F038B02F58DFCD008DD1E7 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */; };
+		02F038B12F58E05B008DD1E7 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */; };
+		02F038B32F58E085008DD1E7 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038B22F58E082008DD1E7 /* APIEndpoints.swift */; };
+		02F038B52F58E0B1008DD1E7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038B42F58E0AF008DD1E7 /* APIClient.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		020853A72F5898F7004E2FD4 /* PiggyPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiggyPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02218DF02F589AA200E8DCEF /* PiggyPulseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiggyPulseApp.swift; sourceTree = "<group>"; };
@@ -16,6 +32,11 @@
 		02218DFA2F589B2700E8DCEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		02218DFD2F589B4500E8DCEF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPeriod.swift; sourceTree = "<group>"; };
+		02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		02F038AD2F58DF9E008DD1E7 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		02F038B22F58E082008DD1E7 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
+		02F038B42F58E0AF008DD1E7 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +53,7 @@
 		0208539E2F5898F7004E2FD4 = {
 			isa = PBXGroup;
 			children = (
+				02F038A92F58DF3C008DD1E7 /* Shared */,
 				02218DFB2F589B3500E8DCEF /* Core */,
 				02218DF52F589AFA00E8DCEF /* Design */,
 				02218DEE2F589A6F00E8DCEF /* App */,
@@ -102,6 +124,7 @@
 		02218DFB2F589B3500E8DCEF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				02F038AC2F58DF94008DD1E7 /* Network */,
 				02218DFC2F589B3C00E8DCEF /* Models */,
 			);
 			path = Core;
@@ -114,6 +137,33 @@
 				02218DFD2F589B4500E8DCEF /* User.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		02F038A92F58DF3C008DD1E7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				02F038AA2F58DF42008DD1E7 /* Utilities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		02F038AA2F58DF42008DD1E7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		02F038AC2F58DF94008DD1E7 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				02F038B42F58E0AF008DD1E7 /* APIClient.swift */,
+				02F038B22F58E082008DD1E7 /* APIEndpoints.swift */,
+				02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */,
+				02F038AD2F58DF9E008DD1E7 /* APIError.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +237,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02F038B12F58E05B008DD1E7 /* KeychainHelper.swift in Sources */,
+				02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */,
+				02F038A22F589EC5008DD1E7 /* User.swift in Sources */,
+				02F038B32F58E085008DD1E7 /* APIEndpoints.swift in Sources */,
+				02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */,
+				02F038A42F589EC5008DD1E7 /* AppState.swift in Sources */,
+				02F038A52F589EC5008DD1E7 /* PiggyPulseApp.swift in Sources */,
+				02F038A62F589EC5008DD1E7 /* LoginView.swift in Sources */,
+				02F038A72F589EC5008DD1E7 /* MainTabView.swift in Sources */,
+				02F038B52F58E0B1008DD1E7 /* APIClient.swift in Sources */,
+				02F038B02F58DFCD008DD1E7 /* TokenManager.swift in Sources */,
+				02F038A82F589EC5008DD1E7 /* RootView.swift in Sources */,
+				02F038AE2F58DFA3008DD1E7 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

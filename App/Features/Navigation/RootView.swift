@@ -6,7 +6,6 @@ struct RootView: View {
     var body: some View {
         Group {
             if appState.isLoading {
-                // Launch / splash state
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.ppBackground)
