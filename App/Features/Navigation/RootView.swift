@@ -12,7 +12,9 @@ struct RootView: View {
             } else if appState.isAuthenticated {
                 MainTabView()
             } else {
-                LoginView()
+                NavigationStack {
+                    LoginView()
+                }
             }
         }
     }

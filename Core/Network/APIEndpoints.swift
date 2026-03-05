@@ -25,8 +25,8 @@ extension APIEndpoint {
     static let login2FA = APIEndpoint(path: "/auth/token/2fa", method: .post, requiresAuth: false)
     static let refreshToken = APIEndpoint(path: "/auth/token/refresh", method: .post, requiresAuth: false)
     static let revokeToken = APIEndpoint(path: "/auth/token/revoke", method: .post, requiresAuth: true)
-    static let register = APIEndpoint(path: "/auth/register", method: .post, requiresAuth: false)
-    static let forgotPassword = APIEndpoint(path: "/auth/forgot-password", method: .post, requiresAuth: false)
+    static let register = APIEndpoint(path: "/users/", method: .post, requiresAuth: false)
+    static let forgotPassword = APIEndpoint(path: "/password-reset/request", method: .post, requiresAuth: false)
 }
 
 // MARK: - User
@@ -58,18 +58,18 @@ extension APIEndpoint {
 // MARK: - Periods
 
 extension APIEndpoint {
-    static let periods = APIEndpoint(path: "/budget_periods", method: .get, requiresAuth: true)
-    static let createPeriod = APIEndpoint(path: "/budget_periods", method: .post, requiresAuth: true)
+    static let periods = APIEndpoint(path: "/budget_period", method: .get, requiresAuth: true)
+    static let createPeriod = APIEndpoint(path: "/budget_period", method: .post, requiresAuth: true)
     static func updatePeriod(_ id: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/budget_periods/\(id)", method: .put, requiresAuth: true)
+        APIEndpoint(path: "/budget_period/\(id)", method: .put, requiresAuth: true)
     }
     static func deletePeriod(_ id: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/budget_periods/\(id)", method: .delete, requiresAuth: true)
+        APIEndpoint(path: "/budget_period/\(id)", method: .delete, requiresAuth: true)
     }
-    static let schedule = APIEndpoint(path: "/budget_periods/schedule", method: .get, requiresAuth: true)
-    static let createSchedule = APIEndpoint(path: "/budget_periods/schedule", method: .post, requiresAuth: true)
-    static let updateSchedule = APIEndpoint(path: "/budget_periods/schedule", method: .put, requiresAuth: true)
-    static let deleteSchedule = APIEndpoint(path: "/budget_periods/schedule", method: .delete, requiresAuth: true)
+    static let schedule = APIEndpoint(path: "/budget_period/schedule", method: .get, requiresAuth: true)
+    static let createSchedule = APIEndpoint(path: "/budget_period/schedule", method: .post, requiresAuth: true)
+    static let updateSchedule = APIEndpoint(path: "/budget_period/schedule", method: .put, requiresAuth: true)
+    static let deleteSchedule = APIEndpoint(path: "/budget_period/schedule", method: .delete, requiresAuth: true)
 }
 
 // MARK: - Accounts
