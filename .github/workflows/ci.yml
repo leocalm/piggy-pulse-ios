@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: macos-15
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project PiggyPulse.xcodeproj \
+            -scheme PiggyPulse \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty
+
+      # Uncomment when we add unit tests
+      # - name: Test
+      #   run: |
+      #     xcodebuild test \
+      #       -project PiggyPulse.xcodeproj \
+      #       -scheme PiggyPulse \
+      #       -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+      #       -configuration Debug \
+      #       CODE_SIGNING_ALLOWED=NO \
+      #       | xcpretty
