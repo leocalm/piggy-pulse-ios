@@ -1,7 +1,13 @@
 import Foundation
 
 final class APIClient {
-    static let baseURL = "https://api.piggy-pulse.com/api/v1"
+    static let baseURL = {
+        #if DEBUG
+        return "http://127.0.0.1:8000/api/v1"
+        #else
+        return "https://api.piggy-pulse.com/api/v1"
+        #endif
+    }()
 
     private let tokenManager: TokenManager
     private let decoder: JSONDecoder
@@ -22,6 +28,8 @@ final class APIClient {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 30
         config.timeoutIntervalForResource = 60
+        config.httpCookieAcceptPolicy = .never  // Don't store cookies
+        config.httpShouldSetCookies = false     // Don't send cookies
         self.session = URLSession(configuration: config)
     }
 

@@ -20,7 +20,9 @@ final class AppState: ObservableObject {
 
     /// Called on app launch to validate existing tokens
     func checkAuth() async {
-        guard tokenManager.getAccessToken() != nil else {
+        let token = tokenManager.getAccessToken()
+        
+        guard token != nil else {
             isLoading = false
             return
         }
@@ -36,7 +38,6 @@ final class AppState: ObservableObject {
 
         isLoading = false
     }
-
     func logout() async {
         if let refreshToken = tokenManager.getRefreshToken() {
             struct RevokeRequest: Encodable {
