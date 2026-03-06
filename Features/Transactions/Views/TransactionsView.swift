@@ -4,6 +4,7 @@ struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var viewModel: TransactionsViewModel
     @State private var showAddSheet = false
+    @State private var editingTransaction: Transaction?
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: TransactionsViewModel(apiClient: apiClient))
@@ -38,7 +39,7 @@ struct TransactionsView: View {
                 Button {
                     showAddSheet = true
                 } label: {
-                    Label("Add Transaction", systemImage: "plus")
+                    Text("Add Transaction")
                         .font(.ppHeadline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.md)
@@ -111,6 +112,16 @@ struct TransactionsView: View {
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                            .onTapGesture {
+                                editingTransaction = transaction
+                            }
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    Task { await deleteTransaction(transaction) }
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                             .onAppear {
                                 if transaction.id == viewModel.transactions.last?.id {
                                     Task { await viewModel.loadMore() }
@@ -150,6 +161,14 @@ struct TransactionsView: View {
         }) {
             AddTransactionSheet {
                 // onDismiss handles refresh
+            }
+            .environmentObject(appState)
+        }
+        .sheet(item: $editingTransaction) { tx in
+            EditTransactionSheet(transaction: tx) {
+                if let periodId = appState.selectedPeriod?.id {
+                    Task { await viewModel.refresh(periodId: periodId) }
+                }
             }
             .environmentObject(appState)
         }
@@ -266,6 +285,15 @@ struct TransactionsView: View {
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         return formatter.string(from: NSNumber(value: value)) ?? "€0.00"
+    }
+    
+    private func deleteTransaction(_ tx: Transaction) async {
+        do {
+            try await appState.apiClient.requestVoid(.deleteTransaction(tx.id))
+            if let periodId = appState.selectedPeriod?.id {
+                await viewModel.refresh(periodId: periodId)
+            }
+        } catch {}
     }
 }
 

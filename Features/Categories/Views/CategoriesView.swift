@@ -8,6 +8,8 @@ struct CategoriesView: View {
     @State private var isLoading = true
     @State private var errorMessage: String?
     @State private var showArchived = false
+    @State private var showAddSheet = false
+    @State private var editingCategory: CategoryManagementItem?
 
     var body: some View {
         List {
@@ -25,6 +27,17 @@ struct CategoriesView: View {
                 .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
             }
 
+            // Add button - in the header section, after subtitle
+            Button {
+                showAddSheet = true
+            } label: {
+                Text("Add Category")
+                    .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
+            }
+            .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
+            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
+            
             if isLoading {
                 Section {
                     HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -79,6 +92,13 @@ struct CategoriesView: View {
         .background(Color.ppBackground)
         .refreshable { await load() }
         .task { await load() }
+        .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+            AddCategorySheet { }.environmentObject(appState)
+        }
+        .sheet(item: $editingCategory) { cat in
+            EditCategorySheet(category: cat) { Task { await load() } }
+                .environmentObject(appState)
+        }
     }
 
     private func categorySection(_ title: String, categories: [CategoryManagementItem], color: Color) -> some View {
@@ -87,6 +107,18 @@ struct CategoriesView: View {
                 Section {
                     ForEach(categories) { cat in
                         categoryRow(cat, dimmed: false)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    Task { await deleteCategory(cat) }
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            .swipeActions(edge: .leading) {
+                                if !cat.isSystem {
+                                    Button { editingCategory = cat } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                }
+                            }
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -100,6 +132,13 @@ struct CategoriesView: View {
                 }
             }
         }
+    }
+    
+    private func deleteCategory(_ cat: CategoryManagementItem) async {
+        do {
+            try await appState.apiClient.requestVoid(.deleteCategory(cat.id))
+            await load()
+        } catch {}
     }
 
     private func categoryRow(_ cat: CategoryManagementItem, dimmed: Bool) -> some View {

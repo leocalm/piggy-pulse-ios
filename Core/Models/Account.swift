@@ -18,3 +18,8 @@ struct AccountsSummary: Codable {
     let totalAssets: Int64
     let totalLiabilities: Int64
 }
+
+extension AccountListItem: Hashable {
+    static func == (lhs: AccountListItem, rhs: AccountListItem) -> Bool { lhs.id == rhs.id }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
+}

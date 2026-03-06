@@ -67,6 +67,11 @@ final class APIClient {
         _ = try await performRequest(endpoint, body: nil as Empty?)
     }
 
+    /// Request with no response body (for DELETE endpoints)
+    func requestVoid(_ endpoint: APIEndpoint) async throws {
+        let _ = try await performRequest(endpoint, body: nil as Empty?)
+    }
+    
     // MARK: - Private
 
     private struct Empty: Encodable {}
