@@ -17,6 +17,17 @@
 		027B347B2F5B426200E96DF6 /* PeriodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */; };
 		027B347D2F5B463F00E96DF6 /* PeriodSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */; };
 		027B347F2F5B466E00E96DF6 /* AutoCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B347E2F5B466B00E96DF6 /* AutoCreationView.swift */; };
+		027B34812F5B4A2F00E96DF6 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34802F5B4A2900E96DF6 /* Account.swift */; };
+		027B34832F5B4A4200E96DF6 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34822F5B4A3B00E96DF6 /* Category.swift */; };
+		027B34852F5B4A5300E96DF6 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34842F5B4A5000E96DF6 /* Vendor.swift */; };
+		027B34892F5B4AA700E96DF6 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34882F5B4AA600E96DF6 /* AccountsView.swift */; };
+		027B348D2F5B4AC200E96DF6 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B348C2F5B4AC100E96DF6 /* CategoriesView.swift */; };
+		027B34912F5B4ADE00E96DF6 /* VendorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34902F5B4ADD00E96DF6 /* VendorsView.swift */; };
+		027B34932F5B4E4D00E96DF6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34922F5B4E4900E96DF6 /* Settings.swift */; };
+		027B34972F5B4EA300E96DF6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34962F5B4E9E00E96DF6 /* SettingsView.swift */; };
+		027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */; };
+		027B349B2F5B4FAB00E96DF6 /* Overlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349A2F5B4FA900E96DF6 /* Overlays.swift */; };
+		027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */; };
 		02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */; };
 		02F038A22F589EC5008DD1E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFD2F589B4500E8DCEF /* User.swift */; };
 		02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF62F589B0100E8DCEF /* Theme.swift */; };
@@ -70,6 +81,17 @@
 		027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailView.swift; sourceTree = "<group>"; };
 		027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSchedule.swift; sourceTree = "<group>"; };
 		027B347E2F5B466B00E96DF6 /* AutoCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCreationView.swift; sourceTree = "<group>"; };
+		027B34802F5B4A2900E96DF6 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		027B34822F5B4A3B00E96DF6 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		027B34842F5B4A5000E96DF6 /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
+		027B34882F5B4AA600E96DF6 /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
+		027B348C2F5B4AC100E96DF6 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		027B34902F5B4ADD00E96DF6 /* VendorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsView.swift; sourceTree = "<group>"; };
+		027B34922F5B4E4900E96DF6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		027B34962F5B4E9E00E96DF6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSheet.swift; sourceTree = "<group>"; };
+		027B349A2F5B4FA900E96DF6 /* Overlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlays.swift; sourceTree = "<group>"; };
+		027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysView.swift; sourceTree = "<group>"; };
 		02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		02F038AD2F58DF9E008DD1E7 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
@@ -188,6 +210,11 @@
 		02218DFC2F589B3C00E8DCEF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				027B349A2F5B4FA900E96DF6 /* Overlays.swift */,
+				027B34922F5B4E4900E96DF6 /* Settings.swift */,
+				027B34842F5B4A5000E96DF6 /* Vendor.swift */,
+				027B34822F5B4A3B00E96DF6 /* Category.swift */,
+				027B34802F5B4A2900E96DF6 /* Account.swift */,
 				027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */,
 				027B34712F5B320200E96DF6 /* BudgetCategory.swift */,
 				027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */,
@@ -232,6 +259,87 @@
 			isa = PBXGroup;
 			children = (
 				027B34782F5B325500E96DF6 /* BudgetPlanView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		027B34862F5B4A9700E96DF6 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				027B34872F5B4AA100E96DF6 /* Views */,
+			);
+			path = Accounts;
+			sourceTree = "<group>";
+		};
+		027B34872F5B4AA100E96DF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				027B34882F5B4AA600E96DF6 /* AccountsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		027B348A2F5B4AB400E96DF6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				027B348B2F5B4ABB00E96DF6 /* Views */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		027B348B2F5B4ABB00E96DF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				027B348C2F5B4AC100E96DF6 /* CategoriesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		027B348E2F5B4ACE00E96DF6 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				027B348F2F5B4AD800E96DF6 /* Views */,
+			);
+			path = Vendors;
+			sourceTree = "<group>";
+		};
+		027B348F2F5B4AD800E96DF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				027B34902F5B4ADD00E96DF6 /* VendorsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		027B34942F5B4E9400E96DF6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				027B34952F5B4E9900E96DF6 /* Views */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		027B34952F5B4E9900E96DF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */,
+				027B34962F5B4E9E00E96DF6 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		027B349C2F5B4FC800E96DF6 /* Overlays */ = {
+			isa = PBXGroup;
+			children = (
+				027B349D2F5B4FCE00E96DF6 /* Views */,
+			);
+			path = Overlays;
+			sourceTree = "<group>";
+		};
+		027B349D2F5B4FCE00E96DF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -292,6 +400,11 @@
 		02F038C62F598D2B008DD1E7 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				027B349C2F5B4FC800E96DF6 /* Overlays */,
+				027B34942F5B4E9400E96DF6 /* Settings */,
+				027B348E2F5B4ACE00E96DF6 /* Vendors */,
+				027B348A2F5B4AB400E96DF6 /* Categories */,
+				027B34862F5B4A9700E96DF6 /* Accounts */,
 				027B34732F5B322F00E96DF6 /* Budget */,
 				02F038E42F5B20FC008DD1E7 /* Periods */,
 				02F038DB2F59A17F008DD1E7 /* Transactions */,
@@ -464,14 +577,21 @@
 				02F038C92F598D78008DD1E7 /* PeriodSelectorBar.swift in Sources */,
 				02F038DE2F59A195008DD1E7 /* TransactionsViewModel.swift in Sources */,
 				027B346A2F5B21DA00E96DF6 /* PeriodsView.swift in Sources */,
+				027B34912F5B4ADE00E96DF6 /* VendorsView.swift in Sources */,
+				027B34812F5B4A2F00E96DF6 /* Account.swift in Sources */,
 				02F038D62F599A90008DD1E7 /* DashboardView.swift in Sources */,
+				027B34932F5B4E4D00E96DF6 /* Settings.swift in Sources */,
 				02F038B12F58E05B008DD1E7 /* KeychainHelper.swift in Sources */,
+				027B348D2F5B4AC200E96DF6 /* CategoriesView.swift in Sources */,
 				02F038B82F58E6D3008DD1E7 /* PPTextField.swift in Sources */,
+				027B34832F5B4A4200E96DF6 /* Category.swift in Sources */,
 				02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */,
 				02F038C22F5984F1008DD1E7 /* ForgotPasswordView.swift in Sources */,
 				027B346C2F5B237400E96DF6 /* CreatePeriodSheet.swift in Sources */,
 				027B347D2F5B463F00E96DF6 /* PeriodSchedule.swift in Sources */,
+				027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */,
 				02F038A22F589EC5008DD1E7 /* User.swift in Sources */,
+				027B34852F5B4A5300E96DF6 /* Vendor.swift in Sources */,
 				02F038B32F58E085008DD1E7 /* APIEndpoints.swift in Sources */,
 				027B346E2F5B2A5400E96DF6 /* FormOptions.swift in Sources */,
 				02F038BB2F58E70D008DD1E7 /* AuthViewModel.swift in Sources */,
@@ -480,6 +600,7 @@
 				02F038A42F589EC5008DD1E7 /* AppState.swift in Sources */,
 				027B347F2F5B466E00E96DF6 /* AutoCreationView.swift in Sources */,
 				02F038E22F59A1CD008DD1E7 /* TransactionsView.swift in Sources */,
+				027B34972F5B4EA300E96DF6 /* SettingsView.swift in Sources */,
 				02F038A52F589EC5008DD1E7 /* PiggyPulseApp.swift in Sources */,
 				02F038A62F589EC5008DD1E7 /* LoginView.swift in Sources */,
 				02F038DA2F59A15D008DD1E7 /* TransactionRepository.swift in Sources */,
@@ -488,8 +609,11 @@
 				027B34702F5B2B2400E96DF6 /* AddTransactionSheet.swift in Sources */,
 				02F038CB2F598F4F008DD1E7 /* PaginatedResponse.swift in Sources */,
 				02F038D12F599A25008DD1E7 /* DashboardViewModel.swift in Sources */,
+				027B349B2F5B4FAB00E96DF6 /* Overlays.swift in Sources */,
 				02F038B52F58E0B1008DD1E7 /* APIClient.swift in Sources */,
 				02F038B02F58DFCD008DD1E7 /* TokenManager.swift in Sources */,
+				027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */,
+				027B34892F5B4AA700E96DF6 /* AccountsView.swift in Sources */,
 				027B34722F5B320E00E96DF6 /* BudgetCategory.swift in Sources */,
 				02F038C02F5984DF008DD1E7 /* RegisterView.swift in Sources */,
 				027B34762F5B324100E96DF6 /* BudgetViewModel.swift in Sources */,
