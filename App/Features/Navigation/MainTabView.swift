@@ -67,7 +67,7 @@ struct MainTabView: View {
             }
             .padding(.horizontal, PPSpacing.sm)
             .padding(.vertical, PPSpacing.sm)
-            .background(Color.ppSurface)
+            .background(.ultraThinMaterial)
             .clipShape(Capsule())
 
             // Separated Add Transaction button
@@ -85,7 +85,7 @@ struct MainTabView: View {
         .padding(.horizontal, PPSpacing.lg)
         .padding(.vertical, PPSpacing.sm)
         .padding(.bottom, PPSpacing.sm)
-        .background(Color.ppBackground)
+        .background(.ultraThinMaterial)
     }
 
     private func tabBarItem(index: Int, icon: String, label: String) -> some View {
@@ -97,6 +97,8 @@ struct MainTabView: View {
                     .font(.system(size: 20))
                 Text(label)
                     .font(.ppCaption)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
             .foregroundColor(selectedTab == index ? .ppPrimary : .ppTextSecondary)
             .frame(maxWidth: .infinity)
