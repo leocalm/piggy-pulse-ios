@@ -5,113 +5,51 @@ struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var showAddTransaction = false
 
-    init() {
-        UITabBar.appearance().isHidden = true
-    }
-
     var body: some View {
-        VStack(spacing: 0) {
-            // Period selector bar
-            PeriodSelectorBar()
-                .padding(.horizontal, PPSpacing.lg)
-                .padding(.top, PPSpacing.sm)
-                .padding(.bottom, PPSpacing.sm)
+        TabView(selection: $selectedTab) {
+            DashboardView(apiClient: appState.apiClient)
+                .tabItem {
+                    Label("Dashboard", systemImage: "square.grid.2x2")
+                }
+                .tag(0)
 
-            TabView(selection: $selectedTab) {
-                DashboardView(apiClient: appState.apiClient)
-                    .tabItem {
-                        Label("Dashboard", systemImage: "square.grid.2x2")
-                    }
-                    .tag(0)
+            TransactionsView(apiClient: appState.apiClient)
+                .tabItem {
+                    Label("Transactions", systemImage: "arrow.left.arrow.right")
+                }
+                .tag(1)
 
-                TransactionsView(apiClient: appState.apiClient)
-                    .tabItem {
-                        Label("Transactions", systemImage: "arrow.left.arrow.right")
-                    }
-                    .tag(1)
+            // Placeholder tab that triggers the add sheet
+            Color.clear
+                .tabItem {
+                    Label("Add", systemImage: "plus.circle.fill")
+                }
+                .tag(2)
 
-                PeriodsView(apiClient: appState.apiClient)
-                    .tabItem {
-                        Label("Periods", systemImage: "calendar")
-                    }
-                    .tag(2)
+            PeriodsView(apiClient: appState.apiClient)
+                .tabItem {
+                    Label("Periods", systemImage: "calendar")
+                }
+                .tag(3)
 
-                moreTab
-                    .tabItem {
-                        Label("More", systemImage: "ellipsis.circle")
-                    }
-                    .tag(3)
-            }
-            .tint(.ppPrimary)
+            moreTab
+                .tabItem {
+                    Label("More", systemImage: "ellipsis.circle")
+                }
+                .tag(4)
         }
-        .background(Color.ppBackground)
-        .safeAreaInset(edge: .bottom) {
-            customTabBar
+        .tint(.ppPrimary)
+        .onChange(of: selectedTab) { newTab in
+            if newTab == 2 {
+                showAddTransaction = true
+                // Return to previous tab so the "Add" tab never stays selected
+                selectedTab = 1
+            }
         }
         .sheet(isPresented: $showAddTransaction) {
             AddTransactionSheet(onCreated: { selectedTab = 1 })
                 .environmentObject(appState)
         }
-    }
-
-    // MARK: - Custom Tab Bar
-
-    private var customTabBar: some View {
-        HStack(spacing: PPSpacing.md) {
-            // Main pill containing 4 tab items
-            HStack(spacing: 0) {
-                tabBarItem(index: 0, icon: "square.grid.2x2", label: "Dashboard")
-                tabBarItem(index: 1, icon: "arrow.left.arrow.right", label: "Transactions")
-                tabBarItem(index: 2, icon: "calendar", label: "Periods")
-                tabBarItem(index: 3, icon: "ellipsis.circle", label: "More")
-            }
-            .padding(.horizontal, PPSpacing.sm)
-            .padding(.vertical, PPSpacing.sm)
-            .background(.ultraThinMaterial)
-            .clipShape(Capsule())
-
-            // Separated Add Transaction button
-            Button {
-                showAddTransaction = true
-            } label: {
-                Image(systemName: "plus")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundColor(.white)
-                    .frame(width: 56, height: 56)
-                    .background(Color.ppPrimary)
-                    .clipShape(Circle())
-            }
-        }
-        .padding(.horizontal, PPSpacing.lg)
-        .padding(.vertical, PPSpacing.sm)
-        .padding(.bottom, PPSpacing.sm)
-        .background(.ultraThinMaterial)
-    }
-
-    private func tabBarItem(index: Int, icon: String, label: String) -> some View {
-        Button {
-            selectedTab = index
-        } label: {
-            VStack(spacing: 2) {
-                Image(systemName: icon)
-                    .font(.system(size: 20))
-                Text(label)
-                    .font(.ppCaption)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-            }
-            .foregroundColor(selectedTab == index ? .ppPrimary : .ppTextSecondary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, PPSpacing.xs)
-            .padding(.horizontal, PPSpacing.xs)
-            .background(
-                selectedTab == index
-                    ? Color.ppPrimary.opacity(0.12)
-                    : Color.clear,
-                in: RoundedRectangle(cornerRadius: PPRadius.md)
-            )
-        }
-        .buttonStyle(.plain)
     }
 
     // MARK: - More Tab
