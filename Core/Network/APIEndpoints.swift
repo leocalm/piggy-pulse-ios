@@ -83,6 +83,7 @@ extension APIEndpoint {
     static func deleteAccount(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/accounts/\(id)", method: .delete, requiresAuth: true)
     }
+    static let accountOptions = APIEndpoint(path: "/accounts/options", method: .get, requiresAuth: true)
 }
 
 // MARK: - Categories
@@ -96,6 +97,12 @@ extension APIEndpoint {
     static func deleteCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)", method: .delete, requiresAuth: true)
     }
+    // Add to Categories section - we'll reuse the list with period_id
+    static func categoriesForPeriod(periodId: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/categories/", method: .get, requiresAuth: true)
+    }
+    static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
+    static let transferCategory = APIEndpoint(path: "/categories/transfer", method: .get, requiresAuth: true)
 }
 
 // MARK: - Vendors
@@ -111,6 +118,10 @@ extension APIEndpoint {
     }
     static func archiveVendor(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/vendors/\(id)/archive", method: .post, requiresAuth: true)
+    }
+    // Add to Vendors section
+    static func vendorsForPeriod(periodId: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/vendors/", method: .get, requiresAuth: true)
     }
 }
 
@@ -137,5 +148,14 @@ extension APIEndpoint {
 // MARK: - Dashboard
 
 extension APIEndpoint {
-    static let dashboard = APIEndpoint(path: "/dashboard", method: .get, requiresAuth: true)
+    static let monthlyBurnIn = APIEndpoint(path: "/dashboard/monthly-burn-in", method: .get, requiresAuth: true)
+    static let monthProgress = APIEndpoint(path: "/dashboard/month-progress", method: .get, requiresAuth: true)
+    static let netPosition = APIEndpoint(path: "/dashboard/net-position", method: .get, requiresAuth: true)
+    static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
+}
+
+// MARK: - Budget Categories
+
+extension APIEndpoint {
+    static let budgetCategories = APIEndpoint(path: "/budget-categories/", method: .get, requiresAuth: true)
 }
