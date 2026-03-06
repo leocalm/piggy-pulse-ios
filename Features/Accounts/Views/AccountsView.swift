@@ -77,7 +77,7 @@ struct AccountsView: View {
                             .foregroundColor(.ppTextSecondary)
                             .tracking(1)
                         Spacer()
-                        Text(formatCurrency(accounts.reduce(0) { $0 + $1.balance }))
+                        Text(formatCurrency(accounts.reduce(0) { $0 + $1.balance }, code: appState.currencyCode))
                             .font(.ppCaption)
                             .foregroundColor(.ppTextSecondary)
                     }
@@ -93,7 +93,7 @@ struct AccountsView: View {
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            Text(formatCurrency(s.totalNetWorth))
+            Text(formatCurrency(s.totalNetWorth, code: appState.currencyCode))
                 .font(.ppAmount)
                 .foregroundColor(.ppCyan)
 
@@ -102,7 +102,7 @@ struct AccountsView: View {
                     Text("Assets")
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
-                    Text(formatCurrency(s.totalAssets))
+                    Text(formatCurrency(s.totalAssets, code: appState.currencyCode))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
                         .foregroundColor(.ppTextPrimary)
@@ -143,7 +143,7 @@ struct AccountsView: View {
                         .foregroundColor(.ppTextSecondary)
 
                     let changePrefix = account.balanceChangeThisPeriod >= 0 ? "+" : ""
-                    Text("\(changePrefix)\(formatCurrency(account.balanceChangeThisPeriod))")
+                    Text("\(changePrefix)\(formatCurrency(account.balanceChangeThisPeriod, code: appState.currencyCode))")
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
                 }
@@ -151,7 +151,7 @@ struct AccountsView: View {
 
             Spacer()
 
-            Text(formatCurrency(account.balance))
+            Text(formatCurrency(account.balance, code: appState.currencyCode))
                 .font(.ppAmountSmall)
                 .foregroundColor(.ppTextPrimary)
         }
@@ -190,13 +190,5 @@ struct AccountsView: View {
             errorMessage = "Failed to load accounts."
         }
         isLoading = false
-    }
-
-    private func formatCurrency(_ cents: Int64) -> String {
-        let value = Double(cents) / 100.0
-        let fmt = NumberFormatter()
-        fmt.numberStyle = .currency
-        fmt.currencyCode = "EUR"
-        return fmt.string(from: NSNumber(value: value)) ?? "€0.00"
     }
 }

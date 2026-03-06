@@ -28,6 +28,19 @@
 		027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */; };
 		027B349B2F5B4FAB00E96DF6 /* Overlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349A2F5B4FA900E96DF6 /* Overlays.swift */; };
 		027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */; };
+<<<<<<< Updated upstream
+=======
+		027B34A12F5B532600E96DF6 /* AddAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A02F5B532500E96DF6 /* AddAccountSheet.swift */; };
+		027B34A32F5B533700E96DF6 /* AddCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A22F5B533400E96DF6 /* AddCategorySheet.swift */; };
+		027B34A52F5B534700E96DF6 /* AddVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A42F5B534500E96DF6 /* AddVendorSheet.swift */; };
+		027B34A72F5B647C00E96DF6 /* EditProfileSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */; };
+		027B34A92F5B67B800E96DF6 /* EditTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */; };
+		027B34AB2F5B699300E96DF6 /* EditAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AA2F5B699200E96DF6 /* EditAccountSheet.swift */; };
+		027B34AD2F5B69A700E96DF6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */; };
+		027B34AF2F5B69B600E96DF6 /* EditVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AE2F5B69B600E96DF6 /* EditVendorSheet.swift */; };
+		027B34B12F5B6D5900E96DF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027B34B02F5B6D5900E96DF6 /* LaunchScreen.storyboard */; };
+		027B34B72F5B764E00E96DF6 /* CurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34B62F5B764C00E96DF6 /* CurrencyHelper.swift */; };
+>>>>>>> Stashed changes
 		02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */; };
 		02F038A22F589EC5008DD1E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFD2F589B4500E8DCEF /* User.swift */; };
 		02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF62F589B0100E8DCEF /* Theme.swift */; };
@@ -92,6 +105,19 @@
 		027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSheet.swift; sourceTree = "<group>"; };
 		027B349A2F5B4FA900E96DF6 /* Overlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlays.swift; sourceTree = "<group>"; };
 		027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysView.swift; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
+=======
+		027B34A02F5B532500E96DF6 /* AddAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountSheet.swift; sourceTree = "<group>"; };
+		027B34A22F5B533400E96DF6 /* AddCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategorySheet.swift; sourceTree = "<group>"; };
+		027B34A42F5B534500E96DF6 /* AddVendorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVendorSheet.swift; sourceTree = "<group>"; };
+		027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileSheet.swift; sourceTree = "<group>"; };
+		027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionSheet.swift; sourceTree = "<group>"; };
+		027B34AA2F5B699200E96DF6 /* EditAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountSheet.swift; sourceTree = "<group>"; };
+		027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
+		027B34AE2F5B69B600E96DF6 /* EditVendorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVendorSheet.swift; sourceTree = "<group>"; };
+		027B34B02F5B6D5900E96DF6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		027B34B62F5B764C00E96DF6 /* CurrencyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyHelper.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		02F038AD2F58DF9E008DD1E7 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
@@ -134,6 +160,7 @@
 				02F038C62F598D2B008DD1E7 /* Features */,
 				02F038BE2F58E9D3008DD1E7 /* PiggyPulse-Info.plist */,
 				02F038BC2F58E87A008DD1E7 /* Assets.xcassets */,
+				027B34B02F5B6D5900E96DF6 /* LaunchScreen.storyboard */,
 				02F038A92F58DF3C008DD1E7 /* Shared */,
 				02218DFB2F589B3500E8DCEF /* Core */,
 				02218DF52F589AFA00E8DCEF /* Design */,
@@ -200,6 +227,7 @@
 		02218DFB2F589B3500E8DCEF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				027B34B22F5B74CE00E96DF6 /* Utilities */,
 				02F038C32F598BF9008DD1E7 /* Repositories */,
 				02F038AC2F58DF94008DD1E7 /* Network */,
 				02218DFC2F589B3C00E8DCEF /* Models */,
@@ -342,6 +370,14 @@
 				027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		027B34B22F5B74CE00E96DF6 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				027B34B62F5B764C00E96DF6 /* CurrencyHelper.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		02F038A92F58DF3C008DD1E7 /* Shared */ = {
@@ -560,6 +596,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				027B34B12F5B6D5900E96DF6 /* LaunchScreen.storyboard in Resources */,
 				02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */,
 				02F038BD2F58E87A008DD1E7 /* Assets.xcassets in Resources */,
 			);
@@ -593,6 +630,7 @@
 				02F038A22F589EC5008DD1E7 /* User.swift in Sources */,
 				027B34852F5B4A5300E96DF6 /* Vendor.swift in Sources */,
 				02F038B32F58E085008DD1E7 /* APIEndpoints.swift in Sources */,
+				027B34B72F5B764E00E96DF6 /* CurrencyHelper.swift in Sources */,
 				027B346E2F5B2A5400E96DF6 /* FormOptions.swift in Sources */,
 				02F038BB2F58E70D008DD1E7 /* AuthViewModel.swift in Sources */,
 				02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */,

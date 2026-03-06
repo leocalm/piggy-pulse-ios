@@ -170,7 +170,7 @@ struct BudgetPlanView: View {
                 .font(.ppCallout)
                 .foregroundColor(.ppTextSecondary)
             Spacer()
-            Text(formatCurrency(value))
+            Text(formatCurrency(value, code: appState.currencyCode))
                 .font(.ppCallout)
                 .fontWeight(.semibold)
                 .foregroundColor(.ppTextPrimary)
@@ -190,7 +190,7 @@ struct BudgetPlanView: View {
                         .font(.ppHeadline)
                         .foregroundColor(.ppTextPrimary)
 
-                    Text("Budget: \(formatCurrency(Int64(item.budgetedValue)))")
+                    Text("Budget: \(formatCurrency(Int64(item.budgetedValue), code: appState.currencyCode))")
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -213,17 +213,5 @@ struct BudgetPlanView: View {
             RoundedRectangle(cornerRadius: PPRadius.md)
                 .stroke(Color.ppBorder, lineWidth: 1)
         )
-    }
-
-    // MARK: - Helpers
-
-    private func formatCurrency(_ cents: Int64) -> String {
-        let value = Double(cents) / 100.0
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "EUR"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter.string(from: NSNumber(value: value)) ?? "€0.00"
     }
 }
