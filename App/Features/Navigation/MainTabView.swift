@@ -3,6 +3,11 @@ import SwiftUI
 struct MainTabView: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedTab = 0
+    @State private var showAddTransaction = false
+
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -40,7 +45,74 @@ struct MainTabView: View {
             .tint(.ppPrimary)
         }
         .background(Color.ppBackground)
+        .safeAreaInset(edge: .bottom) {
+            customTabBar
+        }
+        .sheet(isPresented: $showAddTransaction) {
+            AddTransactionSheet(onCreated: { selectedTab = 1 })
+                .environmentObject(appState)
+        }
     }
+
+    // MARK: - Custom Tab Bar
+
+    private var customTabBar: some View {
+        HStack(spacing: PPSpacing.md) {
+            // Main pill containing 4 tab items
+            HStack(spacing: 0) {
+                tabBarItem(index: 0, icon: "square.grid.2x2", label: "Dashboard")
+                tabBarItem(index: 1, icon: "arrow.left.arrow.right", label: "Transactions")
+                tabBarItem(index: 2, icon: "calendar", label: "Periods")
+                tabBarItem(index: 3, icon: "ellipsis.circle", label: "More")
+            }
+            .padding(.horizontal, PPSpacing.sm)
+            .padding(.vertical, PPSpacing.sm)
+            .background(Color.ppSurface)
+            .clipShape(Capsule())
+
+            // Separated Add Transaction button
+            Button {
+                showAddTransaction = true
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.white)
+                    .frame(width: 56, height: 56)
+                    .background(Color.ppPrimary)
+                    .clipShape(Circle())
+            }
+        }
+        .padding(.horizontal, PPSpacing.lg)
+        .padding(.vertical, PPSpacing.sm)
+        .padding(.bottom, PPSpacing.sm)
+        .background(Color.ppBackground)
+    }
+
+    private func tabBarItem(index: Int, icon: String, label: String) -> some View {
+        Button {
+            selectedTab = index
+        } label: {
+            VStack(spacing: 2) {
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+                Text(label)
+                    .font(.ppCaption)
+            }
+            .foregroundColor(selectedTab == index ? .ppPrimary : .ppTextSecondary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, PPSpacing.xs)
+            .padding(.horizontal, PPSpacing.xs)
+            .background(
+                selectedTab == index
+                    ? Color.ppPrimary.opacity(0.12)
+                    : Color.clear,
+                in: RoundedRectangle(cornerRadius: PPRadius.md)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - More Tab
 
     private var moreTab: some View {
         NavigationStack {
