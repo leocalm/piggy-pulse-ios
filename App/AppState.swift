@@ -10,6 +10,30 @@ final class AppState: ObservableObject {
     @Published var currentUser: User?
     @Published var selectedPeriod: BudgetPeriod?
     @Published var isLoading = true
+    @Published var currencyCode: String = "EUR"
+    
+    func loadUserCurrency() async {
+        // Try to get from settings profile
+        struct SettingsResponse: Codable {
+            let defaultCurrencyId: UUID?
+        }
+        struct CurrencyItem: Codable, Identifiable {
+            let id: UUID
+            let currency: String
+        }
+        
+        do {
+            let profile: ProfileResponse = try await apiClient.request(.profile)
+            if let currencyId = profile.defaultCurrencyId {
+                let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
+                if let match = currencies.first(where: { $0.id == currencyId }) {
+                    currencyCode = match.currency
+                }
+            }
+        } catch {
+            // Keep default EUR
+        }
+    }
 
     init() {
         let tm = TokenManager()
@@ -31,6 +55,7 @@ final class AppState: ObservableObject {
             let user: User = try await apiClient.request(.me)
             currentUser = user
             isAuthenticated = true
+            await loadUserCurrency()
         } catch {
             tokenManager.clearTokens()
             isAuthenticated = false

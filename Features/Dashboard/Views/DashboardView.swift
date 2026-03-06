@@ -101,16 +101,16 @@ struct DashboardView: View {
                 .tracking(1)
 
             // Spent amount
-            Text(formatCurrency(burnIn.spentBudget))
+            Text(formatCurrency(burnIn.spentBudget, code: appState.currencyCode))
                 .font(.ppAmount)
                 .foregroundColor(.ppTextPrimary)
 
-            Text("of \(formatCurrency(burnIn.totalBudget))")
+            Text("of \(formatCurrency(burnIn.totalBudget, code: appState.currencyCode))")
                 .font(.ppCallout)
                 .foregroundColor(.ppTextSecondary)
 
             // Remaining info
-            Text("\(progress.remainingDays) days remaining. \(formatCurrency(burnIn.remainingBudget)) remaining in this period.")
+            Text("\(progress.remainingDays) days remaining. \(formatCurrency(burnIn.remainingBudget, code: appState.currencyCode)) remaining in this period.")
                 .font(.ppCallout)
                 .foregroundColor(.ppTextSecondary)
 
@@ -130,7 +130,7 @@ struct DashboardView: View {
 
             // Projected spend
             let projectedSpend = projectedSpendAmount(burnIn: burnIn, progress: progress)
-            Text("Projected spend at current pace: \(formatCurrency(projectedSpend))")
+            Text("Projected spend at current pace: \(formatCurrency(projectedSpend, code: appState.currencyCode))")
                 .font(.ppCaption)
                 .foregroundColor(.ppTextTertiary)
         }
@@ -195,13 +195,13 @@ struct DashboardView: View {
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            Text(formatCurrency(net.totalNetPosition))
+            Text(formatCurrency(net.totalNetPosition, code: appState.currencyCode))
                 .font(.ppAmount)
                 .foregroundColor(.ppCyan)
 
             HStack(spacing: PPSpacing.sm) {
                 let changePrefix = net.changeThisPeriod >= 0 ? "+" : ""
-                Text("\(changePrefix)\(formatCurrency(net.changeThisPeriod)) this period")
+                Text("\(changePrefix)\(formatCurrency(net.changeThisPeriod, code: appState.currencyCode)) this period")
                     .font(.ppCallout)
                     .foregroundColor(.ppTextSecondary)
 
@@ -239,7 +239,7 @@ struct DashboardView: View {
             }
 
             // Breakdown text
-            Text("Liquid \(formatCurrency(net.liquidBalance)) · Protected \(formatCurrency(net.protectedBalance)) · Debt \(formatCurrency(net.debtBalance))")
+            Text("Liquid \(formatCurrency(net.liquidBalance, code: appState.currencyCode)) · Protected \(formatCurrency(net.protectedBalance, code: appState.currencyCode)) · Debt \(formatCurrency(net.debtBalance, code: appState.currencyCode))")
                 .font(.ppCaption)
                 .foregroundColor(.ppTextTertiary)
         }
@@ -253,17 +253,7 @@ struct DashboardView: View {
     }
 
     // MARK: - Helpers
-
-    private func formatCurrency(_ cents: Int64) -> String {
-        let value = Double(cents) / 100.0
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "EUR"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter.string(from: NSNumber(value: value)) ?? "€0.00"
-    }
-
+    
     private func projectedSpendAmount(burnIn: MonthlyBurnIn, progress: MonthProgress) -> Int64 {
         let daysPassed = progress.daysInPeriod - progress.remainingDays
         guard daysPassed > 0 else { return 0 }
