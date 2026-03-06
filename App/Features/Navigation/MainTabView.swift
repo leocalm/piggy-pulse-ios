@@ -13,19 +13,19 @@ struct MainTabView: View {
                 .padding(.bottom, PPSpacing.sm)
 
             TabView(selection: $selectedTab) {
-                Text("Dashboard")
+                DashboardView(apiClient: appState.apiClient)
                     .tabItem {
                         Label("Dashboard", systemImage: "square.grid.2x2")
                     }
                     .tag(0)
 
-                Text("Transactions")
+                TransactionsView(apiClient: appState.apiClient)
                     .tabItem {
                         Label("Transactions", systemImage: "arrow.left.arrow.right")
                     }
                     .tag(1)
 
-                Text("Periods")
+                PeriodsView(apiClient: appState.apiClient)
                     .tabItem {
                         Label("Periods", systemImage: "calendar")
                     }
@@ -50,7 +50,12 @@ struct MainTabView: View {
                     Label("Categories", systemImage: "tag")
                     Label("Vendors", systemImage: "storefront")
                     Label("Overlays", systemImage: "square.stack")
-                    Label("Budget Plan", systemImage: "chart.pie")
+                    NavigationLink {
+                        BudgetPlanView(apiClient: appState.apiClient)
+                            .environmentObject(appState)
+                    } label: {
+                        Label("Category Targets", systemImage: "chart.pie")
+                    }
                 } header: {
                     Text("Structure")
                 }

@@ -197,4 +197,13 @@ final class APIClient {
         await tokenManager.updateAccessToken(refreshResponse.accessToken)
         return refreshResponse.accessToken
     }
+    
+    /// Request with a body, returning raw response string
+    func requestString<B: Encodable>(
+        _ endpoint: APIEndpoint,
+        body: B
+    ) async throws -> String {
+        let data = try await performRequest(endpoint, body: body)
+        return String(data: data, encoding: .utf8) ?? ""
+    }
 }
