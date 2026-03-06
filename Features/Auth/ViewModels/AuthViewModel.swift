@@ -131,6 +131,7 @@ final class AuthViewModel: ObservableObject {
             appState.tokenManager.setTokens(access: response.accessToken, refresh: response.refreshToken)
             appState.currentUser = response.user
             appState.isAuthenticated = true
+            Task { await appState.loadUserCurrency() }
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {

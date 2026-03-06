@@ -163,10 +163,10 @@ struct OverlaysView: View {
             // Spending progress
             if let cap = overlay.totalCapAmount {
                 HStack {
-                    Text(formatCurrency(overlay.spentAmount))
+                    Text(formatCurrency(overlay.spentAmount, code: appState.currencyCode))
                         .font(.ppAmountSmall)
                         .foregroundColor(.ppTextPrimary)
-                    Text("/ \(formatCurrency(cap))")
+                    Text("/ \(formatCurrency(cap, code: appState.currencyCode))")
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -237,14 +237,6 @@ struct OverlaysView: View {
         fmt.dateFormat = "MMM d"
         let days = Calendar.current.dateComponents([.day], from: s, to: e).day ?? 0
         return "\(fmt.string(from: s)) - \(fmt.string(from: e)) · \(days) days"
-    }
-
-    private func formatCurrency(_ cents: Int64) -> String {
-        let value = Double(cents) / 100.0
-        let fmt = NumberFormatter()
-        fmt.numberStyle = .currency
-        fmt.currencyCode = "EUR"
-        return fmt.string(from: NSNumber(value: value)) ?? "€0.00"
     }
 
     private func load() async {

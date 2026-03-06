@@ -37,6 +37,11 @@ extension APIEndpoint {
     static let updatePreferences = APIEndpoint(path: "/users/me/preferences", method: .put, requiresAuth: true)
 }
 
+// MARK - Currencies
+extension APIEndpoint {
+    static let currencies = APIEndpoint(path: "/currency/", method: .get, requiresAuth: true)
+}
+
 // MARK: - Transactions
 
 extension APIEndpoint {
