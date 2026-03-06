@@ -34,8 +34,6 @@ extension APIEndpoint {
 extension APIEndpoint {
     static let me = APIEndpoint(path: "/users/me", method: .get, requiresAuth: true)
     static let updateProfile = APIEndpoint(path: "/users/me", method: .put, requiresAuth: true)
-    static let changePassword = APIEndpoint(path: "/users/me/password", method: .put, requiresAuth: true)
-    static let preferences = APIEndpoint(path: "/users/me/preferences", method: .get, requiresAuth: true)
     static let updatePreferences = APIEndpoint(path: "/users/me/preferences", method: .put, requiresAuth: true)
 }
 
@@ -84,6 +82,8 @@ extension APIEndpoint {
         APIEndpoint(path: "/accounts/\(id)", method: .delete, requiresAuth: true)
     }
     static let accountOptions = APIEndpoint(path: "/accounts/options", method: .get, requiresAuth: true)
+    static let accountsSummary = APIEndpoint(path: "/accounts/summary", method: .get, requiresAuth: true)
+
 }
 
 // MARK: - Categories
@@ -103,6 +103,8 @@ extension APIEndpoint {
     }
     static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
     static let transferCategory = APIEndpoint(path: "/categories/transfer", method: .get, requiresAuth: true)
+    static let categoriesManagement = APIEndpoint(path: "/categories/management", method: .get, requiresAuth: true)
+
 }
 
 // MARK: - Vendors
@@ -158,4 +160,12 @@ extension APIEndpoint {
 
 extension APIEndpoint {
     static let budgetCategories = APIEndpoint(path: "/budget-categories/", method: .get, requiresAuth: true)
+}
+
+// MARK: - Settings
+
+extension APIEndpoint {
+    static let profile = APIEndpoint(path: "/settings/profile", method: .get, requiresAuth: true)
+    static let preferences = APIEndpoint(path: "/settings/preferences", method: .get, requiresAuth: true)
+    static let changePassword = APIEndpoint(path: "/settings/password", method: .put, requiresAuth: true)
 }

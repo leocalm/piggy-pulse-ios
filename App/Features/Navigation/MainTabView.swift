@@ -44,40 +44,109 @@ struct MainTabView: View {
 
     private var moreTab: some View {
         NavigationStack {
-            List {
-                Section {
-                    Label("Accounts", systemImage: "building.columns")
-                    Label("Categories", systemImage: "tag")
-                    Label("Vendors", systemImage: "storefront")
-                    Label("Overlays", systemImage: "square.stack")
-                    NavigationLink {
-                        BudgetPlanView(apiClient: appState.apiClient)
-                            .environmentObject(appState)
-                    } label: {
-                        Label("Category Targets", systemImage: "chart.pie")
+            ScrollView {
+                VStack(alignment: .leading, spacing: PPSpacing.xl) {
+                    // Structure section
+                    VStack(alignment: .leading, spacing: PPSpacing.md) {
+                        Text("STRUCTURE")
+                            .font(.ppOverline)
+                            .foregroundColor(.ppTextSecondary)
+                            .tracking(1)
+                            .padding(.horizontal, PPSpacing.lg)
+
+                        VStack(spacing: 1) {
+                            moreLink("Accounts", icon: "building.columns") {
+                                AccountsView().environmentObject(appState)
+                            }
+                            moreLink("Categories", icon: "tag") {
+                                CategoriesView().environmentObject(appState)
+                            }
+                            moreLink("Vendors", icon: "storefront") {
+                                VendorsView().environmentObject(appState)
+                            }
+                            moreLink("Category Targets", icon: "chart.pie") {
+                                BudgetPlanView(apiClient: appState.apiClient).environmentObject(appState)
+                            }
+                            moreLink("Overlays", icon: "square.stack") {
+                                OverlaysView().environmentObject(appState)
+                            }
+                        }
+                        .cornerRadius(PPRadius.lg)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: PPRadius.lg)
+                                .stroke(Color.ppBorder, lineWidth: 1)
+                        )
                     }
-                } header: {
-                    Text("Structure")
-                }
 
-                Section {
-                    Label("Settings", systemImage: "gearshape")
-                } header: {
-                    Text("App")
-                }
+                    // App section
+                    VStack(alignment: .leading, spacing: PPSpacing.md) {
+                        Text("APP")
+                            .font(.ppOverline)
+                            .foregroundColor(.ppTextSecondary)
+                            .tracking(1)
+                            .padding(.horizontal, PPSpacing.lg)
 
-                Section {
-                    Button(role: .destructive) {
+                        moreLink("Settings", icon: "gearshape") {
+                            SettingsView().environmentObject(appState)
+                        }
+                        .cornerRadius(PPRadius.lg)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: PPRadius.lg)
+                                .stroke(Color.ppBorder, lineWidth: 1)
+                        )
+                    }
+
+                    // Logout
+                    Button {
                         Task { await appState.logout() }
                     } label: {
-                        Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
-                            .foregroundColor(.ppDestructive)
+                        HStack {
+                            Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
+                                .font(.ppBody)
+                                .foregroundColor(.ppDestructive)
+                            Spacer()
+                        }
+                        .padding(.horizontal, PPSpacing.lg)
+                        .padding(.vertical, PPSpacing.lg)
+                        .background(Color.ppCard)
+                        .cornerRadius(PPRadius.lg)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: PPRadius.lg)
+                                .stroke(Color.ppBorder, lineWidth: 1)
+                        )
                     }
                 }
+                .padding(PPSpacing.lg)
             }
-            .navigationTitle("More")
-            .scrollContentBackground(.hidden)
             .background(Color.ppBackground)
+            .navigationTitle("More")
+            .toolbarBackground(Color.ppBackground, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+        }
+    }
+
+    // MARK: - More Tab Link Helper
+
+    private func moreLink<Destination: View>(
+        _ title: String,
+        icon: String,
+        @ViewBuilder destination: @escaping () -> Destination
+    ) -> some View {
+        NavigationLink {
+            destination()
+        } label: {
+            HStack {
+                Label(title, systemImage: icon)
+                    .font(.ppBody)
+                    .foregroundColor(.ppTextPrimary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.ppTextTertiary)
+            }
+            .padding(.horizontal, PPSpacing.lg)
+            .padding(.vertical, PPSpacing.lg)
+            .background(Color.ppCard)
         }
     }
 }
