@@ -7,6 +7,7 @@ struct SettingsView: View {
     @State private var isLoading = true
     @State private var errorMessage: String?
     @State private var showChangePassword = false
+    @State private var showEditProfile = false
 
     var body: some View {
         ScrollView {
@@ -60,6 +61,10 @@ struct SettingsView: View {
             ChangePasswordSheet()
                 .environmentObject(appState)
         }
+        .sheet(isPresented: $showEditProfile, onDismiss: { Task { await load() } }) {
+            EditProfileSheet(profile: profile)
+                .environmentObject(appState)
+        }
         .task { await load() }
     }
 
@@ -67,10 +72,24 @@ struct SettingsView: View {
 
     private func profileCard(_ p: ProfileResponse) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("PROFILE")
-                .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary)
-                .tracking(1)
+            HStack {
+                Text("PROFILE")
+                    .font(.ppOverline)
+                    .foregroundColor(.ppTextSecondary)
+                    .tracking(1)
+                Spacer()
+                Button {
+                    showEditProfile = true
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                        .font(.ppCaption)
+                        .foregroundColor(.ppPrimary)
+                        .padding(.horizontal, PPSpacing.md)
+                        .padding(.vertical, PPSpacing.sm)
+                        .background(Color.ppPrimary.opacity(0.1))
+                        .cornerRadius(PPRadius.full)
+                }
+            }
 
             settingsRow("Name", value: p.name)
             settingsRow("Email", value: p.email)

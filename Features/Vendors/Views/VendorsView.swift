@@ -5,6 +5,8 @@ struct VendorsView: View {
     @State private var vendors: [VendorListItem] = []
     @State private var isLoading = true
     @State private var errorMessage: String?
+    @State private var showAddSheet = false
+    @State private var editingVendor: VendorListItem?
 
     var body: some View {
         List {
@@ -21,6 +23,17 @@ struct VendorsView: View {
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
             }
+            
+            // Add button - in the header section, after subtitle
+            Button {
+                showAddSheet = true
+            } label: {
+                Text("Add Vendor")
+                    .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
+            }
+            .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
+            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
 
             if isLoading {
                 Section {
@@ -52,6 +65,16 @@ struct VendorsView: View {
                 Section {
                     ForEach(vendors) { vendor in
                         vendorRow(vendor)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    Task { await deleteVendor(vendor) }
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                            }
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -69,6 +92,20 @@ struct VendorsView: View {
         .background(Color.ppBackground)
         .refreshable { await load() }
         .task(id: appState.selectedPeriod?.id) { await load() }
+        .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+            AddVendorSheet { }.environmentObject(appState)
+        }
+        .sheet(item: $editingVendor) { vendor in
+            EditVendorSheet(vendor: vendor) { Task { await load() } }
+                .environmentObject(appState)
+        }
+    }
+    
+    private func deleteVendor(_ vendor: VendorListItem) async {
+        do {
+            try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
+            await load()
+        } catch {}
     }
 
     private func vendorRow(_ vendor: VendorListItem) -> some View {

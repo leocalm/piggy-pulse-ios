@@ -6,6 +6,8 @@ struct AccountsView: View {
     @State private var summary: AccountsSummary?
     @State private var isLoading = true
     @State private var errorMessage: String?
+    @State private var showAddSheet = false
+    @State private var editingAccount: AccountListItem?
 
     var body: some View {
         List {
@@ -22,6 +24,17 @@ struct AccountsView: View {
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
             }
+            
+            // Add button - in the header section, after subtitle
+            Button {
+                showAddSheet = true
+            } label: {
+                Text("Add Account")
+                    .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
+            }
+            .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
+            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
 
             if isLoading {
                 Section {
@@ -58,6 +71,13 @@ struct AccountsView: View {
         .background(Color.ppBackground)
         .refreshable { await load() }
         .task(id: appState.selectedPeriod?.id) { await load() }
+        .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+            AddAccountSheet { }.environmentObject(appState)
+        }
+        .sheet(item: $editingAccount) { account in
+            EditAccountSheet(account: account) { Task { await load() } }
+                .environmentObject(appState)
+        }
     }
 
     private func accountSection(_ title: String, accounts: [AccountListItem]) -> some View {
@@ -66,6 +86,21 @@ struct AccountsView: View {
                 Section {
                     ForEach(accounts) { account in
                         accountRow(account)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    Task { await deleteAccount(account) }
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    editingAccount = account
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                .tint(.ppPrimary)
+                            }
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -84,6 +119,13 @@ struct AccountsView: View {
                 }
             }
         }
+    }
+    
+    private func deleteAccount(_ account: AccountListItem) async {
+        do {
+            try await appState.apiClient.requestVoid(.deleteAccount(account.id))
+            await load()
+        } catch {}
     }
 
     private func summaryCard(_ s: AccountsSummary) -> some View {

@@ -196,11 +196,17 @@ struct PeriodsView: View {
                 ForEach(viewModel.upcomingPeriods) { period in
                     NavigationLink {
                         PeriodDetailView(period: period)
-                            .environmentObject(appState)
                     } label: {
-                        periodCard(period, highlight: true)
+                        periodCard(period, highlight: false)
                     }
                     .buttonStyle(.plain)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            Task { await deletePeriod(period) }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                     .listRowBackground(Color.ppBackground)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -219,6 +225,13 @@ struct PeriodsView: View {
                     .cornerRadius(PPRadius.full)
             }
         }
+    }
+    
+    private func deletePeriod(_ period: BudgetPeriod) async {
+        do {
+            try await appState.apiClient.requestVoid(.deletePeriod(period.id))
+            await viewModel.load()
+        } catch {}
     }
 
     // MARK: - Past

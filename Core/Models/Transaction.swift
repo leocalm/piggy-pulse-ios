@@ -26,6 +26,18 @@ struct Transaction: Codable, Identifiable {
     }
 }
 
+extension Transaction: Equatable {
+    static func == (lhs: Transaction, rhs: Transaction) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+extension Transaction: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 struct TransactionCategory: Codable {
     let id: UUID
     let name: String
