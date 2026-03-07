@@ -5,6 +5,7 @@ struct TransactionsView: View {
     @StateObject private var viewModel: TransactionsViewModel
     @State private var showAddSheet = false
     @State private var editingTransaction: Transaction?
+    @State private var transactionToDelete: Transaction?
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: TransactionsViewModel(apiClient: apiClient))
@@ -87,7 +88,7 @@ struct TransactionsView: View {
                                 }
                                 .swipeActions(edge: .trailing) {
                                     Button(role: .destructive) {
-                                        Task { await deleteTransaction(transaction) }
+                                        transactionToDelete = transaction
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
@@ -150,9 +151,16 @@ struct TransactionsView: View {
                 }
                 .environmentObject(appState)
             }
+            .confirmationDialog("Delete transaction?", isPresented: Binding(get: { transactionToDelete != nil }, set: { if !$0 { transactionToDelete = nil } }), titleVisibility: .visible) {
+                Button("Delete", role: .destructive) {
+                    if let tx = transactionToDelete { Task { await deleteTransaction(tx) } }
+                }
+                Button("Cancel", role: .cancel) { transactionToDelete = nil }
+            } message: {
+                Text("This transaction will be permanently deleted.")
+            }
             .navigationTitle("Transactions")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Record and review your income and spending.")
         }
     }
 
@@ -182,7 +190,7 @@ struct TransactionsView: View {
                                     ? Color.ppCard
                                     : Color.clear
                             )
-                            .cornerRadius(PPRadius.full)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                             .overlay(
                                 RoundedRectangle(cornerRadius: PPRadius.full)
                                     .stroke(
@@ -250,7 +258,7 @@ struct TransactionsView: View {
         }
         .padding(PPSpacing.md)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.md)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.md)
                 .stroke(Color.ppBorder, lineWidth: 1)

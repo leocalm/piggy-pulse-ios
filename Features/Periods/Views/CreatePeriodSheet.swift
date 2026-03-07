@@ -167,7 +167,7 @@ struct CreatePeriodSheet: View {
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.sm)
                         .background(Color.ppSurface)
-                        .cornerRadius(PPRadius.md)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.md)
                                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -181,36 +181,20 @@ struct CreatePeriodSheet: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.ppTextPrimary)
 
-                        Menu {
+                        Picker("Duration Unit", selection: $durationUnit) {
                             ForEach(DurationUnitOption.allCases, id: \.self) { unit in
-                                Button(unit.label) { durationUnit = unit }
+                                Text(unit.label).tag(unit)
                             }
-                        } label: {
-                            HStack {
-                                Text(durationUnit.label)
-                                    .font(.ppBody)
-                                    .foregroundColor(.ppTextPrimary)
-                                Spacer()
-                                Image(systemName: "chevron.up.chevron.down")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.ppTextSecondary)
-                            }
-                            .padding(.horizontal, PPSpacing.lg)
-                            .padding(.vertical, PPSpacing.md)
-                            .background(Color.ppSurface)
-                            .cornerRadius(PPRadius.md)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: PPRadius.md)
-                                    .stroke(Color.ppBorder, lineWidth: 1)
-                            )
                         }
+                        .pickerStyle(.menu)
+                        .tint(.ppPrimary)
                     }
                 }
             }
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -225,17 +209,11 @@ struct CreatePeriodSheet: View {
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
-            // Toggle
-            HStack(spacing: 0) {
-                endRuleButton("By Duration", mode: .byDuration)
-                endRuleButton("Set Manually", mode: .manual)
+            Picker("End Rule", selection: $endRuleMode) {
+                Text("By Duration").tag(EndRuleMode.byDuration)
+                Text("Set Manually").tag(EndRuleMode.manual)
             }
-            .background(Color.ppSurface)
-            .cornerRadius(PPRadius.md)
-            .overlay(
-                RoundedRectangle(cornerRadius: PPRadius.md)
-                    .stroke(Color.ppBorder, lineWidth: 1)
-            )
+            .pickerStyle(.segmented)
 
             if endRuleMode == .byDuration {
                 // Calculated end date display
@@ -250,7 +228,7 @@ struct CreatePeriodSheet: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(PPSpacing.lg)
                 .background(Color.ppSurface)
-                .cornerRadius(PPRadius.md)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
             } else {
                 // Manual end date picker
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
@@ -273,7 +251,7 @@ struct CreatePeriodSheet: View {
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -288,37 +266,25 @@ struct CreatePeriodSheet: View {
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
-            PPTextField(
-                label: "Period Name",
-                placeholder: "e.g. March 2026",
-                isRequired: true,
-                text: $name
-            )
+            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                HStack(spacing: 2) {
+                    Text("Period Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                }
+                TextField("e.g. March 2026", text: $name)
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+            }
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)
         )
-    }
-
-    // MARK: - End Rule Button
-
-    private func endRuleButton(_ title: String, mode: EndRuleMode) -> some View {
-        Button {
-            withAnimation(.easeInOut(duration: 0.2)) { endRuleMode = mode }
-        } label: {
-            Text(title)
-                .font(.ppCallout)
-                .fontWeight(endRuleMode == mode ? .semibold : .regular)
-                .foregroundColor(endRuleMode == mode ? .ppTextPrimary : .ppTextSecondary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, PPSpacing.md)
-                .background(endRuleMode == mode ? Color.ppCard : Color.clear)
-                .cornerRadius(PPRadius.sm)
-        }
     }
 
     // MARK: - Create

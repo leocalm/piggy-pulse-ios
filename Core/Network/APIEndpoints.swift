@@ -33,8 +33,8 @@ extension APIEndpoint {
 
 extension APIEndpoint {
     static let me = APIEndpoint(path: "/users/me", method: .get, requiresAuth: true)
-    static let updateProfile = APIEndpoint(path: "/users/me", method: .put, requiresAuth: true)
-    static let updatePreferences = APIEndpoint(path: "/users/me/preferences", method: .put, requiresAuth: true)
+    static let updateProfile = APIEndpoint(path: "/settings/profile", method: .put, requiresAuth: true)
+    static let updatePreferences = APIEndpoint(path: "/settings/preferences", method: .put, requiresAuth: true)
 }
 
 // MARK - Currencies
@@ -86,6 +86,9 @@ extension APIEndpoint {
     static func deleteAccount(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/accounts/\(id)", method: .delete, requiresAuth: true)
     }
+    static func archiveAccount(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/accounts/\(id)/archive", method: .post, requiresAuth: true)
+    }
     static let accountOptions = APIEndpoint(path: "/accounts/options", method: .get, requiresAuth: true)
     static let accountsSummary = APIEndpoint(path: "/accounts/summary", method: .get, requiresAuth: true)
 
@@ -101,6 +104,9 @@ extension APIEndpoint {
     }
     static func deleteCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)", method: .delete, requiresAuth: true)
+    }
+    static func archiveCategory(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/categories/\(id)/archive", method: .post, requiresAuth: true)
     }
     // Add to Categories section - we'll reuse the list with period_id
     static func categoriesForPeriod(periodId: UUID) -> APIEndpoint {
@@ -172,5 +178,5 @@ extension APIEndpoint {
 extension APIEndpoint {
     static let profile = APIEndpoint(path: "/settings/profile", method: .get, requiresAuth: true)
     static let preferences = APIEndpoint(path: "/settings/preferences", method: .get, requiresAuth: true)
-    static let changePassword = APIEndpoint(path: "/settings/password", method: .put, requiresAuth: true)
+    static let changePassword = APIEndpoint(path: "/settings/security/password", method: .post, requiresAuth: true)
 }

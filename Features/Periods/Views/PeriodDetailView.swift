@@ -16,7 +16,7 @@ struct PeriodDetailView: View {
                             .padding(.horizontal, PPSpacing.sm)
                             .padding(.vertical, 4)
                             .background(Color.ppSurface)
-                            .cornerRadius(PPRadius.full)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     }
                     Spacer()
                 }
@@ -37,7 +37,7 @@ struct PeriodDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(PPSpacing.xl)
                 .background(Color.ppCard)
-                .cornerRadius(PPRadius.lg)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                 .overlay(
                     RoundedRectangle(cornerRadius: PPRadius.lg)
                         .stroke(Color.ppBorder, lineWidth: 1)
@@ -79,7 +79,7 @@ struct PeriodDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(PPSpacing.xl)
                 .background(Color.ppCard)
-                .cornerRadius(PPRadius.lg)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                 .overlay(
                     RoundedRectangle(cornerRadius: PPRadius.lg)
                         .stroke(Color.ppBorder, lineWidth: 1)
@@ -104,7 +104,7 @@ struct PeriodDetailView: View {
             .padding(.horizontal, PPSpacing.md)
             .padding(.vertical, 4)
             .background(statusColor.opacity(0.15))
-            .cornerRadius(PPRadius.full)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
     }
 
     private var statusColor: Color {

@@ -40,9 +40,42 @@ struct ChangePasswordSheet: View {
                             }
                             .padding(.vertical, PPSpacing.xxxl)
                         } else {
-                            PPTextField(label: "Current Password", placeholder: "Enter current password", isRequired: true, text: $currentPassword, isSecure: true)
-                            PPTextField(label: "New Password", placeholder: "Min 8 characters", isRequired: true, text: $newPassword, isSecure: true)
-                            PPTextField(label: "Confirm Password", placeholder: "Repeat new password", isRequired: true, text: $confirmPassword, isSecure: true)
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                HStack(spacing: 2) {
+                                    Text("Current Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                }
+                                SecureField("Enter current password", text: $currentPassword)
+                                    .textContentType(.password)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                HStack(spacing: 2) {
+                                    Text("New Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                }
+                                SecureField("Min 8 characters", text: $newPassword)
+                                    .textContentType(.newPassword)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                HStack(spacing: 2) {
+                                    Text("Confirm Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                }
+                                SecureField("Repeat new password", text: $confirmPassword)
+                                    .textContentType(.newPassword)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
 
                             if !confirmPassword.isEmpty && newPassword != confirmPassword {
                                 Text("Passwords don't match")
@@ -95,7 +128,7 @@ struct ChangePasswordSheet: View {
         }
 
         do {
-            let _: String = try await appState.apiClient.requestString(
+            try await appState.apiClient.request(
                 .changePassword,
                 body: PasswordRequest(currentPassword: currentPassword, newPassword: newPassword)
             )

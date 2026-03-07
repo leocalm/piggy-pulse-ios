@@ -6,14 +6,14 @@ struct AddCategorySheet: View {
 
     @State private var name = ""
     @State private var icon = "🛒"
-    @State private var color = "#6C5CE7"
+    @State private var color = "#007AFF"
     @State private var categoryType = "Outgoing"
     @State private var isLoading = false
     @State private var errorMessage: String?
 
     var onCreated: () -> Void
 
-    private let colorOptions = ["#6C5CE7", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
+    private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
     private var isDisabled: Bool {
         name.trimmingCharacters(in: .whitespaces).count < 3 || isLoading
@@ -33,17 +33,26 @@ struct AddCategorySheet: View {
                             Text("Category Details")
                                 .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
-                            PPTextField(label: "Name", placeholder: "e.g. Groceries", isRequired: true, text: $name)
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                HStack(spacing: 2) {
+                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                }
+                                TextField("e.g. Groceries", text: $name)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
 
                             // Type
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 Text("Type").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                HStack(spacing: 0) {
-                                    typeButton("Incoming")
-                                    typeButton("Outgoing")
+                                Picker("Type", selection: $categoryType) {
+                                    Text("Incoming").tag("Incoming")
+                                    Text("Outgoing").tag("Outgoing")
                                 }
-                                .background(Color.ppSurface).cornerRadius(PPRadius.md)
-                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                .pickerStyle(.segmented)
                             }
 
                             // Icon selector
@@ -56,7 +65,7 @@ struct AddCategorySheet: View {
                                             .font(.system(size: 24))
                                             .frame(width: 36, height: 36)
                                             .background(icon == i ? Color.ppPrimary.opacity(0.3) : Color.clear)
-                                            .cornerRadius(PPRadius.sm)
+                                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: PPRadius.sm)
                                                     .stroke(icon == i ? Color.ppPrimary : Color.clear, lineWidth: 1)
@@ -77,7 +86,7 @@ struct AddCategorySheet: View {
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
                     }
                     .padding(PPSpacing.xl)
@@ -112,19 +121,6 @@ struct AddCategorySheet: View {
         }
     }
 
-    private func typeButton(_ type: String) -> some View {
-        Button {
-            categoryType = type
-        } label: {
-            Text(type)
-                .font(.ppCallout).fontWeight(categoryType == type ? .semibold : .regular)
-                .foregroundColor(categoryType == type ? .ppTextPrimary : .ppTextSecondary)
-                .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-                .background(categoryType == type ? Color.ppCard : Color.clear)
-                .cornerRadius(PPRadius.sm)
-        }
-    }
-
     private func create() async {
         isLoading = true; errorMessage = nil
         struct Req: Encodable {
@@ -132,7 +128,7 @@ struct AddCategorySheet: View {
         }
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: icon, categoryType: categoryType)
         do {
-            let _: CategoryListItem = try await appState.apiClient.request(.createCategory, body: req)
+            try await appState.apiClient.request(.createCategory, body: req)
             onCreated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
         catch { errorMessage = "Failed to create category." }

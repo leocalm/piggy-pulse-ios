@@ -8,10 +8,11 @@ struct AccountsView: View {
     @State private var errorMessage: String?
     @State private var showAddSheet = false
     @State private var editingAccount: AccountListItem?
+    @State private var accountToDelete: AccountListItem?
+    @State private var accountToArchive: AccountListItem?
 
     var body: some View {
-        NavigationStack {
-            List {
+        List {
                 if isLoading {
                     Section {
                         HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -54,9 +55,24 @@ struct AccountsView: View {
                 EditAccountSheet(account: account) { Task { await load() } }
                     .environmentObject(appState)
             }
+            .confirmationDialog("Archive \"\(accountToArchive?.name ?? "")\"?", isPresented: Binding(get: { accountToArchive != nil }, set: { if !$0 { accountToArchive = nil } }), titleVisibility: .visible) {
+                Button("Archive", role: .destructive) {
+                    if let account = accountToArchive { Task { await archiveAccount(account) } }
+                }
+                Button("Cancel", role: .cancel) { accountToArchive = nil }
+            } message: {
+                Text("This account will be hidden but its history will be preserved.")
+            }
+            .confirmationDialog("Delete \"\(accountToDelete?.name ?? "")\"?", isPresented: Binding(get: { accountToDelete != nil }, set: { if !$0 { accountToDelete = nil } }), titleVisibility: .visible) {
+                Button("Delete", role: .destructive) {
+                    if let account = accountToDelete { Task { await deleteAccount(account) } }
+                }
+                Button("Cancel", role: .cancel) { accountToDelete = nil }
+            } message: {
+                Text("This account will be permanently deleted.")
+            }
             .navigationTitle("Accounts")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Balance-level structure across liquid, protected, and debt accounts.")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -67,7 +83,6 @@ struct AccountsView: View {
                     .tint(.white)
                 }
             }
-        }
     }
 
     private func accountSection(_ title: String, accounts: [AccountListItem]) -> some View {
@@ -77,12 +92,21 @@ struct AccountsView: View {
                     ForEach(accounts) { account in
                         accountRow(account)
                             .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task { await deleteAccount(account) }
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                                if account.transactionCount > 0 {
+                                    Button {
+                                        accountToArchive = account
+                                    } label: {
+                                        Label("Archive", systemImage: "archivebox")
+                                    }
+                                    .tint(.ppAmber)
+                                } else {
+                                    Button(role: .destructive) {
+                                        accountToDelete = account
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.ppDestructive)
                                 }
-                                .tint(.ppDestructive)
                             }
                             .swipeActions(edge: .leading) {
                                 Button {
@@ -114,6 +138,13 @@ struct AccountsView: View {
     private func deleteAccount(_ account: AccountListItem) async {
         do {
             try await appState.apiClient.requestVoid(.deleteAccount(account.id))
+            await load()
+        } catch {}
+    }
+
+    private func archiveAccount(_ account: AccountListItem) async {
+        do {
+            try await appState.apiClient.requestVoid(.archiveAccount(account.id))
             await load()
         } catch {}
     }
@@ -153,7 +184,7 @@ struct AccountsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
@@ -188,7 +219,7 @@ struct AccountsView: View {
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.md)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 

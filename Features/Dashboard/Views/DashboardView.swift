@@ -43,7 +43,6 @@ struct DashboardView: View {
             }
             .navigationTitle("Dashboard")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Current position, deviation, and period trajectory.")
         }
     }
 
@@ -127,7 +126,7 @@ struct DashboardView: View {
         }
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppPrimary.opacity(0.3), lineWidth: 1)
@@ -170,7 +169,7 @@ struct DashboardView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -236,7 +235,7 @@ struct DashboardView: View {
         }
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)

@@ -7,10 +7,11 @@ struct VendorsView: View {
     @State private var errorMessage: String?
     @State private var showAddSheet = false
     @State private var editingVendor: VendorListItem?
+    @State private var vendorToDelete: VendorListItem?
+    @State private var vendorToArchive: VendorListItem?
 
     var body: some View {
-        NavigationStack {
-            List {
+        List {
                 if isLoading {
                     Section {
                         HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -42,12 +43,21 @@ struct VendorsView: View {
                         ForEach(vendors) { vendor in
                             vendorRow(vendor)
                                 .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) {
-                                        Task { await deleteVendor(vendor) }
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
+                                    if vendor.transactionCount > 0 {
+                                        Button {
+                                            vendorToArchive = vendor
+                                        } label: {
+                                            Label("Archive", systemImage: "archivebox")
+                                        }
+                                        .tint(.ppAmber)
+                                    } else {
+                                        Button(role: .destructive) {
+                                            vendorToDelete = vendor
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                        .tint(.ppDestructive)
                                     }
-                                    .tint(.ppDestructive)
                                 }
                                 .swipeActions(edge: .leading) {
                                     Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
@@ -76,9 +86,24 @@ struct VendorsView: View {
                 EditVendorSheet(vendor: vendor) { Task { await load() } }
                     .environmentObject(appState)
             }
+            .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
+                Button("Archive", role: .destructive) {
+                    if let vendor = vendorToArchive { Task { await archiveVendor(vendor) } }
+                }
+                Button("Cancel", role: .cancel) { vendorToArchive = nil }
+            } message: {
+                Text("This vendor will be hidden but its history will be preserved.")
+            }
+            .confirmationDialog("Delete \"\(vendorToDelete?.name ?? "")\"?", isPresented: Binding(get: { vendorToDelete != nil }, set: { if !$0 { vendorToDelete = nil } }), titleVisibility: .visible) {
+                Button("Delete", role: .destructive) {
+                    if let vendor = vendorToDelete { Task { await deleteVendor(vendor) } }
+                }
+                Button("Cancel", role: .cancel) { vendorToDelete = nil }
+            } message: {
+                Text("This vendor will be permanently deleted.")
+            }
             .navigationTitle("Vendors")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Track where transactions occur.")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -89,12 +114,18 @@ struct VendorsView: View {
                     .tint(.white)
                 }
             }
-        }
     }
-    
+
     private func deleteVendor(_ vendor: VendorListItem) async {
         do {
             try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
+            await load()
+        } catch {}
+    }
+
+    private func archiveVendor(_ vendor: VendorListItem) async {
+        do {
+            try await appState.apiClient.requestVoid(.archiveVendor(vendor.id))
             await load()
         } catch {}
     }
@@ -128,14 +159,14 @@ struct VendorsView: View {
                         .padding(.horizontal, PPSpacing.sm)
                         .padding(.vertical, 2)
                         .background(Color.ppSurface)
-                        .cornerRadius(PPRadius.full)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 }
             }
         }
         .padding(PPSpacing.lg)
         .frame(minHeight: 68)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.md)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 

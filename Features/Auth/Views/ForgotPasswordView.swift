@@ -43,7 +43,7 @@ struct ForgotPasswordView: View {
                     }
                     .padding(PPSpacing.xxl)
                     .background(Color.ppCard)
-                    .cornerRadius(PPRadius.xl)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
                     .overlay(
                         RoundedRectangle(cornerRadius: PPRadius.xl)
                             .stroke(Color.ppBorder, lineWidth: 1)
@@ -86,14 +86,21 @@ struct ForgotPasswordView: View {
                     .padding(.horizontal)
             }
 
-            PPTextField(
-                label: "Email",
-                placeholder: "name@example.com",
-                isRequired: true,
-                text: $viewModel.forgotEmail,
-                keyboardType: .emailAddress,
-                textContentType: .emailAddress
-            )
+            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                HStack(spacing: 2) {
+                    Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                }
+                TextField("name@example.com", text: $viewModel.forgotEmail)
+                    .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled()
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+            }
 
             Button {
                 Task { await viewModel.requestPasswordReset() }
@@ -112,7 +119,7 @@ struct ForgotPasswordView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .cornerRadius(PPRadius.full)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             .disabled(viewModel.isForgotDisabled)
             .opacity(viewModel.isForgotDisabled ? 0.6 : 1)
 
@@ -151,7 +158,7 @@ struct ForgotPasswordView: View {
             .padding(.vertical, PPSpacing.md)
             .background(Color.ppPrimary)
             .foregroundColor(.white)
-            .cornerRadius(PPRadius.full)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
         }
     }
 }

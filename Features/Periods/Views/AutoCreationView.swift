@@ -78,11 +78,11 @@ struct AutoCreationView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .cornerRadius(PPRadius.full)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
         }
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -156,7 +156,7 @@ struct AutoCreationView: View {
             }
             .padding(PPSpacing.lg)
             .background(Color.ppCard)
-            .cornerRadius(PPRadius.lg)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.lg)
                     .stroke(Color.ppBorder, lineWidth: 1)
@@ -173,7 +173,7 @@ struct AutoCreationView: View {
             }
             .padding(PPSpacing.lg)
             .background(Color.ppCard)
-            .cornerRadius(PPRadius.lg)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.lg)
                     .stroke(Color.ppBorder, lineWidth: 1)
@@ -185,12 +185,19 @@ struct AutoCreationView: View {
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                PPTextField(
-                    label: "Name Pattern",
-                    placeholder: "{month} {year}",
-                    isRequired: true,
-                    text: $namePattern
-                )
+                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                    HStack(spacing: 2) {
+                        Text("Name Pattern").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                    }
+                    TextField("{month} {year}", text: $namePattern)
+                        .autocapitalization(.none)
+                        .autocorrectionDisabled()
+                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                }
 
                 Text("Use {month} and {year} as placeholders.")
                     .font(.ppCaption)
@@ -198,7 +205,7 @@ struct AutoCreationView: View {
             }
             .padding(PPSpacing.lg)
             .background(Color.ppCard)
-            .cornerRadius(PPRadius.lg)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.lg)
                     .stroke(Color.ppBorder, lineWidth: 1)
@@ -222,7 +229,7 @@ struct AutoCreationView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.ppPrimary)
-                .cornerRadius(PPRadius.full)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 .disabled(isSaving || namePattern.trimmingCharacters(in: .whitespaces).isEmpty)
 
                 if schedule != nil {

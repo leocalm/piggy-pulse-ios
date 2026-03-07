@@ -28,22 +28,13 @@ struct MainTabView: View {
             Tab("More", systemImage: "ellipsis.circle", value: 3) {
                 moreTab
             }
-            Tab("Transaction", systemImage: "plus.circle.fill", value: 4, role: .search) {
-                EmptyView()
-            }
         }
         .tabViewBottomAccessory {
-            PeriodSelectorBar()
+            PeriodSelectorBar(onAddTransaction: { showAddTransaction = true })
         }
         .tabBarMinimizeBehavior(.onScrollDown)
         .tint(.ppPrimary)
         .background(Color.ppBackground)
-        .onChange(of: selectedTab) { oldTab, newTab in
-            if newTab == 4 {
-                showAddTransaction = true
-                selectedTab = 1
-            }
-        }
         .sheet(isPresented: $showAddTransaction) {
             AddTransactionSheet(onCreated: { selectedTab = 1 })
                 .environmentObject(appState)
@@ -81,7 +72,7 @@ struct MainTabView: View {
                                 OverlaysView().environmentObject(appState)
                             }
                         }
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -99,7 +90,7 @@ struct MainTabView: View {
                         moreLink("Settings", icon: "gearshape") {
                             SettingsView().environmentObject(appState)
                         }
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -119,7 +110,7 @@ struct MainTabView: View {
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.lg)
                         .background(Color.ppCard)
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)
