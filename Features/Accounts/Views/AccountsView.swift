@@ -10,73 +10,64 @@ struct AccountsView: View {
     @State private var editingAccount: AccountListItem?
 
     var body: some View {
-        List {
-            Section {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Accounts")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-                    Text("Balance-level structure across liquid, protected, and debt accounts.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+        NavigationStack {
+            List {
+                // Add button - in the header section, after subtitle
+                Button {
+                    showAddSheet = true
+                } label: {
+                    Text("Add Account")
+                        .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
                 }
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-            }
-            
-            // Add button - in the header section, after subtitle
-            Button {
-                showAddSheet = true
-            } label: {
-                Text("Add Account")
-                    .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-            }
-            .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
-            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-            .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-
-            if isLoading {
-                Section {
-                    HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                        .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
-                        .listRowSeparator(.hidden)
-                }
-            } else if let error = errorMessage {
-                Section {
-                    errorView(error)
-                        .listRowBackground(Color.ppBackground)
-                        .listRowSeparator(.hidden)
-                }
-            } else {
-                // Summary
-                if let s = summary {
+                .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
+                .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
+                
+                if isLoading {
                     Section {
-                        summaryCard(s)
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                            .padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
+                } else if let error = errorMessage {
+                    Section {
+                        errorView(error)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                    }
+                } else {
+                    // Summary
+                    if let s = summary {
+                        Section {
+                            summaryCard(s)
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+                    }
+                    
+                    // Grouped by type
+                    accountSection("LIQUID ACCOUNTS", accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" })
+                    accountSection("PROTECTED ACCOUNTS", accounts: accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" })
+                    accountSection("DEBT ACCOUNTS", accounts: accounts.filter { $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
                 }
-
-                // Grouped by type
-                accountSection("LIQUID ACCOUNTS", accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" })
-                accountSection("PROTECTED ACCOUNTS", accounts: accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" })
-                accountSection("DEBT ACCOUNTS", accounts: accounts.filter { $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
             }
-        }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
-        .refreshable { await load() }
-        .task(id: appState.selectedPeriod?.id) { await load() }
-        .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
-            AddAccountSheet { }.environmentObject(appState)
-        }
-        .sheet(item: $editingAccount) { account in
-            EditAccountSheet(account: account) { Task { await load() } }
-                .environmentObject(appState)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color.ppBackground)
+            .refreshable { await load() }
+            .task(id: appState.selectedPeriod?.id) { await load() }
+            .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                AddAccountSheet { }.environmentObject(appState)
+            }
+            .sheet(item: $editingAccount) { account in
+                EditAccountSheet(account: account) { Task { await load() } }
+                    .environmentObject(appState)
+            }
+            .navigationTitle("Accounts")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Balance-level structure across liquid, protected, and debt accounts.")
         }
     }
 
@@ -92,6 +83,7 @@ struct AccountsView: View {
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
+                                .tint(.ppDestructive)
                             }
                             .swipeActions(edge: .leading) {
                                 Button {
@@ -99,7 +91,6 @@ struct AccountsView: View {
                                 } label: {
                                     Label("Edit", systemImage: "pencil")
                                 }
-                                .tint(.ppPrimary)
                             }
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
@@ -172,7 +163,6 @@ struct AccountsView: View {
             Circle()
                 .fill(Color(hex: account.color) ?? .ppPrimary)
                 .frame(width: 36, height: 36)
-                .overlay(Text(account.icon).font(.system(size: 16)))
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(account.name)

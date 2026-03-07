@@ -12,92 +12,83 @@ struct CategoriesView: View {
     @State private var editingCategory: CategoryManagementItem?
 
     var body: some View {
-        List {
-            Section {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Categories")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-                    Text("Organize your transactions by type.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+        NavigationStack {
+            List {
+                // Add button - in the header section, after subtitle
+                Button {
+                    showAddSheet = true
+                } label: {
+                    Text("Add Category")
+                        .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
                 }
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-            }
-
-            // Add button - in the header section, after subtitle
-            Button {
-                showAddSheet = true
-            } label: {
-                Text("Add Category")
-                    .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-            }
-            .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
-            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-            .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-            
-            if isLoading {
-                Section {
-                    HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                        .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
-                        .listRowSeparator(.hidden)
-                }
-            } else if let error = errorMessage {
-                Section {
-                    VStack(spacing: PPSpacing.md) {
-                        Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                        Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                        Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
-                    }
-                    .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                }
-            } else {
-                categorySection("INCOMING", categories: incoming, color: .ppCyan)
-                categorySection("OUTGOING", categories: outgoing, color: .ppPrimary)
-
-                if !archived.isEmpty {
+                .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
+                .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
+                
+                if isLoading {
                     Section {
-                        if showArchived {
-                            ForEach(archived) { cat in
-                                categoryRow(cat, dimmed: true)
-                                    .listRowBackground(Color.ppBackground)
-                                    .listRowSeparator(.hidden)
-                                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                            }
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                            .padding(.vertical, PPSpacing.xxxl)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                    }
+                } else if let error = errorMessage {
+                    Section {
+                        VStack(spacing: PPSpacing.md) {
+                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
-                    } header: {
-                        Button {
-                            withAnimation { showArchived.toggle() }
-                        } label: {
-                            HStack {
-                                Text("ARCHIVED").font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
-                                Spacer()
-                                Text("\(archived.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
-                                    .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                                    .background(Color.ppCard).cornerRadius(PPRadius.full)
-                                Image(systemName: showArchived ? "chevron.up" : "chevron.down")
-                                    .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
+                        .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                    }
+                } else {
+                    categorySection("INCOMING", categories: incoming, color: .ppCyan)
+                    categorySection("OUTGOING", categories: outgoing, color: .ppPrimary)
+                    
+                    if !archived.isEmpty {
+                        Section {
+                            if showArchived {
+                                ForEach(archived) { cat in
+                                    categoryRow(cat, dimmed: true)
+                                        .listRowBackground(Color.ppBackground)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                }
+                            }
+                        } header: {
+                            Button {
+                                withAnimation { showArchived.toggle() }
+                            } label: {
+                                HStack {
+                                    Text("ARCHIVED").font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
+                                    Spacer()
+                                    Text("\(archived.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
+                                        .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
+                                        .background(Color.ppCard).cornerRadius(PPRadius.full)
+                                    Image(systemName: showArchived ? "chevron.up" : "chevron.down")
+                                        .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
-        .refreshable { await load() }
-        .task { await load() }
-        .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
-            AddCategorySheet { }.environmentObject(appState)
-        }
-        .sheet(item: $editingCategory) { cat in
-            EditCategorySheet(category: cat) { Task { await load() } }
-                .environmentObject(appState)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color.ppBackground)
+            .refreshable { await load() }
+            .task { await load() }
+            .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                AddCategorySheet { }.environmentObject(appState)
+            }
+            .sheet(item: $editingCategory) { cat in
+                EditCategorySheet(category: cat) { Task { await load() } }
+                    .environmentObject(appState)
+            }
+            .navigationTitle("Categories")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Organize your transactions by type.")
         }
     }
 
@@ -113,6 +104,7 @@ struct CategoriesView: View {
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
+                                .tint(.ppDestructive)
                             }
                             .swipeActions(edge: .leading) {
                                 if !cat.isSystem {

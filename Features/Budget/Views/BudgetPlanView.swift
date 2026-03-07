@@ -9,116 +9,105 @@ struct BudgetPlanView: View {
     }
 
     var body: some View {
-        List {
-            // Header
-            Section {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Budget Plan")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-
-                    Text("Manage your spending limits and assign budgets to your categories.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
-                }
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-            }
-
-            if viewModel.isLoading {
-                Section {
-                    HStack {
-                        Spacer()
-                        ProgressView().tint(.ppTextSecondary)
-                        Spacer()
-                    }
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
-            } else if let error = viewModel.errorMessage {
-                Section {
-                    VStack(spacing: PPSpacing.md) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 32))
-                            .foregroundColor(.ppAmber)
-                        Text(error)
-                            .font(.ppBody)
-                            .foregroundColor(.ppTextSecondary)
-                        Button("Retry") {
-                            if let periodId = appState.selectedPeriod?.id {
-                                Task { await viewModel.load(periodId: periodId) }
-                            }
-                        }
-                        .font(.ppHeadline)
-                        .foregroundColor(.ppPrimary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
-            } else {
-                // Budget Summary card
-                if let burnIn = viewModel.burnIn {
+        NavigationStack {
+            List {
+                if viewModel.isLoading {
                     Section {
-                        summaryCard(burnIn: burnIn)
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                    }
-                }
-
-                // Budgeted Categories
-                Section {
-                    if viewModel.categories.isEmpty {
-                        VStack(spacing: PPSpacing.md) {
-                            Image(systemName: "chart.pie")
-                                .font(.system(size: 32))
-                                .foregroundColor(.ppTextTertiary)
-                            Text("No budget categories yet")
-                                .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
-                            Text("Assign budgets to your categories from the web app to see them here.")
-                                .font(.ppCallout)
-                                .foregroundColor(.ppTextTertiary)
-                                .multilineTextAlignment(.center)
+                        HStack {
+                            Spacer()
+                            ProgressView().tint(.ppTextSecondary)
+                            Spacer()
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, PPSpacing.xl)
+                        .padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground)
                         .listRowSeparator(.hidden)
-                    } else {
-                        ForEach(viewModel.categories) { cat in
-                            categoryRow(cat)
+                    }
+                } else if let error = viewModel.errorMessage {
+                    Section {
+                        VStack(spacing: PPSpacing.md) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .font(.system(size: 32))
+                                .foregroundColor(.ppAmber)
+                            Text(error)
+                                .font(.ppBody)
+                                .foregroundColor(.ppTextSecondary)
+                            Button("Retry") {
+                                if let periodId = appState.selectedPeriod?.id {
+                                    Task { await viewModel.load(periodId: periodId) }
+                                }
+                            }
+                            .font(.ppHeadline)
+                            .foregroundColor(.ppPrimary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, PPSpacing.xxxl)
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                    }
+                } else {
+                    // Budget Summary card
+                    if let burnIn = viewModel.burnIn {
+                        Section {
+                            summaryCard(burnIn: burnIn)
                                 .listRowBackground(Color.ppBackground)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
                     }
-                } header: {
-                    if !viewModel.categories.isEmpty {
-                        Text("BUDGETED CATEGORIES")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
+                    
+                    // Budgeted Categories
+                    Section {
+                        if viewModel.categories.isEmpty {
+                            VStack(spacing: PPSpacing.md) {
+                                Image(systemName: "chart.pie")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.ppTextTertiary)
+                                Text("No budget categories yet")
+                                    .font(.ppBody)
+                                    .foregroundColor(.ppTextSecondary)
+                                Text("Assign budgets to your categories from the web app to see them here.")
+                                    .font(.ppCallout)
+                                    .foregroundColor(.ppTextTertiary)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, PPSpacing.xl)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                        } else {
+                            ForEach(viewModel.categories) { cat in
+                                categoryRow(cat)
+                                    .listRowBackground(Color.ppBackground)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                            }
+                        }
+                    } header: {
+                        if !viewModel.categories.isEmpty {
+                            Text("BUDGETED CATEGORIES")
+                                .font(.ppOverline)
+                                .foregroundColor(.ppTextSecondary)
+                                .tracking(1)
+                        }
                     }
                 }
             }
-        }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
-        .refreshable {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.load(periodId: periodId)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color.ppBackground)
+            .refreshable {
+                if let periodId = appState.selectedPeriod?.id {
+                    await viewModel.load(periodId: periodId)
+                }
             }
-        }
-        .task(id: appState.selectedPeriod?.id) {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.load(periodId: periodId)
+            .task(id: appState.selectedPeriod?.id) {
+                if let periodId = appState.selectedPeriod?.id {
+                    await viewModel.load(periodId: periodId)
+                }
             }
+            .navigationTitle("Category targets")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Manage your spending limits.")
         }
     }
 

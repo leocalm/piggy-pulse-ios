@@ -14,19 +14,6 @@ struct PeriodsView: View {
             List {
                 // Header
                 Section {
-                    VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                        Text("Periods")
-                            .font(.ppLargeTitle)
-                            .foregroundColor(.ppPrimary)
-                        
-                        Text("Time windows that help you track patterns")
-                            .font(.ppCallout)
-                            .foregroundColor(.ppTextSecondary)
-                    }
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.sm, trailing: PPSpacing.lg))
-                    
                     // Create button
                     Button {
                         showCreateSheet = true
@@ -139,6 +126,9 @@ struct PeriodsView: View {
                 }
                 .environmentObject(appState)
             }
+            .navigationTitle("Periods")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Time windows that help you track patterns.")
         }
     }
 

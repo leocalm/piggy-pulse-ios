@@ -4,51 +4,33 @@ struct MainTabView: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedTab = 0
     @State private var showAddTransaction = false
+    @Environment(\.horizontalSizeClass) var sizeClass
 
     var body: some View {
-        VStack(spacing: 0) {
-            PeriodSelectorBar()
-                .padding(.horizontal, PPSpacing.lg)
-                .padding(.top, PPSpacing.sm)
-                .padding(.bottom, PPSpacing.sm)
-
-            TabView(selection: $selectedTab) {
+        TabView(selection: $selectedTab) {
+            Tab("Dashboard", systemImage: "square.grid.2x2", value: 0) {
                 DashboardView(apiClient: appState.apiClient)
-                    .tabItem {
-                        Label("Dashboard", systemImage: "square.grid.2x2")
-                    }
-                    .tag(0)
-
-                TransactionsView(apiClient: appState.apiClient)
-                    .tabItem {
-                        Label("Transactions", systemImage: "arrow.left.arrow.right")
-                    }
-                    .tag(1)
-
-                // Placeholder tab that triggers the add sheet
-                Color.clear
-                    .tabItem {
-                        Label("Add", systemImage: "plus.circle.fill")
-                    }
-                    .tag(2)
-
-                PeriodsView(apiClient: appState.apiClient)
-                    .tabItem {
-                        Label("Periods", systemImage: "calendar")
-                    }
-                    .tag(3)
-
-                moreTab
-                    .tabItem {
-                        Label("More", systemImage: "ellipsis.circle")
-                    }
-                    .tag(4)
             }
-            .tint(.ppPrimary)
+            Tab("Transactions", systemImage: "arrow.left.arrow.right", value: 1) {
+                TransactionsView(apiClient: appState.apiClient)
+            }
+            Tab("Periods", systemImage: "calendar", value: 2) {
+                PeriodsView(apiClient: appState.apiClient)
+            }
+            Tab("More", systemImage: "ellipsis.circle", value: 3) {
+                moreTab
+            }
+            Tab("Transaction", systemImage: "plus.circle.fill", value: 4, role: .search) {
+            }
         }
+        .tabViewBottomAccessory {
+            PeriodSelectorBar()
+        }
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .tint(.ppPrimary)
         .background(Color.ppBackground)
         .onChange(of: selectedTab) { newTab in
-            if newTab == 2 {
+            if newTab == 4 {
                 showAddTransaction = true
                 selectedTab = 1
             }

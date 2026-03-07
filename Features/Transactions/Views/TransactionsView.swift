@@ -11,166 +11,141 @@ struct TransactionsView: View {
     }
 
     var body: some View {
-        List {
-            // Header section
-            Section {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Transactions")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-
-                    Text("Record and review your income and spending.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+        NavigationStack {
+            List {
+                // Header section
+                Section {
+                    // Direction tabs
+                    directionTabs
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.sm, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
                 }
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: 0, trailing: PPSpacing.lg))
                 
-                
-
-                // Direction tabs
-                directionTabs
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: PPSpacing.sm, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-                
-                // Add button - after the direction tabs row
-                Button {
-                    showAddSheet = true
-                } label: {
-                    Text("Add Transaction")
-                        .font(.ppHeadline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, PPSpacing.md)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.ppPrimary)
-                .cornerRadius(PPRadius.full)
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-            }
-
-            // Content section
-            if viewModel.isLoading {
-                Section {
-                    HStack {
-                        Spacer()
-                        ProgressView().tint(.ppTextSecondary)
-                        Spacer()
-                    }
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
-            } else if let error = viewModel.errorMessage {
-                Section {
-                    VStack(spacing: PPSpacing.md) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 32))
-                            .foregroundColor(.ppAmber)
-                        Text(error)
-                            .font(.ppBody)
-                            .foregroundColor(.ppTextSecondary)
-                        Button("Retry") {
-                            if let periodId = appState.selectedPeriod?.id {
-                                Task { await viewModel.load(periodId: periodId) }
-                            }
-                        }
-                        .font(.ppHeadline)
-                        .foregroundColor(.ppPrimary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
-            } else if viewModel.transactions.isEmpty {
-                Section {
-                    VStack(spacing: PPSpacing.lg) {
-                        Image(systemName: "tray")
-                            .font(.system(size: 40))
-                            .foregroundColor(.ppTextTertiary)
-                        Text("No transactions found")
-                            .font(.ppBody)
-                            .foregroundColor(.ppTextSecondary)
-                        Text("Start tracking your spending by adding your first transaction.")
-                            .font(.ppCallout)
-                            .foregroundColor(.ppTextTertiary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
-            } else {
-                Section {
-                    ForEach(viewModel.transactions) { transaction in
-                        transactionRow(transaction)
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                            .onTapGesture {
-                                editingTransaction = transaction
-                            }
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task { await deleteTransaction(transaction) }
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
-                            .onAppear {
-                                if transaction.id == viewModel.transactions.last?.id {
-                                    Task { await viewModel.loadMore() }
-                                }
-                            }
-                    }
-
-                    if viewModel.isLoadingMore {
+                // Content section
+                if viewModel.isLoading {
+                    Section {
                         HStack {
                             Spacer()
                             ProgressView().tint(.ppTextSecondary)
                             Spacer()
                         }
+                        .padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground)
                         .listRowSeparator(.hidden)
                     }
+                } else if let error = viewModel.errorMessage {
+                    Section {
+                        VStack(spacing: PPSpacing.md) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .font(.system(size: 32))
+                                .foregroundColor(.ppAmber)
+                            Text(error)
+                                .font(.ppBody)
+                                .foregroundColor(.ppTextSecondary)
+                            Button("Retry") {
+                                if let periodId = appState.selectedPeriod?.id {
+                                    Task { await viewModel.load(periodId: periodId) }
+                                }
+                            }
+                            .font(.ppHeadline)
+                            .foregroundColor(.ppPrimary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, PPSpacing.xxxl)
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                    }
+                } else if viewModel.transactions.isEmpty {
+                    Section {
+                        VStack(spacing: PPSpacing.lg) {
+                            Image(systemName: "tray")
+                                .font(.system(size: 40))
+                                .foregroundColor(.ppTextTertiary)
+                            Text("No transactions found")
+                                .font(.ppBody)
+                                .foregroundColor(.ppTextSecondary)
+                            Text("Start tracking your spending by adding your first transaction.")
+                                .font(.ppCallout)
+                                .foregroundColor(.ppTextTertiary)
+                                .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, PPSpacing.xxxl)
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                    }
+                } else {
+                    Section {
+                        ForEach(viewModel.transactions) { transaction in
+                            transactionRow(transaction)
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                .onTapGesture {
+                                    editingTransaction = transaction
+                                }
+                                .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) {
+                                        Task { await deleteTransaction(transaction) }
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.ppDestructive)
+                                }
+                                .onAppear {
+                                    if transaction.id == viewModel.transactions.last?.id {
+                                        Task { await viewModel.loadMore() }
+                                    }
+                                }
+                        }
+                        
+                        if viewModel.isLoadingMore {
+                            HStack {
+                                Spacer()
+                                ProgressView().tint(.ppTextSecondary)
+                                Spacer()
+                            }
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                        }
+                    }
                 }
             }
-        }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
-        .refreshable {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.refresh(periodId: periodId)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color.ppBackground)
+            .refreshable {
+                if let periodId = appState.selectedPeriod?.id {
+                    await viewModel.refresh(periodId: periodId)
+                }
             }
-        }
-        .task(id: appState.selectedPeriod?.id) {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.load(periodId: periodId)
+            .task(id: appState.selectedPeriod?.id) {
+                if let periodId = appState.selectedPeriod?.id {
+                    await viewModel.load(periodId: periodId)
+                }
             }
-        }
-        .sheet(isPresented: $showAddSheet, onDismiss: {
-            if let periodId = appState.selectedPeriod?.id {
-                Task { await viewModel.refresh(periodId: periodId) }
-            }
-        }) {
-            AddTransactionSheet {
-                // onDismiss handles refresh
-            }
-            .environmentObject(appState)
-        }
-        .sheet(item: $editingTransaction) { tx in
-            EditTransactionSheet(transaction: tx) {
+            .sheet(isPresented: $showAddSheet, onDismiss: {
                 if let periodId = appState.selectedPeriod?.id {
                     Task { await viewModel.refresh(periodId: periodId) }
                 }
+            }) {
+                AddTransactionSheet {
+                    // onDismiss handles refresh
+                }
+                .environmentObject(appState)
             }
-            .environmentObject(appState)
+            .sheet(item: $editingTransaction) { tx in
+                EditTransactionSheet(transaction: tx) {
+                    if let periodId = appState.selectedPeriod?.id {
+                        Task { await viewModel.refresh(periodId: periodId) }
+                    }
+                }
+                .environmentObject(appState)
+            }
+            .navigationTitle("Transactions")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Record and review your income and spending.")
         }
     }
 
