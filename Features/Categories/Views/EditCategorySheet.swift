@@ -68,16 +68,6 @@ struct EditCategorySheet: View {
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
-
-                        Button { Task { await save() } } label: {
-                            Group {
-                                if isLoading { ProgressView().tint(.white) }
-                                else { Text("Save Changes").font(.ppHeadline) }
-                            }
-                            .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-                        }
-                        .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
-                        .disabled(isDisabled).opacity(isDisabled ? 0.6 : 1)
                     }
                     .padding(PPSpacing.xl)
                 }
@@ -85,7 +75,28 @@ struct EditCategorySheet: View {
             .navigationTitle("Edit Category").navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() }.foregroundColor(.ppTextSecondary) }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        Task { await save() }
+                    } label: {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                    .disabled(isDisabled || isLoading)
+                    .opacity(isDisabled ? 0.6 : 1)
+                }
             }
             .onAppear { name = category.name; icon = category.icon; color = category.color; categoryType = category.categoryType }
         }

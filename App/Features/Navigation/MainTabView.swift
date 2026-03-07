@@ -5,6 +5,14 @@ struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var showAddTransaction = false
     @Environment(\.horizontalSizeClass) var sizeClass
+    
+    init() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = UIColor(Color.ppBackground.opacity(0.8))
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -21,6 +29,7 @@ struct MainTabView: View {
                 moreTab
             }
             Tab("Transaction", systemImage: "plus.circle.fill", value: 4, role: .search) {
+                EmptyView()
             }
         }
         .tabViewBottomAccessory {
@@ -29,7 +38,7 @@ struct MainTabView: View {
         .tabBarMinimizeBehavior(.onScrollDown)
         .tint(.ppPrimary)
         .background(Color.ppBackground)
-        .onChange(of: selectedTab) { newTab in
+        .onChange(of: selectedTab) { oldTab, newTab in
             if newTab == 4 {
                 showAddTransaction = true
                 selectedTab = 1

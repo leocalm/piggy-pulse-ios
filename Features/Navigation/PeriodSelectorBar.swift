@@ -5,6 +5,7 @@ struct PeriodSelectorBar: View {
     @State private var periods: [BudgetPeriod] = []
     @State private var showPicker = false
     @State private var isLoading = true
+    @Environment(\.tabViewBottomAccessoryPlacement) var placement
 
     var body: some View {
         Button {
@@ -13,24 +14,31 @@ struct PeriodSelectorBar: View {
             HStack(spacing: PPSpacing.md) {
                 Image(systemName: "calendar")
                     .font(.system(size: 14))
-                    .foregroundColor(.ppPrimary)
+                    .foregroundColor(.white)
 
                 if isLoading {
                     ProgressView()
                         .tint(.ppTextSecondary)
                         .scaleEffect(0.8)
                 } else if let period = appState.selectedPeriod {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(period.name)
-                            .font(.ppCallout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.ppTextPrimary)
+                    Text(period.name)
+                        .font(.ppCallout)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.ppTextPrimary)
 
+                    Spacer()
+                    
+                    switch placement {
+                    case .inline:
+                        Text(period.statusText)
+                            .font(.ppCaption)
+                            .foregroundColor(statusColor(period.status))
+                    case .expanded:
                         HStack(spacing: 4) {
                             Text(period.dateRangeText)
                                 .font(.ppCaption)
                                 .foregroundColor(.ppTextSecondary)
-
+                            
                             if !period.statusText.isEmpty {
                                 Text("·")
                                     .font(.ppCaption)
@@ -40,26 +48,23 @@ struct PeriodSelectorBar: View {
                                     .foregroundColor(statusColor(period.status))
                             }
                         }
+                    case .none:
+                        Text("No period selected")
+                            .font(.ppCallout)
+                            .foregroundColor(.ppTextSecondary)
+                    case .some(_):
+                        Text("No period selected")
+                            .font(.ppCallout)
+                            .foregroundColor(.ppTextSecondary)
                     }
                 } else {
                     Text("No period selected")
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
                 }
-
-                Spacer()
-
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.ppTextSecondary)
             }
             .padding(.horizontal, PPSpacing.lg)
             .padding(.vertical, PPSpacing.md)
-            .cornerRadius(PPRadius.md)
-            .overlay(
-                RoundedRectangle(cornerRadius: PPRadius.md)
-                    .stroke(Color.ppBorder, lineWidth: 1)
-            )
         }
         .sheet(isPresented: $showPicker) {
             PeriodPickerSheet(

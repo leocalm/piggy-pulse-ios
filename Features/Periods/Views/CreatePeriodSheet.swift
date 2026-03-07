@@ -73,27 +73,6 @@ struct CreatePeriodSheet: View {
 
                         // Naming section
                         namingSection
-
-                        // Submit
-                        Button {
-                            Task { await createPeriod() }
-                        } label: {
-                            Group {
-                                if isLoading {
-                                    ProgressView().tint(.white)
-                                } else {
-                                    Label("Create Period", systemImage: "calendar.badge.plus")
-                                        .font(.ppHeadline)
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, PPSpacing.md)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.ppPrimary)
-                        .cornerRadius(PPRadius.full)
-                        .disabled(isDisabled)
-                        .opacity(isDisabled ? 0.6 : 1)
                     }
                     .padding(PPSpacing.xl)
                 }
@@ -104,8 +83,26 @@ struct CreatePeriodSheet: View {
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                        .foregroundColor(.ppTextSecondary)
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        Task { await createPeriod() }
+                    } label: {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                    .disabled(isDisabled || isLoading)
+                    .opacity(isDisabled ? 0.6 : 1)
                 }
             }
         }
