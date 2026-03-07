@@ -16,7 +16,7 @@ struct EditAccountSheet: View {
 
     private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
     private let typeLabels = ["Checking": "Checking", "Savings": "Savings", "CreditCard": "Credit Card", "Wallet": "Wallet", "Allowance": "Allowance"]
-    private let colorOptions = ["#6C5CE7", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
+    private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
     private var showSpendLimit: Bool { accountType == "CreditCard" || accountType == "Allowance" }
     private var isDisabled: Bool { name.trimmingCharacters(in: .whitespaces).count < 3 || isLoading }
@@ -40,24 +40,28 @@ struct EditAccountSheet: View {
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
                             Text("Account Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
-                            PPTextField(label: "Name", placeholder: "Account name", isRequired: true, text: $name)
-
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Account Type").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                Menu {
-                                    ForEach(accountTypes, id: \.self) { type in
-                                        Button(typeLabels[type] ?? type) { accountType = type }
-                                    }
-                                } label: {
-                                    HStack {
-                                        Text(typeLabels[accountType] ?? accountType).font(.ppBody).foregroundColor(.ppTextPrimary)
-                                        Spacer()
-                                        Image(systemName: "chevron.up.chevron.down").font(.system(size: 12)).foregroundColor(.ppTextSecondary)
-                                    }
-                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).cornerRadius(PPRadius.md)
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                HStack(spacing: 2) {
+                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
+                                TextField("Account name", text: $name)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
+
+                            HStack {
+                                Text("Account Type").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Spacer()
+                                Picker("Account Type", selection: $accountType) {
+                                    ForEach(accountTypes, id: \.self) { type in
+                                        Text(typeLabels[type] ?? type).tag(type)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .tint(.ppPrimary)
                             }
 
                             if showSpendLimit {
@@ -68,12 +72,12 @@ struct EditAccountSheet: View {
                                         TextField("0.00", text: $spendLimitText).keyboardType(.decimalPad).font(.ppBody).foregroundColor(.ppTextPrimary)
                                     }
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).cornerRadius(PPRadius.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
@@ -89,7 +93,7 @@ struct EditAccountSheet: View {
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
                     }
                     .padding(PPSpacing.xl)
@@ -148,7 +152,7 @@ struct EditAccountSheet: View {
         }
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: defaultIcon, accountType: accountType, spendLimit: spendLimit)
         do {
-            let _: AccountListItem = try await appState.apiClient.request(.updateAccount(account.id), body: req)
+            try await appState.apiClient.request(.updateAccount(account.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
         catch { errorMessage = "Failed to update account." }

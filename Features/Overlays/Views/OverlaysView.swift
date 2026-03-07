@@ -12,8 +12,7 @@ struct OverlaysView: View {
     private var past: [OverlayItem] { overlays.filter { $0.status == .ended } }
 
     var body: some View {
-        NavigationStack {
-            List {
+        List {
                 if isLoading {
                     Section {
                         HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -67,7 +66,7 @@ struct OverlaysView: View {
                                     Spacer()
                                     Text("\(past.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                                        .background(Color.ppCard).cornerRadius(PPRadius.full)
+                                        .background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                                     Image(systemName: showPast ? "chevron.up" : "chevron.down")
                                         .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
                                 }
@@ -83,8 +82,6 @@ struct OverlaysView: View {
             .task { await load() }
             .navigationTitle("Overlays")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Temporary spending plans that run alongside your periods.")
-        }
     }
 
     private func overlaySection(_ title: String, items: [OverlayItem], badge: Bool) -> some View {
@@ -104,7 +101,7 @@ struct OverlaysView: View {
                         Text("\(items.count)").font(.ppCaption).foregroundColor(.white)
                             .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
                             .background(badge ? Color.ppPrimary : Color.ppCard)
-                            .cornerRadius(PPRadius.full)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     }
                 }
             }
@@ -132,7 +129,7 @@ struct OverlaysView: View {
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(Color.ppSurface)
-                        .cornerRadius(PPRadius.sm)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                 }
             }
 
@@ -189,7 +186,7 @@ struct OverlaysView: View {
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
@@ -200,7 +197,7 @@ struct OverlaysView: View {
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
             .background(statusColor(status).opacity(0.15))
-            .cornerRadius(PPRadius.sm)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
     }
 
     private func statusText(_ status: OverlayStatus) -> String {

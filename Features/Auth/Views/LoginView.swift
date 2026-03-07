@@ -48,7 +48,7 @@ struct LoginView: View {
                     }
                     .padding(PPSpacing.xxl)
                     .background(Color.ppCard)
-                    .cornerRadius(PPRadius.xl)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
                     .overlay(
                         RoundedRectangle(cornerRadius: PPRadius.xl)
                             .stroke(Color.ppBorder, lineWidth: 1)
@@ -85,23 +85,34 @@ struct LoginView: View {
             }
 
             VStack(spacing: PPSpacing.lg) {
-                PPTextField(
-                    label: "Email",
-                    placeholder: "you@example.com",
-                    isRequired: true,
-                    text: $viewModel.email,
-                    keyboardType: .emailAddress,
-                    textContentType: .emailAddress
-                )
+                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                    HStack(spacing: 2) {
+                        Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                    }
+                    TextField("you@example.com", text: $viewModel.email)
+                        .keyboardType(.emailAddress)
+                        .textContentType(.emailAddress)
+                        .autocapitalization(.none)
+                        .autocorrectionDisabled()
+                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                }
 
-                PPTextField(
-                    label: "Password",
-                    placeholder: "Your password",
-                    isRequired: true,
-                    text: $viewModel.password,
-                    isSecure: true,
-                    textContentType: .password
-                )
+                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                    HStack(spacing: 2) {
+                        Text("Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                    }
+                    SecureField("Your password", text: $viewModel.password)
+                        .textContentType(.password)
+                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                }
             }
 
             Button {
@@ -121,7 +132,7 @@ struct LoginView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .cornerRadius(PPRadius.full)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             .disabled(viewModel.isLoginDisabled)
             .opacity(viewModel.isLoginDisabled ? 0.6 : 1)
 
@@ -171,14 +182,19 @@ struct LoginView: View {
                     .padding(.horizontal)
             }
 
-            PPTextField(
-                label: "Code",
-                placeholder: "123456",
-                isRequired: true,
-                text: $viewModel.twoFactorCode,
-                keyboardType: .numberPad,
-                textContentType: .oneTimeCode
-            )
+            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                HStack(spacing: 2) {
+                    Text("Code").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                }
+                TextField("123456", text: $viewModel.twoFactorCode)
+                    .keyboardType(.numberPad)
+                    .textContentType(.oneTimeCode)
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+            }
 
             Button {
                 Task { await viewModel.submit2FA() }
@@ -197,7 +213,7 @@ struct LoginView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .cornerRadius(PPRadius.full)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             .disabled(viewModel.is2FADisabled)
             .opacity(viewModel.is2FADisabled ? 0.6 : 1)
 

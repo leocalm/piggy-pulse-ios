@@ -25,10 +25,27 @@ struct EditVendorSheet: View {
                         }
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
                             Text("Vendor Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
-                            PPTextField(label: "Name", placeholder: "Vendor name", isRequired: true, text: $name)
-                            PPTextField(label: "Description", placeholder: "Optional", isRequired: false, text: $desc)
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                HStack(spacing: 2) {
+                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                }
+                                TextField("Vendor name", text: $name)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                TextField("Optional", text: $desc)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
                     }
                     .padding(PPSpacing.xl)
@@ -70,7 +87,7 @@ struct EditVendorSheet: View {
         let d = desc.trimmingCharacters(in: .whitespaces)
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), description: d.isEmpty ? nil : d)
         do {
-            let _: VendorListItem = try await appState.apiClient.request(.updateVendor(vendor.id), body: req)
+            try await appState.apiClient.request(.updateVendor(vendor.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
         catch { errorMessage = "Failed to update vendor." }

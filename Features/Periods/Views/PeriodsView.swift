@@ -31,7 +31,7 @@ struct PeriodsView: View {
                         }
                         .padding(PPSpacing.lg)
                         .background(Color.ppCard)
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -109,7 +109,6 @@ struct PeriodsView: View {
             }
             .navigationTitle("Periods")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Time windows that help you track patterns.")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -147,7 +146,7 @@ struct PeriodsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(PPSpacing.xl)
                 .background(Color.ppCard)
-                .cornerRadius(PPRadius.lg)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                 .overlay(
                     RoundedRectangle(cornerRadius: PPRadius.lg)
                         .stroke(Color.ppPrimary.opacity(0.3), lineWidth: 1)
@@ -203,7 +202,7 @@ struct PeriodsView: View {
                     .padding(.horizontal, PPSpacing.sm)
                     .padding(.vertical, 2)
                     .background(Color.ppCard)
-                    .cornerRadius(PPRadius.full)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             }
         }
     }
@@ -254,7 +253,7 @@ struct PeriodsView: View {
                         .padding(.horizontal, PPSpacing.sm)
                         .padding(.vertical, 2)
                         .background(Color.ppCard)
-                        .cornerRadius(PPRadius.full)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     Image(systemName: viewModel.showPastPeriods ? "chevron.up" : "chevron.down")
                         .font(.system(size: 12))
                         .foregroundColor(.ppTextSecondary)
@@ -311,7 +310,7 @@ struct PeriodsView: View {
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(highlight ? Color.ppPrimary.opacity(0.5) : Color.ppBorder, lineWidth: highlight ? 1.5 : 1)

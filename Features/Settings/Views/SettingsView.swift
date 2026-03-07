@@ -10,8 +10,7 @@ struct SettingsView: View {
     @State private var showEditProfile = false
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
+        ScrollView {
                 VStack(alignment: .leading, spacing: PPSpacing.xl) {
                     if isLoading {
                         HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -44,8 +43,6 @@ struct SettingsView: View {
                 .padding(PPSpacing.lg)
             }
             .background(Color.ppBackground)
-            .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .sheet(isPresented: $showChangePassword) {
@@ -59,8 +56,6 @@ struct SettingsView: View {
             .task { await load() }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Manage your preferences and account settings.")
-        }
     }
 
     // MARK: - Profile
@@ -82,7 +77,7 @@ struct SettingsView: View {
                         .padding(.horizontal, PPSpacing.md)
                         .padding(.vertical, PPSpacing.sm)
                         .background(Color.ppPrimary.opacity(0.1))
-                        .cornerRadius(PPRadius.full)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 }
             }
 
@@ -93,7 +88,7 @@ struct SettingsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
@@ -125,14 +120,14 @@ struct SettingsView: View {
                         .padding(.horizontal, PPSpacing.md)
                         .padding(.vertical, PPSpacing.sm)
                         .background(Color.ppPrimary.opacity(0.1))
-                        .cornerRadius(PPRadius.full)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
@@ -153,7 +148,7 @@ struct SettingsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
@@ -172,7 +167,7 @@ struct SettingsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 

@@ -144,7 +144,7 @@ struct BudgetPlanView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.lg)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -198,7 +198,7 @@ struct BudgetPlanView: View {
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.md)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.md)
                 .stroke(Color.ppBorder, lineWidth: 1)
