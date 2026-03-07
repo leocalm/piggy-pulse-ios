@@ -93,6 +93,13 @@ struct TransactionsView: View {
                                     }
                                     .tint(.ppDestructive)
                                 }
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        editingTransaction = transaction
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                }
                                 .onAppear {
                                     if transaction.id == viewModel.transactions.last?.id {
                                         Task { await viewModel.loadMore() }

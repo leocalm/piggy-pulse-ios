@@ -12,17 +12,6 @@ struct AccountsView: View {
     var body: some View {
         NavigationStack {
             List {
-                // Add button - in the header section, after subtitle
-                Button {
-                    showAddSheet = true
-                } label: {
-                    Text("Add Account")
-                        .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-                }
-                .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
-                .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-                
                 if isLoading {
                     Section {
                         HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -68,6 +57,16 @@ struct AccountsView: View {
             .navigationTitle("Accounts")
             .navigationBarTitleDisplayMode(.large)
             .navigationSubtitle("Balance-level structure across liquid, protected, and debt accounts.")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showAddSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .tint(.white)
+                }
+            }
         }
     }
 

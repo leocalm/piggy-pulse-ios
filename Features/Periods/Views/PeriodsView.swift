@@ -12,26 +12,7 @@ struct PeriodsView: View {
     var body: some View {
         NavigationStack {
             List {
-                // Header
-                Section {
-                    // Create button
-                    Button {
-                        showCreateSheet = true
-                    } label: {
-                        Text("Create Period")
-                            .font(.ppHeadline)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, PPSpacing.md)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.ppPrimary)
-                    .cornerRadius(PPRadius.full)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-                }
-                
-                // Schedule section
+               // Schedule section
                 Section {
                     NavigationLink {
                         AutoCreationView()
@@ -129,6 +110,16 @@ struct PeriodsView: View {
             .navigationTitle("Periods")
             .navigationBarTitleDisplayMode(.large)
             .navigationSubtitle("Time windows that help you track patterns.")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showCreateSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .tint(.white)
+                }
+            }
         }
     }
 

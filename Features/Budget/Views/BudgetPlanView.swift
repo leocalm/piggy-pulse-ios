@@ -108,6 +108,7 @@ struct BudgetPlanView: View {
             .navigationTitle("Category targets")
             .navigationBarTitleDisplayMode(.large)
             .navigationSubtitle("Manage your spending limits.")
+            
         }
     }
 

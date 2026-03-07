@@ -49,25 +49,6 @@ struct ChangePasswordSheet: View {
                                     .font(.ppCaption)
                                     .foregroundColor(.ppDestructive)
                             }
-
-                            Button {
-                                Task { await changePassword() }
-                            } label: {
-                                Group {
-                                    if isLoading {
-                                        ProgressView().tint(.white)
-                                    } else {
-                                        Text("Change Password").font(.ppHeadline)
-                                    }
-                                }
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, PPSpacing.md)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.ppPrimary)
-                            .cornerRadius(PPRadius.full)
-                            .disabled(isDisabled)
-                            .opacity(isDisabled ? 0.6 : 1)
                         }
                     }
                     .padding(PPSpacing.xl)
@@ -79,8 +60,26 @@ struct ChangePasswordSheet: View {
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(success ? "Done" : "Cancel") { dismiss() }
-                        .foregroundColor(.ppTextSecondary)
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        Task { await changePassword() }
+                    } label: {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                    .disabled(isDisabled || isLoading)
+                    .opacity(isDisabled ? 0.6 : 1)
                 }
             }
         }

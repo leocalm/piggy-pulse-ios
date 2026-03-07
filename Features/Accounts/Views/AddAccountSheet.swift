@@ -137,19 +137,6 @@ struct AddAccountSheet: View {
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
-
-                        // Submit
-                        Button {
-                            Task { await create() }
-                        } label: {
-                            Group {
-                                if isLoading { ProgressView().tint(.white) }
-                                else { Label("Create Account", systemImage: "plus.circle").font(.ppHeadline) }
-                            }
-                            .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-                        }
-                        .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
-                        .disabled(isDisabled).opacity(isDisabled ? 0.6 : 1)
                     }
                     .padding(PPSpacing.xl)
                 }
@@ -158,7 +145,26 @@ struct AddAccountSheet: View {
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }.foregroundColor(.ppTextSecondary)
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        Task { await create() }
+                    } label: {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                    .foregroundColor(.ppTextSecondary)
+                    .disabled(isDisabled || isLoading)
+                    .opacity(isDisabled ? 0.6 : 1)
                 }
             }
         }
