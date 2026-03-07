@@ -6,43 +6,50 @@ struct MainTabView: View {
     @State private var showAddTransaction = false
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            DashboardView(apiClient: appState.apiClient)
-                .tabItem {
-                    Label("Dashboard", systemImage: "square.grid.2x2")
-                }
-                .tag(0)
+        VStack(spacing: 0) {
+            PeriodSelectorBar()
+                .padding(.horizontal, PPSpacing.lg)
+                .padding(.top, PPSpacing.sm)
+                .padding(.bottom, PPSpacing.sm)
 
-            TransactionsView(apiClient: appState.apiClient)
-                .tabItem {
-                    Label("Transactions", systemImage: "arrow.left.arrow.right")
-                }
-                .tag(1)
+            TabView(selection: $selectedTab) {
+                DashboardView(apiClient: appState.apiClient)
+                    .tabItem {
+                        Label("Dashboard", systemImage: "square.grid.2x2")
+                    }
+                    .tag(0)
 
-            // Placeholder tab that triggers the add sheet
-            Color.clear
-                .tabItem {
-                    Label("Add", systemImage: "plus.circle.fill")
-                }
-                .tag(2)
+                TransactionsView(apiClient: appState.apiClient)
+                    .tabItem {
+                        Label("Transactions", systemImage: "arrow.left.arrow.right")
+                    }
+                    .tag(1)
 
-            PeriodsView(apiClient: appState.apiClient)
-                .tabItem {
-                    Label("Periods", systemImage: "calendar")
-                }
-                .tag(3)
+                // Placeholder tab that triggers the add sheet
+                Color.clear
+                    .tabItem {
+                        Label("Add", systemImage: "plus.circle.fill")
+                    }
+                    .tag(2)
 
-            moreTab
-                .tabItem {
-                    Label("More", systemImage: "ellipsis.circle")
-                }
-                .tag(4)
+                PeriodsView(apiClient: appState.apiClient)
+                    .tabItem {
+                        Label("Periods", systemImage: "calendar")
+                    }
+                    .tag(3)
+
+                moreTab
+                    .tabItem {
+                        Label("More", systemImage: "ellipsis.circle")
+                    }
+                    .tag(4)
+            }
+            .tint(.ppPrimary)
         }
-        .tint(.ppPrimary)
+        .background(Color.ppBackground)
         .onChange(of: selectedTab) { newTab in
             if newTab == 2 {
                 showAddTransaction = true
-                // Return to previous tab so the "Add" tab never stays selected
                 selectedTab = 1
             }
         }
