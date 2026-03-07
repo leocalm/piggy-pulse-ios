@@ -9,95 +9,87 @@ struct VendorsView: View {
     @State private var editingVendor: VendorListItem?
 
     var body: some View {
-        List {
-            Section {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Vendors")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-                    Text("Track where transactions occur.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+        NavigationStack {
+            List {
+                // Add button - in the header section, after subtitle
+                Button {
+                    showAddSheet = true
+                } label: {
+                    Text("Add Vendor")
+                        .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
                 }
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.lg, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-            }
-            
-            // Add button - in the header section, after subtitle
-            Button {
-                showAddSheet = true
-            } label: {
-                Text("Add Vendor")
-                    .font(.ppHeadline).frame(maxWidth: .infinity).padding(.vertical, PPSpacing.md)
-            }
-            .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
-            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-            .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
-
-            if isLoading {
-                Section {
-                    HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                        .padding(.vertical, PPSpacing.xxxl)
+                .buttonStyle(.borderedProminent).tint(.ppPrimary).cornerRadius(PPRadius.full)
+                .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
+                
+                if isLoading {
+                    Section {
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                            .padding(.vertical, PPSpacing.xxxl)
+                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                    }
+                } else if let error = errorMessage {
+                    Section {
+                        VStack(spacing: PPSpacing.md) {
+                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                        }
+                        .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                }
-            } else if let error = errorMessage {
-                Section {
-                    VStack(spacing: PPSpacing.md) {
-                        Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                        Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                        Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                     }
-                    .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                }
-            } else if vendors.isEmpty {
-                Section {
-                    VStack(spacing: PPSpacing.lg) {
-                        Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                        Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
-                        Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                } else if vendors.isEmpty {
+                    Section {
+                        VStack(spacing: PPSpacing.lg) {
+                            Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
+                            Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
-                    .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                }
-            } else {
-                Section {
-                    ForEach(vendors) { vendor in
-                        vendorRow(vendor)
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task { await deleteVendor(vendor) }
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                } else {
+                    Section {
+                        ForEach(vendors) { vendor in
+                            vendorRow(vendor)
+                                .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) {
+                                        Task { await deleteVendor(vendor) }
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.ppDestructive)
                                 }
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
-                            }
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                .swipeActions(edge: .leading) {
+                                    Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                }
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+                    } header: {
+                        Text("ALL VENDORS")
+                            .font(.ppOverline)
+                            .foregroundColor(.ppTextSecondary)
+                            .tracking(1)
                     }
-                } header: {
-                    Text("ALL VENDORS")
-                        .font(.ppOverline)
-                        .foregroundColor(.ppTextSecondary)
-                        .tracking(1)
                 }
             }
-        }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
-        .refreshable { await load() }
-        .task(id: appState.selectedPeriod?.id) { await load() }
-        .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
-            AddVendorSheet { }.environmentObject(appState)
-        }
-        .sheet(item: $editingVendor) { vendor in
-            EditVendorSheet(vendor: vendor) { Task { await load() } }
-                .environmentObject(appState)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color.ppBackground)
+            .refreshable { await load() }
+            .task(id: appState.selectedPeriod?.id) { await load() }
+            .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                AddVendorSheet { }.environmentObject(appState)
+            }
+            .sheet(item: $editingVendor) { vendor in
+                EditVendorSheet(vendor: vendor) { Task { await load() } }
+                    .environmentObject(appState)
+            }
+            .navigationTitle("Vendors")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Track where transactions occur.")
         }
     }
     
@@ -142,6 +134,7 @@ struct VendorsView: View {
             }
         }
         .padding(PPSpacing.lg)
+        .frame(minHeight: 68)
         .background(Color.ppCard)
         .cornerRadius(PPRadius.md)
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))

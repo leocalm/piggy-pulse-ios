@@ -9,50 +9,41 @@ struct DashboardView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: PPSpacing.xl) {
-                // Header
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Dashboard")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-
-                    Text("Current position, deviation, and period trajectory.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
-                }
-
-                Divider()
-                    .background(Color.ppBorder)
-
-                if viewModel.isLoading {
-                    loadingState
-                } else if let error = viewModel.errorMessage {
-                    errorState(error)
-                } else {
-                    // Current Period card
-                    if let burnIn = viewModel.burnIn, let progress = viewModel.progress {
-                        currentPeriodCard(burnIn: burnIn, progress: progress)
-                    }
-
-                    // Spending Consistency card
-                    if let stability = viewModel.stability, stability.totalClosedPeriods > 0 {
-                        stabilityCard(stability: stability)
-                    }
-
-                    // Net Position card
-                    if let net = viewModel.netPosition {
-                        netPositionCard(net: net)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: PPSpacing.xl) {
+                    if viewModel.isLoading {
+                        loadingState
+                    } else if let error = viewModel.errorMessage {
+                        errorState(error)
+                    } else {
+                        // Current Period card
+                        if let burnIn = viewModel.burnIn, let progress = viewModel.progress {
+                            currentPeriodCard(burnIn: burnIn, progress: progress)
+                        }
+                        
+                        // Spending Consistency card
+                        if let stability = viewModel.stability, stability.totalClosedPeriods > 0 {
+                            stabilityCard(stability: stability)
+                        }
+                        
+                        // Net Position card
+                        if let net = viewModel.netPosition {
+                            netPositionCard(net: net)
+                        }
                     }
                 }
+                .padding(PPSpacing.lg)
             }
-            .padding(PPSpacing.lg)
-        }
-        .background(Color.ppBackground)
-        .task(id: appState.selectedPeriod?.id) {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.load(periodId: periodId)
+            .background(Color.ppBackground)
+            .task(id: appState.selectedPeriod?.id) {
+                if let periodId = appState.selectedPeriod?.id {
+                    await viewModel.load(periodId: periodId)
+                }
             }
+            .navigationTitle("Dashboard")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Current position, deviation, and period trajectory.")
         }
     }
 

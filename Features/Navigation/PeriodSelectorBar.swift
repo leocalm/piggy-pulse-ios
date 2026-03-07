@@ -55,7 +55,6 @@ struct PeriodSelectorBar: View {
             }
             .padding(.horizontal, PPSpacing.lg)
             .padding(.vertical, PPSpacing.md)
-            .background(Color.ppCard)
             .cornerRadius(PPRadius.md)
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.md)

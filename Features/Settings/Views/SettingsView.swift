@@ -10,62 +10,57 @@ struct SettingsView: View {
     @State private var showEditProfile = false
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: PPSpacing.xl) {
-                // Header
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Settings")
-                        .font(.ppLargeTitle)
-                        .foregroundColor(.ppPrimary)
-                    Text("Manage your preferences and account settings.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: PPSpacing.xl) {
+                    if isLoading {
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                            .padding(.vertical, PPSpacing.xxxl)
+                    } else if let error = errorMessage {
+                        VStack(spacing: PPSpacing.md) {
+                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                        }
+                        .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
+                    } else {
+                        // Profile card
+                        if let p = profile {
+                            profileCard(p)
+                        }
+                        
+                        // Security card
+                        securityCard
+                        
+                        // Preferences card
+                        if let prefs = preferences {
+                            preferencesCard(prefs)
+                        }
+                        
+                        // App info
+                        appInfoCard
+                    }
                 }
-
-                if isLoading {
-                    HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                        .padding(.vertical, PPSpacing.xxxl)
-                } else if let error = errorMessage {
-                    VStack(spacing: PPSpacing.md) {
-                        Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                        Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                        Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
-                    }
-                    .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                } else {
-                    // Profile card
-                    if let p = profile {
-                        profileCard(p)
-                    }
-
-                    // Security card
-                    securityCard
-
-                    // Preferences card
-                    if let prefs = preferences {
-                        preferencesCard(prefs)
-                    }
-
-                    // App info
-                    appInfoCard
-                }
+                .padding(PPSpacing.lg)
             }
-            .padding(PPSpacing.lg)
+            .background(Color.ppBackground)
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color.ppBackground, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .sheet(isPresented: $showChangePassword) {
+                ChangePasswordSheet()
+                    .environmentObject(appState)
+            }
+            .sheet(isPresented: $showEditProfile, onDismiss: { Task { await load() } }) {
+                EditProfileSheet(profile: profile)
+                    .environmentObject(appState)
+            }
+            .task { await load() }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSubtitle("Manage your preferences and account settings.")
         }
-        .background(Color.ppBackground)
-        .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Color.ppBackground, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .sheet(isPresented: $showChangePassword) {
-            ChangePasswordSheet()
-                .environmentObject(appState)
-        }
-        .sheet(isPresented: $showEditProfile, onDismiss: { Task { await load() } }) {
-            EditProfileSheet(profile: profile)
-                .environmentObject(appState)
-        }
-        .task { await load() }
     }
 
     // MARK: - Profile
