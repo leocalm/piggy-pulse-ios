@@ -68,6 +68,7 @@
 		02F038E22F59A1CD008DD1E7 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E12F59A1CC008DD1E7 /* TransactionsView.swift */; };
 		02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
 		02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
+		02BBBBBB2F5B6D5900E96DF7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -133,6 +134,7 @@
 		02F038DD2F59A193008DD1E7 /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
 		02F038E12F59A1CC008DD1E7 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodsViewModel.swift; sourceTree = "<group>"; };
+		02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				02F038C62F598D2B008DD1E7 /* Features */,
+				02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */,
 				02F038BE2F58E9D3008DD1E7 /* PiggyPulse-Info.plist */,
 				02F038BC2F58E87A008DD1E7 /* Assets.xcassets */,
 				027B34B02F5B6D5900E96DF6 /* LaunchScreen.storyboard */,
@@ -595,6 +598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02BBBBBB2F5B6D5900E96DF7 /* Localizable.xcstrings in Resources */,
 				027B34B12F5B6D5900E96DF6 /* LaunchScreen.storyboard in Resources */,
 				02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */,
 				02F038BD2F58E87A008DD1E7 /* Assets.xcassets in Resources */,
