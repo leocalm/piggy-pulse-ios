@@ -39,3 +39,33 @@ struct OverlayItem: Codable, Identifiable {
 enum OverlayStatus {
     case active, upcoming, ended, unknown
 }
+
+// MARK: - Inclusion Mode
+
+enum OverlayInclusionMode: String, Codable, CaseIterable {
+    case manual = "manual"
+    case rulesBased = "rules_based"
+    case includeAll = "include_all"
+}
+
+// MARK: - Category Cap
+
+struct CategoryCap: Codable {
+    let categoryId: UUID
+    let amount: Int64
+}
+
+// MARK: - Create/Update Request
+
+struct OverlayRequest: Encodable {
+    let name: String
+    let icon: String?
+    let startDate: String
+    let endDate: String
+    let inclusionMode: String
+    let accountIds: [UUID]?
+    let categoryIds: [UUID]?
+    let vendorIds: [UUID]?
+    let totalCapAmount: Int64?
+    let categoryCaps: [CategoryCap]?
+}
