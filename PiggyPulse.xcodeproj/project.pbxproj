@@ -28,6 +28,8 @@
 		027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */; };
 		027B349B2F5B4FAB00E96DF6 /* Overlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349A2F5B4FA900E96DF6 /* Overlays.swift */; };
 		027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */; };
+		027B34C12F5C000000E96DF6 /* OverlayFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34C02F5C000000E96DF6 /* OverlayFormSheet.swift */; };
+		027B34C32F5C000100E96DF6 /* EmojiPickerGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34C22F5C000100E96DF6 /* EmojiPickerGrid.swift */; };
 		027B34A12F5B532600E96DF6 /* AddAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A02F5B532500E96DF6 /* AddAccountSheet.swift */; };
 		027B34A32F5B533700E96DF6 /* AddCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A22F5B533400E96DF6 /* AddCategorySheet.swift */; };
 		027B34A52F5B534700E96DF6 /* AddVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A42F5B534500E96DF6 /* AddVendorSheet.swift */; };
@@ -103,6 +105,8 @@
 		027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSheet.swift; sourceTree = "<group>"; };
 		027B349A2F5B4FA900E96DF6 /* Overlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlays.swift; sourceTree = "<group>"; };
 		027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysView.swift; sourceTree = "<group>"; };
+		027B34C02F5C000000E96DF6 /* OverlayFormSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayFormSheet.swift; sourceTree = "<group>"; };
+		027B34C22F5C000100E96DF6 /* EmojiPickerGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerGrid.swift; sourceTree = "<group>"; };
 		027B34A02F5B532500E96DF6 /* AddAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountSheet.swift; sourceTree = "<group>"; };
 		027B34A22F5B533400E96DF6 /* AddCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategorySheet.swift; sourceTree = "<group>"; };
 		027B34A42F5B534500E96DF6 /* AddVendorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVendorSheet.swift; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 			isa = PBXGroup;
 			children = (
 				027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */,
+				027B34C02F5C000000E96DF6 /* OverlayFormSheet.swift */,
+				027B34C22F5C000100E96DF6 /* EmojiPickerGrid.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,6 +639,8 @@
 				027B346C2F5B237400E96DF6 /* CreatePeriodSheet.swift in Sources */,
 				027B347D2F5B463F00E96DF6 /* PeriodSchedule.swift in Sources */,
 				027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */,
+				027B34C12F5C000000E96DF6 /* OverlayFormSheet.swift in Sources */,
+				027B34C32F5C000100E96DF6 /* EmojiPickerGrid.swift in Sources */,
 				02F038A22F589EC5008DD1E7 /* User.swift in Sources */,
 				027B34852F5B4A5300E96DF6 /* Vendor.swift in Sources */,
 				02F038B32F58E085008DD1E7 /* APIEndpoints.swift in Sources */,

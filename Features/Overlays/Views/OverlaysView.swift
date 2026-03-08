@@ -6,12 +6,14 @@ struct OverlaysView: View {
     @State private var isLoading = true
     @State private var errorMessage: String?
     @State private var showPast = false
+    @State private var showCreateSheet = false
 
     private var active: [OverlayItem] { overlays.filter { $0.status == .active } }
     private var upcoming: [OverlayItem] { overlays.filter { $0.status == .upcoming } }
     private var past: [OverlayItem] { overlays.filter { $0.status == .ended } }
 
     var body: some View {
+        ZStack(alignment: .bottomTrailing) {
         List {
                 if isLoading {
                     Section {
@@ -34,7 +36,7 @@ struct OverlaysView: View {
                         VStack(spacing: PPSpacing.lg) {
                             Image(systemName: "square.stack").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
                             Text("No overlays yet").font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Text("Create overlays from the web app to track temporary spending goals.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                            Text("Tap + to create your first overlay.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -82,6 +84,26 @@ struct OverlaysView: View {
             .task { await load() }
             .navigationTitle("Overlays")
             .navigationBarTitleDisplayMode(.large)
+
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            showCreateSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(Color.ppPrimary)
+                .frame(width: 56, height: 56)
+                .glassEffect(.regular, in: Circle())
+        }
+        .padding(.trailing, PPSpacing.lg)
+        .padding(.bottom, PPSpacing.xl)
+        }
+        .sheet(isPresented: $showCreateSheet) {
+            OverlayFormSheet(overlay: nil, onSaved: {
+                Task { await load() }
+            })
+            .environmentObject(appState)
+        }
     }
 
     private func overlaySection(_ title: LocalizedStringKey, items: [OverlayItem], badge: Bool) -> some View {
