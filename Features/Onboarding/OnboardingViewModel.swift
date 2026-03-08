@@ -106,9 +106,15 @@ final class OnboardingViewModel: ObservableObject {
                 selectedCurrencyId = currencies.first?.id
             }
 
-            let response: PaginatedResponse<AccountListItem> = try await apiClient.request(.accounts)
-            if !response.data.isEmpty {
-                accounts = response.data.map { item in
+            // /accounts/management returns a plain array with no period_id required
+            struct AccountMgmt: Decodable {
+                let name: String; let accountType: String
+                let balance: Int64; let spendLimit: Int32?; let isArchived: Bool
+            }
+            let list: [AccountMgmt] = try await apiClient.request(.accountsManagement)
+            let active = list.filter { !$0.isArchived }
+            if !active.isEmpty {
+                accounts = active.map { item in
                     var draft = DraftAccount()
                     draft.name = item.name
                     draft.accountType = item.accountType
@@ -127,8 +133,9 @@ final class OnboardingViewModel: ObservableObject {
 
     private func loadExistingCategories() async {
         do {
-            let response: PaginatedResponse<CategoryListItem> = try await apiClient.request(.categories)
-            let active = response.data.filter { !$0.isArchived && !$0.isSystem }
+            // /categories/management returns grouped arrays with no period_id required
+            let response: CategoriesManagementResponse = try await apiClient.request(.categoriesManagement)
+            let active = (response.incoming + response.outgoing).filter { !$0.isArchived && !$0.isSystem }
             if !active.isEmpty {
                 categories = active.map { item in
                     DraftCategory(name: item.name, icon: item.icon, categoryType: item.categoryType)

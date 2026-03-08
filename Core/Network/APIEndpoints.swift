@@ -92,6 +92,7 @@ extension APIEndpoint {
     }
     static let accountOptions = APIEndpoint(path: "/accounts/options", method: .get, requiresAuth: true)
     static let accountsSummary = APIEndpoint(path: "/accounts/summary", method: .get, requiresAuth: true)
+    static let accountsManagement = APIEndpoint(path: "/accounts/management", method: .get, requiresAuth: true)
 
 }
 
