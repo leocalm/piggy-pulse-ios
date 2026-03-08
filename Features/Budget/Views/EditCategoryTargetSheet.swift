@@ -82,8 +82,8 @@ struct EditCategoryTargetSheet: View {
                                 guard let cents = parsedCents else { return }
                                 Task {
                                     isLoading = true
+                                    defer { isLoading = false }
                                     await onSave(cents)
-                                    isLoading = false
                                     dismiss()
                                 }
                             } label: {
@@ -106,8 +106,8 @@ struct EditCategoryTargetSheet: View {
                             Button {
                                 Task {
                                     isLoading = true
+                                    defer { isLoading = false }
                                     await onExclude()
-                                    isLoading = false
                                     dismiss()
                                 }
                             } label: {
@@ -120,8 +120,8 @@ struct EditCategoryTargetSheet: View {
                             Button {
                                 Task {
                                     isLoading = true
+                                    defer { isLoading = false }
                                     await onInclude()
-                                    isLoading = false
                                     dismiss()
                                 }
                             } label: {
