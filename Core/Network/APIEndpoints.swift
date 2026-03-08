@@ -180,3 +180,10 @@ extension APIEndpoint {
     static let preferences = APIEndpoint(path: "/settings/preferences", method: .get, requiresAuth: true)
     static let changePassword = APIEndpoint(path: "/settings/security/password", method: .post, requiresAuth: true)
 }
+
+// MARK: - Onboarding
+
+extension APIEndpoint {
+    static let onboardingStatus = APIEndpoint(path: "/onboarding/status", method: .get, requiresAuth: true)
+    static let completeOnboarding = APIEndpoint(path: "/onboarding/complete", method: .post, requiresAuth: true)
+}
