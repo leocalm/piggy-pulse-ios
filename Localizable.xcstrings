@@ -1,889 +1,2718 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
 
-    "PiggyPulse" : {
-      "comment" : "App name / logo label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "PiggyPulse" } } }
     },
-    "Clarity begins with structure." : {
-      "comment" : "App tagline shown on login screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Clarity begins with structure." } } }
-    },
+    "—" : {
 
-    "Dashboard" : {
-      "comment" : "Tab bar item — main dashboard screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Dashboard" } } }
     },
-    "Transactions" : {
-      "comment" : "Tab bar item — transactions list",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Transactions" } } }
-    },
-    "Periods" : {
-      "comment" : "Tab bar item — budget periods",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Periods" } } }
-    },
-    "More" : {
-      "comment" : "Tab bar item — more options",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "More" } } }
-    },
+    "·" : {
 
-    "STRUCTURE" : {
-      "comment" : "Section header in More tab",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "STRUCTURE" } } }
     },
-    "APP" : {
-      "comment" : "Section header in More tab and Settings",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "APP" } } }
-    },
-    "Accounts" : {
-      "comment" : "Navigation link and screen title",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Accounts" } } }
-    },
-    "Categories" : {
-      "comment" : "Navigation link and screen title",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Categories" } } }
-    },
-    "Vendors" : {
-      "comment" : "Navigation link and screen title",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Vendors" } } }
-    },
-    "Category Targets" : {
-      "comment" : "Navigation link in More tab for budget targets",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Category Targets" } } }
-    },
-    "Overlays" : {
-      "comment" : "Navigation link and screen title",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Overlays" } } }
-    },
-    "Settings" : {
-      "comment" : "Navigation link and screen title",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } } }
-    },
-    "Log out" : {
-      "comment" : "Logout button in More tab",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Log out" } } }
-    },
+    "{month} {year}" : {
 
-    "CURRENT PERIOD" : {
-      "comment" : "Dashboard card section header",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "CURRENT PERIOD" } } }
     },
-    "SPENDING CONSISTENCY" : {
-      "comment" : "Dashboard card section header",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "SPENDING CONSISTENCY" } } }
-    },
-    "NET POSITION" : {
-      "comment" : "Dashboard card section header",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "NET POSITION" } } }
-    },
-    "Retry" : {
-      "comment" : "Button to retry a failed network request",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Retry" } } }
-    },
+    "*" : {
 
-    "Welcome back" : {
-      "comment" : "Login screen heading",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Welcome back" } } }
     },
-    "Email" : {
-      "comment" : "Form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Email" } } }
+    "/ %@" : {
+
     },
-    "you@example.com" : {
-      "comment" : "Email field placeholder",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "you@example.com" } } }
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
     },
-    "Password" : {
-      "comment" : "Form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Password" } } }
+    "%@ remaining" : {
+
     },
-    "Your password" : {
-      "comment" : "Password field placeholder on login",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Your password" } } }
+    "%@, step %lld of %lld%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, step %2$lld of %3$lld%4$@"
+          }
+        }
+      }
     },
-    "Log in" : {
-      "comment" : "Login button",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Log in" } } }
+    "%@%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@%2$@"
+          }
+        }
+      }
     },
-    "Forgot password?" : {
-      "comment" : "Link to forgot password screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Forgot password?" } } }
+    "%@%@ this period" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@%2$@ this period"
+          }
+        }
+      }
     },
-    "Don't have an account?" : {
-      "comment" : "Prompt before Sign up link",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Don't have an account?" } } }
+    "%lld" : {
+
     },
-    "Sign up" : {
-      "comment" : "Link to registration screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Sign up" } } }
+    "%lld days" : {
+
     },
-    "Two-Factor Authentication" : {
-      "comment" : "2FA section heading on login",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Two-Factor Authentication" } } }
+    "%lld days left" : {
+
     },
-    "Enter the code from your authenticator app." : {
-      "comment" : "2FA instruction text",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Enter the code from your authenticator app." } } }
+    "%lld days remaining. %@ remaining in this period." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld days remaining. %2$@ remaining in this period."
+          }
+        }
+      }
     },
-    "Code" : {
-      "comment" : "2FA code field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Code" } } }
+    "%lld of %lld periods within range" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld periods within range"
+          }
+        }
+      }
+    },
+    "%lld of the last %lld closed periods were outside tolerance." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of the last %2$lld closed periods were outside tolerance."
+          }
+        }
+      }
+    },
+    "%lld periods" : {
+
+    },
+    "%lld transactions" : {
+
+    },
+    "%lld tx" : {
+
+    },
+    "%lld%%" : {
+
+    },
+    "%lld%% used" : {
+
+    },
+    "••••••••" : {
+
+    },
+    "€" : {
+
+    },
+    "0.00" : {
+
+    },
+    "1" : {
+
     },
     "123456" : {
       "comment" : "2FA code field placeholder",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "123456" } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "123456"
+          }
+        }
+      }
     },
-    "Verify" : {
-      "comment" : "2FA submit button",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Verify" } } }
-    },
-    "Back to login" : {
-      "comment" : "Button to go back to login from 2FA or forgot password",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Back to login" } } }
-    },
+    "Account" : {
 
-    "Create an account" : {
-      "comment" : "Registration screen heading",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Create an account" } } }
-    },
-    "Full Name" : {
-      "comment" : "Registration form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Full Name" } } }
-    },
-    "John Doe" : {
-      "comment" : "Name field placeholder on registration",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "John Doe" } } }
-    },
-    "Confirm Password" : {
-      "comment" : "Registration confirm password field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Confirm Password" } } }
-    },
-    "Confirm your password" : {
-      "comment" : "Confirm password field placeholder",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Confirm your password" } } }
-    },
-    "Register" : {
-      "comment" : "Registration submit button",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Register" } } }
-    },
-    "Already have an account?" : {
-      "comment" : "Prompt before Login link on registration",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Already have an account?" } } }
-    },
-    "Login" : {
-      "comment" : "Link back to login from registration",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Login" } } }
-    },
-
-    "Password recovery" : {
-      "comment" : "Forgot password screen heading",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Password recovery" } } }
-    },
-    "Enter your email address. If it is registered, you will receive a reset link." : {
-      "comment" : "Forgot password instruction text",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Enter your email address. If it is registered, you will receive a reset link." } } }
-    },
-    "name@example.com" : {
-      "comment" : "Email placeholder on forgot password screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "name@example.com" } } }
-    },
-    "Send link" : {
-      "comment" : "Forgot password submit button",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Send link" } } }
-    },
-    "Check your email" : {
-      "comment" : "Forgot password success heading",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Check your email" } } }
-    },
-    "If an account exists for that email, we've sent a password reset link. Check your inbox and spam folder." : {
-      "comment" : "Forgot password success body",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "If an account exists for that email, we've sent a password reset link. Check your inbox and spam folder." } } }
-    },
-
-    "No transactions found" : {
-      "comment" : "Empty state heading on Transactions screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No transactions found" } } }
-    },
-    "Start tracking your spending by adding your first transaction." : {
-      "comment" : "Empty state body on Transactions screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Start tracking your spending by adding your first transaction." } } }
-    },
-    "Delete" : {
-      "comment" : "Destructive action button / swipe action",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } } }
-    },
-    "Edit" : {
-      "comment" : "Edit action button / swipe action",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit" } } }
-    },
-    "Cancel" : {
-      "comment" : "Cancel button in dialogs",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } } }
-    },
-    "Delete transaction?" : {
-      "comment" : "Confirmation dialog title before deleting a transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete transaction?" } } }
-    },
-    "This transaction will be permanently deleted." : {
-      "comment" : "Confirmation dialog message for transaction deletion",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "This transaction will be permanently deleted." } } }
-    },
-
-    "Add Transaction" : {
-      "comment" : "Sheet title for adding a new transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Transaction" } } }
-    },
-    "Edit Transaction" : {
-      "comment" : "Sheet title for editing an existing transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit Transaction" } } }
-    },
-    "Amount" : {
-      "comment" : "Section heading / field label for currency amount",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Amount" } } }
-    },
-    "Transfer between accounts" : {
-      "comment" : "Toggle label for transfer transaction type",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Transfer between accounts" } } }
-    },
-    "Details" : {
-      "comment" : "Section heading in transaction form",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Details" } } }
-    },
-    "Description" : {
-      "comment" : "Form field label for transaction description",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Description" } } }
-    },
-    "e.g. Groceries at Albert Heijn" : {
-      "comment" : "Description field placeholder in Add Transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "e.g. Groceries at Albert Heijn" } } }
-    },
-    "e.g. Groceries" : {
-      "comment" : "Description field placeholder in Edit Transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "e.g. Groceries" } } }
-    },
-    "Date" : {
-      "comment" : "Form field label for date picker",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Date" } } }
-    },
-    "Classification" : {
-      "comment" : "Section heading in transaction form",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Classification" } } }
-    },
-    "Category" : {
-      "comment" : "Form field label / picker label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Category" } } }
-    },
-    "Select category" : {
-      "comment" : "Placeholder option in category picker",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Select category" } } }
-    },
-    "From Account" : {
-      "comment" : "Form field label / picker label for source account",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "From Account" } } }
-    },
-    "To Account" : {
-      "comment" : "Form field label / picker label for destination account",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "To Account" } } }
-    },
-    "Select account" : {
-      "comment" : "Placeholder option in account picker",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Select account" } } }
-    },
-    "Select" : {
-      "comment" : "Generic placeholder option in pickers",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Select" } } }
-    },
-    "Vendor" : {
-      "comment" : "Form field label / picker label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Vendor" } } }
-    },
-    "None" : {
-      "comment" : "Placeholder 'no selection' option in vendor picker",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "None" } } }
-    },
-    "Failed to load form options." : {
-      "comment" : "Error message when transaction form options fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load form options." } } }
-    },
-    "Please select a category and account." : {
-      "comment" : "Validation error in Add Transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Please select a category and account." } } }
-    },
-    "Failed to create transaction." : {
-      "comment" : "Error message when transaction creation fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to create transaction." } } }
-    },
-    "Failed to load options." : {
-      "comment" : "Error message when edit form options fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load options." } } }
-    },
-    "Select a category and account." : {
-      "comment" : "Validation error in Edit Transaction",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Select a category and account." } } }
-    },
-    "Failed to update transaction." : {
-      "comment" : "Error message when transaction update fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to update transaction." } } }
-    },
-    "Failed to load transactions." : {
-      "comment" : "Error message when transactions list fails to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load transactions." } } }
-    },
-    "Failed to load dashboard data." : {
-      "comment" : "Error message when dashboard fails to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load dashboard data." } } }
-    },
-
-    "PROFILE" : {
-      "comment" : "Settings section header",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "PROFILE" } } }
-    },
-    "SECURITY" : {
-      "comment" : "Settings section header",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "SECURITY" } } }
-    },
-    "PREFERENCES" : {
-      "comment" : "Settings section header",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "PREFERENCES" } } }
-    },
-    "Name" : {
-      "comment" : "Settings row label / form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Name" } } }
-    },
-    "Timezone" : {
-      "comment" : "Settings row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Timezone" } } }
-    },
-    "Theme" : {
-      "comment" : "Settings preferences row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Theme" } } }
-    },
-    "Date Format" : {
-      "comment" : "Settings preferences row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Date Format" } } }
-    },
-    "Number Format" : {
-      "comment" : "Settings preferences row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Number Format" } } }
-    },
-    "Compact Mode" : {
-      "comment" : "Settings preferences row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Compact Mode" } } }
-    },
-    "On" : {
-      "comment" : "Compact mode enabled state value",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "On" } } }
-    },
-    "Off" : {
-      "comment" : "Compact mode disabled state value",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Off" } } }
-    },
-    "Version" : {
-      "comment" : "App info row label in Settings",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } } }
-    },
-    "Build" : {
-      "comment" : "App info row label in Settings",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Build" } } }
-    },
-    "Change" : {
-      "comment" : "Button label to change password in Settings",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Change" } } }
-    },
-    "Failed to load settings." : {
-      "comment" : "Error message when settings fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load settings." } } }
-    },
-
-    "Edit Profile" : {
-      "comment" : "Sheet title for editing user profile",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit Profile" } } }
-    },
-    "Your name" : {
-      "comment" : "Name field placeholder in Edit Profile",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Your name" } } }
-    },
-    "Save" : {
-      "comment" : "Save button in forms",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } } }
-    },
-    "Failed to update profile." : {
-      "comment" : "Error message when profile update fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to update profile." } } }
-    },
-
-    "Change Password" : {
-      "comment" : "Sheet title for changing password",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Change Password" } } }
-    },
-    "Current Password" : {
-      "comment" : "Form field label in Change Password",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Current Password" } } }
-    },
-    "New Password" : {
-      "comment" : "Form field label in Change Password",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "New Password" } } }
-    },
-    "Update Password" : {
-      "comment" : "Submit button in Change Password sheet",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Update Password" } } }
-    },
-    "Failed to change password." : {
-      "comment" : "Error message when password change fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to change password." } } }
-    },
-
-    "No accounts yet" : {
-      "comment" : "Empty state heading on Accounts screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No accounts yet" } } }
-    },
-    "Archive" : {
-      "comment" : "Archive action button",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Archive" } } }
-    },
-    "This account will be permanently deleted." : {
-      "comment" : "Confirmation dialog message for account deletion",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "This account will be permanently deleted." } } }
-    },
-    "Failed to load accounts." : {
-      "comment" : "Error message when accounts fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load accounts." } } }
-    },
-    "Failed to create account." : {
-      "comment" : "Error message when account creation fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to create account." } } }
-    },
-    "Failed to update account." : {
-      "comment" : "Error message when account update fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to update account." } } }
-    },
-    "Add Account" : {
-      "comment" : "Sheet title for adding a new account",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Account" } } }
-    },
-    "Edit Account" : {
-      "comment" : "Sheet title for editing an account",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit Account" } } }
     },
     "Account Details" : {
       "comment" : "Section heading in account form",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Account Details" } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account Details"
+          }
+        }
+      }
     },
-    "Type" : {
-      "comment" : "Account type form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Type" } } }
-    },
-    "Currency" : {
-      "comment" : "Account currency form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Currency" } } }
-    },
-    "Select type" : {
-      "comment" : "Placeholder option in account type picker",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Select type" } } }
-    },
+    "Account name" : {
 
-    "No categories yet" : {
-      "comment" : "Empty state heading on Categories screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No categories yet" } } }
     },
-    "Failed to load categories." : {
-      "comment" : "Error message when categories fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load categories." } } }
-    },
-    "Failed to create category." : {
-      "comment" : "Error message when category creation fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to create category." } } }
-    },
-    "Failed to update category." : {
-      "comment" : "Error message when category update fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to update category." } } }
-    },
-    "Add Category" : {
-      "comment" : "Sheet title for adding a new category",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Category" } } }
-    },
-    "Edit Category" : {
-      "comment" : "Sheet title for editing a category",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit Category" } } }
-    },
-    "Icon" : {
-      "comment" : "Category icon form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Icon" } } }
-    },
-    "Color" : {
-      "comment" : "Category color form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Color" } } }
-    },
-    "Income category" : {
-      "comment" : "Toggle label for marking a category as income",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Income category" } } }
-    },
-    "Budget Target" : {
-      "comment" : "Section heading for budget target in category form",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Budget Target" } } }
-    },
+    "Account Type" : {
 
-    "No vendors yet" : {
-      "comment" : "Empty state heading on Vendors screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No vendors yet" } } }
     },
-    "Vendors are assigned when creating transactions." : {
-      "comment" : "Empty state body on Vendors screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Vendors are assigned when creating transactions." } } }
+    "Accounts" : {
+      "comment" : "Navigation link and screen title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accounts"
+          }
+        }
+      }
     },
-    "ALL VENDORS" : {
-      "comment" : "Section header on Vendors screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "ALL VENDORS" } } }
-    },
-    "Archived" : {
-      "comment" : "Badge label for archived vendors",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Archived" } } }
-    },
-    "This vendor will be hidden but its history will be preserved." : {
-      "comment" : "Confirmation dialog message for archiving a vendor",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "This vendor will be hidden but its history will be preserved." } } }
-    },
-    "This vendor will be permanently deleted." : {
-      "comment" : "Confirmation dialog message for deleting a vendor",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "This vendor will be permanently deleted." } } }
-    },
-    "Failed to load vendors." : {
-      "comment" : "Error message when vendors fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load vendors." } } }
-    },
-    "Failed to create vendor." : {
-      "comment" : "Error message when vendor creation fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to create vendor." } } }
-    },
-    "Failed to update vendor." : {
-      "comment" : "Error message when vendor update fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to update vendor." } } }
-    },
-    "Add Vendor" : {
-      "comment" : "Sheet title for adding a new vendor",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Vendor" } } }
-    },
-    "Edit Vendor" : {
-      "comment" : "Sheet title for editing a vendor",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit Vendor" } } }
-    },
-    "Vendor Details" : {
-      "comment" : "Section heading in vendor form",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Vendor Details" } } }
-    },
-    "Optional description" : {
-      "comment" : "Vendor description field placeholder",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Optional description" } } }
-    },
-    "Vendor name" : {
-      "comment" : "Vendor name field placeholder in Edit Vendor",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Vendor name" } } }
-    },
-    "Optional" : {
-      "comment" : "Vendor description field placeholder in Edit Vendor",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Optional" } } }
-    },
+    "Across %lld accounts" : {
 
-    "Auto-Creation" : {
-      "comment" : "Navigation link and screen title for auto-creation of periods",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Auto-Creation" } } }
-    },
-    "Configure automatic period generation" : {
-      "comment" : "Subtitle under Auto-Creation link in Periods",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Configure automatic period generation" } } }
-    },
-    "SCHEDULE" : {
-      "comment" : "Section header in Periods screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "SCHEDULE" } } }
-    },
-    "UPCOMING PERIODS" : {
-      "comment" : "Section header in Periods screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "UPCOMING PERIODS" } } }
-    },
-    "PAST PERIODS" : {
-      "comment" : "Section header in Periods screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "PAST PERIODS" } } }
-    },
-    "No current period found." : {
-      "comment" : "Empty state when no current budget period exists",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No current period found." } } }
-    },
-    "No upcoming periods." : {
-      "comment" : "Empty state when no upcoming budget periods exist",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No upcoming periods." } } }
-    },
-    "No past periods." : {
-      "comment" : "Empty state when no past budget periods exist",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No past periods." } } }
-    },
-    "Failed to load periods." : {
-      "comment" : "Error message when periods fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load periods." } } }
-    },
-    "Auto-generated" : {
-      "comment" : "Badge label on auto-generated periods in period detail",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Auto-generated" } } }
-    },
-    "DATE RANGE" : {
-      "comment" : "Section header in Period Detail",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "DATE RANGE" } } }
-    },
-    "METRICS" : {
-      "comment" : "Section header in Period Detail",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "METRICS" } } }
-    },
-    "Start" : {
-      "comment" : "Start date column label in Period Detail",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Start" } } }
-    },
-    "End" : {
-      "comment" : "End date column label in Period Detail",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "End" } } }
-    },
-    "Budget Used" : {
-      "comment" : "Metric label in Period Detail",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Budget Used" } } }
-    },
-    "Duration" : {
-      "comment" : "Metric label in Period Detail and picker label in Create Period",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Duration" } } }
-    },
-
-    "Create Budget Period" : {
-      "comment" : "Sheet title for creating a new budget period",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Create Budget Period" } } }
-    },
-    "Period Setup" : {
-      "comment" : "Section heading in Create Period and Auto-Creation",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Period Setup" } } }
-    },
-    "Period boundaries are structural and can reclassify transactions." : {
-      "comment" : "Informational text in Create Period form",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Period boundaries are structural and can reclassify transactions." } } }
-    },
-    "Start Date" : {
-      "comment" : "Form field label for period start date",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Start Date" } } }
-    },
-    "Duration Unit" : {
-      "comment" : "Picker label for duration unit in Create Period",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Duration Unit" } } }
-    },
-    "Days" : {
-      "comment" : "Duration unit option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Days" } } }
-    },
-    "Weeks" : {
-      "comment" : "Duration unit option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Weeks" } } }
-    },
-    "Months" : {
-      "comment" : "Duration unit option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Months" } } }
-    },
-    "End Rule" : {
-      "comment" : "Section heading in Create Period",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "End Rule" } } }
-    },
-    "By Duration" : {
-      "comment" : "End rule picker option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "By Duration" } } }
-    },
-    "Set Manually" : {
-      "comment" : "End rule picker option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Set Manually" } } }
-    },
-    "Calculated End Date" : {
-      "comment" : "Label showing auto-computed end date in Create Period",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Calculated End Date" } } }
-    },
-    "Manual End Date" : {
-      "comment" : "Label for manual end date picker in Create Period",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Manual End Date" } } }
-    },
-    "Naming" : {
-      "comment" : "Section heading for period naming in Create Period and Auto-Creation",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Naming" } } }
-    },
-    "Period Name" : {
-      "comment" : "Form field label for period name",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Period Name" } } }
-    },
-    "Failed to create period." : {
-      "comment" : "Error message when period creation fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to create period." } } }
-    },
-
-    "Auto-Creation is disabled" : {
-      "comment" : "Heading shown when auto-creation schedule is off",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Auto-Creation is disabled" } } }
-    },
-    "Enable a schedule to generate future periods automatically." : {
-      "comment" : "Body text when auto-creation is disabled",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable a schedule to generate future periods automatically." } } }
-    },
-    "Set up Auto-Creation" : {
-      "comment" : "Button to enable auto-creation schedule",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Set up Auto-Creation" } } }
-    },
-    "Start Day of Month" : {
-      "comment" : "Auto-Creation form field label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Start Day of Month" } } }
-    },
-    "Generate Ahead" : {
-      "comment" : "Auto-Creation form field label for how many periods to pre-generate",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Generate Ahead" } } }
-    },
-    "Weekend Adjustments" : {
-      "comment" : "Section heading in Auto-Creation for weekend day adjustments",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Weekend Adjustments" } } }
-    },
-    "Name Pattern" : {
-      "comment" : "Auto-Creation form field label for period naming pattern",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Name Pattern" } } }
-    },
-    "Use {month} and {year} as placeholders." : {
-      "comment" : "Helper text for auto-creation name pattern field",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Use {month} and {year} as placeholders." } } }
-    },
-    "Saturday" : {
-      "comment" : "Weekend adjustment row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Saturday" } } }
-    },
-    "Sunday" : {
-      "comment" : "Weekend adjustment row label",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Sunday" } } }
-    },
-    "Keep" : {
-      "comment" : "Weekend adjustment option — keep the day as-is",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Keep" } } }
-    },
-    "Move to Friday" : {
-      "comment" : "Weekend adjustment option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Move to Friday" } } }
-    },
-    "Move to Monday" : {
-      "comment" : "Weekend adjustment option",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Move to Monday" } } }
-    },
-    "Enable Auto-Creation" : {
-      "comment" : "Button to save and enable auto-creation schedule",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable Auto-Creation" } } }
-    },
-    "Save Changes" : {
-      "comment" : "Button to save changes to auto-creation schedule",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Save Changes" } } }
-    },
-    "Disable Auto-Creation" : {
-      "comment" : "Button to disable auto-creation schedule",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Disable Auto-Creation" } } }
-    },
-    "Failed to save schedule." : {
-      "comment" : "Error message when saving auto-creation schedule fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to save schedule." } } }
-    },
-    "Failed to disable auto-creation." : {
-      "comment" : "Error message when disabling auto-creation fails",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to disable auto-creation." } } }
-    },
-
-    "No overlays yet" : {
-      "comment" : "Empty state heading on Overlays screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No overlays yet" } } }
-    },
-    "Create overlays from the web app to track temporary spending goals." : {
-      "comment" : "Empty state body on Overlays screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Create overlays from the web app to track temporary spending goals." } } }
-    },
-    "ACTIVE OVERLAYS" : {
-      "comment" : "Section header on Overlays screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "ACTIVE OVERLAYS" } } }
-    },
-    "UPCOMING OVERLAYS" : {
-      "comment" : "Section header on Overlays screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "UPCOMING OVERLAYS" } } }
-    },
-    "PAST OVERLAYS" : {
-      "comment" : "Section header on Overlays screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "PAST OVERLAYS" } } }
     },
     "ACTIVE" : {
       "comment" : "Status badge label for active overlay",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "ACTIVE" } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ACTIVE"
+          }
+        }
+      }
     },
-    "UPCOMING" : {
-      "comment" : "Status badge label for upcoming overlay",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "UPCOMING" } } }
+    "ACTIVE OVERLAYS" : {
+      "comment" : "Section header on Overlays screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ACTIVE OVERLAYS"
+          }
+        }
+      }
     },
-    "ENDED" : {
-      "comment" : "Status badge label for ended overlay",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "ENDED" } } }
+    "Add Account" : {
+      "comment" : "Sheet title for adding a new account",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Account"
+          }
+        }
+      }
     },
-    "Failed to load overlays." : {
-      "comment" : "Error message when overlays fail to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load overlays." } } }
+    "Add Category" : {
+      "comment" : "Sheet title for adding a new category",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Category"
+          }
+        }
+      }
     },
+    "Add Transaction" : {
+      "comment" : "Sheet title for adding a new transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Transaction"
+          }
+        }
+      }
+    },
+    "Add Vendor" : {
+      "comment" : "Sheet title for adding a new vendor",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Vendor"
+          }
+        }
+      }
+    },
+    "ALL VENDORS" : {
+      "comment" : "Section header on Vendors screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALL VENDORS"
+          }
+        }
+      }
+    },
+    "Already have an account?" : {
+      "comment" : "Prompt before Login link on registration",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already have an account?"
+          }
+        }
+      }
+    },
+    "Amount" : {
+      "comment" : "Section heading / field label for currency amount",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amount"
+          }
+        }
+      }
+    },
+    "APP" : {
+      "comment" : "Section header in More tab and Settings",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APP"
+          }
+        }
+      }
+    },
+    "Appearance" : {
 
-    "Category targets" : {
-      "comment" : "Navigation title of Budget Plan / Category Targets screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Category targets" } } }
     },
-    "Manage your spending limits." : {
-      "comment" : "Navigation subtitle on Category Targets screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Manage your spending limits." } } }
+    "Apply" : {
+
     },
-    "No budget categories yet" : {
-      "comment" : "Empty state heading on Category Targets screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No budget categories yet" } } }
+    "Archive" : {
+      "comment" : "Archive action button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive"
+          }
+        }
+      }
+    },
+    "Archive \"%@\"?" : {
+
+    },
+    "Archived" : {
+      "comment" : "Badge label for archived vendors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archived"
+          }
+        }
+      }
+    },
+    "ARCHIVED" : {
+
+    },
+    "Assets" : {
+
     },
     "Assign budgets to your categories from the web app to see them here." : {
       "comment" : "Empty state body on Category Targets screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Assign budgets to your categories from the web app to see them here." } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assign budgets to your categories from the web app to see them here."
+          }
+        }
+      }
     },
-    "BUDGETED CATEGORIES" : {
-      "comment" : "Section header on Category Targets screen",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "BUDGETED CATEGORIES" } } }
+    "Auto-Creation" : {
+      "comment" : "Navigation link and screen title for auto-creation of periods",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Creation"
+          }
+        }
+      }
+    },
+    "Auto-Creation is disabled" : {
+      "comment" : "Heading shown when auto-creation schedule is off",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Creation is disabled"
+          }
+        }
+      }
+    },
+    "Auto-generated" : {
+      "comment" : "Badge label on auto-generated periods in period detail",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-generated"
+          }
+        }
+      }
+    },
+    "Back" : {
+
+    },
+    "Back to login" : {
+      "comment" : "Button to go back to login from 2FA or forgot password",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back to login"
+          }
+        }
+      }
     },
     "BUDGET BREAKDOWN" : {
       "comment" : "Section header on Category Targets summary card",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "BUDGET BREAKDOWN" } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BUDGET BREAKDOWN"
+          }
+        }
+      }
     },
-    "Total Budget" : {
-      "comment" : "Breakdown row label in Category Targets",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Total Budget" } } }
+    "Budget Target" : {
+      "comment" : "Section heading for budget target in category form",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Budget Target"
+          }
+        }
+      }
+    },
+    "Budget Used" : {
+      "comment" : "Metric label in Period Detail",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Budget Used"
+          }
+        }
+      }
+    },
+    "Budget: %@" : {
+
+    },
+    "BUDGETED CATEGORIES" : {
+      "comment" : "Section header on Category Targets screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BUDGETED CATEGORIES"
+          }
+        }
+      }
+    },
+    "Build" : {
+      "comment" : "App info row label in Settings",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build"
+          }
+        }
+      }
+    },
+    "By Duration" : {
+      "comment" : "End rule picker option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Duration"
+          }
+        }
+      }
+    },
+    "Calculated End Date" : {
+      "comment" : "Label showing auto-computed end date in Create Period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculated End Date"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "Cancel button in dialogs",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Categories" : {
+      "comment" : "Navigation link and screen title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "comment" : "Form field label / picker label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
+    "Category Details" : {
+
+    },
+    "Category name" : {
+
+    },
+    "Category targets" : {
+      "comment" : "Navigation title of Budget Plan / Category Targets screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category targets"
+          }
+        }
+      }
+    },
+    "Category Targets" : {
+      "comment" : "Navigation link in More tab for budget targets",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category Targets"
+          }
+        }
+      }
+    },
+    "Change" : {
+      "comment" : "Button label to change password in Settings",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change"
+          }
+        }
+      }
+    },
+    "Change Password" : {
+      "comment" : "Sheet title for changing password",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Password"
+          }
+        }
+      }
+    },
+    "Changing date range or inclusion mode updates which transactions may belong to this overlay." : {
+
+    },
+    "Check your email" : {
+      "comment" : "Forgot password success heading",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your email"
+          }
+        }
+      }
+    },
+    "Clarity begins with structure." : {
+      "comment" : "App tagline shown on login screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clarity begins with structure."
+          }
+        }
+      }
+    },
+    "Classification" : {
+      "comment" : "Section heading in transaction form",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classification"
+          }
+        }
+      }
+    },
+    "Clear All" : {
+
+    },
+    "Code" : {
+      "comment" : "2FA code field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code"
+          }
+        }
+      }
+    },
+    "Color" : {
+      "comment" : "Category color form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        }
+      }
+    },
+    "Compact Mode" : {
+      "comment" : "Settings preferences row label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compact Mode"
+          }
+        }
+      }
+    },
+    "Configure automatic period generation" : {
+      "comment" : "Subtitle under Auto-Creation link in Periods",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configure automatic period generation"
+          }
+        }
+      }
+    },
+    "Confirm Password" : {
+      "comment" : "Registration confirm password field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm Password"
+          }
+        }
+      }
+    },
+    "Confirm your password" : {
+      "comment" : "Confirm password field placeholder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm your password"
+          }
+        }
+      }
+    },
+    "Create an account" : {
+      "comment" : "Registration screen heading",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create an account"
+          }
+        }
+      }
+    },
+    "Create Budget Period" : {
+      "comment" : "Sheet title for creating a new budget period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Budget Period"
+          }
+        }
+      }
+    },
+    "Create Overlay" : {
+
+    },
+    "Create overlays from the web app to track temporary spending goals." : {
+      "comment" : "Empty state body on Overlays screen",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create overlays from the web app to track temporary spending goals."
+          }
+        }
+      }
+    },
+    "Currency" : {
+      "comment" : "Account currency form field label",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency"
+          }
+        }
+      }
+    },
+    "Current Password" : {
+      "comment" : "Form field label in Change Password",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Password"
+          }
+        }
+      }
+    },
+    "CURRENT PERIOD" : {
+      "comment" : "Dashboard card section header",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CURRENT PERIOD"
+          }
+        }
+      }
     },
     "Currently Spent" : {
       "comment" : "Breakdown row label in Category Targets",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Currently Spent" } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently Spent"
+          }
+        }
+      }
     },
-    "Remaining Budget" : {
-      "comment" : "Breakdown row label in Category Targets",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Remaining Budget" } } }
+    "Dashboard" : {
+      "comment" : "Tab bar item — main dashboard screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dashboard"
+          }
+        }
+      }
+    },
+    "Date" : {
+      "comment" : "Form field label for date picker",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "Date Format" : {
+      "comment" : "Settings preferences row label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date Format"
+          }
+        }
+      }
+    },
+    "Date Range" : {
+
+    },
+    "DATE RANGE" : {
+      "comment" : "Section header in Period Detail",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATE RANGE"
+          }
+        }
+      }
+    },
+    "Days" : {
+      "comment" : "Duration unit option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "comment" : "Destructive action button / swipe action",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Delete \"%@\"?" : {
+
+    },
+    "Delete transaction?" : {
+      "comment" : "Confirmation dialog title before deleting a transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete transaction?"
+          }
+        }
+      }
+    },
+    "Description" : {
+      "comment" : "Form field label for transaction description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
+    },
+    "Details" : {
+      "comment" : "Section heading in transaction form",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        }
+      }
+    },
+    "Disable Auto-Creation" : {
+      "comment" : "Button to disable auto-creation schedule",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disable Auto-Creation"
+          }
+        }
+      }
+    },
+    "Don't have an account?" : {
+      "comment" : "Prompt before Sign up link",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't have an account?"
+          }
+        }
+      }
+    },
+    "Duration" : {
+      "comment" : "Metric label in Period Detail and picker label in Create Period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duration"
+          }
+        }
+      }
+    },
+    "Duration Unit" : {
+      "comment" : "Picker label for duration unit in Create Period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duration Unit"
+          }
+        }
+      }
+    },
+    "e.g. Albert Heijn" : {
+
+    },
+    "e.g. Europe/Amsterdam" : {
+
+    },
+    "e.g. Groceries" : {
+      "comment" : "Description field placeholder in Edit Transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. Groceries"
+          }
+        }
+      }
+    },
+    "e.g. Groceries at Albert Heijn" : {
+      "comment" : "Description field placeholder in Add Transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. Groceries at Albert Heijn"
+          }
+        }
+      }
+    },
+    "e.g. Main Checking" : {
+
+    },
+    "e.g. March 2026" : {
+
+    },
+    "e.g. Summer Vacation Budget" : {
+
+    },
+    "Edit" : {
+      "comment" : "Edit action button / swipe action",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Edit Account" : {
+      "comment" : "Sheet title for editing an account",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Account"
+          }
+        }
+      }
+    },
+    "Edit Category" : {
+      "comment" : "Sheet title for editing a category",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Category"
+          }
+        }
+      }
+    },
+    "Edit Overlay" : {
+
+    },
+    "Edit Profile" : {
+      "comment" : "Sheet title for editing user profile",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Profile"
+          }
+        }
+      }
+    },
+    "Edit Transaction" : {
+      "comment" : "Sheet title for editing an existing transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Transaction"
+          }
+        }
+      }
+    },
+    "Edit Vendor" : {
+      "comment" : "Sheet title for editing a vendor",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Vendor"
+          }
+        }
+      }
+    },
+    "Email" : {
+      "comment" : "Form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "Emoji %@" : {
+
+    },
+    "Enable a schedule to generate future periods automatically." : {
+      "comment" : "Body text when auto-creation is disabled",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable a schedule to generate future periods automatically."
+          }
+        }
+      }
+    },
+    "Enable Auto-Creation" : {
+      "comment" : "Button to save and enable auto-creation schedule",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Auto-Creation"
+          }
+        }
+      }
+    },
+    "End" : {
+      "comment" : "End date column label in Period Detail",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End"
+          }
+        }
+      }
+    },
+    "End Date" : {
+
+    },
+    "End Rule" : {
+      "comment" : "Section heading in Create Period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End Rule"
+          }
+        }
+      }
+    },
+    "ENDED" : {
+      "comment" : "Status badge label for ended overlay",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ENDED"
+          }
+        }
+      }
+    },
+    "Enter current password" : {
+
+    },
+    "Enter the code from your authenticator app." : {
+      "comment" : "2FA instruction text",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the code from your authenticator app."
+          }
+        }
+      }
+    },
+    "Enter your email address. If it is registered, you will receive a reset link." : {
+      "comment" : "Forgot password instruction text",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email address. If it is registered, you will receive a reset link."
+          }
+        }
+      }
+    },
+    "Failed to change password." : {
+      "comment" : "Error message when password change fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to change password."
+          }
+        }
+      }
+    },
+    "Failed to create account." : {
+      "comment" : "Error message when account creation fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to create account."
+          }
+        }
+      }
+    },
+    "Failed to create category." : {
+      "comment" : "Error message when category creation fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to create category."
+          }
+        }
+      }
+    },
+    "Failed to create period." : {
+      "comment" : "Error message when period creation fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to create period."
+          }
+        }
+      }
+    },
+    "Failed to create transaction." : {
+      "comment" : "Error message when transaction creation fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to create transaction."
+          }
+        }
+      }
+    },
+    "Failed to create vendor." : {
+      "comment" : "Error message when vendor creation fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to create vendor."
+          }
+        }
+      }
+    },
+    "Failed to disable auto-creation." : {
+      "comment" : "Error message when disabling auto-creation fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to disable auto-creation."
+          }
+        }
+      }
+    },
+    "Failed to load accounts." : {
+      "comment" : "Error message when accounts fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load accounts."
+          }
+        }
+      }
     },
     "Failed to load budget data." : {
       "comment" : "Error message when budget data fails to load",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to load budget data." } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load budget data."
+          }
+        }
+      }
     },
+    "Failed to load categories." : {
+      "comment" : "Error message when categories fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load categories."
+          }
+        }
+      }
+    },
+    "Failed to load dashboard data." : {
+      "comment" : "Error message when dashboard fails to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load dashboard data."
+          }
+        }
+      }
+    },
+    "Failed to load form options." : {
+      "comment" : "Error message when transaction form options fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load form options."
+          }
+        }
+      }
+    },
+    "Failed to load options." : {
+      "comment" : "Error message when edit form options fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load options."
+          }
+        }
+      }
+    },
+    "Failed to load overlays." : {
+      "comment" : "Error message when overlays fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load overlays."
+          }
+        }
+      }
+    },
+    "Failed to load periods." : {
+      "comment" : "Error message when periods fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load periods."
+          }
+        }
+      }
+    },
+    "Failed to load settings." : {
+      "comment" : "Error message when settings fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load settings."
+          }
+        }
+      }
+    },
+    "Failed to load transactions." : {
+      "comment" : "Error message when transactions list fails to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load transactions."
+          }
+        }
+      }
+    },
+    "Failed to load vendors." : {
+      "comment" : "Error message when vendors fail to load",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load vendors."
+          }
+        }
+      }
+    },
+    "Failed to save overlay." : {
 
+    },
+    "Failed to save schedule." : {
+      "comment" : "Error message when saving auto-creation schedule fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to save schedule."
+          }
+        }
+      }
+    },
+    "Failed to update account." : {
+      "comment" : "Error message when account update fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to update account."
+          }
+        }
+      }
+    },
+    "Failed to update category." : {
+      "comment" : "Error message when category update fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to update category."
+          }
+        }
+      }
+    },
+    "Failed to update profile." : {
+      "comment" : "Error message when profile update fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to update profile."
+          }
+        }
+      }
+    },
+    "Failed to update transaction." : {
+      "comment" : "Error message when transaction update fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to update transaction."
+          }
+        }
+      }
+    },
+    "Failed to update vendor." : {
+      "comment" : "Error message when vendor update fails",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to update vendor."
+          }
+        }
+      }
+    },
+    "Filter" : {
+
+    },
+    "Filter, %lld active" : {
+
+    },
+    "Forgot password?" : {
+      "comment" : "Link to forgot password screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password?"
+          }
+        }
+      }
+    },
+    "From Account" : {
+      "comment" : "Form field label / picker label for source account",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Account"
+          }
+        }
+      }
+    },
+    "Full Name" : {
+      "comment" : "Registration form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Name"
+          }
+        }
+      }
+    },
+    "Generate Ahead" : {
+      "comment" : "Auto-Creation form field label for how many periods to pre-generate",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate Ahead"
+          }
+        }
+      }
+    },
+    "Icon" : {
+      "comment" : "Category icon form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icon"
+          }
+        }
+      }
+    },
+    "Icon (optional)" : {
+
+    },
+    "If %@" : {
+
+    },
+    "If an account exists for that email, we've sent a password reset link. Check your inbox and spam folder." : {
+      "comment" : "Forgot password success body",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If an account exists for that email, we've sent a password reset link. Check your inbox and spam folder."
+          }
+        }
+      }
+    },
+    "Inclusion Rules" : {
+
+    },
+    "Income category" : {
+      "comment" : "Toggle label for marking a category as income",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income category"
+          }
+        }
+      }
+    },
+    "Incoming" : {
+
+    },
+    "John Doe" : {
+      "comment" : "Name field placeholder on registration",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "John Doe"
+          }
+        }
+      }
+    },
+    "Keep" : {
+      "comment" : "Weekend adjustment option — keep the day as-is",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep"
+          }
+        }
+      }
+    },
+    "Liabilities" : {
+
+    },
+    "Limit spending per category within this overlay." : {
+
+    },
+    "Liquid %@ · Protected %@ · Debt %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Liquid %1$@ · Protected %2$@ · Debt %3$@"
+          }
+        }
+      }
+    },
+    "Log in" : {
+      "comment" : "Login button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in"
+          }
+        }
+      }
+    },
+    "Log out" : {
+      "comment" : "Logout button in More tab",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log out"
+          }
+        }
+      }
+    },
+    "Login" : {
+      "comment" : "Link back to login from registration",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        }
+      }
+    },
+    "Manage your spending limits." : {
+      "comment" : "Navigation subtitle on Category Targets screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage your spending limits."
+          }
+        }
+      }
+    },
+    "Manual End Date" : {
+      "comment" : "Label for manual end date picker in Create Period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual End Date"
+          }
+        }
+      }
+    },
+    "METRICS" : {
+      "comment" : "Section header in Period Detail",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "METRICS"
+          }
+        }
+      }
+    },
+    "Min 8 characters" : {
+
+    },
+    "Months" : {
+      "comment" : "Duration unit option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Months"
+          }
+        }
+      }
+    },
+    "More" : {
+      "comment" : "Tab bar item — more options",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More"
+          }
+        }
+      }
+    },
+    "Move to Friday" : {
+      "comment" : "Weekend adjustment option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move to Friday"
+          }
+        }
+      }
+    },
+    "Move to Monday" : {
+      "comment" : "Weekend adjustment option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move to Monday"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "comment" : "Settings row label / form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Name Pattern" : {
+      "comment" : "Auto-Creation form field label for period naming pattern",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name Pattern"
+          }
+        }
+      }
+    },
+    "name@example.com" : {
+      "comment" : "Email placeholder on forgot password screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        }
+      }
+    },
+    "Naming" : {
+      "comment" : "Section heading for period naming in Create Period and Auto-Creation",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naming"
+          }
+        }
+      }
+    },
+    "NET POSITION" : {
+      "comment" : "Dashboard card section header",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NET POSITION"
+          }
+        }
+      }
+    },
+    "New Overlay" : {
+
+    },
+    "New Password" : {
+      "comment" : "Form field label in Change Password",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Password"
+          }
+        }
+      }
+    },
+    "Next" : {
+
+    },
+    "No %@ available" : {
+
+    },
+    "No accounts yet" : {
+      "comment" : "Empty state heading on Accounts screen",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No accounts yet"
+          }
+        }
+      }
+    },
+    "No budget categories yet" : {
+      "comment" : "Empty state heading on Category Targets screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No budget categories yet"
+          }
+        }
+      }
+    },
+    "No categories available." : {
+
+    },
+    "No categories yet" : {
+      "comment" : "Empty state heading on Categories screen",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No categories yet"
+          }
+        }
+      }
+    },
+    "No current period found." : {
+      "comment" : "Empty state when no current budget period exists",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No current period found."
+          }
+        }
+      }
+    },
+    "No overlays yet" : {
+      "comment" : "Empty state heading on Overlays screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No overlays yet"
+          }
+        }
+      }
+    },
+    "No past periods." : {
+      "comment" : "Empty state when no past budget periods exist",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No past periods."
+          }
+        }
+      }
+    },
     "No period selected" : {
       "comment" : "Shown in period selector bar when no period is active",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "No period selected" } } }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No period selected"
+          }
+        }
+      }
     },
-    "Select Period" : {
-      "comment" : "Navigation title of the period picker sheet",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Select Period" } } }
+    "No transactions found" : {
+      "comment" : "Empty state heading on Transactions screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No transactions found"
+          }
+        }
+      }
     },
+    "No upcoming periods." : {
+      "comment" : "Empty state when no upcoming budget periods exist",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No upcoming periods."
+          }
+        }
+      }
+    },
+    "No vendors yet" : {
+      "comment" : "Empty state heading on Vendors screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No vendors yet"
+          }
+        }
+      }
+    },
+    "None" : {
+      "comment" : "Placeholder 'no selection' option in vendor picker",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        }
+      }
+    },
+    "Number Format" : {
+      "comment" : "Settings preferences row label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number Format"
+          }
+        }
+      }
+    },
+    "of %@" : {
 
-    "Something went wrong. Please try again." : {
-      "comment" : "Generic error message in auth flow",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Something went wrong. Please try again." } } }
+    },
+    "Off" : {
+      "comment" : "Compact mode disabled state value",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        }
+      }
+    },
+    "On" : {
+      "comment" : "Compact mode enabled state value",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        }
+      }
+    },
+    "Optional" : {
+      "comment" : "Vendor description field placeholder in Edit Vendor",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional"
+          }
+        }
+      }
+    },
+    "Optional description" : {
+      "comment" : "Vendor description field placeholder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional description"
+          }
+        }
+      }
+    },
+    "Organize your transactions by type." : {
+
+    },
+    "Outgoing" : {
+
+    },
+    "Overlay Details" : {
+
+    },
+    "Overlays" : {
+      "comment" : "Navigation link and screen title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlays"
+          }
+        }
+      }
+    },
+    "Overlays are temporary and always require both start and end dates." : {
+
+    },
+    "Password" : {
+      "comment" : "Form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        }
+      }
+    },
+    "Password changed successfully" : {
+
+    },
+    "Password recovery" : {
+      "comment" : "Forgot password screen heading",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password recovery"
+          }
+        }
+      }
     },
     "Passwords do not match." : {
       "comment" : "Validation error when passwords don't match in registration",
-      "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Passwords do not match." } } }
-    }
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwords do not match."
+          }
+        }
+      }
+    },
+    "Passwords don't match" : {
 
+    },
+    "PAST OVERLAYS" : {
+      "comment" : "Section header on Overlays screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PAST OVERLAYS"
+          }
+        }
+      }
+    },
+    "PAST PERIODS" : {
+      "comment" : "Section header in Periods screen",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PAST PERIODS"
+          }
+        }
+      }
+    },
+    "Per-Category Cap" : {
+
+    },
+    "Per-Category Caps" : {
+
+    },
+    "Period boundaries are structural and can reclassify transactions." : {
+      "comment" : "Informational text in Create Period form",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Period boundaries are structural and can reclassify transactions."
+          }
+        }
+      }
+    },
+    "Period Name" : {
+      "comment" : "Form field label for period name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Period Name"
+          }
+        }
+      }
+    },
+    "Period Setup" : {
+      "comment" : "Section heading in Create Period and Auto-Creation",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Period Setup"
+          }
+        }
+      }
+    },
+    "Periods" : {
+      "comment" : "Tab bar item — budget periods",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periods"
+          }
+        }
+      }
+    },
+    "PiggyPulse" : {
+      "comment" : "App name / logo label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PiggyPulse"
+          }
+        }
+      }
+    },
+    "Please select a category and account." : {
+      "comment" : "Validation error in Add Transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select a category and account."
+          }
+        }
+      }
+    },
+    "PREFERENCES" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PREFERENCES"
+          }
+        }
+      }
+    },
+    "PROFILE" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PROFILE"
+          }
+        }
+      }
+    },
+    "Projected spend at current pace: %@" : {
+
+    },
+    "Recommended" : {
+
+    },
+    "Register" : {
+      "comment" : "Registration submit button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register"
+          }
+        }
+      }
+    },
+    "Remaining Budget" : {
+      "comment" : "Breakdown row label in Category Targets",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remaining Budget"
+          }
+        }
+      }
+    },
+    "Repeat new password" : {
+
+    },
+    "Retry" : {
+      "comment" : "Button to retry a failed network request",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
+    },
+    "Rules" : {
+
+    },
+    "Saturday" : {
+      "comment" : "Weekend adjustment row label",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturday"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "comment" : "Save button in forms",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Save Changes" : {
+      "comment" : "Button to save changes to auto-creation schedule",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Changes"
+          }
+        }
+      }
+    },
+    "SCHEDULE" : {
+      "comment" : "Section header in Periods screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SCHEDULE"
+          }
+        }
+      }
+    },
+    "SECURITY" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SECURITY"
+          }
+        }
+      }
+    },
+    "Select" : {
+      "comment" : "Generic placeholder option in pickers",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select"
+          }
+        }
+      }
+    },
+    "Select a category and account." : {
+      "comment" : "Validation error in Edit Transaction",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a category and account."
+          }
+        }
+      }
+    },
+    "Select account" : {
+      "comment" : "Placeholder option in account picker",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select account"
+          }
+        }
+      }
+    },
+    "Select category" : {
+      "comment" : "Placeholder option in category picker",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select category"
+          }
+        }
+      }
+    },
+    "Select Period" : {
+      "comment" : "Navigation title of the period picker sheet",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Period"
+          }
+        }
+      }
+    },
+    "Select type" : {
+      "comment" : "Placeholder option in account type picker",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select type"
+          }
+        }
+      }
+    },
+    "Selected emoji %@" : {
+
+    },
+    "Send link" : {
+      "comment" : "Forgot password submit button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send link"
+          }
+        }
+      }
+    },
+    "Set a spending limit for the entire overlay." : {
+
+    },
+    "Set Manually" : {
+      "comment" : "End rule picker option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Manually"
+          }
+        }
+      }
+    },
+    "Set up Auto-Creation" : {
+      "comment" : "Button to enable auto-creation schedule",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up Auto-Creation"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "comment" : "Navigation link and screen title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Sign up" : {
+      "comment" : "Link to registration screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign up"
+          }
+        }
+      }
+    },
+    "Something went wrong. Please try again." : {
+      "comment" : "Generic error message in auth flow",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Please try again."
+          }
+        }
+      }
+    },
+    "Spend Limit" : {
+
+    },
+    "SPENDING CONSISTENCY" : {
+      "comment" : "Dashboard card section header",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SPENDING CONSISTENCY"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "comment" : "Start date column label in Period Detail",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
+    },
+    "Start Date" : {
+      "comment" : "Form field label for period start date",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Date"
+          }
+        }
+      }
+    },
+    "Start Day of Month" : {
+      "comment" : "Auto-Creation form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Day of Month"
+          }
+        }
+      }
+    },
+    "Start tracking your spending by adding your first transaction." : {
+      "comment" : "Empty state body on Transactions screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start tracking your spending by adding your first transaction."
+          }
+        }
+      }
+    },
+    "Starting Balance" : {
+
+    },
+    "STRUCTURE" : {
+      "comment" : "Section header in More tab",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STRUCTURE"
+          }
+        }
+      }
+    },
+    "Summary" : {
+
+    },
+    "Sunday" : {
+      "comment" : "Weekend adjustment row label",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunday"
+          }
+        }
+      }
+    },
+    "System" : {
+
+    },
+    "Tap + to create your first overlay." : {
+
+    },
+    "Theme" : {
+      "comment" : "Settings preferences row label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
+          }
+        }
+      }
+    },
+    "This account will be hidden but its history will be preserved." : {
+
+    },
+    "This account will be permanently deleted." : {
+      "comment" : "Confirmation dialog message for account deletion",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This account will be permanently deleted."
+          }
+        }
+      }
+    },
+    "This category will be hidden but its history will be preserved." : {
+
+    },
+    "This category will be permanently deleted." : {
+
+    },
+    "This transaction will be permanently deleted." : {
+      "comment" : "Confirmation dialog message for transaction deletion",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This transaction will be permanently deleted."
+          }
+        }
+      }
+    },
+    "This vendor will be hidden but its history will be preserved." : {
+      "comment" : "Confirmation dialog message for archiving a vendor",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This vendor will be hidden but its history will be preserved."
+          }
+        }
+      }
+    },
+    "This vendor will be permanently deleted." : {
+      "comment" : "Confirmation dialog message for deleting a vendor",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This vendor will be permanently deleted."
+          }
+        }
+      }
+    },
+    "Timezone" : {
+      "comment" : "Settings row label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timezone"
+          }
+        }
+      }
+    },
+    "To Account" : {
+      "comment" : "Form field label / picker label for destination account",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To Account"
+          }
+        }
+      }
+    },
+    "Total Amount Cap" : {
+
+    },
+    "Total Budget" : {
+      "comment" : "Breakdown row label in Category Targets",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Budget"
+          }
+        }
+      }
+    },
+    "Transactions" : {
+      "comment" : "Tab bar item — transactions list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transactions"
+          }
+        }
+      }
+    },
+    "Transfer between accounts" : {
+      "comment" : "Toggle label for transfer transaction type",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer between accounts"
+          }
+        }
+      }
+    },
+    "Two-Factor Authentication" : {
+      "comment" : "2FA section heading on login",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two-Factor Authentication"
+          }
+        }
+      }
+    },
+    "Type" : {
+      "comment" : "Account type form field label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type"
+          }
+        }
+      }
+    },
+    "UPCOMING" : {
+      "comment" : "Status badge label for upcoming overlay",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UPCOMING"
+          }
+        }
+      }
+    },
+    "UPCOMING OVERLAYS" : {
+      "comment" : "Section header on Overlays screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UPCOMING OVERLAYS"
+          }
+        }
+      }
+    },
+    "UPCOMING PERIODS" : {
+      "comment" : "Section header in Periods screen",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UPCOMING PERIODS"
+          }
+        }
+      }
+    },
+    "Update Password" : {
+      "comment" : "Submit button in Change Password sheet",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Password"
+          }
+        }
+      }
+    },
+    "Use {month} and {year} as placeholders." : {
+      "comment" : "Helper text for auto-creation name pattern field",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use {month} and {year} as placeholders."
+          }
+        }
+      }
+    },
+    "Vendor" : {
+      "comment" : "Form field label / picker label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendor"
+          }
+        }
+      }
+    },
+    "Vendor Details" : {
+      "comment" : "Section heading in vendor form",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendor Details"
+          }
+        }
+      }
+    },
+    "Vendor name" : {
+      "comment" : "Vendor name field placeholder in Edit Vendor",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendor name"
+          }
+        }
+      }
+    },
+    "Vendors" : {
+      "comment" : "Navigation link and screen title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendors"
+          }
+        }
+      }
+    },
+    "Vendors are assigned when creating transactions." : {
+      "comment" : "Empty state body on Vendors screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendors are assigned when creating transactions."
+          }
+        }
+      }
+    },
+    "Verify" : {
+      "comment" : "2FA submit button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verify"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "comment" : "App info row label in Settings",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "Weekend Adjustments" : {
+      "comment" : "Section heading in Auto-Creation for weekend day adjustments",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekend Adjustments"
+          }
+        }
+      }
+    },
+    "Weeks" : {
+      "comment" : "Duration unit option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weeks"
+          }
+        }
+      }
+    },
+    "Welcome back" : {
+      "comment" : "Login screen heading",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back"
+          }
+        }
+      }
+    },
+    "you@example.com" : {
+      "comment" : "Email field placeholder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "you@example.com"
+          }
+        }
+      }
+    },
+    "Your name" : {
+      "comment" : "Name field placeholder in Edit Profile",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your name"
+          }
+        }
+      }
+    },
+    "Your password" : {
+      "comment" : "Password field placeholder on login",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your password"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }

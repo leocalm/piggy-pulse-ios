@@ -3,9 +3,9 @@ import Foundation
 final class APIClient {
     static let baseURL = {
         #if DEBUG
-        return "http://127.0.0.1:8000/api/v1"
+        return "http://127.0.0.1:8000/v1"
         #else
-        return "https://api.piggy-pulse.com/api/v1"
+        return "https://api.piggy-pulse.com/v1"
         #endif
     }()
 
