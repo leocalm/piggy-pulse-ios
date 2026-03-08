@@ -266,14 +266,153 @@ struct OverlayFormSheet: View {
         }
     }
 
-    // MARK: - Step 2: Inclusion (stub)
+    // MARK: - Step 2: Inclusion
 
-    private var step2View: some View {
-        Text("Step 2: Inclusion Rules — coming soon")
-            .font(.ppBody)
-            .foregroundColor(.ppTextSecondary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, PPSpacing.xl)
+    @ViewBuilder private var step2View: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.xl) {
+            // Mode selection card
+            VStack(alignment: .leading, spacing: PPSpacing.lg) {
+                Text("Inclusion Rules")
+                    .font(.ppTitle3)
+                    .foregroundColor(.ppTextPrimary)
+
+                VStack(spacing: PPSpacing.sm) {
+                    inclusionModeRow(.manual, title: "Manual", description: "You decide what to include manually.", recommended: true)
+                    inclusionModeRow(.rulesBased, title: "Rules-based", description: "Include transactions automatically from category, vendor, or account rules.", recommended: false)
+                    inclusionModeRow(.includeAll, title: "Include everything", description: "Include every transaction inside the date range.", recommended: false)
+                }
+            }
+            .padding(PPSpacing.lg)
+            .background(Color.ppCard)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+
+            // Rules pickers (only when rules-based)
+            if inclusionMode == .rulesBased {
+                VStack(alignment: .leading, spacing: PPSpacing.lg) {
+                    Text("Rules")
+                        .font(.ppTitle3)
+                        .foregroundColor(.ppTextPrimary)
+
+                    if isLoadingOptions {
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                    } else {
+                        multiSelectSection(
+                            title: "Accounts",
+                            items: accountOptions.map { ($0.id, "\($0.icon) \($0.name)") },
+                            selected: $selectedAccountIds
+                        )
+                        multiSelectSection(
+                            title: "Categories",
+                            items: categoryOptions.map { ($0.id, "\($0.icon) \($0.name)") },
+                            selected: $selectedCategoryIds
+                        )
+                        multiSelectSection(
+                            title: "Vendors",
+                            items: vendorOptions.map { ($0.id, $0.name) },
+                            selected: $selectedVendorIds
+                        )
+                    }
+                }
+                .padding(PPSpacing.lg)
+                .background(Color.ppCard)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+            }
+        }
+    }
+
+    private func inclusionModeRow(_ mode: OverlayInclusionMode, title: String, description: String, recommended: Bool) -> some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation(.easeInOut(duration: 0.2)) { inclusionMode = mode }
+        } label: {
+            HStack(alignment: .top, spacing: PPSpacing.md) {
+                Image(systemName: inclusionMode == mode ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 20))
+                    .foregroundColor(inclusionMode == mode ? .ppPrimary : .ppTextTertiary)
+                    .padding(.top, 2)
+
+                VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                    HStack(spacing: PPSpacing.xs) {
+                        Text(title)
+                            .font(.ppHeadline)
+                            .foregroundColor(.ppTextPrimary)
+                        if recommended {
+                            Text("Recommended")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(.ppPrimary)
+                                .padding(.horizontal, 6).padding(.vertical, 2)
+                                .background(Color.ppPrimary.opacity(0.12))
+                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
+                        }
+                    }
+                    Text(description)
+                        .font(.ppCallout)
+                        .foregroundColor(.ppTextSecondary)
+                        .multilineTextAlignment(.leading)
+                }
+
+                Spacer()
+            }
+            .padding(PPSpacing.md)
+            .background(inclusionMode == mode ? Color.ppPrimary.opacity(0.06) : Color.ppSurface)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+            .overlay(
+                RoundedRectangle(cornerRadius: PPRadius.md)
+                    .stroke(inclusionMode == mode ? Color.ppPrimary.opacity(0.4) : Color.ppBorder, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func multiSelectSection(title: String, items: [(UUID, String)], selected: Binding<Set<UUID>>) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            HStack {
+                Text(title)
+                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                Spacer()
+                if !selected.wrappedValue.isEmpty {
+                    Text("\(selected.wrappedValue.count)")
+                        .font(.ppCaption).foregroundColor(.white)
+                        .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
+                        .background(Color.ppPrimary)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                }
+            }
+
+            if items.isEmpty {
+                Text("No \(title.lowercased()) available")
+                    .font(.ppCallout).foregroundColor(.ppTextTertiary)
+            } else {
+                VStack(spacing: PPSpacing.xs) {
+                    ForEach(items, id: \.0) { id, label in
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            if selected.wrappedValue.contains(id) {
+                                selected.wrappedValue.remove(id)
+                            } else {
+                                selected.wrappedValue.insert(id)
+                            }
+                        } label: {
+                            HStack {
+                                Text(label).font(.ppBody).foregroundColor(.ppTextPrimary)
+                                Spacer()
+                                if selected.wrappedValue.contains(id) {
+                                    Image(systemName: "checkmark")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundColor(.ppPrimary)
+                                }
+                            }
+                            .padding(.horizontal, PPSpacing.md).padding(.vertical, PPSpacing.sm)
+                            .background(selected.wrappedValue.contains(id) ? Color.ppPrimary.opacity(0.06) : Color.clear)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
     }
 
     // MARK: - Step 3: Caps (stub)
