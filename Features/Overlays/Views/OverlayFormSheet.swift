@@ -913,5 +913,27 @@ struct OverlayFormSheet: View {
         }
 
         inclusionMode = OverlayInclusionMode(rawValue: item.inclusionMode) ?? .includeAll
+
+        // Restore rules-based filter selections
+        if let rules = item.rules {
+            selectedAccountIds = Set(rules.accountIds)
+            selectedCategoryIds = Set(rules.categoryIds)
+            selectedVendorIds = Set(rules.vendorIds)
+        }
+
+        // Restore total cap
+        if let cap = item.totalCapAmount {
+            isTotalCapEnabled = true
+            totalCapText = String(format: "%.2f", Double(cap) / 100.0)
+        }
+
+        // Restore per-category caps
+        if let caps = item.categoryCaps, !caps.isEmpty {
+            isPerCategoryCapEnabled = true
+            for cap in caps {
+                categoryCapSelections.insert(cap.categoryId)
+                categoryCaps[cap.categoryId] = String(format: "%.2f", Double(cap.capAmount) / 100.0)
+            }
+        }
     }
 }
