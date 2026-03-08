@@ -11,6 +11,9 @@ struct TransactionFilterSheet: View {
     @State private var draftCategoryIds: Set<UUID>
     @State private var draftVendorIds: Set<UUID>
 
+    @State private var selectionFeedback = UISelectionFeedbackGenerator()
+    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+
     var onApply: (Set<UUID>, Set<UUID>, Set<UUID>) -> Void
 
     init(
@@ -74,18 +77,24 @@ struct TransactionFilterSheet: View {
                             }
                         }
 
-                        Section {
-                            Button("Clear All") {
-                                UISelectionFeedbackGenerator().selectionChanged()
-                                draftAccountIds = []
-                                draftCategoryIds = []
-                                draftVendorIds = []
+                        if !draftAccountIds.isEmpty || !draftCategoryIds.isEmpty || !draftVendorIds.isEmpty {
+                            Section {
+                                Button("Clear All") {
+                                    impactFeedback.impactOccurred()
+                                    draftAccountIds = []
+                                    draftCategoryIds = []
+                                    draftVendorIds = []
+                                }
+                                .foregroundColor(.ppDestructive)
+                                .frame(maxWidth: .infinity, alignment: .center)
                             }
-                            .foregroundColor(.ppDestructive)
-                            .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
                 }
+            }
+            .onAppear {
+                selectionFeedback.prepare()
+                impactFeedback.prepare()
             }
             .navigationTitle("Filter")
             .navigationBarTitleDisplayMode(.inline)
@@ -109,7 +118,7 @@ struct TransactionFilterSheet: View {
     @ViewBuilder
     private func filterRow(title: String, id: UUID, selected: Binding<Set<UUID>>) -> some View {
         Button {
-            UISelectionFeedbackGenerator().selectionChanged()
+            selectionFeedback.selectionChanged()
             if selected.wrappedValue.contains(id) {
                 selected.wrappedValue.remove(id)
             } else {
@@ -127,5 +136,6 @@ struct TransactionFilterSheet: View {
                 }
             }
         }
+        .buttonStyle(.plain)
     }
 }

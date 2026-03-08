@@ -170,7 +170,7 @@ struct TransactionsView: View {
                     } label: {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "line.3.horizontal.decrease.circle")
-                                .font(.system(size: 20))
+                                .imageScale(.medium)
                             if viewModel.activeFilterCount > 0 {
                                 Text("\(viewModel.activeFilterCount)")
                                     .font(.system(size: 10, weight: .bold))
@@ -182,6 +182,7 @@ struct TransactionsView: View {
                             }
                         }
                     }
+                    .accessibilityLabel(viewModel.activeFilterCount > 0 ? "Filter, \(viewModel.activeFilterCount) active" : "Filter")
                 }
             }
             .sheet(isPresented: $showFilterSheet) {
