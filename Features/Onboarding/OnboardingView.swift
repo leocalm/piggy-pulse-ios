@@ -19,7 +19,7 @@ struct OnboardingView: View {
                     // Header
                     VStack(spacing: PPSpacing.md) {
                         Text("Welcome to PiggyPulse")
-                            .font(.ppTitle2).fontWeight(.bold).foregroundColor(.ppTextPrimary)
+                            .font(.ppTitle).fontWeight(.bold).foregroundColor(.ppTextPrimary)
                         OnboardingStepIndicator(currentStep: vm.currentStep)
                     }
                     .padding(.top, PPSpacing.xl)
