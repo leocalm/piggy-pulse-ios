@@ -119,9 +119,15 @@ struct EditProfileSheet: View {
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), timezone: timezone)
         do {
             let _: ProfileResponse = try await appState.apiClient.request(.updateProfile, body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to update profile.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to update profile.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }

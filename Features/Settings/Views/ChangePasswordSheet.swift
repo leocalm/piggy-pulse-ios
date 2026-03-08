@@ -133,10 +133,13 @@ struct ChangePasswordSheet: View {
                 body: PasswordRequest(currentPassword: currentPassword, newPassword: newPassword)
             )
             success = true
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
         } catch let error as APIError {
             errorMessage = error.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         } catch {
             errorMessage = String(localized: "Failed to change password.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
         isLoading = false
     }
