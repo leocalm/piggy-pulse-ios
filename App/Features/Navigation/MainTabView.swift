@@ -47,11 +47,17 @@ struct MainTabView: View {
         Button {
             showAddTransaction = true
         } label: {
-            Image(systemName: "arrow.left.arrow.right.badge.plus")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(Color.ppPrimary)
-                .frame(width: 56, height: 56)
-                .glassEffect(.regular, in: Circle())
+            ZStack(alignment: .topTrailing) {
+                Image(systemName: "arrow.left.arrow.right")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Color.ppPrimary)
+                    .frame(width: 56, height: 56)
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Color.ppPrimary)
+                    .offset(x: 4, y: -4)
+            }
+            .glassEffect(.regular, in: Circle())
         }
         .padding(.trailing, PPSpacing.lg)
         .padding(.bottom, PPSpacing.xl)
