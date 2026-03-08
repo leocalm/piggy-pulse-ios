@@ -315,7 +315,7 @@ struct AutoCreationView: View {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Failed to save schedule."
+            errorMessage = String(localized: "Failed to save schedule.")
         }
 
         isSaving = false
@@ -330,7 +330,7 @@ struct AutoCreationView: View {
             schedule = nil
             isDisabled = true
         } catch {
-            errorMessage = "Failed to disable auto-creation."
+            errorMessage = String(localized: "Failed to disable auto-creation.")
         }
 
         isSaving = false

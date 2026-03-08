@@ -95,7 +95,7 @@ struct AddVendorSheet: View {
             try await appState.apiClient.request(.createVendor, body: req)
             onCreated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to create vendor." }
+        catch { errorMessage = String(localized: "Failed to create vendor.") }
         isLoading = false
     }
 }

@@ -234,7 +234,7 @@ struct OverlaysView: View {
             let response: [OverlayItem] = try await appState.apiClient.request(.overlays)
             overlays = response
         } catch {
-            errorMessage = "Failed to load overlays."
+            errorMessage = String(localized: "Failed to load overlays.")
         }
         isLoading = false
     }

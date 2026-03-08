@@ -27,7 +27,7 @@ final class PeriodsViewModel: ObservableObject {
             upcomingPeriods = all.filter { $0.status == .upcoming }
             pastPeriods = all.filter { $0.status == .ended }.reversed()
         } catch {
-            errorMessage = "Failed to load periods."
+            errorMessage = String(localized: "Failed to load periods.")
         }
 
         isLoading = false

@@ -181,7 +181,7 @@ struct VendorsView: View {
             )
             vendors = response.data
         } catch {
-            errorMessage = "Failed to load vendors."
+            errorMessage = String(localized: "Failed to load vendors.")
         }
         isLoading = false
     }

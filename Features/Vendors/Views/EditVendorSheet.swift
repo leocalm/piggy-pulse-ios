@@ -90,7 +90,7 @@ struct EditVendorSheet: View {
             try await appState.apiClient.request(.updateVendor(vendor.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to update vendor." }
+        catch { errorMessage = String(localized: "Failed to update vendor.") }
         isLoading = false
     }
 }

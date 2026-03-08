@@ -29,7 +29,7 @@ final class BudgetViewModel: ObservableObject {
             burnIn = b
             categories = c.data
         } catch {
-            errorMessage = "Failed to load budget data."
+            errorMessage = String(localized: "Failed to load budget data.")
         }
 
         isLoading = false

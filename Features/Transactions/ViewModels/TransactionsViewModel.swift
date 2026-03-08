@@ -35,7 +35,7 @@ final class TransactionsViewModel: ObservableObject {
             nextCursor = response.nextCursor
             hasMore = response.nextCursor != nil
         } catch {
-            errorMessage = "Failed to load transactions."
+            errorMessage = String(localized: "Failed to load transactions.")
         }
 
         isLoading = false

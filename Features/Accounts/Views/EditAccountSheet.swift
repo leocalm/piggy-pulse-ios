@@ -155,7 +155,7 @@ struct EditAccountSheet: View {
             try await appState.apiClient.request(.updateAccount(account.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to update account." }
+        catch { errorMessage = String(localized: "Failed to update account.") }
         isLoading = false
     }
 }

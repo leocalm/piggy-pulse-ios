@@ -131,7 +131,7 @@ struct AddCategorySheet: View {
             try await appState.apiClient.request(.createCategory, body: req)
             onCreated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to create category." }
+        catch { errorMessage = String(localized: "Failed to create category.") }
         isLoading = false
     }
 }

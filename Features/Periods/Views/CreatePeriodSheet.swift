@@ -315,7 +315,7 @@ struct CreatePeriodSheet: View {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Failed to create period."
+            errorMessage = String(localized: "Failed to create period.")
         }
 
         isLoading = false

@@ -195,7 +195,7 @@ struct SettingsView: View {
             profile = p
             preferences = pr
         } catch {
-            errorMessage = "Failed to load settings."
+            errorMessage = String(localized: "Failed to load settings.")
         }
         isLoading = false
     }

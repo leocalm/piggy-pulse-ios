@@ -191,7 +191,7 @@ struct AddAccountSheet: View {
             try await appState.apiClient.request(.createAccount, body: req)
             onCreated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to create account." }
+        catch { errorMessage = String(localized: "Failed to create account.") }
         isLoading = false
     }
 }

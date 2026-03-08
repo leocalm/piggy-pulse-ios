@@ -249,7 +249,7 @@ struct AccountsView: View {
             accounts = a.data
             summary = s
         } catch {
-            errorMessage = "Failed to load accounts."
+            errorMessage = String(localized: "Failed to load accounts.")
         }
         isLoading = false
     }

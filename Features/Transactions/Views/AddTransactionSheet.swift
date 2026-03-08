@@ -318,7 +318,7 @@ struct AddTransactionSheet: View {
             )
             vendors = vendorsResponse.data
         } catch {
-            errorMessage = "Failed to load form options."
+            errorMessage = String(localized: "Failed to load form options.")
         }
 
         isLoadingOptions = false
@@ -332,7 +332,7 @@ struct AddTransactionSheet: View {
 
         guard let categoryId = selectedCategory?.id,
               let fromAccountId = selectedFromAccount?.id else {
-            errorMessage = "Please select a category and account."
+            errorMessage = String(localized: "Please select a category and account.")
             isLoading = false
             return
         }
@@ -367,7 +367,7 @@ struct AddTransactionSheet: View {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Failed to create transaction."
+            errorMessage = String(localized: "Failed to create transaction.")
         }
 
         isLoading = false
