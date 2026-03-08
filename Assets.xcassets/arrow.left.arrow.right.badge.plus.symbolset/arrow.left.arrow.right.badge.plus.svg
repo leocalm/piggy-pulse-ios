@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+
+    <!--
+        SF Symbols custom symbol template.
+        Baseline at y=75, Capline at y=18, margins at x=5/x=95.
+        All three scale guides (S, M, L) share the same metrics in this single-artboard approach.
+    -->
+    <g id="Notes">
+        <!-- Baseline guides (required for all three scales) -->
+        <line id="Baseline-S" x1="0" y1="75" x2="100" y2="75" stroke="#00ADEF" stroke-width="0.5" fill="none"/>
+        <line id="Baseline-M" x1="0" y1="75" x2="100" y2="75" stroke="#00ADEF" stroke-width="0.5" fill="none"/>
+        <line id="Baseline-L" x1="0" y1="75" x2="100" y2="75" stroke="#00ADEF" stroke-width="0.5" fill="none"/>
+        <!-- Capline guides -->
+        <line id="Capline-S" x1="0" y1="18" x2="100" y2="18" stroke="#00ADEF" stroke-width="0.5" fill="none"/>
+        <line id="Capline-M" x1="0" y1="18" x2="100" y2="18" stroke="#00ADEF" stroke-width="0.5" fill="none"/>
+        <line id="Capline-L" x1="0" y1="18" x2="100" y2="18" stroke="#00ADEF" stroke-width="0.5" fill="none"/>
+        <!-- Left margin guides -->
+        <line id="Left-Margin-S"  x1="5" y1="0" x2="5"  y2="100" stroke="#EF0000" stroke-width="0.5" fill="none"/>
+        <line id="Left-Margin-M"  x1="5" y1="0" x2="5"  y2="100" stroke="#EF0000" stroke-width="0.5" fill="none"/>
+        <line id="Left-Margin-L"  x1="5" y1="0" x2="5"  y2="100" stroke="#EF0000" stroke-width="0.5" fill="none"/>
+        <!-- Right margin guides -->
+        <line id="Right-Margin-S" x1="95" y1="0" x2="95" y2="100" stroke="#EF0000" stroke-width="0.5" fill="none"/>
+        <line id="Right-Margin-M" x1="95" y1="0" x2="95" y2="100" stroke="#EF0000" stroke-width="0.5" fill="none"/>
+        <line id="Right-Margin-L" x1="95" y1="0" x2="95" y2="100" stroke="#EF0000" stroke-width="0.5" fill="none"/>
+    </g>
+
+    <g id="Symbols">
+
+        <!-- regular-S: small scale -->
+        <g id="regular-S">
+            <!-- Left arrow (←) -->
+            <path d="M 8,50 L 25,40 L 25,46 L 58,46 L 58,54 L 25,54 L 25,60 Z"/>
+            <!-- Right arrow (→) -->
+            <path d="M 92,64 L 75,54 L 75,60 L 42,60 L 42,68 L 75,68 L 75,74 Z"/>
+            <!-- Badge circle with plus cutout -->
+            <!-- Circle: cx=80, cy=22, r=13 -->
+            <path fill-rule="evenodd" d="
+                M 93,22 A 13,13 0 1,0 67,22 A 13,13 0 1,0 93,22 Z
+                M 77,16 L 83,16 L 83,28 L 77,28 Z
+                M 74,19 L 86,19 L 86,25 L 74,25 Z
+            "/>
+        </g>
+
+        <!-- regular-M: medium scale (primary design) -->
+        <g id="regular-M">
+            <!-- Left arrow (←) -->
+            <path d="M 8,50 L 25,40 L 25,46 L 58,46 L 58,54 L 25,54 L 25,60 Z"/>
+            <!-- Right arrow (→) -->
+            <path d="M 92,64 L 75,54 L 75,60 L 42,60 L 42,68 L 75,68 L 75,74 Z"/>
+            <!-- Badge circle with plus cutout -->
+            <path fill-rule="evenodd" d="
+                M 93,22 A 13,13 0 1,0 67,22 A 13,13 0 1,0 93,22 Z
+                M 77,16 L 83,16 L 83,28 L 77,28 Z
+                M 74,19 L 86,19 L 86,25 L 74,25 Z
+            "/>
+        </g>
+
+        <!-- regular-L: large scale -->
+        <g id="regular-L">
+            <!-- Left arrow (←) -->
+            <path d="M 8,50 L 25,40 L 25,46 L 58,46 L 58,54 L 25,54 L 25,60 Z"/>
+            <!-- Right arrow (→) -->
+            <path d="M 92,64 L 75,54 L 75,60 L 42,60 L 42,68 L 75,68 L 75,74 Z"/>
+            <!-- Badge circle with plus cutout -->
+            <path fill-rule="evenodd" d="
+                M 93,22 A 13,13 0 1,0 67,22 A 13,13 0 1,0 93,22 Z
+                M 77,16 L 83,16 L 83,28 L 77,28 Z
+                M 74,19 L 86,19 L 86,25 L 74,25 Z
+            "/>
+        </g>
+
+    </g>
+
+</svg>
