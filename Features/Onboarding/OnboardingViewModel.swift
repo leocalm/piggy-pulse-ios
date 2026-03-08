@@ -135,7 +135,7 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Step saves
 
     private func savePeriod() async throws {
-        struct ScheduleRequest: Encodable {
+        struct ScheduleConfig: Encodable {
             let startDay: Int
             let durationValue: Int
             let durationUnit: String
@@ -144,7 +144,11 @@ final class OnboardingViewModel: ObservableObject {
             let namePattern: String
             let generateAhead: Int
         }
-        let req = ScheduleRequest(
+        struct PeriodModelRequest: Encodable {
+            let mode: String
+            let schedule: ScheduleConfig
+        }
+        let schedule = ScheduleConfig(
             startDay: customize ? startDay : 1,
             durationValue: customize ? periodLength : 1,
             durationUnit: "months",
@@ -153,7 +157,7 @@ final class OnboardingViewModel: ObservableObject {
             namePattern: "MMMM yyyy",
             generateAhead: customize ? periodsToPrepare : 3
         )
-        let _: PeriodSchedule = try await apiClient.request(.createSchedule, body: req)
+        try await apiClient.request(.updatePeriodModel, body: PeriodModelRequest(mode: "automatic", schedule: schedule))
     }
 
     private func saveAccounts() async throws {

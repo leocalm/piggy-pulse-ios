@@ -35,6 +35,7 @@ extension APIEndpoint {
     static let me = APIEndpoint(path: "/users/me", method: .get, requiresAuth: true)
     static let updateProfile = APIEndpoint(path: "/settings/profile", method: .put, requiresAuth: true)
     static let updatePreferences = APIEndpoint(path: "/settings/preferences", method: .put, requiresAuth: true)
+    static let updatePeriodModel = APIEndpoint(path: "/settings/period-model", method: .put, requiresAuth: true)
 }
 
 // MARK - Currencies

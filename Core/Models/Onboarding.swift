@@ -32,9 +32,9 @@ enum OnboardingStep: String, CaseIterable {
 // MARK: - Weekend behavior
 
 enum WeekendBehavior: String, CaseIterable {
-    case keep = "Keep"
-    case shiftFriday = "ShiftFriday"
-    case shiftMonday = "ShiftMonday"
+    case keep = "keep"
+    case shiftFriday = "friday"
+    case shiftMonday = "monday"
 
     var label: String {
         switch self {
