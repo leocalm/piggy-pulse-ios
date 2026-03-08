@@ -577,14 +577,180 @@ struct OverlayFormSheet: View {
         }
     }
 
-    // MARK: - Step 4: Review (stub)
+    // MARK: - Step 4: Review
 
     private var step4View: some View {
-        Text("Step 4: Review — coming soon")
-            .font(.ppBody)
-            .foregroundColor(.ppTextSecondary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, PPSpacing.xl)
+        VStack(alignment: .leading, spacing: PPSpacing.lg) {
+
+            // Edit-mode warning
+            if isEditMode {
+                HStack(alignment: .top, spacing: PPSpacing.sm) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.ppAmber)
+                        .font(.ppBody)
+                    Text("Changing date range or inclusion mode updates which transactions may belong to this overlay.")
+                        .font(.ppCallout)
+                        .foregroundColor(.ppTextPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(PPSpacing.md)
+                .background(Color.ppAmber.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppAmber.opacity(0.3), lineWidth: 1))
+            }
+
+            // Summary card
+            VStack(alignment: .leading, spacing: PPSpacing.md) {
+                Text("Summary")
+                    .font(.ppTitle3)
+                    .foregroundColor(.ppTextPrimary)
+
+                Divider().background(Color.ppBorder)
+
+                // Row 1: Name
+                reviewRow(label: "Name") {
+                    HStack(spacing: PPSpacing.xs) {
+                        if let emoji = selectedEmoji {
+                            Text(emoji).font(.ppBody)
+                        }
+                        Text(name.trimmingCharacters(in: .whitespaces))
+                            .font(.ppBody)
+                            .foregroundColor(.ppTextPrimary)
+                    }
+                }
+
+                Divider().background(Color.ppBorder)
+
+                // Row 2: Date Range
+                reviewRow(label: "Date Range") {
+                    Text(formatReviewDateRange())
+                        .font(.ppBody)
+                        .foregroundColor(.ppTextPrimary)
+                        .multilineTextAlignment(.trailing)
+                }
+
+                Divider().background(Color.ppBorder)
+
+                // Row 3: Inclusion
+                VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                    reviewRow(label: "Inclusion") {
+                        Text(inclusionModeLabel(inclusionMode))
+                            .font(.ppBody)
+                            .foregroundColor(.ppTextPrimary)
+                    }
+                    if inclusionMode == .rulesBased {
+                        let accountCount = selectedAccountIds.count
+                        let categoryCount = selectedCategoryIds.count
+                        let vendorCount = selectedVendorIds.count
+                        let parts = [
+                            accountCount > 0 ? "\(accountCount) account\(accountCount == 1 ? "" : "s")" : nil,
+                            categoryCount > 0 ? "\(categoryCount) categor\(categoryCount == 1 ? "y" : "ies")" : nil,
+                            vendorCount > 0 ? "\(vendorCount) vendor\(vendorCount == 1 ? "" : "s")" : nil
+                        ].compactMap { $0 }
+                        if !parts.isEmpty {
+                            Text(parts.joined(separator: ", "))
+                                .font(.ppCaption)
+                                .foregroundColor(.ppTextTertiary)
+                                .padding(.leading, PPSpacing.sm)
+                        }
+                    }
+                }
+
+                Divider().background(Color.ppBorder)
+
+                // Row 4: Total Cap
+                reviewRow(label: "Total Cap") {
+                    if isTotalCapEnabled, let cents = totalCapAmountCents {
+                        Text(formatCentsForReview(cents))
+                            .font(.ppBody)
+                            .foregroundColor(.ppTextPrimary)
+                    } else {
+                        Text("None")
+                            .font(.ppBody)
+                            .foregroundColor(.ppTextTertiary)
+                    }
+                }
+
+                // Row 5: Per-Category Caps (only if enabled and selections non-empty)
+                if isPerCategoryCapEnabled && !categoryCapSelections.isEmpty {
+                    Divider().background(Color.ppBorder)
+
+                    VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                        Text("Per-Category Caps")
+                            .font(.ppCallout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.ppTextSecondary)
+
+                        ForEach(categoryOptions.filter { categoryCapSelections.contains($0.id) }) { category in
+                            HStack {
+                                Text("\(category.icon) \(category.name)")
+                                    .font(.ppBody)
+                                    .foregroundColor(.ppTextPrimary)
+                                Spacer()
+                                if let text = categoryCaps[category.id],
+                                   let value = Double(text.replacingOccurrences(of: ",", with: ".")) {
+                                    Text(formatCentsForReview(Int64(value * 100)))
+                                        .font(.ppBody)
+                                        .foregroundColor(.ppTextPrimary)
+                                } else {
+                                    Text("—")
+                                        .font(.ppBody)
+                                        .foregroundColor(.ppTextTertiary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(PPSpacing.lg)
+            .background(Color.ppCard)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+
+            // Submit error
+            if let error = errorMessage {
+                Text(error)
+                    .font(.ppCallout)
+                    .foregroundColor(.ppDestructive)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+    }
+
+    // MARK: - Review Helpers
+
+    private func reviewRow<Content: View>(label: String, @ViewBuilder content: () -> Content) -> some View {
+        HStack(alignment: .top) {
+            Text(label)
+                .font(.ppCallout)
+                .fontWeight(.semibold)
+                .foregroundColor(.ppTextSecondary)
+            Spacer()
+            content()
+        }
+    }
+
+    private func formatReviewDateRange() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        let startStr = formatter.string(from: startDate)
+        let endStr = formatter.string(from: endDate)
+        let days = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day.map { $0 + 1 } ?? 1
+        return "\(startStr) – \(endStr) · \(days) day\(days == 1 ? "" : "s")"
+    }
+
+    private func inclusionModeLabel(_ mode: OverlayInclusionMode) -> String {
+        switch mode {
+        case .manual: return "Manual"
+        case .rulesBased: return "Rules-based"
+        case .includeAll: return "Include everything"
+        }
+    }
+
+    private func formatCentsForReview(_ cents: Int64) -> String {
+        let value = Double(cents) / 100.0
+        return String(format: "%.2f %@", value, appState.currencyCode)
     }
 
     // MARK: - Navigation Buttons
