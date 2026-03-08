@@ -10,7 +10,11 @@ struct RootView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.ppBackground)
             } else if appState.isAuthenticated {
-                MainTabView()
+                if appState.currentUser?.onboardingStatus == "completed" {
+                    MainTabView()
+                } else {
+                    OnboardingView(apiClient: appState.apiClient)
+                }
             } else {
                 NavigationStack {
                     LoginView()

@@ -35,6 +35,7 @@ extension APIEndpoint {
     static let me = APIEndpoint(path: "/users/me", method: .get, requiresAuth: true)
     static let updateProfile = APIEndpoint(path: "/settings/profile", method: .put, requiresAuth: true)
     static let updatePreferences = APIEndpoint(path: "/settings/preferences", method: .put, requiresAuth: true)
+    static let updatePeriodModel = APIEndpoint(path: "/settings/period-model", method: .put, requiresAuth: true)
 }
 
 // MARK - Currencies
@@ -91,6 +92,7 @@ extension APIEndpoint {
     }
     static let accountOptions = APIEndpoint(path: "/accounts/options", method: .get, requiresAuth: true)
     static let accountsSummary = APIEndpoint(path: "/accounts/summary", method: .get, requiresAuth: true)
+    static let accountsManagement = APIEndpoint(path: "/accounts/management", method: .get, requiresAuth: true)
 
 }
 
@@ -179,4 +181,11 @@ extension APIEndpoint {
     static let profile = APIEndpoint(path: "/settings/profile", method: .get, requiresAuth: true)
     static let preferences = APIEndpoint(path: "/settings/preferences", method: .get, requiresAuth: true)
     static let changePassword = APIEndpoint(path: "/settings/security/password", method: .post, requiresAuth: true)
+}
+
+// MARK: - Onboarding
+
+extension APIEndpoint {
+    static let onboardingStatus = APIEndpoint(path: "/onboarding/status", method: .get, requiresAuth: true)
+    static let completeOnboarding = APIEndpoint(path: "/onboarding/complete", method: .post, requiresAuth: true)
 }
