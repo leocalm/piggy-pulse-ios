@@ -158,6 +158,21 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     private func saveAccounts() async throws {
+        // Set default currency before creating accounts (required by backend).
+        // Must include name + timezone since PUT /settings/profile requires them.
+        if let currencyId = selectedCurrencyId {
+            struct ProfileResponse: Decodable { let name: String; let timezone: String }
+            struct ProfileRequest: Encodable {
+                let name: String; let timezone: String; let defaultCurrencyId: UUID
+            }
+            let current: ProfileResponse = try await apiClient.request(.profile)
+            try await apiClient.request(.updateProfile, body: ProfileRequest(
+                name: current.name,
+                timezone: current.timezone,
+                defaultCurrencyId: currencyId
+            ))
+        }
+
         struct AccountRequest: Encodable {
             let name: String; let color: String; let icon: String
             let accountType: String; let balance: Int64; let spendLimit: Int32?
