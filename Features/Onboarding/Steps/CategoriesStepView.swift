@@ -6,7 +6,6 @@ struct CategoriesStepView: View {
     private let templates: [(title: String, subtitle: String, template: CategoryTemplate)] = [
         ("Essential 5",  "5 basic categories to get started",        .essential),
         ("Detailed 12",  "12 categories for detailed tracking",       .detailed),
-        ("Custom",       "Start with an empty list",                  .custom),
     ]
 
     var body: some View {

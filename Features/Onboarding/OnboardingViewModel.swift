@@ -42,8 +42,7 @@ final class OnboardingViewModel: ObservableObject {
                 && !accounts.isEmpty
                 && accounts.allSatisfy(\.isValid)
         case .categories:
-            return selectedTemplate != .none
-                && categories.contains(where: { $0.categoryType == "Incoming" })
+            return categories.contains(where: { $0.categoryType == "Incoming" })
                 && categories.contains(where: { $0.categoryType == "Outgoing" })
         case .summary:
             return true
