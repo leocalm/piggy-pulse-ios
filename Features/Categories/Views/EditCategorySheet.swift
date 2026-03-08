@@ -120,9 +120,15 @@ struct EditCategorySheet: View {
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: icon, categoryType: categoryType)
         do {
             try await appState.apiClient.request(.updateCategory(category.id), body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onUpdated(); dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to update category.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to update category.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }
