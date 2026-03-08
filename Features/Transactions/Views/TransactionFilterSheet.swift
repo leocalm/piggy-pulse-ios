@@ -6,10 +6,6 @@ struct TransactionFilterSheet: View {
     let filterOptions: TransactionFilterOptions
     let isLoadingOptions: Bool
 
-    @Binding var selectedAccountIds: Set<UUID>
-    @Binding var selectedCategoryIds: Set<UUID>
-    @Binding var selectedVendorIds: Set<UUID>
-
     // Local draft state — only committed on Apply
     @State private var draftAccountIds: Set<UUID>
     @State private var draftCategoryIds: Set<UUID>
@@ -20,20 +16,17 @@ struct TransactionFilterSheet: View {
     init(
         filterOptions: TransactionFilterOptions,
         isLoadingOptions: Bool,
-        selectedAccountIds: Binding<Set<UUID>>,
-        selectedCategoryIds: Binding<Set<UUID>>,
-        selectedVendorIds: Binding<Set<UUID>>,
+        initialAccountIds: Set<UUID> = [],
+        initialCategoryIds: Set<UUID> = [],
+        initialVendorIds: Set<UUID> = [],
         onApply: @escaping (Set<UUID>, Set<UUID>, Set<UUID>) -> Void
     ) {
         self.filterOptions = filterOptions
         self.isLoadingOptions = isLoadingOptions
-        self._selectedAccountIds = selectedAccountIds
-        self._selectedCategoryIds = selectedCategoryIds
-        self._selectedVendorIds = selectedVendorIds
         self.onApply = onApply
-        _draftAccountIds = State(initialValue: selectedAccountIds.wrappedValue)
-        _draftCategoryIds = State(initialValue: selectedCategoryIds.wrappedValue)
-        _draftVendorIds = State(initialValue: selectedVendorIds.wrappedValue)
+        _draftAccountIds = State(initialValue: initialAccountIds)
+        _draftCategoryIds = State(initialValue: initialCategoryIds)
+        _draftVendorIds = State(initialValue: initialVendorIds)
     }
 
     var body: some View {
@@ -80,6 +73,17 @@ struct TransactionFilterSheet: View {
                                 }
                             }
                         }
+
+                        Section {
+                            Button("Clear All") {
+                                UISelectionFeedbackGenerator().selectionChanged()
+                                draftAccountIds = []
+                                draftCategoryIds = []
+                                draftVendorIds = []
+                            }
+                            .foregroundStyle(.ppDestructive)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        }
                     }
                 }
             }
@@ -87,12 +91,9 @@ struct TransactionFilterSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Clear All") {
-                        draftAccountIds = []
-                        draftCategoryIds = []
-                        draftVendorIds = []
+                    Button("Cancel") {
+                        dismiss()
                     }
-                    .foregroundColor(.ppDestructive)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Apply") {
@@ -117,11 +118,11 @@ struct TransactionFilterSheet: View {
         } label: {
             HStack {
                 Text(title)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundStyle(.ppTextPrimary)
                 Spacer()
                 if selected.wrappedValue.contains(id) {
                     Image(systemName: "checkmark")
-                        .foregroundColor(.ppPrimary)
+                        .foregroundStyle(.ppPrimary)
                         .fontWeight(.semibold)
                 }
             }
