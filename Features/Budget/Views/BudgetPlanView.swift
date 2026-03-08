@@ -9,8 +9,7 @@ struct BudgetPlanView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
+        List {
                 if viewModel.isLoading {
                     Section {
                         HStack {
@@ -107,9 +106,6 @@ struct BudgetPlanView: View {
             }
             .navigationTitle("Category targets")
             .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Manage your spending limits.")
-            
-        }
     }
 
     // MARK: - Summary Card

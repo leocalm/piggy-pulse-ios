@@ -5,7 +5,7 @@ struct CategoriesView: View {
     @State private var incoming: [CategoryManagementItem] = []
     @State private var outgoing: [CategoryManagementItem] = []
     @State private var archived: [CategoryManagementItem] = []
-    @State private var isLoading = true
+    @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showArchived = false
     @State private var showAddSheet = false
@@ -15,14 +15,7 @@ struct CategoriesView: View {
 
     var body: some View {
         List {
-                if isLoading {
-                    Section {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                            .padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                    }
-                } else if let error = errorMessage {
+                if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
@@ -93,8 +86,6 @@ struct CategoriesView: View {
                 Text("This category will be permanently deleted.")
             }
             .navigationTitle("Categories")
-            .navigationBarTitleDisplayMode(.large)
-            .navigationSubtitle("Organize your transactions by type.")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

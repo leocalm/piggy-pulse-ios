@@ -48,7 +48,7 @@ struct MainTabView: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             showAddTransaction = true
         } label: {
-            Image(systemName: "text.badge.plus")
+            Image("custom.arrow.left.arrow.right.badge.plus")
                 .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(Color.ppPrimary)
                 .frame(width: 56, height: 56)
@@ -139,8 +139,6 @@ struct MainTabView: View {
             }
             .background(Color.ppBackground)
             .navigationTitle("More")
-            .toolbarBackground(Color.ppBackground, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 

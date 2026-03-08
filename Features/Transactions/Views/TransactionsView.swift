@@ -161,7 +161,6 @@ struct TransactionsView: View {
                 Text("This transaction will be permanently deleted.")
             }
             .navigationTitle("Transactions")
-            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

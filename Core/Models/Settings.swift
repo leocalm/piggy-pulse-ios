@@ -11,5 +11,4 @@ struct PreferencesResponse: Codable {
     let theme: String
     let dateFormat: String
     let numberFormat: String
-    let compactMode: Bool
 }

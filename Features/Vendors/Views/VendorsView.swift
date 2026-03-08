@@ -3,7 +3,7 @@ import SwiftUI
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
     @State private var vendors: [VendorListItem] = []
-    @State private var isLoading = true
+    @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showAddSheet = false
     @State private var editingVendor: VendorListItem?

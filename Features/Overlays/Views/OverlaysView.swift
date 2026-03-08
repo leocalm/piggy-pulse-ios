@@ -3,7 +3,7 @@ import SwiftUI
 struct OverlaysView: View {
     @EnvironmentObject var appState: AppState
     @State private var overlays: [OverlayItem] = []
-    @State private var isLoading = true
+    @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showPast = false
     @State private var showCreateSheet = false

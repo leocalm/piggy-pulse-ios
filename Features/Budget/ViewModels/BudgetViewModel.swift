@@ -5,7 +5,7 @@ internal import Combine
 final class BudgetViewModel: ObservableObject {
     @Published var burnIn: MonthlyBurnIn?
     @Published var categories: [BudgetCategoryItem] = []
-    @Published var isLoading = true
+    @Published var isLoading = false
     @Published var errorMessage: String?
 
     private let apiClient: APIClient

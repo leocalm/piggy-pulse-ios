@@ -4,10 +4,15 @@ struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @State private var profile: ProfileResponse?
     @State private var preferences: PreferencesResponse?
-    @State private var isLoading = true
+    @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showChangePassword = false
     @State private var showEditProfile = false
+    @State private var selectedTheme = "system"
+    @State private var selectedDateFormat = "DD/MM/YYYY"
+    @State private var selectedNumberFormat = "1,234.56"
+    @State private var isSavingPreferences = false
+    @State private var preferencesDirty = false
 
     var body: some View {
         ScrollView {
@@ -32,9 +37,7 @@ struct SettingsView: View {
                         securityCard
                         
                         // Preferences card
-                        if let prefs = preferences {
-                            preferencesCard(prefs)
-                        }
+                        preferencesCard
                         
                         // App info
                         appInfoCard
@@ -43,8 +46,6 @@ struct SettingsView: View {
                 .padding(PPSpacing.lg)
             }
             .background(Color.ppBackground)
-            .toolbarBackground(Color.ppBackground, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
             .sheet(isPresented: $showChangePassword) {
                 ChangePasswordSheet()
                     .environmentObject(appState)
@@ -62,28 +63,31 @@ struct SettingsView: View {
 
     private func profileCard(_ p: ProfileResponse) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            HStack {
-                Text("PROFILE")
-                    .font(.ppOverline)
-                    .foregroundColor(.ppTextSecondary)
-                    .tracking(1)
-                Spacer()
-                Button {
-                    showEditProfile = true
-                } label: {
-                    Label("Edit", systemImage: "pencil")
-                        .font(.ppCaption)
-                        .foregroundColor(.ppPrimary)
-                        .padding(.horizontal, PPSpacing.md)
-                        .padding(.vertical, PPSpacing.sm)
-                        .background(Color.ppPrimary.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
-                }
-            }
+            Text("PROFILE")
+                .font(.ppOverline)
+                .foregroundColor(.ppTextSecondary)
+                .tracking(1)
 
             settingsRow("Name", value: p.name)
             settingsRow("Email", value: p.email)
-            settingsRow("Timezone", value: p.timezone)
+            settingsRow("Currency", value: appState.currencyCode)
+
+            Divider().background(Color.ppBorder)
+
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                showEditProfile = true
+            } label: {
+                HStack {
+                    Label("Edit Profile", systemImage: "pencil")
+                        .font(.ppBody)
+                        .foregroundColor(.ppPrimary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.ppTextTertiary)
+                }
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
@@ -101,26 +105,18 @@ struct SettingsView: View {
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Password")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
-                    Text("••••••••")
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                showChangePassword = true
+            } label: {
+                HStack {
+                    Label("Change Password", systemImage: "key")
                         .font(.ppBody)
                         .foregroundColor(.ppTextPrimary)
-                }
-                Spacer()
-                Button {
-                    showChangePassword = true
-                } label: {
-                    Label("Change", systemImage: "key")
-                        .font(.ppCaption)
-                        .foregroundColor(.ppPrimary)
-                        .padding(.horizontal, PPSpacing.md)
-                        .padding(.vertical, PPSpacing.sm)
-                        .background(Color.ppPrimary.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.ppTextTertiary)
                 }
             }
         }
@@ -133,23 +129,74 @@ struct SettingsView: View {
 
     // MARK: - Preferences
 
-    private func preferencesCard(_ prefs: PreferencesResponse) -> some View {
+    private var preferencesCard: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("PREFERENCES")
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            settingsRow("Theme", value: prefs.theme.capitalized)
-            settingsRow("Date Format", value: prefs.dateFormat)
-            settingsRow("Number Format", value: prefs.numberFormat)
-            settingsRow("Compact Mode", value: prefs.compactMode ? "On" : "Off")
+            preferenceRow("Theme", selection: $selectedTheme, options: [
+                ("system", "System"), ("light", "Light"), ("dark", "Dark")
+            ])
+            .onChange(of: selectedTheme) { _, _ in preferencesDirty = true }
+
+            preferenceRow("Date Format", selection: $selectedDateFormat, options: [
+                ("DD/MM/YYYY", "DD/MM/YYYY"),
+                ("MM/DD/YYYY", "MM/DD/YYYY"),
+                ("YYYY-MM-DD", "YYYY-MM-DD")
+            ])
+            .onChange(of: selectedDateFormat) { _, _ in preferencesDirty = true }
+
+            preferenceRow("Number Format", selection: $selectedNumberFormat, options: [
+                ("1.234,56", "1.234,56"),
+                ("1,234.56", "1,234.56"),
+                ("1 234.56", "1 234.56")
+            ])
+            .onChange(of: selectedNumberFormat) { _, _ in preferencesDirty = true }
+
+            if preferencesDirty {
+                Divider().background(Color.ppBorder)
+
+                Button {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    Task { await savePreferences() }
+                } label: {
+                    HStack {
+                        Label("Save Preferences", systemImage: "checkmark")
+                            .font(.ppBody)
+                            .foregroundColor(.ppPrimary)
+                        Spacer()
+                        if isSavingPreferences {
+                            ProgressView().tint(.ppTextSecondary)
+                        }
+                    }
+                }
+                .disabled(isSavingPreferences)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .animation(.easeInOut(duration: 0.2), value: preferencesDirty)
+    }
+
+    private func preferenceRow(_ label: LocalizedStringKey, selection: Binding<String>, options: [(String, String)]) -> some View {
+        HStack {
+            Text(label)
+                .font(.ppCallout)
+                .foregroundColor(.ppTextSecondary)
+            Spacer()
+            Picker("", selection: selection) {
+                ForEach(options, id: \.0) { value, display in
+                    Text(display).tag(value)
+                }
+            }
+            .pickerStyle(.menu)
+            .tint(.ppTextPrimary)
+        }
     }
 
     // MARK: - App Info
@@ -194,9 +241,33 @@ struct SettingsView: View {
             let (p, pr) = try await (profileTask, prefsTask)
             profile = p
             preferences = pr
+            selectedTheme = pr.theme == "auto" ? "system" : pr.theme
+            selectedDateFormat = pr.dateFormat
+            selectedNumberFormat = pr.numberFormat
         } catch {
             errorMessage = String(localized: "Failed to load settings.")
         }
         isLoading = false
+    }
+
+    private func savePreferences() async {
+        isSavingPreferences = true
+        struct Req: Encodable {
+            let theme: String
+            let dateFormat: String
+            let numberFormat: String
+            let compactMode: Bool
+        }
+        let themeValue = selectedTheme == "system" ? "auto" : selectedTheme
+        let req = Req(theme: themeValue, dateFormat: selectedDateFormat, numberFormat: selectedNumberFormat, compactMode: false)
+        do {
+            let updated: PreferencesResponse = try await appState.apiClient.request(.updatePreferences, body: req)
+            preferences = updated
+            preferencesDirty = false
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        } catch {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
+        isSavingPreferences = false
     }
 }
