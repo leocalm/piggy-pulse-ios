@@ -110,11 +110,7 @@ extension APIEndpoint {
     static func archiveCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)/archive", method: .post, requiresAuth: true)
     }
-    // Add to Categories section - we'll reuse the list with period_id
-    static func categoriesForPeriod(periodId: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/categories/", method: .get, requiresAuth: true)
-    }
-    static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
+static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
     static let transferCategory = APIEndpoint(path: "/categories/transfer", method: .get, requiresAuth: true)
     static let categoriesManagement = APIEndpoint(path: "/categories/management", method: .get, requiresAuth: true)
 

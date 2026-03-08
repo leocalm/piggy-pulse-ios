@@ -15,7 +15,9 @@ struct EditCategoryTargetSheet: View {
 
     private var parsedCents: Int32? {
         guard let value = Double(amountText.replacingOccurrences(of: ",", with: ".")) else { return nil }
-        return Int32(value * 100)
+        let cents = value * 100
+        guard cents >= 1, cents <= Double(Int32.max) else { return nil }
+        return Int32(cents)
     }
 
     private var isSaveDisabled: Bool {
