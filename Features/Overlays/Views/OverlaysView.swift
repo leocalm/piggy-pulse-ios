@@ -104,12 +104,14 @@ struct OverlaysView: View {
                 Task { await load() }
             })
             .environmentObject(appState)
+            .presentationDetents([.large])
         }
         .sheet(item: $overlayToEdit) { overlay in
             OverlayFormSheet(overlay: overlay, onSaved: {
                 Task { await load() }
             })
             .environmentObject(appState)
+            .presentationDetents([.large])
         }
     }
 

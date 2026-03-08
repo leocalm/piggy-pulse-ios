@@ -39,6 +39,8 @@ struct EmojiPickerGrid: View {
                                 lineWidth: 2
                             )
                     )
+                    .accessibilityLabel(selectedEmoji == emoji ? "Selected emoji \(emoji)" : "Emoji \(emoji)")
+                    .accessibilityAddTraits(selectedEmoji == emoji ? .isSelected : [])
                     .onTapGesture {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         if selectedEmoji == emoji {

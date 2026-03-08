@@ -86,12 +86,14 @@ struct OverlayFormSheet: View {
                             currentStepView
                         }
                         .padding(PPSpacing.xl)
+                        .padding(.bottom, PPSpacing.xl)
                     }
-
-                    Divider().background(Color.ppBorder)
-                    navigationButtons
-                        .padding(.horizontal, PPSpacing.xl)
-                        .padding(.vertical, PPSpacing.lg)
+                    .safeAreaInset(edge: .bottom) {
+                        navigationButtons
+                            .padding(.horizontal, PPSpacing.xl)
+                            .padding(.vertical, PPSpacing.md)
+                            .background(.ultraThinMaterial)
+                    }
                 }
             }
             .navigationTitle(isEditMode ? "Edit Overlay" : "New Overlay")
@@ -120,6 +122,7 @@ struct OverlayFormSheet: View {
                     endDate = Calendar.current.date(byAdding: .day, value: 1, to: newStart) ?? newStart
                 }
             }
+            .presentationDetents([.large])
         }
     }
 
@@ -143,6 +146,8 @@ struct OverlayFormSheet: View {
                         .font(.ppCaption)
                         .foregroundColor(index == currentStep ? .ppPrimary : .ppTextTertiary)
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(labels[index]), step \(index + 1) of \(labels.count)\(index == currentStep ? ", current" : index < currentStep ? ", completed" : "")")
                 if index < 3 {
                     Rectangle()
                         .fill(index < currentStep ? Color.ppPrimary.opacity(0.5) : Color.ppBorder)
