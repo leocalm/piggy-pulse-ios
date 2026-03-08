@@ -311,13 +311,7 @@ struct TransactionsView: View {
     // MARK: - Helpers
 
     private func formatAmount(_ tx: Transaction) -> String {
-        let value = Double(tx.amount) / 100.0
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "EUR"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter.string(from: NSNumber(value: value)) ?? "€0.00"
+        formatCurrency(tx.amount, code: appState.currencyCode)
     }
     
     private func deleteTransaction(_ tx: Transaction) async {

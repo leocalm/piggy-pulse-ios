@@ -46,6 +46,13 @@ struct OverlayFormSheet: View {
 
     private var isEditMode: Bool { overlay != nil }
 
+    private var currencySymbol: String {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        fmt.currencyCode = appState.currencyCode
+        return fmt.currencySymbol ?? appState.currencyCode
+    }
+
     private var step1Valid: Bool {
         !name.trimmingCharacters(in: .whitespaces).isEmpty
     }
@@ -449,27 +456,20 @@ struct OverlayFormSheet: View {
 
                 // Currency text field, shown when enabled
                 if isTotalCapEnabled {
-                    HStack(spacing: PPSpacing.sm) {
-                        Text(appState.currencyCode)
-                            .font(.ppBody.weight(.semibold))
+                    HStack {
+                        Text(currencySymbol)
+                            .font(.ppBody)
                             .foregroundColor(.ppTextSecondary)
-                            .padding(.horizontal, PPSpacing.md)
-                            .padding(.vertical, PPSpacing.md)
-                            .background(Color.ppSurface)
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-
                         TextField("0.00", text: $totalCapText)
                             .font(.ppBody)
                             .foregroundColor(.ppTextPrimary)
                             .keyboardType(.decimalPad)
-                            .padding(.horizontal, PPSpacing.lg)
-                            .padding(.vertical, PPSpacing.md)
-                            .background(Color.ppSurface)
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                            .frame(maxWidth: .infinity)
                     }
+                    .padding(.horizontal, PPSpacing.lg)
+                    .padding(.vertical, PPSpacing.md)
+                    .background(Color.ppSurface)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                     .transition(.opacity.combined(with: .move(edge: .top)))
                 }
             }
@@ -542,25 +542,20 @@ struct OverlayFormSheet: View {
 
                                     // Indented amount field when category is selected
                                     if categoryCapSelections.contains(category.id) {
-                                        HStack(spacing: PPSpacing.sm) {
+                                        HStack {
                                             Spacer().frame(width: PPSpacing.xl)
-
-                                            Text(appState.currencyCode)
-                                                .font(.ppCallout.weight(.semibold))
-                                                .foregroundColor(.ppTextSecondary)
-                                                .padding(.horizontal, PPSpacing.md)
-                                                .padding(.vertical, PPSpacing.sm)
-                                                .background(Color.ppSurface)
-                                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-
-                                            TextField("0.00", text: Binding(
-                                                get: { categoryCaps[category.id] ?? "" },
-                                                set: { categoryCaps[category.id] = $0 }
-                                            ))
-                                            .font(.ppCallout)
-                                            .foregroundColor(.ppTextPrimary)
-                                            .keyboardType(.decimalPad)
+                                            HStack {
+                                                Text(currencySymbol)
+                                                    .font(.ppCallout)
+                                                    .foregroundColor(.ppTextSecondary)
+                                                TextField("0.00", text: Binding(
+                                                    get: { categoryCaps[category.id] ?? "" },
+                                                    set: { categoryCaps[category.id] = $0 }
+                                                ))
+                                                .font(.ppCallout)
+                                                .foregroundColor(.ppTextPrimary)
+                                                .keyboardType(.decimalPad)
+                                            }
                                             .padding(.horizontal, PPSpacing.md)
                                             .padding(.vertical, PPSpacing.sm)
                                             .background(Color.ppSurface)
@@ -756,8 +751,7 @@ struct OverlayFormSheet: View {
     }
 
     private func formatCentsForReview(_ cents: Int64) -> String {
-        let value = Double(cents) / 100.0
-        return String(format: "%.2f %@", value, appState.currencyCode)
+        formatCurrency(cents, code: appState.currencyCode)
     }
 
     // MARK: - Navigation Buttons

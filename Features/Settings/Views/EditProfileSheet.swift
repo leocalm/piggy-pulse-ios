@@ -80,7 +80,7 @@ struct EditProfileSheet: View {
                                     Picker("Currency", selection: $selectedCurrencyId) {
                                         Text("None").tag(UUID?.none)
                                         ForEach(currencies) { c in
-                                            Text("\(c.currency) — \(c.name)").tag(UUID?.some(c.id))
+                                            Text("\(c.symbol) \(c.name)").tag(UUID?.some(c.id))
                                         }
                                     }
                                     .pickerStyle(.menu)

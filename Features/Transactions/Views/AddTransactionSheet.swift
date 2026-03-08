@@ -27,6 +27,13 @@ struct AddTransactionSheet: View {
 
     var onCreated: () -> Void
 
+    private var currencySymbol: String {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        fmt.currencyCode = appState.currencyCode
+        return fmt.currencySymbol ?? appState.currencyCode
+    }
+
     private var amountInCents: Int64 {
         let cleaned = amountText.replacingOccurrences(of: ",", with: ".")
         guard let value = Double(cleaned) else { return 0 }
@@ -116,7 +123,7 @@ struct AddTransactionSheet: View {
                 .foregroundColor(.ppTextPrimary)
 
             HStack(alignment: .center, spacing: PPSpacing.sm) {
-                Text("€")
+                Text(currencySymbol)
                     .font(.ppAmount)
                     .foregroundColor(.ppTextSecondary)
 
