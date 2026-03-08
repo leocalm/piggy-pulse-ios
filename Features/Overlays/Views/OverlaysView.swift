@@ -224,6 +224,15 @@ struct OverlaysView: View {
                 Label("Edit Overlay", systemImage: "pencil")
             }
         }
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                overlayToEdit = overlay
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.ppPrimary)
+        }
     }
 
     private func statusBadge(_ status: OverlayStatus) -> some View {
