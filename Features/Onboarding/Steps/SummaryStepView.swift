@@ -9,6 +9,7 @@ struct SummaryStepView: View {
 
                 Text("You're all set — here's what will be configured when you enter PiggyPulse.")
                     .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    .padding(.horizontal, PPSpacing.xl)
 
                 // Period summary
                 summarySection(title: "Period") {
@@ -61,7 +62,7 @@ struct SummaryStepView: View {
                     }
                 }
             }
-            .padding(PPSpacing.xl)
+            .padding(.vertical, PPSpacing.xl)
         }
     }
 
@@ -74,9 +75,15 @@ struct SummaryStepView: View {
             }
         }
         .padding(PPSpacing.lg)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.ppCard)
-        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(
+            VStack {
+                Divider().background(Color.ppBorder)
+                Spacer()
+                Divider().background(Color.ppBorder)
+            }
+        )
     }
 
     private func labeledRow(_ label: String, _ value: String) -> some View {

@@ -2,10 +2,6 @@ import SwiftUI
 
 struct CategoriesStepView: View {
     @ObservedObject var vm: OnboardingViewModel
-    @State private var showAddCategory = false
-    @State private var newName = ""
-    @State private var newIcon = "📦"
-    @State private var newType = "Outgoing"
 
     private let templates: [(title: String, subtitle: String, template: CategoryTemplate)] = [
         ("Essential 5",  "5 basic categories to get started",        .essential),
@@ -67,26 +63,6 @@ struct CategoriesStepView: View {
                     }
                 }
 
-                // Add category
-                if vm.selectedTemplate != .none {
-                    if showAddCategory {
-                        addCategoryForm
-                    } else {
-                        Button {
-                            showAddCategory = true
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus.circle.fill").foregroundColor(.ppPrimary)
-                                Text("Add Category").font(.ppCallout).foregroundColor(.ppPrimary)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(PPSpacing.md)
-                            .background(Color.ppPrimary.opacity(0.08))
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        }
-                    }
-                }
             }
             .padding(PPSpacing.xl)
         }
@@ -108,49 +84,6 @@ struct CategoriesStepView: View {
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
     }
 
-    private var addCategoryForm: some View {
-        VStack(alignment: .leading, spacing: PPSpacing.md) {
-            Text("New Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-
-            HStack(spacing: PPSpacing.sm) {
-                TextField("Icon", text: $newIcon).frame(width: 48)
-                    .font(.title3).multilineTextAlignment(.center)
-                    .padding(.horizontal, PPSpacing.sm).padding(.vertical, PPSpacing.sm)
-                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.sm).stroke(Color.ppBorder, lineWidth: 1))
-
-                TextField("Category name", text: $newName)
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
-                    .padding(.horizontal, PPSpacing.md).padding(.vertical, PPSpacing.sm)
-                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.sm).stroke(Color.ppBorder, lineWidth: 1))
-            }
-
-            Picker("Direction", selection: $newType) {
-                Text("Incoming").tag("Incoming")
-                Text("Outgoing").tag("Outgoing")
-            }.pickerStyle(.segmented)
-
-            HStack {
-                Button("Cancel") {
-                    showAddCategory = false; newName = ""; newIcon = "📦"; newType = "Outgoing"
-                }.foregroundColor(.ppTextSecondary)
-                Spacer()
-                Button("Add") {
-                    guard !newName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-                    vm.addCategory(DraftCategory(name: newName.trimmingCharacters(in: .whitespaces), icon: newIcon, categoryType: newType))
-                    showAddCategory = false; newName = ""; newIcon = "📦"; newType = "Outgoing"
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                }
-                .foregroundColor(.ppPrimary).fontWeight(.semibold)
-                .disabled(newName.trimmingCharacters(in: .whitespaces).isEmpty)
-            }
-        }
-        .padding(PPSpacing.lg)
-        .background(Color.ppCard)
-        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-    }
 
     private func templateMatches(_ template: CategoryTemplate) -> Bool {
         switch (vm.selectedTemplate, template) {

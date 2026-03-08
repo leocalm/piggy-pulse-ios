@@ -53,6 +53,8 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Init
 
     private let apiClient: APIClient
+    /// Steps that have already been saved to the server; skipped on re-advance.
+    private var savedSteps: Set<OnboardingStep> = []
 
     init(apiClient: APIClient) {
         self.apiClient = apiClient
@@ -107,11 +109,17 @@ final class OnboardingViewModel: ObservableObject {
         do {
             switch currentStep {
             case .period:
-                try await savePeriod()
+                try await savePeriod()     // PUT — always safe to re-send
             case .accounts:
-                try await saveAccounts()
+                if !savedSteps.contains(.accounts) {
+                    try await saveAccounts()
+                    savedSteps.insert(.accounts)
+                }
             case .categories:
-                try await saveCategories()
+                if !savedSteps.contains(.categories) {
+                    try await saveCategories()
+                    savedSteps.insert(.categories)
+                }
             case .summary:
                 try await finish()
                 return
