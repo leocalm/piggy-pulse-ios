@@ -81,7 +81,7 @@ struct TransactionFilterSheet: View {
                                 draftCategoryIds = []
                                 draftVendorIds = []
                             }
-                            .foregroundStyle(.ppDestructive)
+                            .foregroundColor(.ppDestructive)
                             .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
@@ -118,11 +118,11 @@ struct TransactionFilterSheet: View {
         } label: {
             HStack {
                 Text(title)
-                    .foregroundStyle(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary)
                 Spacer()
                 if selected.wrappedValue.contains(id) {
                     Image(systemName: "checkmark")
-                        .foregroundStyle(.ppPrimary)
+                        .foregroundColor(.ppPrimary)
                         .fontWeight(.semibold)
                 }
             }
