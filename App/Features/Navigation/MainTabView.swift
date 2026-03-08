@@ -145,7 +145,7 @@ struct MainTabView: View {
     // MARK: - More Tab Link Helper
 
     private func moreLink<Destination: View>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         icon: String,
         @ViewBuilder destination: @escaping () -> Destination
     ) -> some View {

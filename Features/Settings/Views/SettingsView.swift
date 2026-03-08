@@ -173,7 +173,7 @@ struct SettingsView: View {
 
     // MARK: - Helpers
 
-    private func settingsRow(_ label: String, value: String) -> some View {
+    private func settingsRow(_ label: LocalizedStringKey, value: String) -> some View {
         HStack {
             Text(label)
                 .font(.ppCallout)
