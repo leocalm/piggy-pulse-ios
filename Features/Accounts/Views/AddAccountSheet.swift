@@ -18,6 +18,13 @@ struct AddAccountSheet: View {
     private let typeLabels = ["Checking": "Checking", "Savings": "Savings", "CreditCard": "Credit Card", "Wallet": "Wallet", "Allowance": "Allowance"]
     private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
+    private var currencySymbol: String {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        fmt.currencyCode = appState.currencyCode
+        return fmt.currencySymbol ?? appState.currencyCode
+    }
+
     private var balanceInCents: Int64 {
         let cleaned = balanceText.replacingOccurrences(of: ",", with: ".")
         guard let value = Double(cleaned) else { return 0 }
@@ -89,7 +96,7 @@ struct AddAccountSheet: View {
                                 Text("Starting Balance")
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 HStack {
-                                    Text("€").font(.ppBody).foregroundColor(.ppTextSecondary)
+                                    Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary)
                                     TextField("0.00", text: $balanceText).keyboardType(.decimalPad)
                                         .font(.ppBody).foregroundColor(.ppTextPrimary)
                                 }
@@ -104,7 +111,7 @@ struct AddAccountSheet: View {
                                     Text("Spend Limit")
                                         .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     HStack {
-                                        Text("€").font(.ppBody).foregroundColor(.ppTextSecondary)
+                                        Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary)
                                         TextField("0.00", text: $spendLimitText).keyboardType(.decimalPad)
                                             .font(.ppBody).foregroundColor(.ppTextPrimary)
                                     }

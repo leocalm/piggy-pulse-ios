@@ -70,7 +70,7 @@ struct SettingsView: View {
 
             settingsRow("Name", value: p.name)
             settingsRow("Email", value: p.email)
-            settingsRow("Currency", value: appState.currencyCode)
+            settingsRow("Currency", value: currencyDisplay)
 
             Divider().background(Color.ppBorder)
 
@@ -216,6 +216,16 @@ struct SettingsView: View {
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private var currencyDisplay: String {
+        let code = appState.currencyCode
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        fmt.currencyCode = code
+        let symbol = fmt.currencySymbol ?? code
+        let name = Locale.current.localizedString(forCurrencyCode: code) ?? code
+        return "\(symbol) \(name)"
     }
 
     // MARK: - Helpers

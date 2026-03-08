@@ -25,6 +25,13 @@ struct EditTransactionSheet: View {
     @State private var isLoadingOptions = true
     @State private var errorMessage: String?
 
+    private var currencySymbol: String {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        fmt.currencyCode = appState.currencyCode
+        return fmt.currencySymbol ?? appState.currencyCode
+    }
+
     private var amountInCents: Int64 {
         let cleaned = amountText.replacingOccurrences(of: ",", with: ".")
         guard let value = Double(cleaned) else { return 0 }
@@ -58,7 +65,7 @@ struct EditTransactionSheet: View {
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
                                 Text("Amount").font(.ppTitle3).foregroundColor(.ppTextPrimary)
                                 HStack {
-                                    Text("€").font(.ppAmount).foregroundColor(.ppTextSecondary)
+                                    Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
                                     TextField("0.00", text: $amountText).font(.ppAmount).foregroundColor(.ppTextPrimary).keyboardType(.decimalPad)
                                 }
                                 .padding(PPSpacing.lg).background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
