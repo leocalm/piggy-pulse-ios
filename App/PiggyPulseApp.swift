@@ -8,7 +8,7 @@ struct PiggyPulseApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(appState.appColorScheme)
                 .task {
                     await appState.checkAuth()
                 }
