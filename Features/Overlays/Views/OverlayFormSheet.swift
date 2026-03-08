@@ -839,16 +839,19 @@ struct OverlayFormSheet: View {
         isLoading = true
         errorMessage = nil
 
+        let rules = OverlayRules(
+            accountIds: inclusionMode == .rulesBased ? Array(selectedAccountIds) : [],
+            categoryIds: inclusionMode == .rulesBased ? Array(selectedCategoryIds) : [],
+            vendorIds: inclusionMode == .rulesBased ? Array(selectedVendorIds) : []
+        )
         let req = OverlayRequest(
             name: name.trimmingCharacters(in: .whitespaces),
             icon: selectedEmoji,
             startDate: DateFormatter.apiDate.string(from: startDate),
             endDate: DateFormatter.apiDate.string(from: endDate),
             inclusionMode: inclusionMode.rawValue,
-            accountIds: selectedAccountIds.isEmpty ? nil : Array(selectedAccountIds),
-            categoryIds: selectedCategoryIds.isEmpty ? nil : Array(selectedCategoryIds),
-            vendorIds: selectedVendorIds.isEmpty ? nil : Array(selectedVendorIds),
             totalCapAmount: isTotalCapEnabled ? totalCapAmountCents : nil,
+            rules: rules,
             categoryCaps: buildCategoryCaps()
         )
 
@@ -872,15 +875,14 @@ struct OverlayFormSheet: View {
         isLoading = false
     }
 
-    private func buildCategoryCaps() -> [CategoryCap]? {
-        guard isPerCategoryCapEnabled else { return nil }
-        let caps = categoryCapSelections.compactMap { id -> CategoryCap? in
+    private func buildCategoryCaps() -> [OverlayCategoryCap] {
+        guard isPerCategoryCapEnabled else { return [] }
+        return categoryCapSelections.compactMap { id -> OverlayCategoryCap? in
             guard let text = categoryCaps[id] else { return nil }
             let cleaned = text.replacingOccurrences(of: ",", with: ".")
             guard let value = Double(cleaned), value > 0 else { return nil }
-            return CategoryCap(categoryId: id, amount: Int64(value * 100))
+            return OverlayCategoryCap(categoryId: id, capAmount: Int64(value * 100))
         }
-        return caps.isEmpty ? nil : caps
     }
 
     // MARK: - Load Options
