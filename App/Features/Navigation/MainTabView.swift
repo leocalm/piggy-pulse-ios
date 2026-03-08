@@ -47,7 +47,7 @@ struct MainTabView: View {
         Button {
             showAddTransaction = true
         } label: {
-            Image(systemName: "creditcard.badge.plus")
+            Image(systemName: "rectangle.badge.plus")
                 .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(Color.ppPrimary)
                 .frame(width: 56, height: 56)
