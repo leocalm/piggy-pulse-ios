@@ -4,6 +4,7 @@ struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var viewModel: TransactionsViewModel
     @State private var showAddSheet = false
+    @State private var showFilterSheet = false
     @State private var editingTransaction: Transaction?
     @State private var transactionToDelete: Transaction?
 
@@ -161,6 +162,49 @@ struct TransactionsView: View {
             }
             .navigationTitle("Transactions")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showFilterSheet = true
+                        Task { await viewModel.loadFilterOptions() }
+                    } label: {
+                        ZStack(alignment: .topTrailing) {
+                            Image(systemName: "line.3.horizontal.decrease.circle")
+                                .imageScale(.medium)
+                            if viewModel.activeFilterCount > 0 {
+                                Text("\(viewModel.activeFilterCount)")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .foregroundStyle(.white)
+                                    .padding(3)
+                                    .background(Color.ppPrimary)
+                                    .clipShape(Circle())
+                                    .offset(x: 8, y: -8)
+                            }
+                        }
+                    }
+                    .accessibilityLabel(viewModel.activeFilterCount > 0 ? "Filter, \(viewModel.activeFilterCount) active" : "Filter")
+                }
+            }
+            .sheet(isPresented: $showFilterSheet) {
+                TransactionFilterSheet(
+                    filterOptions: viewModel.filterOptions,
+                    isLoadingOptions: viewModel.isLoadingFilterOptions,
+                    initialAccountIds: viewModel.selectedAccountIds,
+                    initialCategoryIds: viewModel.selectedCategoryIds,
+                    initialVendorIds: viewModel.selectedVendorIds
+                ) { accountIds, categoryIds, vendorIds in
+                    if let periodId = appState.selectedPeriod?.id {
+                        Task {
+                            await viewModel.applyFilters(
+                                accountIds: accountIds,
+                                categoryIds: categoryIds,
+                                vendorIds: vendorIds,
+                                periodId: periodId
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 

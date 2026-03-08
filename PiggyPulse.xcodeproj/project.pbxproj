@@ -33,6 +33,7 @@
 		027B34A52F5B534700E96DF6 /* AddVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A42F5B534500E96DF6 /* AddVendorSheet.swift */; };
 		027B34A72F5B647C00E96DF6 /* EditProfileSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */; };
 		027B34A92F5B67B800E96DF6 /* EditTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */; };
+		027B34AD2F5B700000E96DF6 /* TransactionFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B700000E96DF6 /* TransactionFilterSheet.swift */; };
 		027B34AB2F5B699300E96DF6 /* EditAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AA2F5B699200E96DF6 /* EditAccountSheet.swift */; };
 		027B34AD2F5B69A700E96DF6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */; };
 		027B34AF2F5B69B600E96DF6 /* EditVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AE2F5B69B600E96DF6 /* EditVendorSheet.swift */; };
@@ -107,6 +108,7 @@
 		027B34A42F5B534500E96DF6 /* AddVendorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVendorSheet.swift; sourceTree = "<group>"; };
 		027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileSheet.swift; sourceTree = "<group>"; };
 		027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionSheet.swift; sourceTree = "<group>"; };
+		027B34AC2F5B700000E96DF6 /* TransactionFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilterSheet.swift; sourceTree = "<group>"; };
 		027B34AA2F5B699200E96DF6 /* EditAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountSheet.swift; sourceTree = "<group>"; };
 		027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		027B34AE2F5B69B600E96DF6 /* EditVendorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVendorSheet.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */,
+				027B34AC2F5B700000E96DF6 /* TransactionFilterSheet.swift */,
 				027B346F2F5B2B2100E96DF6 /* AddTransactionSheet.swift */,
 				02F038E12F59A1CC008DD1E7 /* TransactionsView.swift */,
 			);
@@ -650,6 +653,7 @@
 				02F038A72F589EC5008DD1E7 /* MainTabView.swift in Sources */,
 				027B34702F5B2B2400E96DF6 /* AddTransactionSheet.swift in Sources */,
 				027B34A92F5B67B800E96DF6 /* EditTransactionSheet.swift in Sources */,
+				027B34AD2F5B700000E96DF6 /* TransactionFilterSheet.swift in Sources */,
 				02F038CB2F598F4F008DD1E7 /* PaginatedResponse.swift in Sources */,
 				02F038D12F599A25008DD1E7 /* DashboardViewModel.swift in Sources */,
 				027B34A52F5B534700E96DF6 /* AddVendorSheet.swift in Sources */,
