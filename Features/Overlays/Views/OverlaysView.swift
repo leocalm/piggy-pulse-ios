@@ -7,6 +7,7 @@ struct OverlaysView: View {
     @State private var errorMessage: String?
     @State private var showPast = false
     @State private var showCreateSheet = false
+    @State private var overlayToEdit: OverlayItem? = nil
 
     private var active: [OverlayItem] { overlays.filter { $0.status == .active } }
     private var upcoming: [OverlayItem] { overlays.filter { $0.status == .upcoming } }
@@ -100,6 +101,12 @@ struct OverlaysView: View {
         }
         .sheet(isPresented: $showCreateSheet) {
             OverlayFormSheet(overlay: nil, onSaved: {
+                Task { await load() }
+            })
+            .environmentObject(appState)
+        }
+        .sheet(item: $overlayToEdit) { overlay in
+            OverlayFormSheet(overlay: overlay, onSaved: {
                 Task { await load() }
             })
             .environmentObject(appState)
@@ -210,6 +217,13 @@ struct OverlaysView: View {
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .contextMenu {
+            Button {
+                overlayToEdit = overlay
+            } label: {
+                Label("Edit Overlay", systemImage: "pencil")
+            }
+        }
     }
 
     private func statusBadge(_ status: OverlayStatus) -> some View {
