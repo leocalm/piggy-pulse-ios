@@ -6,10 +6,6 @@ struct MainTabView: View {
     @State private var showAddTransaction = false
     @Environment(\.horizontalSizeClass) var sizeClass
 
-    private var showFAB: Bool {
-        selectedTab == 0 || selectedTab == 1
-    }
-
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
@@ -19,35 +15,31 @@ struct MainTabView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            TabView(selection: $selectedTab) {
-                Tab("Dashboard", systemImage: "square.grid.2x2", value: 0) {
-                    DashboardView(apiClient: appState.apiClient)
-                }
-                Tab("Transactions", systemImage: "arrow.left.arrow.right", value: 1) {
-                    TransactionsView(apiClient: appState.apiClient)
-                }
-                Tab("Periods", systemImage: "calendar", value: 2) {
-                    PeriodsView(apiClient: appState.apiClient)
-                }
-                Tab("More", systemImage: "ellipsis.circle", value: 3) {
-                    moreTab
-                }
+        TabView(selection: $selectedTab) {
+            Tab("Dashboard", systemImage: "square.grid.2x2", value: 0) {
+                DashboardView(apiClient: appState.apiClient)
+                    .overlay(alignment: .bottomTrailing) { addTransactionFAB }
             }
-            .tabViewBottomAccessory {
-                PeriodSelectorBar()
+            Tab("Transactions", systemImage: "arrow.left.arrow.right", value: 1) {
+                TransactionsView(apiClient: appState.apiClient)
+                    .overlay(alignment: .bottomTrailing) { addTransactionFAB }
             }
-            .tabBarMinimizeBehavior(.onScrollDown)
-            .tint(.ppPrimary)
-            .background(Color.ppBackground)
-            .sheet(isPresented: $showAddTransaction) {
-                AddTransactionSheet(onCreated: { selectedTab = 1 })
-                    .environmentObject(appState)
+            Tab("Periods", systemImage: "calendar", value: 2) {
+                PeriodsView(apiClient: appState.apiClient)
             }
-
-            if showFAB {
-                addTransactionFAB
+            Tab("More", systemImage: "ellipsis.circle", value: 3) {
+                moreTab
             }
+        }
+        .tabViewBottomAccessory {
+            PeriodSelectorBar()
+        }
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .tint(.ppPrimary)
+        .background(Color.ppBackground)
+        .sheet(isPresented: $showAddTransaction) {
+            AddTransactionSheet(onCreated: { selectedTab = 1 })
+                .environmentObject(appState)
         }
     }
 
@@ -63,8 +55,6 @@ struct MainTabView: View {
         }
         .padding(.trailing, PPSpacing.lg)
         .padding(.bottom, PPSpacing.xl)
-        .transition(.scale(scale: 0.8).combined(with: .opacity))
-        .animation(.spring(duration: 0.3), value: showFAB)
     }
 
     // MARK: - More Tab
