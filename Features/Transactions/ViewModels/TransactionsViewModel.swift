@@ -1,6 +1,12 @@
 import SwiftUI
 internal import Combine
 
+struct TransactionFilterOptions {
+    var accounts: [AccountOption] = []
+    var categories: [CategoryOption] = []
+    var vendors: [VendorOption] = []
+}
+
 @MainActor
 final class TransactionsViewModel: ObservableObject {
     @Published var transactions: [Transaction] = []
@@ -8,6 +14,11 @@ final class TransactionsViewModel: ObservableObject {
     @Published var isLoadingMore = false
     @Published var errorMessage: String?
     @Published var selectedDirection: TransactionDirection = .all
+    @Published var selectedAccountIds: Set<UUID> = []
+    @Published var selectedCategoryIds: Set<UUID> = []
+    @Published var selectedVendorIds: Set<UUID> = []
+    @Published var filterOptions = TransactionFilterOptions()
+    @Published var isLoadingFilterOptions = false
 
     private var nextCursor: UUID?
     private var hasMore = true
@@ -16,6 +27,10 @@ final class TransactionsViewModel: ObservableObject {
 
     init(apiClient: APIClient) {
         self.repository = TransactionRepository(apiClient: apiClient)
+    }
+
+    var activeFilterCount: Int {
+        selectedAccountIds.count + selectedCategoryIds.count + selectedVendorIds.count
     }
 
     func load(periodId: UUID) async {
@@ -29,7 +44,10 @@ final class TransactionsViewModel: ObservableObject {
         do {
             let response = try await repository.fetchTransactions(
                 periodId: periodId,
-                direction: selectedDirection
+                direction: selectedDirection,
+                accountIds: Array(selectedAccountIds),
+                categoryIds: Array(selectedCategoryIds),
+                vendorIds: Array(selectedVendorIds)
             )
             transactions = response.data
             nextCursor = response.nextCursor
@@ -53,7 +71,10 @@ final class TransactionsViewModel: ObservableObject {
             let response = try await repository.fetchTransactions(
                 periodId: periodId,
                 direction: selectedDirection,
-                cursor: cursor
+                cursor: cursor,
+                accountIds: Array(selectedAccountIds),
+                categoryIds: Array(selectedCategoryIds),
+                vendorIds: Array(selectedVendorIds)
             )
             transactions.append(contentsOf: response.data)
             nextCursor = response.nextCursor
@@ -71,6 +92,41 @@ final class TransactionsViewModel: ObservableObject {
 
     func changeDirection(_ direction: TransactionDirection, periodId: UUID) async {
         selectedDirection = direction
+        await load(periodId: periodId)
+    }
+
+    func loadFilterOptions() async {
+        guard filterOptions.accounts.isEmpty &&
+              filterOptions.categories.isEmpty &&
+              filterOptions.vendors.isEmpty else { return }
+
+        isLoadingFilterOptions = true
+        defer { isLoadingFilterOptions = false }
+
+        async let accounts: [AccountOption] = (try? repository.apiClient.request(.accountOptions)) ?? []
+        async let categories: [CategoryOption] = (try? repository.apiClient.request(.categoryOptions)) ?? []
+        async let vendors: PaginatedResponse<VendorOption> = (try? repository.apiClient.request(.vendors)) ?? PaginatedResponse(data: [], nextCursor: nil)
+
+        let (a, c, v) = await (accounts, categories, vendors)
+        filterOptions = TransactionFilterOptions(accounts: a, categories: c, vendors: v.data)
+    }
+
+    func applyFilters(
+        accountIds: Set<UUID>,
+        categoryIds: Set<UUID>,
+        vendorIds: Set<UUID>,
+        periodId: UUID
+    ) async {
+        selectedAccountIds = accountIds
+        selectedCategoryIds = categoryIds
+        selectedVendorIds = vendorIds
+        await load(periodId: periodId)
+    }
+
+    func clearFilters(periodId: UUID) async {
+        selectedAccountIds = []
+        selectedCategoryIds = []
+        selectedVendorIds = []
         await load(periodId: periodId)
     }
 }
