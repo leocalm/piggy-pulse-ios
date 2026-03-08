@@ -122,7 +122,7 @@ struct EditCategorySheet: View {
             try await appState.apiClient.request(.updateCategory(category.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to update category." }
+        catch { errorMessage = String(localized: "Failed to update category.") }
         isLoading = false
     }
 }

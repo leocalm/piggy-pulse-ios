@@ -121,7 +121,7 @@ struct EditProfileSheet: View {
             let _: ProfileResponse = try await appState.apiClient.request(.updateProfile, body: req)
             dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to update profile." }
+        catch { errorMessage = String(localized: "Failed to update profile.") }
         isLoading = false
     }
 }

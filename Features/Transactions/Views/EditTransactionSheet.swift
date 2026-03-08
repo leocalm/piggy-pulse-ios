@@ -239,7 +239,7 @@ struct EditTransactionSheet: View {
             selectedToAccount = transaction.toAccount.flatMap { to in accounts.first { $0.id == to.id } }
             selectedVendor = transaction.vendor.flatMap { v in vendors.first { $0.id == v.id } }
         } catch {
-            errorMessage = "Failed to load options."
+            errorMessage = String(localized: "Failed to load options.")
         }
 
         isLoadingOptions = false
@@ -250,7 +250,7 @@ struct EditTransactionSheet: View {
 
         guard let categoryId = selectedCategory?.id,
               let fromAccountId = selectedFromAccount?.id else {
-            errorMessage = "Select a category and account."
+            errorMessage = String(localized: "Select a category and account.")
             isLoading = false; return
         }
 
@@ -276,7 +276,7 @@ struct EditTransactionSheet: View {
             try await appState.apiClient.request(.updateTransaction(transaction.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = "Failed to update transaction." }
+        catch { errorMessage = String(localized: "Failed to update transaction.") }
         isLoading = false
     }
 }

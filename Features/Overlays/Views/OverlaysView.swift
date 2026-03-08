@@ -84,7 +84,7 @@ struct OverlaysView: View {
             .navigationBarTitleDisplayMode(.large)
     }
 
-    private func overlaySection(_ title: String, items: [OverlayItem], badge: Bool) -> some View {
+    private func overlaySection(_ title: LocalizedStringKey, items: [OverlayItem], badge: Bool) -> some View {
         Group {
             if !items.isEmpty {
                 Section {
@@ -200,7 +200,7 @@ struct OverlaysView: View {
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
     }
 
-    private func statusText(_ status: OverlayStatus) -> String {
+    private func statusText(_ status: OverlayStatus) -> LocalizedStringKey {
         switch status {
         case .active: return "ACTIVE"
         case .upcoming: return "UPCOMING"
@@ -234,7 +234,7 @@ struct OverlaysView: View {
             let response: [OverlayItem] = try await appState.apiClient.request(.overlays)
             overlays = response
         } catch {
-            errorMessage = "Failed to load overlays."
+            errorMessage = String(localized: "Failed to load overlays.")
         }
         isLoading = false
     }

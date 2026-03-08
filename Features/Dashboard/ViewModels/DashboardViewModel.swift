@@ -32,7 +32,7 @@ final class DashboardViewModel: ObservableObject {
             netPosition = n
             stability = s
         } catch {
-            errorMessage = "Failed to load dashboard data."
+            errorMessage = String(localized: "Failed to load dashboard data.")
         }
 
         isLoading = false

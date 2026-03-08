@@ -209,7 +209,7 @@ struct CategoriesView: View {
             outgoing = response.outgoing
             archived = response.archived
         } catch {
-            errorMessage = "Failed to load categories."
+            errorMessage = String(localized: "Failed to load categories.")
         }
         isLoading = false
     }

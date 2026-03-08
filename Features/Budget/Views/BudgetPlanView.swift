@@ -151,7 +151,7 @@ struct BudgetPlanView: View {
         )
     }
 
-    private func breakdownRow(_ label: String, value: Int64, color: Color) -> some View {
+    private func breakdownRow(_ label: LocalizedStringKey, value: Int64, color: Color) -> some View {
         HStack {
             Circle()
                 .fill(color)

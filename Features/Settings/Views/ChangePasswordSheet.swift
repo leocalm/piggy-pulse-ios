@@ -136,7 +136,7 @@ struct ChangePasswordSheet: View {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Failed to change password."
+            errorMessage = String(localized: "Failed to change password.")
         }
         isLoading = false
     }

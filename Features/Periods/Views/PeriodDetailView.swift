@@ -118,7 +118,7 @@ struct PeriodDetailView: View {
 
     // MARK: - Date Column
 
-    private func dateColumn(_ label: String, date: String) -> some View {
+    private func dateColumn(_ label: LocalizedStringKey, date: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .font(.ppCaption)
@@ -142,7 +142,7 @@ struct PeriodDetailView: View {
 
     // MARK: - Metric Item
 
-    private func metricItem(value: String, label: String) -> some View {
+    private func metricItem(value: String, label: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(value)
                 .font(.ppTitle)

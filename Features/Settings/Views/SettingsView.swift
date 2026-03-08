@@ -173,7 +173,7 @@ struct SettingsView: View {
 
     // MARK: - Helpers
 
-    private func settingsRow(_ label: String, value: String) -> some View {
+    private func settingsRow(_ label: LocalizedStringKey, value: String) -> some View {
         HStack {
             Text(label)
                 .font(.ppCallout)
@@ -195,7 +195,7 @@ struct SettingsView: View {
             profile = p
             preferences = pr
         } catch {
-            errorMessage = "Failed to load settings."
+            errorMessage = String(localized: "Failed to load settings.")
         }
         isLoading = false
     }

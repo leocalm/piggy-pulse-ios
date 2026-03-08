@@ -96,7 +96,7 @@ final class AuthViewModel: ObservableObject {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Something went wrong. Please try again."
+            errorMessage = String(localized: "Something went wrong. Please try again.")
         }
 
         isLoading = false
@@ -135,7 +135,7 @@ final class AuthViewModel: ObservableObject {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Something went wrong. Please try again."
+            errorMessage = String(localized: "Something went wrong. Please try again.")
         }
 
         isLoading = false
@@ -150,7 +150,7 @@ final class AuthViewModel: ObservableObject {
 
         // Client-side validation
         guard registerPassword == registerConfirmPassword else {
-            errorMessage = "Passwords do not match."
+            errorMessage = String(localized: "Passwords do not match.")
             isLoading = false
             return
         }
@@ -178,7 +178,7 @@ final class AuthViewModel: ObservableObject {
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
-            errorMessage = "Something went wrong. Please try again."
+            errorMessage = String(localized: "Something went wrong. Please try again.")
         }
 
         isLoading = false
