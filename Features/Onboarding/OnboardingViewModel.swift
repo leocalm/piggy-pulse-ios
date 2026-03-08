@@ -158,11 +158,6 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     private func saveAccounts() async throws {
-        guard let currencyId = selectedCurrencyId else { return }
-
-        struct PrefRequest: Encodable { let defaultCurrencyId: UUID }
-        try await apiClient.request(.updatePreferences, body: PrefRequest(defaultCurrencyId: currencyId))
-
         struct AccountRequest: Encodable {
             let name: String; let color: String; let icon: String
             let accountType: String; let balance: Int64; let spendLimit: Int32?

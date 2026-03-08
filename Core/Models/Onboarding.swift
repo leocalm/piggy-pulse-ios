@@ -83,7 +83,7 @@ struct DraftAccount: Identifiable {
     }
 
     var isValid: Bool {
-        name.trimmingCharacters(in: .whitespaces).count >= 2
+        name.trimmingCharacters(in: .whitespaces).count >= 3
     }
 }
 
