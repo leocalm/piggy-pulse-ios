@@ -96,7 +96,7 @@ struct DraftCategory: Identifiable {
 
 // MARK: - Category template
 
-enum CategoryTemplate {
+enum CategoryTemplate: Equatable {
     case none, essential, detailed, custom
 
     var categories: [DraftCategory] {
