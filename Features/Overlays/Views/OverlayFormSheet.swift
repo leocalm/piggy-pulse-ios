@@ -26,8 +26,11 @@ struct OverlayFormSheet: View {
     @State private var selectedVendorIds: Set<UUID> = []
 
     // Step 3 — Caps
+    @State private var isTotalCapEnabled: Bool = false
+    @State private var isPerCategoryCapEnabled: Bool = false
     @State private var totalCapText: String = ""
     @State private var categoryCaps: [UUID: String] = [:]
+    @State private var categoryCapSelections: Set<UUID> = []
 
     // Options
     @State private var accountOptions: [AccountOption] = []
@@ -415,14 +418,163 @@ struct OverlayFormSheet: View {
         }
     }
 
-    // MARK: - Step 3: Caps (stub)
+    // MARK: - Step 3: Caps
 
     private var step3View: some View {
-        Text("Step 3: Spending Caps — coming soon")
-            .font(.ppBody)
-            .foregroundColor(.ppTextSecondary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, PPSpacing.xl)
+        VStack(alignment: .leading, spacing: PPSpacing.xl) {
+
+            // Card 1 — Total Amount Cap
+            VStack(alignment: .leading, spacing: PPSpacing.lg) {
+                // Toggle header
+                VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                    Toggle(isOn: $isTotalCapEnabled.animation(.easeInOut(duration: 0.2))) {
+                        VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                            Text("Total Amount Cap")
+                                .font(.ppTitle3)
+                                .foregroundColor(.ppTextPrimary)
+                            Text("Set a spending limit for the entire overlay.")
+                                .font(.ppCallout)
+                                .foregroundColor(.ppTextSecondary)
+                        }
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: .ppPrimary))
+                }
+
+                // Currency text field, shown when enabled
+                if isTotalCapEnabled {
+                    HStack(spacing: PPSpacing.sm) {
+                        Text(appState.currencyCode)
+                            .font(.ppBody.weight(.semibold))
+                            .foregroundColor(.ppTextSecondary)
+                            .padding(.horizontal, PPSpacing.md)
+                            .padding(.vertical, PPSpacing.md)
+                            .background(Color.ppSurface)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+
+                        TextField("0.00", text: $totalCapText)
+                            .font(.ppBody)
+                            .foregroundColor(.ppTextPrimary)
+                            .keyboardType(.decimalPad)
+                            .padding(.horizontal, PPSpacing.lg)
+                            .padding(.vertical, PPSpacing.md)
+                            .background(Color.ppSurface)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .frame(maxWidth: .infinity)
+                    }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+            }
+            .padding(PPSpacing.lg)
+            .background(Color.ppCard)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+
+            // Card 2 — Per-Category Cap
+            VStack(alignment: .leading, spacing: PPSpacing.lg) {
+                // Toggle header
+                VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                    Toggle(isOn: $isPerCategoryCapEnabled.animation(.easeInOut(duration: 0.2))) {
+                        VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                            Text("Per-Category Cap")
+                                .font(.ppTitle3)
+                                .foregroundColor(.ppTextPrimary)
+                            Text("Limit spending per category within this overlay.")
+                                .font(.ppCallout)
+                                .foregroundColor(.ppTextSecondary)
+                        }
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: .ppPrimary))
+                }
+
+                // Category rows, shown when enabled
+                if isPerCategoryCapEnabled {
+                    if categoryOptions.isEmpty {
+                        Text("No categories available.")
+                            .font(.ppCallout)
+                            .foregroundColor(.ppTextTertiary)
+                            .transition(.opacity)
+                    } else {
+                        VStack(spacing: PPSpacing.xs) {
+                            ForEach(categoryOptions) { category in
+                                VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                                    // Category row with checkmark toggle
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            if categoryCapSelections.contains(category.id) {
+                                                categoryCapSelections.remove(category.id)
+                                                categoryCaps.removeValue(forKey: category.id)
+                                            } else {
+                                                categoryCapSelections.insert(category.id)
+                                            }
+                                        }
+                                    } label: {
+                                        HStack(spacing: PPSpacing.md) {
+                                            Image(systemName: categoryCapSelections.contains(category.id) ? "checkmark.circle.fill" : "circle")
+                                                .font(.system(size: 20))
+                                                .foregroundColor(categoryCapSelections.contains(category.id) ? .ppPrimary : .ppTextTertiary)
+
+                                            Text("\(category.icon) \(category.name)")
+                                                .font(.ppBody)
+                                                .foregroundColor(.ppTextPrimary)
+
+                                            Spacer()
+                                        }
+                                        .padding(.horizontal, PPSpacing.md)
+                                        .padding(.vertical, PPSpacing.sm)
+                                        .background(categoryCapSelections.contains(category.id) ? Color.ppPrimary.opacity(0.06) : Color.ppSurface)
+                                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: PPRadius.md)
+                                                .stroke(categoryCapSelections.contains(category.id) ? Color.ppPrimary.opacity(0.4) : Color.ppBorder, lineWidth: 1)
+                                        )
+                                    }
+                                    .buttonStyle(.plain)
+
+                                    // Indented amount field when category is selected
+                                    if categoryCapSelections.contains(category.id) {
+                                        HStack(spacing: PPSpacing.sm) {
+                                            Spacer().frame(width: PPSpacing.xl)
+
+                                            Text(appState.currencyCode)
+                                                .font(.ppCallout.weight(.semibold))
+                                                .foregroundColor(.ppTextSecondary)
+                                                .padding(.horizontal, PPSpacing.md)
+                                                .padding(.vertical, PPSpacing.sm)
+                                                .background(Color.ppSurface)
+                                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+
+                                            TextField("0.00", text: Binding(
+                                                get: { categoryCaps[category.id] ?? "" },
+                                                set: { categoryCaps[category.id] = $0 }
+                                            ))
+                                            .font(.ppCallout)
+                                            .foregroundColor(.ppTextPrimary)
+                                            .keyboardType(.decimalPad)
+                                            .padding(.horizontal, PPSpacing.md)
+                                            .padding(.vertical, PPSpacing.sm)
+                                            .background(Color.ppSurface)
+                                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                            .frame(maxWidth: .infinity)
+                                        }
+                                        .transition(.opacity.combined(with: .move(edge: .top)))
+                                    }
+                                }
+                            }
+                        }
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                }
+            }
+            .padding(PPSpacing.lg)
+            .background(Color.ppCard)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        }
     }
 
     // MARK: - Step 4: Review (stub)
@@ -523,7 +675,7 @@ struct OverlayFormSheet: View {
             accountIds: selectedAccountIds.isEmpty ? nil : Array(selectedAccountIds),
             categoryIds: selectedCategoryIds.isEmpty ? nil : Array(selectedCategoryIds),
             vendorIds: selectedVendorIds.isEmpty ? nil : Array(selectedVendorIds),
-            totalCapAmount: totalCapAmountCents,
+            totalCapAmount: isTotalCapEnabled ? totalCapAmountCents : nil,
             categoryCaps: buildCategoryCaps()
         )
 
@@ -548,7 +700,9 @@ struct OverlayFormSheet: View {
     }
 
     private func buildCategoryCaps() -> [CategoryCap]? {
-        let caps = categoryCaps.compactMap { (id, text) -> CategoryCap? in
+        guard isPerCategoryCapEnabled else { return nil }
+        let caps = categoryCapSelections.compactMap { id -> CategoryCap? in
+            guard let text = categoryCaps[id] else { return nil }
             let cleaned = text.replacingOccurrences(of: ",", with: ".")
             guard let value = Double(cleaned), value > 0 else { return nil }
             return CategoryCap(categoryId: id, amount: Int64(value * 100))
