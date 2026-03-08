@@ -227,7 +227,7 @@ final class OnboardingViewModel: ObservableObject {
             durationUnit: "months",
             saturdayAdjustment: customize ? saturdayBehavior.rawValue : WeekendBehavior.keep.rawValue,
             sundayAdjustment: customize ? sundayBehavior.rawValue : WeekendBehavior.keep.rawValue,
-            namePattern: "MMMM yyyy",
+            namePattern: "{MONTH} {YEAR}",
             generateAhead: customize ? periodsToPrepare : 3
         )
         try await apiClient.request(.updatePeriodModel, body: PeriodModelRequest(mode: "automatic", schedule: schedule))
