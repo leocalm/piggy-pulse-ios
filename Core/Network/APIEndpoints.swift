@@ -110,11 +110,7 @@ extension APIEndpoint {
     static func archiveCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)/archive", method: .post, requiresAuth: true)
     }
-    // Add to Categories section - we'll reuse the list with period_id
-    static func categoriesForPeriod(periodId: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/categories/", method: .get, requiresAuth: true)
-    }
-    static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
+static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
     static let transferCategory = APIEndpoint(path: "/categories/transfer", method: .get, requiresAuth: true)
     static let categoriesManagement = APIEndpoint(path: "/categories/management", method: .get, requiresAuth: true)
 
@@ -169,12 +165,6 @@ extension APIEndpoint {
     static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
 }
 
-// MARK: - Budget Categories
-
-extension APIEndpoint {
-    static let budgetCategories = APIEndpoint(path: "/budget-categories/", method: .get, requiresAuth: true)
-}
-
 // MARK: - Settings
 
 extension APIEndpoint {
@@ -188,4 +178,17 @@ extension APIEndpoint {
 extension APIEndpoint {
     static let onboardingStatus = APIEndpoint(path: "/onboarding/status", method: .get, requiresAuth: true)
     static let completeOnboarding = APIEndpoint(path: "/onboarding/complete", method: .post, requiresAuth: true)
+}
+
+// MARK: - Category Targets
+
+extension APIEndpoint {
+    static let categoryTargets = APIEndpoint(path: "/category-targets/", method: .get, requiresAuth: true)
+    static let upsertCategoryTargets = APIEndpoint(path: "/category-targets/", method: .post, requiresAuth: true)
+    static func excludeCategoryTarget(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/category-targets/\(id)/exclude", method: .post, requiresAuth: true)
+    }
+    static func includeCategoryTarget(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/category-targets/\(id)/include", method: .post, requiresAuth: true)
+    }
 }
