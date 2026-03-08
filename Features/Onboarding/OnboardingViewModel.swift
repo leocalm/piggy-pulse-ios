@@ -92,9 +92,23 @@ final class OnboardingViewModel: ObservableObject {
 
     private func loadExistingAccounts() async {
         do {
-            let list: [AccountListItem] = try await apiClient.request(.accounts)
-            if !list.isEmpty {
-                accounts = list.map { item in
+            // Load currencies first so selectedCurrencyId can be restored
+            if currencies.isEmpty {
+                let currencyList: [Currency] = try await apiClient.request(.currencies)
+                currencies = currencyList
+            }
+            // Restore selected currency from profile
+            struct ProfileResponse: Decodable { let defaultCurrencyId: UUID? }
+            if let profile = try? await apiClient.request(.profile) as ProfileResponse,
+               let currencyId = profile.defaultCurrencyId {
+                selectedCurrencyId = currencyId
+            } else {
+                selectedCurrencyId = currencies.first?.id
+            }
+
+            let response: PaginatedResponse<AccountListItem> = try await apiClient.request(.accounts)
+            if !response.data.isEmpty {
+                accounts = response.data.map { item in
                     var draft = DraftAccount()
                     draft.name = item.name
                     draft.accountType = item.accountType
@@ -111,13 +125,13 @@ final class OnboardingViewModel: ObservableObject {
 
     private func loadExistingCategories() async {
         do {
-            let list: [CategoryListItem] = try await apiClient.request(.categories)
-            let active = list.filter { !$0.isArchived && !$0.isSystem }
+            let response: PaginatedResponse<CategoryListItem> = try await apiClient.request(.categories)
+            let active = response.data.filter { !$0.isArchived && !$0.isSystem }
             if !active.isEmpty {
                 categories = active.map { item in
                     DraftCategory(name: item.name, icon: item.icon, categoryType: item.categoryType)
                 }
-                selectedTemplate = .custom   // user already has categories; show them as-is
+                selectedTemplate = .custom
                 savedSteps.insert(.categories)
             }
         } catch { /* non-fatal */ }
