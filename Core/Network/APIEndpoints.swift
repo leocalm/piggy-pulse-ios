@@ -189,3 +189,16 @@ extension APIEndpoint {
     static let onboardingStatus = APIEndpoint(path: "/onboarding/status", method: .get, requiresAuth: true)
     static let completeOnboarding = APIEndpoint(path: "/onboarding/complete", method: .post, requiresAuth: true)
 }
+
+// MARK: - Category Targets
+
+extension APIEndpoint {
+    static let categoryTargets = APIEndpoint(path: "/category-targets/", method: .get, requiresAuth: true)
+    static let upsertCategoryTargets = APIEndpoint(path: "/category-targets/", method: .post, requiresAuth: true)
+    static func excludeCategoryTarget(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/category-targets/\(id)/exclude", method: .post, requiresAuth: true)
+    }
+    static func includeCategoryTarget(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/category-targets/\(id)/include", method: .post, requiresAuth: true)
+    }
+}
