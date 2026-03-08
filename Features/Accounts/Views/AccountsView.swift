@@ -136,6 +136,7 @@ struct AccountsView: View {
     }
     
     private func deleteAccount(_ account: AccountListItem) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteAccount(account.id))
             await load()
@@ -143,6 +144,7 @@ struct AccountsView: View {
     }
 
     private func archiveAccount(_ account: AccountListItem) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveAccount(account.id))
             await load()

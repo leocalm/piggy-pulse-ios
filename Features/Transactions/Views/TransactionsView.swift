@@ -278,6 +278,7 @@ struct TransactionsView: View {
     }
     
     private func deleteTransaction(_ tx: Transaction) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteTransaction(tx.id))
             if let periodId = appState.selectedPeriod?.id {

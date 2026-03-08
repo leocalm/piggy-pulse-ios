@@ -151,6 +151,7 @@ struct CategoriesView: View {
     }
     
     private func deleteCategory(_ cat: CategoryManagementItem) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteCategory(cat.id))
             await load()
@@ -158,6 +159,7 @@ struct CategoriesView: View {
     }
 
     private func archiveCategory(_ cat: CategoryManagementItem) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveCategory(cat.id))
             await load()

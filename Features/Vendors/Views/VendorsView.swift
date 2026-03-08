@@ -117,6 +117,7 @@ struct VendorsView: View {
     }
 
     private func deleteVendor(_ vendor: VendorListItem) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
             await load()
@@ -124,6 +125,7 @@ struct VendorsView: View {
     }
 
     private func archiveVendor(_ vendor: VendorListItem) async {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveVendor(vendor.id))
             await load()

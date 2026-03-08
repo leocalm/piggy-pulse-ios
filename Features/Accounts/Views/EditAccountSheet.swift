@@ -153,9 +153,15 @@ struct EditAccountSheet: View {
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: defaultIcon, accountType: accountType, spendLimit: spendLimit)
         do {
             try await appState.apiClient.request(.updateAccount(account.id), body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onUpdated(); dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to update account.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to update account.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }

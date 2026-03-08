@@ -189,9 +189,15 @@ struct AddAccountSheet: View {
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: defaultIcon, accountType: accountType, balance: balanceInCents, spendLimit: spendLimit)
         do {
             try await appState.apiClient.request(.createAccount, body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated(); dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to create account.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to create account.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }

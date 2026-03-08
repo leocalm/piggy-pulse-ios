@@ -310,12 +310,15 @@ struct CreatePeriodSheet: View {
 
         do {
             let _ = try await appState.apiClient.requestString(.createPeriod, body: request)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated()
             dismiss()
         } catch let error as APIError {
             errorMessage = error.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         } catch {
             errorMessage = String(localized: "Failed to create period.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
 
         isLoading = false

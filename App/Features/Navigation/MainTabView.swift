@@ -45,6 +45,7 @@ struct MainTabView: View {
 
     private var addTransactionFAB: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             showAddTransaction = true
         } label: {
             Image(systemName: "text.badge.plus")
@@ -115,6 +116,7 @@ struct MainTabView: View {
 
                     // Logout
                     Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         Task { await appState.logout() }
                     } label: {
                         HStack {
