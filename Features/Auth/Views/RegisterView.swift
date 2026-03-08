@@ -49,40 +49,60 @@ struct RegisterView: View {
                             }
 
                             VStack(spacing: PPSpacing.lg) {
-                                PPTextField(
-                                    label: "Full Name",
-                                    placeholder: "John Doe",
-                                    isRequired: true,
-                                    text: $viewModel.registerName,
-                                    textContentType: .name
-                                )
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack(spacing: 2) {
+                                        Text("Full Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                    }
+                                    TextField("John Doe", text: $viewModel.registerName)
+                                        .textContentType(.name)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                }
 
-                                PPTextField(
-                                    label: "Email",
-                                    placeholder: "you@example.com",
-                                    isRequired: true,
-                                    text: $viewModel.registerEmail,
-                                    keyboardType: .emailAddress,
-                                    textContentType: .emailAddress
-                                )
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack(spacing: 2) {
+                                        Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                    }
+                                    TextField("you@example.com", text: $viewModel.registerEmail)
+                                        .keyboardType(.emailAddress)
+                                        .textContentType(.emailAddress)
+                                        .autocapitalization(.none)
+                                        .autocorrectionDisabled()
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                }
 
-                                PPTextField(
-                                    label: "Password",
-                                    placeholder: "Your password",
-                                    isRequired: true,
-                                    text: $viewModel.registerPassword,
-                                    isSecure: true,
-                                    textContentType: .newPassword
-                                )
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack(spacing: 2) {
+                                        Text("Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                    }
+                                    SecureField("Your password", text: $viewModel.registerPassword)
+                                        .textContentType(.newPassword)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                }
 
-                                PPTextField(
-                                    label: "Confirm Password",
-                                    placeholder: "Confirm your password",
-                                    isRequired: true,
-                                    text: $viewModel.registerConfirmPassword,
-                                    isSecure: true,
-                                    textContentType: .newPassword
-                                )
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack(spacing: 2) {
+                                        Text("Confirm Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                    }
+                                    SecureField("Confirm your password", text: $viewModel.registerConfirmPassword)
+                                        .textContentType(.newPassword)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                }
                             }
 
                             Button {
@@ -102,7 +122,7 @@ struct RegisterView: View {
                             }
                             .buttonStyle(.borderedProminent)
                             .tint(.ppPrimary)
-                            .cornerRadius(PPRadius.full)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                             .disabled(viewModel.isRegisterDisabled)
                             .opacity(viewModel.isRegisterDisabled ? 0.6 : 1)
 
@@ -120,7 +140,7 @@ struct RegisterView: View {
                     }
                     .padding(PPSpacing.xxl)
                     .background(Color.ppCard)
-                    .cornerRadius(PPRadius.xl)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
                     .overlay(
                         RoundedRectangle(cornerRadius: PPRadius.xl)
                             .stroke(Color.ppBorder, lineWidth: 1)

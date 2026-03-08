@@ -9,7 +9,7 @@ extension Color {
     static let ppCard = Color(red: 0.08, green: 0.11, blue: 0.15)             // #151b26
 
     // Brand
-    static let ppPrimary = Color(red: 0.49, green: 0.36, blue: 0.99)          // #7c5cfc
+    static let ppPrimary = Color(red: 0.00, green: 0.48, blue: 1.00)          // #007AFF (Apple Blue)
     static let ppCyan = Color(red: 0.00, green: 0.83, blue: 1.00)             // #00d4ff
     static let ppAmber = Color(red: 1.00, green: 0.66, blue: 0.25)            // #ffa940
     static let ppTeal = Color(red: 0.00, green: 0.71, blue: 0.78)             // #00b4c8

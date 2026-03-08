@@ -10,10 +10,11 @@ struct CategoriesView: View {
     @State private var showArchived = false
     @State private var showAddSheet = false
     @State private var editingCategory: CategoryManagementItem?
+    @State private var categoryToDelete: CategoryManagementItem?
+    @State private var categoryToArchive: CategoryManagementItem?
 
     var body: some View {
-        NavigationStack {
-            List {
+        List {
                 if isLoading {
                     Section {
                         HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -54,7 +55,7 @@ struct CategoriesView: View {
                                     Spacer()
                                     Text("\(archived.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                                        .background(Color.ppCard).cornerRadius(PPRadius.full)
+                                        .background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                                     Image(systemName: showArchived ? "chevron.up" : "chevron.down")
                                         .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
                                 }
@@ -75,6 +76,22 @@ struct CategoriesView: View {
                 EditCategorySheet(category: cat) { Task { await load() } }
                     .environmentObject(appState)
             }
+            .confirmationDialog("Archive \"\(categoryToArchive?.name ?? "")\"?", isPresented: Binding(get: { categoryToArchive != nil }, set: { if !$0 { categoryToArchive = nil } }), titleVisibility: .visible) {
+                Button("Archive", role: .destructive) {
+                    if let cat = categoryToArchive { Task { await archiveCategory(cat) } }
+                }
+                Button("Cancel", role: .cancel) { categoryToArchive = nil }
+            } message: {
+                Text("This category will be hidden but its history will be preserved.")
+            }
+            .confirmationDialog("Delete \"\(categoryToDelete?.name ?? "")\"?", isPresented: Binding(get: { categoryToDelete != nil }, set: { if !$0 { categoryToDelete = nil } }), titleVisibility: .visible) {
+                Button("Delete", role: .destructive) {
+                    if let cat = categoryToDelete { Task { await deleteCategory(cat) } }
+                }
+                Button("Cancel", role: .cancel) { categoryToDelete = nil }
+            } message: {
+                Text("This category will be permanently deleted.")
+            }
             .navigationTitle("Categories")
             .navigationBarTitleDisplayMode(.large)
             .navigationSubtitle("Organize your transactions by type.")
@@ -88,7 +105,6 @@ struct CategoriesView: View {
                     .tint(.white)
                 }
             }
-        }
     }
 
     private func categorySection(_ title: String, categories: [CategoryManagementItem], color: Color) -> some View {
@@ -98,12 +114,21 @@ struct CategoriesView: View {
                     ForEach(categories) { cat in
                         categoryRow(cat, dimmed: false)
                             .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task { await deleteCategory(cat) }
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                                if cat.globalTransactionCount > 0 {
+                                    Button {
+                                        categoryToArchive = cat
+                                    } label: {
+                                        Label("Archive", systemImage: "archivebox")
+                                    }
+                                    .tint(.ppAmber)
+                                } else {
+                                    Button(role: .destructive) {
+                                        categoryToDelete = cat
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.ppDestructive)
                                 }
-                                .tint(.ppDestructive)
                             }
                             .swipeActions(edge: .leading) {
                                 if !cat.isSystem {
@@ -128,6 +153,13 @@ struct CategoriesView: View {
     private func deleteCategory(_ cat: CategoryManagementItem) async {
         do {
             try await appState.apiClient.requestVoid(.deleteCategory(cat.id))
+            await load()
+        } catch {}
+    }
+
+    private func archiveCategory(_ cat: CategoryManagementItem) async {
+        do {
+            try await appState.apiClient.requestVoid(.archiveCategory(cat.id))
             await load()
         } catch {}
     }
@@ -159,12 +191,12 @@ struct CategoriesView: View {
                     .padding(.horizontal, PPSpacing.sm)
                     .padding(.vertical, 2)
                     .background(Color.ppSurface)
-                    .cornerRadius(PPRadius.full)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             }
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
-        .cornerRadius(PPRadius.md)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 

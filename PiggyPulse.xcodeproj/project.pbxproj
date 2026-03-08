@@ -51,7 +51,6 @@
 		02F038B12F58E05B008DD1E7 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */; };
 		02F038B32F58E085008DD1E7 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038B22F58E082008DD1E7 /* APIEndpoints.swift */; };
 		02F038B52F58E0B1008DD1E7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038B42F58E0AF008DD1E7 /* APIClient.swift */; };
-		02F038B82F58E6D3008DD1E7 /* PPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038B72F58E6D2008DD1E7 /* PPTextField.swift */; };
 		02F038BB2F58E70D008DD1E7 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038BA2F58E70B008DD1E7 /* AuthViewModel.swift */; };
 		02F038BD2F58E87A008DD1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F038BC2F58E87A008DD1E7 /* Assets.xcassets */; };
 		02F038C02F5984DF008DD1E7 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038BF2F5984DC008DD1E7 /* RegisterView.swift */; };
@@ -117,7 +116,6 @@
 		02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		02F038B22F58E082008DD1E7 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
 		02F038B42F58E0AF008DD1E7 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		02F038B72F58E6D2008DD1E7 /* PPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPTextField.swift; sourceTree = "<group>"; };
 		02F038BA2F58E70B008DD1E7 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		02F038BC2F58E87A008DD1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02F038BE2F58E9D3008DD1E7 /* PiggyPulse-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "PiggyPulse-Info.plist"; sourceTree = "<group>"; };
@@ -411,7 +409,6 @@
 		02F038B62F58E6C5008DD1E7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				02F038B72F58E6D2008DD1E7 /* PPTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -623,7 +620,6 @@
 				027B34932F5B4E4D00E96DF6 /* Settings.swift in Sources */,
 				02F038B12F58E05B008DD1E7 /* KeychainHelper.swift in Sources */,
 				027B348D2F5B4AC200E96DF6 /* CategoriesView.swift in Sources */,
-				02F038B82F58E6D3008DD1E7 /* PPTextField.swift in Sources */,
 				027B34832F5B4A4200E96DF6 /* Category.swift in Sources */,
 				02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */,
 				02F038C22F5984F1008DD1E7 /* ForgotPasswordView.swift in Sources */,

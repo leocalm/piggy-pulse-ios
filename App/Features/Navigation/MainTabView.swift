@@ -5,7 +5,7 @@ struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var showAddTransaction = false
     @Environment(\.horizontalSizeClass) var sizeClass
-    
+
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
@@ -18,18 +18,17 @@ struct MainTabView: View {
         TabView(selection: $selectedTab) {
             Tab("Dashboard", systemImage: "square.grid.2x2", value: 0) {
                 DashboardView(apiClient: appState.apiClient)
+                    .overlay(alignment: .bottomTrailing) { addTransactionFAB }
             }
             Tab("Transactions", systemImage: "arrow.left.arrow.right", value: 1) {
                 TransactionsView(apiClient: appState.apiClient)
+                    .overlay(alignment: .bottomTrailing) { addTransactionFAB }
             }
             Tab("Periods", systemImage: "calendar", value: 2) {
                 PeriodsView(apiClient: appState.apiClient)
             }
             Tab("More", systemImage: "ellipsis.circle", value: 3) {
                 moreTab
-            }
-            Tab("Transaction", systemImage: "plus.circle.fill", value: 4, role: .search) {
-                EmptyView()
             }
         }
         .tabViewBottomAccessory {
@@ -38,16 +37,24 @@ struct MainTabView: View {
         .tabBarMinimizeBehavior(.onScrollDown)
         .tint(.ppPrimary)
         .background(Color.ppBackground)
-        .onChange(of: selectedTab) { oldTab, newTab in
-            if newTab == 4 {
-                showAddTransaction = true
-                selectedTab = 1
-            }
-        }
         .sheet(isPresented: $showAddTransaction) {
             AddTransactionSheet(onCreated: { selectedTab = 1 })
                 .environmentObject(appState)
         }
+    }
+
+    private var addTransactionFAB: some View {
+        Button {
+            showAddTransaction = true
+        } label: {
+            Image(systemName: "text.badge.plus")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(Color.ppPrimary)
+                .frame(width: 56, height: 56)
+                .glassEffect(.regular, in: Circle())
+        }
+        .padding(.trailing, PPSpacing.lg)
+        .padding(.bottom, PPSpacing.xl)
     }
 
     // MARK: - More Tab
@@ -81,7 +88,7 @@ struct MainTabView: View {
                                 OverlaysView().environmentObject(appState)
                             }
                         }
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -99,7 +106,7 @@ struct MainTabView: View {
                         moreLink("Settings", icon: "gearshape") {
                             SettingsView().environmentObject(appState)
                         }
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)
@@ -119,7 +126,7 @@ struct MainTabView: View {
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.lg)
                         .background(Color.ppCard)
-                        .cornerRadius(PPRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
                                 .stroke(Color.ppBorder, lineWidth: 1)

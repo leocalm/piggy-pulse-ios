@@ -8,63 +8,61 @@ struct PeriodSelectorBar: View {
     @Environment(\.tabViewBottomAccessoryPlacement) var placement
 
     var body: some View {
-        Button {
-            showPicker = true
-        } label: {
-            HStack(spacing: PPSpacing.md) {
-                Image(systemName: "calendar")
-                    .font(.system(size: 14))
-                    .foregroundColor(.white)
+        HStack(spacing: 0) {
+            Button {
+                showPicker = true
+            } label: {
+                HStack(spacing: PPSpacing.md) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
 
-                if isLoading {
-                    ProgressView()
-                        .tint(.ppTextSecondary)
-                        .scaleEffect(0.8)
-                } else if let period = appState.selectedPeriod {
-                    Text(period.name)
-                        .font(.ppCallout)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.ppTextPrimary)
-
-                    Spacer()
-                    
-                    switch placement {
-                    case .inline:
-                        Text(period.statusText)
-                            .font(.ppCaption)
-                            .foregroundColor(statusColor(period.status))
-                    case .expanded:
-                        HStack(spacing: 4) {
-                            Text(period.dateRangeText)
-                                .font(.ppCaption)
-                                .foregroundColor(.ppTextSecondary)
-                            
-                            if !period.statusText.isEmpty {
-                                Text("·")
-                                    .font(.ppCaption)
-                                    .foregroundColor(.ppTextTertiary)
-                                Text(period.statusText)
-                                    .font(.ppCaption)
-                                    .foregroundColor(statusColor(period.status))
-                            }
-                        }
-                    case .none:
-                        Text("No period selected")
+                    if isLoading {
+                        ProgressView()
+                            .tint(.ppTextSecondary)
+                            .scaleEffect(0.8)
+                    } else if let period = appState.selectedPeriod {
+                        Text(period.name)
                             .font(.ppCallout)
-                            .foregroundColor(.ppTextSecondary)
-                    case .some(_):
+                            .fontWeight(.semibold)
+                            .foregroundColor(.ppTextPrimary)
+
+                        switch placement {
+                        case .inline:
+                            Text(period.statusText)
+                                .font(.ppCaption)
+                                .foregroundColor(statusColor(period.status))
+                        case .expanded:
+                            HStack(spacing: 4) {
+                                Text(period.dateRangeText)
+                                    .font(.ppCaption)
+                                    .foregroundColor(.ppTextSecondary)
+
+                                if !period.statusText.isEmpty {
+                                    Text("·")
+                                        .font(.ppCaption)
+                                        .foregroundColor(.ppTextTertiary)
+                                    Text(period.statusText)
+                                        .font(.ppCaption)
+                                        .foregroundColor(statusColor(period.status))
+                                }
+                            }
+                        default:
+                            Text("No period selected")
+                                .font(.ppCallout)
+                                .foregroundColor(.ppTextSecondary)
+                        }
+                    } else {
                         Text("No period selected")
                             .font(.ppCallout)
                             .foregroundColor(.ppTextSecondary)
                     }
-                } else {
-                    Text("No period selected")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
                 }
+                .padding(.horizontal, PPSpacing.lg)
+                .padding(.vertical, PPSpacing.md)
             }
-            .padding(.horizontal, PPSpacing.lg)
-            .padding(.vertical, PPSpacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
         }
         .sheet(isPresented: $showPicker) {
             PeriodPickerSheet(
@@ -159,7 +157,7 @@ struct PeriodPickerSheet: View {
                                     ? Color.ppPrimary.opacity(0.1)
                                     : Color.ppCard
                             )
-                            .cornerRadius(PPRadius.md)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(
                                 RoundedRectangle(cornerRadius: PPRadius.md)
                                     .stroke(

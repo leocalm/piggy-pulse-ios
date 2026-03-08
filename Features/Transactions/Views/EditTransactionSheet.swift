@@ -17,6 +17,7 @@ struct EditTransactionSheet: View {
     @State private var isTransfer = false
 
     @State private var categories: [CategoryOption] = []
+    @State private var transferCategory: CategoryOption?
     @State private var accounts: [AccountOption] = []
     @State private var vendors: [VendorOption] = []
 
@@ -60,60 +61,113 @@ struct EditTransactionSheet: View {
                                     Text("€").font(.ppAmount).foregroundColor(.ppTextSecondary)
                                     TextField("0.00", text: $amountText).font(.ppAmount).foregroundColor(.ppTextPrimary).keyboardType(.decimalPad)
                                 }
-                                .padding(PPSpacing.lg).background(Color.ppSurface).cornerRadius(PPRadius.md)
+                                .padding(PPSpacing.lg).background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                 .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+
+                                Toggle(isOn: $isTransfer) {
+                                    Text("Transfer between accounts")
+                                        .font(.ppCallout)
+                                        .foregroundColor(.ppTextPrimary)
+                                }
+                                .tint(.ppPrimary)
+                                .onChange(of: isTransfer) { _, transfer in
+                                    if transfer {
+                                        selectedCategory = transferCategory
+                                        selectedVendor = nil
+                                    } else {
+                                        selectedToAccount = nil
+                                        if selectedCategory?.categoryType == "Transfer" {
+                                            selectedCategory = nil
+                                        }
+                                    }
+                                }
                             }
-                            .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
 
                             // Details
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
                                 Text("Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
-                                PPTextField(label: "Description", placeholder: "e.g. Groceries", isRequired: true, text: $description)
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack(spacing: 2) {
+                                        Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                    }
+                                    TextField("e.g. Groceries", text: $description)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                }
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     Text("Date").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     DatePicker("", selection: $occurredAt, displayedComponents: .date).datePickerStyle(.compact).labelsHidden().tint(.ppPrimary)
                                 }
                             }
-                            .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
 
                             // Classification
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
                                 Text("Classification").font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
-                                pickerField("Category", selection: selectedCategory.map { "\($0.icon) \($0.name)" } ?? "Select") {
-                                    ForEach(categories) { cat in
-                                        Button("\(cat.icon) \(cat.name)") {
-                                            selectedCategory = cat
-                                            isTransfer = cat.categoryType == "Transfer"
-                                            if isTransfer { selectedVendor = nil }
+                                if !isTransfer {
+                                    HStack {
+                                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Spacer()
+                                        Picker("Category", selection: $selectedCategory) {
+                                            Text("Select").tag(Optional<CategoryOption>.none)
+                                            ForEach(categories) { cat in
+                                                Text("\(cat.icon) \(cat.name)").tag(Optional(cat))
+                                            }
                                         }
+                                        .pickerStyle(.menu)
+                                        .tint(.ppPrimary)
                                     }
                                 }
 
-                                pickerField("From Account", selection: selectedFromAccount?.name ?? "Select") {
-                                    ForEach(accounts) { acc in
-                                        Button(acc.name) { selectedFromAccount = acc }
+                                HStack {
+                                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Spacer()
+                                    Picker("From Account", selection: $selectedFromAccount) {
+                                        Text("Select").tag(Optional<AccountOption>.none)
+                                        ForEach(accounts) { acc in
+                                            Text(acc.name).tag(Optional(acc))
+                                        }
                                     }
+                                    .pickerStyle(.menu)
+                                    .tint(.ppPrimary)
                                 }
 
                                 if isTransfer {
-                                    pickerField("To Account", selection: selectedToAccount?.name ?? "Select") {
-                                        ForEach(accounts.filter { $0.id != selectedFromAccount?.id }) { acc in
-                                            Button(acc.name) { selectedToAccount = acc }
+                                    HStack {
+                                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Spacer()
+                                        Picker("To Account", selection: $selectedToAccount) {
+                                            Text("Select").tag(Optional<AccountOption>.none)
+                                            ForEach(accounts.filter { $0.id != selectedFromAccount?.id }) { acc in
+                                                Text(acc.name).tag(Optional(acc))
+                                            }
                                         }
+                                        .pickerStyle(.menu)
+                                        .tint(.ppPrimary)
                                     }
                                 } else {
-                                    pickerField("Vendor", selection: selectedVendor?.name ?? "None") {
-                                        Button("None") { selectedVendor = nil }
-                                        ForEach(vendors) { v in
-                                            Button(v.name) { selectedVendor = v }
+                                    HStack {
+                                        Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Spacer()
+                                        Picker("Vendor", selection: $selectedVendor) {
+                                            Text("None").tag(Optional<VendorOption>.none)
+                                            ForEach(vendors) { v in
+                                                Text(v.name).tag(Optional(v))
+                                            }
                                         }
+                                        .pickerStyle(.menu)
+                                        .tint(.ppPrimary)
                                     }
                                 }
                             }
-                            .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
                         }
                         .padding(PPSpacing.xl)
@@ -150,22 +204,6 @@ struct EditTransactionSheet: View {
         }
     }
 
-    private func pickerField<Content: View>(_ label: String, selection: String, @ViewBuilder content: @escaping () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: PPSpacing.sm) {
-            Text(label).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-            Menu { content() } label: {
-                HStack {
-                    Text(selection).font(.ppBody).foregroundColor(.ppTextPrimary)
-                    Spacer()
-                    Image(systemName: "chevron.up.chevron.down").font(.system(size: 12)).foregroundColor(.ppTextSecondary)
-                }
-                .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                .background(Color.ppSurface).cornerRadius(PPRadius.md)
-                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-            }
-        }
-    }
-
     private func loadOptions() async {
         isLoadingOptions = true
 
@@ -185,20 +223,18 @@ struct EditTransactionSheet: View {
                 queryItems: [URLQueryItem(name: "period_id", value: periodId?.uuidString.lowercased() ?? "")]
             )
 
-            // Also fetch transfer category
-            if let transferCat: CategoryOption = try? await appState.apiClient.request(.transferCategory) {
-                var cats = try await catsTask
-                if !cats.contains(where: { $0.id == transferCat.id }) { cats.append(transferCat) }
-                categories = cats
-            } else {
-                categories = try await catsTask
-            }
+            transferCategory = try? await appState.apiClient.request(.transferCategory)
+            categories = try await catsTask
 
             accounts = try await accsTask
             vendors = (try? await vendorsTask)?.data ?? []
 
             // Match selections
-            selectedCategory = categories.first { $0.id == transaction.category.id }
+            if isTransfer {
+                selectedCategory = transferCategory
+            } else {
+                selectedCategory = categories.first { $0.id == transaction.category.id }
+            }
             selectedFromAccount = accounts.first { $0.id == transaction.fromAccount.id }
             selectedToAccount = transaction.toAccount.flatMap { to in accounts.first { $0.id == to.id } }
             selectedVendor = transaction.vendor.flatMap { v in vendors.first { $0.id == v.id } }
@@ -237,7 +273,7 @@ struct EditTransactionSheet: View {
         )
 
         do {
-            let _: Transaction = try await appState.apiClient.request(.updateTransaction(transaction.id), body: req)
+            try await appState.apiClient.request(.updateTransaction(transaction.id), body: req)
             onUpdated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
         catch { errorMessage = "Failed to update transaction." }

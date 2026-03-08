@@ -6,7 +6,7 @@ struct AddAccountSheet: View {
 
     @State private var name = ""
     @State private var spendLimitText = ""
-    @State private var color = "#6C5CE7"
+    @State private var color = "#007AFF"
     @State private var accountType = "Checking"
     @State private var balanceText = ""
     @State private var isLoading = false
@@ -16,7 +16,7 @@ struct AddAccountSheet: View {
 
     private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
     private let typeLabels = ["Checking": "Checking", "Savings": "Savings", "CreditCard": "Credit Card", "Wallet": "Wallet", "Allowance": "Allowance"]
-    private let colorOptions = ["#6C5CE7", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
+    private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
     private var balanceInCents: Int64 {
         let cleaned = balanceText.replacingOccurrences(of: ",", with: ".")
@@ -58,28 +58,30 @@ struct AddAccountSheet: View {
                             Text("Account Details")
                                 .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
-                            PPTextField(label: "Name", placeholder: "e.g. Main Checking", isRequired: true, text: $name)
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                HStack(spacing: 2) {
+                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+                                }
+                                TextField("e.g. Main Checking", text: $name)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
 
                             // Account Type
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                            HStack {
                                 Text("Account Type")
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                Menu {
+                                Spacer()
+                                Picker("Account Type", selection: $accountType) {
                                     ForEach(accountTypes, id: \.self) { type in
-                                        Button(typeLabels[type] ?? type) { accountType = type }
+                                        Text(typeLabels[type] ?? type).tag(type)
                                     }
-                                } label: {
-                                    HStack {
-                                        Text(typeLabels[accountType] ?? accountType)
-                                            .font(.ppBody).foregroundColor(.ppTextPrimary)
-                                        Spacer()
-                                        Image(systemName: "chevron.up.chevron.down")
-                                            .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
-                                    }
-                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).cornerRadius(PPRadius.md)
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                                 }
+                                .pickerStyle(.menu)
+                                .tint(.ppPrimary)
                             }
 
                             // Starting Balance
@@ -92,7 +94,7 @@ struct AddAccountSheet: View {
                                         .font(.ppBody).foregroundColor(.ppTextPrimary)
                                 }
                                 .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                .background(Color.ppSurface).cornerRadius(PPRadius.md)
+                                .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                 .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
                             
@@ -107,12 +109,12 @@ struct AddAccountSheet: View {
                                             .font(.ppBody).foregroundColor(.ppTextPrimary)
                                     }
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).cornerRadius(PPRadius.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
 
                         // Appearance
@@ -135,7 +137,7 @@ struct AddAccountSheet: View {
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).cornerRadius(PPRadius.lg)
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
                     }
                     .padding(PPSpacing.xl)
@@ -186,7 +188,7 @@ struct AddAccountSheet: View {
         }
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: defaultIcon, accountType: accountType, balance: balanceInCents, spendLimit: spendLimit)
         do {
-            let _: AccountListItem = try await appState.apiClient.request(.createAccount, body: req)
+            try await appState.apiClient.request(.createAccount, body: req)
             onCreated(); dismiss()
         } catch let e as APIError { errorMessage = e.errorDescription }
         catch { errorMessage = "Failed to create account." }
