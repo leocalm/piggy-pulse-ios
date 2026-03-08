@@ -1,5 +1,22 @@
 import Foundation
 
+struct OverlayRules: Codable {
+    let accountIds: [UUID]
+    let categoryIds: [UUID]
+    let vendorIds: [UUID]
+
+    init(accountIds: [UUID] = [], categoryIds: [UUID] = [], vendorIds: [UUID] = []) {
+        self.accountIds = accountIds
+        self.categoryIds = categoryIds
+        self.vendorIds = vendorIds
+    }
+}
+
+struct OverlayCategoryCap: Codable {
+    let categoryId: UUID
+    let capAmount: Int64
+}
+
 struct OverlayItem: Codable, Identifiable {
     let id: UUID
     let name: String
@@ -10,6 +27,8 @@ struct OverlayItem: Codable, Identifiable {
     let totalCapAmount: Int64?
     let spentAmount: Int64
     let transactionCount: Int64
+    let rules: OverlayRules?
+    let categoryCaps: [OverlayCategoryCap]?
 
     var status: OverlayStatus {
         let today = Date()
@@ -38,4 +57,25 @@ struct OverlayItem: Codable, Identifiable {
 
 enum OverlayStatus {
     case active, upcoming, ended, unknown
+}
+
+// MARK: - Inclusion Mode
+
+enum OverlayInclusionMode: String, Codable, CaseIterable {
+    case manual = "manual"
+    case rulesBased = "rules"
+    case includeAll = "all"
+}
+
+// MARK: - Create/Update Request
+
+struct OverlayRequest: Encodable {
+    let name: String
+    let icon: String?
+    let startDate: String
+    let endDate: String
+    let inclusionMode: String
+    let totalCapAmount: Int64?
+    let rules: OverlayRules
+    let categoryCaps: [OverlayCategoryCap]
 }

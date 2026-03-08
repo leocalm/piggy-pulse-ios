@@ -6,12 +6,15 @@ struct OverlaysView: View {
     @State private var isLoading = true
     @State private var errorMessage: String?
     @State private var showPast = false
+    @State private var showCreateSheet = false
+    @State private var overlayToEdit: OverlayItem? = nil
 
     private var active: [OverlayItem] { overlays.filter { $0.status == .active } }
     private var upcoming: [OverlayItem] { overlays.filter { $0.status == .upcoming } }
     private var past: [OverlayItem] { overlays.filter { $0.status == .ended } }
 
     var body: some View {
+        ZStack(alignment: .bottomTrailing) {
         List {
                 if isLoading {
                     Section {
@@ -34,7 +37,7 @@ struct OverlaysView: View {
                         VStack(spacing: PPSpacing.lg) {
                             Image(systemName: "square.stack").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
                             Text("No overlays yet").font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Text("Create overlays from the web app to track temporary spending goals.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                            Text("Tap + to create your first overlay.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -82,6 +85,34 @@ struct OverlaysView: View {
             .task { await load() }
             .navigationTitle("Overlays")
             .navigationBarTitleDisplayMode(.large)
+
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            showCreateSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(Color.ppPrimary)
+                .frame(width: 56, height: 56)
+                .glassEffect(.regular, in: Circle())
+        }
+        .padding(.trailing, PPSpacing.lg)
+        .padding(.bottom, PPSpacing.xl)
+        }
+        .sheet(isPresented: $showCreateSheet) {
+            OverlayFormSheet(overlay: nil, onSaved: {
+                Task { await load() }
+            })
+            .environmentObject(appState)
+            .presentationDetents([.large])
+        }
+        .sheet(item: $overlayToEdit) { overlay in
+            OverlayFormSheet(overlay: overlay, onSaved: {
+                Task { await load() }
+            })
+            .environmentObject(appState)
+            .presentationDetents([.large])
+        }
     }
 
     private func overlaySection(_ title: LocalizedStringKey, items: [OverlayItem], badge: Bool) -> some View {
@@ -188,6 +219,22 @@ struct OverlaysView: View {
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .contextMenu {
+            Button {
+                overlayToEdit = overlay
+            } label: {
+                Label("Edit Overlay", systemImage: "pencil")
+            }
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                overlayToEdit = overlay
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.ppPrimary)
+        }
     }
 
     private func statusBadge(_ status: OverlayStatus) -> some View {
