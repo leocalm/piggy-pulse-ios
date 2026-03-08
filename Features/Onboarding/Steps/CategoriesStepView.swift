@@ -56,7 +56,7 @@ struct CategoriesStepView: View {
                         let outgoing = vm.categories.filter { $0.categoryType == "Outgoing" }
 
                         if !incoming.isEmpty {
-                            Text("Incoming").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppSuccess)
+                            Text("Incoming").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTeal)
                             ForEach(incoming) { cat in categoryRow(cat) }
                         }
                         if !outgoing.isEmpty {

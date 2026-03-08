@@ -13,7 +13,7 @@ struct OnboardingStepIndicator: View {
                     HStack(spacing: PPSpacing.xs) {
                         if isPast {
                             Image(systemName: "checkmark.circle.fill")
-                                .font(.caption).foregroundColor(.ppSuccess)
+                                .font(.caption).foregroundColor(.ppTeal)
                         } else {
                             Text("\(idx + 1)")
                                 .font(.ppCaption).fontWeight(.semibold)

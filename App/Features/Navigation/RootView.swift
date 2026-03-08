@@ -13,7 +13,7 @@ struct RootView: View {
                 if appState.currentUser?.onboardingStatus == "completed" {
                     MainTabView()
                 } else {
-                    OnboardingView(appState: appState)
+                    OnboardingView(apiClient: appState.apiClient)
                 }
             } else {
                 NavigationStack {

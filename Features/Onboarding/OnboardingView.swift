@@ -4,8 +4,8 @@ struct OnboardingView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var vm: OnboardingViewModel
 
-    init(appState: AppState) {
-        _vm = StateObject(wrappedValue: OnboardingViewModel(apiClient: appState.apiClient))
+    init(apiClient: APIClient) {
+        _vm = StateObject(wrappedValue: OnboardingViewModel(apiClient: apiClient))
     }
 
     var body: some View {

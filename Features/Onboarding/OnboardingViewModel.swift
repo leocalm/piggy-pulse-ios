@@ -1,6 +1,6 @@
 import SwiftUI
+internal import Combine
 
-@MainActor
 final class OnboardingViewModel: ObservableObject {
 
     // MARK: - Navigation

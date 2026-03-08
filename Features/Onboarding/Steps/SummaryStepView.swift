@@ -47,7 +47,7 @@ struct SummaryStepView: View {
                     let incoming = vm.categories.filter { $0.categoryType == "Incoming" }
                     let outgoing = vm.categories.filter { $0.categoryType == "Outgoing" }
                     if !incoming.isEmpty {
-                        Text("Incoming").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppSuccess)
+                        Text("Incoming").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTeal)
                         ForEach(incoming) { cat in
                             HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
                         }
