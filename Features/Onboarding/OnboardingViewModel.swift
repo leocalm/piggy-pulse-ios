@@ -70,12 +70,58 @@ final class OnboardingViewModel: ObservableObject {
             if let stepStr = response.currentStep,
                let step = OnboardingStep(rawValue: stepStr) {
                 currentStep = step
+                // Mark all steps before the current one as already saved so we
+                // don't re-POST data that the server already has.
+                for s in OnboardingStep.allCases where s.index < step.index {
+                    savedSteps.insert(s)
+                }
+                // Load existing data for steps already completed so the UI
+                // reflects what's on the server and Back/Continue works cleanly.
+                if step.index >= OnboardingStep.accounts.index {
+                    await loadExistingAccounts()
+                }
+                if step.index >= OnboardingStep.categories.index {
+                    await loadExistingCategories()
+                }
             } else {
                 currentStep = .period
             }
         } catch {
             currentStep = .period
         }
+    }
+
+    private func loadExistingAccounts() async {
+        do {
+            let list: [AccountListItem] = try await apiClient.request(.accounts)
+            if !list.isEmpty {
+                accounts = list.map { item in
+                    var draft = DraftAccount()
+                    draft.name = item.name
+                    draft.accountType = item.accountType
+                    draft.balanceText = String(format: "%.2f", Double(item.balance) / 100)
+                    if let limit = item.spendLimit {
+                        draft.spendLimitText = String(format: "%.2f", Double(limit) / 100)
+                    }
+                    return draft
+                }
+                savedSteps.insert(.accounts)
+            }
+        } catch { /* non-fatal */ }
+    }
+
+    private func loadExistingCategories() async {
+        do {
+            let list: [CategoryListItem] = try await apiClient.request(.categories)
+            let active = list.filter { !$0.isArchived && !$0.isSystem }
+            if !active.isEmpty {
+                categories = active.map { item in
+                    DraftCategory(name: item.name, icon: item.icon, categoryType: item.categoryType)
+                }
+                selectedTemplate = .custom   // user already has categories; show them as-is
+                savedSteps.insert(.categories)
+            }
+        } catch { /* non-fatal */ }
     }
 
     // MARK: - Load currencies (called by AccountsStep on appear)
