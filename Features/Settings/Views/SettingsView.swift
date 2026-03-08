@@ -274,6 +274,7 @@ struct SettingsView: View {
             let updated: PreferencesResponse = try await appState.apiClient.request(.updatePreferences, body: req)
             preferences = updated
             preferencesDirty = false
+            appState.applyTheme(themeValue)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         } catch {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
