@@ -88,9 +88,15 @@ struct EditVendorSheet: View {
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), description: d.isEmpty ? nil : d)
         do {
             try await appState.apiClient.request(.updateVendor(vendor.id), body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onUpdated(); dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to update vendor.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to update vendor.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }

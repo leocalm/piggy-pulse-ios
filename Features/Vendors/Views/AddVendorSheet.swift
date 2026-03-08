@@ -93,9 +93,15 @@ struct AddVendorSheet: View {
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), description: desc.isEmpty ? nil : desc)
         do {
             try await appState.apiClient.request(.createVendor, body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated(); dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to create vendor.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to create vendor.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }
