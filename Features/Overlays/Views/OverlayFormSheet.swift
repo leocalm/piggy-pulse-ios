@@ -17,7 +17,7 @@ struct OverlayFormSheet: View {
     @State private var name: String = ""
     @State private var selectedEmoji: String? = nil
     @State private var startDate: Date = Date()
-    @State private var endDate: Date = Calendar.current.date(byAdding: .day, value: 30, to: Date()) ?? Date()
+    @State private var endDate: Date = Calendar.current.date(byAdding: .day, value: 5, to: Date()) ?? Date()
 
     // Step 2 — Inclusion
     @State private var inclusionMode: OverlayInclusionMode = .includeAll
@@ -47,7 +47,7 @@ struct OverlayFormSheet: View {
     private var isEditMode: Bool { overlay != nil }
 
     private var step1Valid: Bool {
-        name.trimmingCharacters(in: .whitespaces).count >= 2
+        !name.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
     private var minEndDate: Date {
@@ -229,6 +229,7 @@ struct OverlayFormSheet: View {
                         displayedComponents: .date
                     )
                     .labelsHidden()
+                    .datePickerStyle(.compact)
                     .tint(.ppPrimary)
                 }
 
@@ -245,6 +246,7 @@ struct OverlayFormSheet: View {
                         displayedComponents: .date
                     )
                     .labelsHidden()
+                    .datePickerStyle(.compact)
                     .tint(.ppPrimary)
                 }
 
@@ -253,7 +255,7 @@ struct OverlayFormSheet: View {
                     Image(systemName: "info.circle")
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
-                    Text("The overlay will track transactions that fall within this date range. Dates are inclusive.")
+                    Text("Overlays are temporary and always require both start and end dates.")
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -760,7 +762,7 @@ struct OverlayFormSheet: View {
             if currentStep > 0 {
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    withAnimation { currentStep -= 1 }
+                    withAnimation(.easeInOut(duration: 0.25)) { currentStep -= 1 }
                 } label: {
                     HStack(spacing: PPSpacing.sm) {
                         Image(systemName: "chevron.left")
@@ -779,7 +781,7 @@ struct OverlayFormSheet: View {
             if currentStep < 3 {
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    withAnimation { currentStep += 1 }
+                    withAnimation(.easeInOut(duration: 0.25)) { currentStep += 1 }
                 } label: {
                     HStack(spacing: PPSpacing.sm) {
                         Text("Next")
@@ -822,13 +824,18 @@ struct OverlayFormSheet: View {
     private var nextButtonDisabled: Bool {
         switch currentStep {
         case 0: return !step1Valid
+        case 1:
+            if inclusionMode == .rulesBased {
+                return selectedAccountIds.isEmpty && selectedCategoryIds.isEmpty && selectedVendorIds.isEmpty
+            }
+            return false
         default: return false
         }
     }
 
     // MARK: - Submit
 
-    private func submit() async {
+    @MainActor private func submit() async {
         isLoading = true
         errorMessage = nil
 
@@ -878,7 +885,7 @@ struct OverlayFormSheet: View {
 
     // MARK: - Load Options
 
-    private func loadOptions() async {
+    @MainActor private func loadOptions() async {
         isLoadingOptions = true
         defer { isLoadingOptions = false }
 
