@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct PeriodSelectorBar: View {
-    var onAddTransaction: (() -> Void)? = nil
     @EnvironmentObject var appState: AppState
     @State private var periods: [BudgetPeriod] = []
     @State private var showPicker = false
@@ -64,14 +63,6 @@ struct PeriodSelectorBar: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            if let onAdd = onAddTransaction {
-                Button(action: onAdd) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 24))
-                        .foregroundColor(.ppPrimary)
-                }
-                .padding(.trailing, PPSpacing.lg)
-            }
         }
         .sheet(isPresented: $showPicker) {
             PeriodPickerSheet(
