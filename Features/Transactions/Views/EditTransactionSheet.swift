@@ -240,6 +240,7 @@ struct EditTransactionSheet: View {
             selectedVendor = transaction.vendor.flatMap { v in vendors.first { $0.id == v.id } }
         } catch {
             errorMessage = String(localized: "Failed to load options.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
 
         isLoadingOptions = false
@@ -251,6 +252,7 @@ struct EditTransactionSheet: View {
         guard let categoryId = selectedCategory?.id,
               let fromAccountId = selectedFromAccount?.id else {
             errorMessage = String(localized: "Select a category and account.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
             isLoading = false; return
         }
 
@@ -274,9 +276,15 @@ struct EditTransactionSheet: View {
 
         do {
             try await appState.apiClient.request(.updateTransaction(transaction.id), body: req)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onUpdated(); dismiss()
-        } catch let e as APIError { errorMessage = e.errorDescription }
-        catch { errorMessage = String(localized: "Failed to update transaction.") }
+        } catch let e as APIError {
+            errorMessage = e.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        } catch {
+            errorMessage = String(localized: "Failed to update transaction.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
         isLoading = false
     }
 }

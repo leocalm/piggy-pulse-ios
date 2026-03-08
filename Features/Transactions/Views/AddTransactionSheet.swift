@@ -319,6 +319,7 @@ struct AddTransactionSheet: View {
             vendors = vendorsResponse.data
         } catch {
             errorMessage = String(localized: "Failed to load form options.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
 
         isLoadingOptions = false
@@ -333,6 +334,7 @@ struct AddTransactionSheet: View {
         guard let categoryId = selectedCategory?.id,
               let fromAccountId = selectedFromAccount?.id else {
             errorMessage = String(localized: "Please select a category and account.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
             isLoading = false
             return
         }
@@ -362,12 +364,15 @@ struct AddTransactionSheet: View {
 
         do {
             try await appState.apiClient.request(.createTransaction, body: request)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated()
             dismiss()
         } catch let error as APIError {
             errorMessage = error.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         } catch {
             errorMessage = String(localized: "Failed to create transaction.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
 
         isLoading = false
