@@ -312,10 +312,13 @@ struct AutoCreationView: View {
             let endpoint: APIEndpoint = schedule == nil ? .createSchedule : .updateSchedule
             let s: PeriodSchedule = try await appState.apiClient.request(endpoint, body: request)
             schedule = s
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
         } catch let error as APIError {
             errorMessage = error.errorDescription
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         } catch {
             errorMessage = String(localized: "Failed to save schedule.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
 
         isSaving = false
@@ -329,8 +332,10 @@ struct AutoCreationView: View {
             try await appState.apiClient.request(.deleteSchedule)
             schedule = nil
             isDisabled = true
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
         } catch {
             errorMessage = String(localized: "Failed to disable auto-creation.")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
 
         isSaving = false
