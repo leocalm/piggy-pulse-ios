@@ -11,7 +11,8 @@ final class AppState: ObservableObject {
     @Published var selectedPeriod: BudgetPeriod?
     @Published var isLoading = true
     @Published var currencyCode: String = "EUR"
-    
+    @Published var appColorScheme: ColorScheme? = nil
+
     func loadUserCurrency() async {
         // Try to get from settings profile
         struct SettingsResponse: Codable {
@@ -35,7 +36,26 @@ final class AppState: ObservableObject {
         }
     }
 
+    func loadTheme() {
+        let stored = UserDefaults.standard.string(forKey: "appTheme") ?? "system"
+        appColorScheme = colorScheme(from: stored)
+    }
+
+    func applyTheme(_ value: String) {
+        UserDefaults.standard.set(value, forKey: "appTheme")
+        appColorScheme = colorScheme(from: value)
+    }
+
+    private func colorScheme(from value: String) -> ColorScheme? {
+        switch value {
+        case "light": return .light
+        case "dark":  return .dark
+        default:      return nil   // "system" / "auto"
+        }
+    }
+
     init() {
+        loadTheme()
         let tm = TokenManager()
         self.tokenManager = tm
         self.apiClient = APIClient(tokenManager: tm)
@@ -62,6 +82,7 @@ final class AppState: ObservableObject {
         }
 
         isLoading = false
+        loadTheme()
     }
     func logout() async {
         if let refreshToken = tokenManager.getRefreshToken() {
