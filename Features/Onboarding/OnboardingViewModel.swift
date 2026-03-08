@@ -120,7 +120,9 @@ final class OnboardingViewModel: ObservableObject {
                 }
                 savedSteps.insert(.accounts)
             }
-        } catch { /* non-fatal */ }
+        } catch {
+            errorMessage = "Could not load existing accounts: \(error)"
+        }
     }
 
     private func loadExistingCategories() async {
