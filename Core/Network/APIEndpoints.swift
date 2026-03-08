@@ -169,12 +169,6 @@ extension APIEndpoint {
     static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
 }
 
-// MARK: - Budget Categories
-
-extension APIEndpoint {
-    static let budgetCategories = APIEndpoint(path: "/budget-categories/", method: .get, requiresAuth: true)
-}
-
 // MARK: - Settings
 
 extension APIEndpoint {
