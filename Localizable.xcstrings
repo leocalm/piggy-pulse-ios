@@ -10,6 +10,9 @@
     "·" : {
 
     },
+    "(optional)" : {
+
+    },
     "{month} {year}" : {
 
     },
@@ -19,12 +22,32 @@
     "/ %@" : {
 
     },
+    "%@ — %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ — %2$@"
+          }
+        }
+      }
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ %@ — %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@ — %3$@"
           }
         }
       }
@@ -116,9 +139,6 @@
     "%lld%% used" : {
 
     },
-    "••••••••" : {
-
-    },
     "€" : {
 
     },
@@ -169,6 +189,9 @@
           }
         }
       }
+    },
+    "Accounts are where your money goes." : {
+
     },
     "Across %lld accounts" : {
 
@@ -481,6 +504,9 @@
         }
       }
     },
+    "Categories are how you organize your spendings." : {
+
+    },
     "Category" : {
       "comment" : "Form field label / picker label",
       "localizations" : {
@@ -522,6 +548,7 @@
     },
     "Change" : {
       "comment" : "Button label to change password in Settings",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -555,6 +582,9 @@
           }
         }
       }
+    },
+    "Choose a starting point" : {
+
     },
     "Clarity begins with structure." : {
       "comment" : "App tagline shown on login screen",
@@ -605,6 +635,7 @@
     },
     "Compact Mode" : {
       "comment" : "Settings preferences row label",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -613,6 +644,9 @@
           }
         }
       }
+    },
+    "Configuration" : {
+
     },
     "Configure automatic period generation" : {
       "comment" : "Subtitle under Auto-Creation link in Periods",
@@ -646,6 +680,9 @@
           }
         }
       }
+    },
+    "Continue" : {
+
     },
     "Create an account" : {
       "comment" : "Registration screen heading",
@@ -686,7 +723,6 @@
     },
     "Currency" : {
       "comment" : "Account currency form field label",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -728,6 +764,9 @@
           }
         }
       }
+    },
+    "Customize" : {
+
     },
     "Dashboard" : {
       "comment" : "Tab bar item — main dashboard screen",
@@ -786,6 +825,9 @@
           }
         }
       }
+    },
+    "Default Currency" : {
+
     },
     "Delete" : {
       "comment" : "Destructive action button / swipe action",
@@ -1354,6 +1396,9 @@
     "Filter, %lld active" : {
 
     },
+    "Finish" : {
+
+    },
     "Forgot password?" : {
       "comment" : "Link to forgot password screen",
       "localizations" : {
@@ -1425,6 +1470,15 @@
           }
         }
       }
+    },
+    "If it lands on Saturday" : {
+
+    },
+    "If it lands on Sunday" : {
+
+    },
+    "If the period start date falls on a weekend, PiggyPulse can shift it to the nearest weekday. This only affects when a period is recorded as starting — it does not change how long the period lasts." : {
+
     },
     "Inclusion Rules" : {
 
@@ -1517,6 +1571,7 @@
     },
     "Manage your spending limits." : {
       "comment" : "Navigation subtitle on Category Targets screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1549,6 +1604,9 @@
       }
     },
     "Min 8 characters" : {
+
+    },
+    "Monthly, starting on the 1st (default)" : {
 
     },
     "Months" : {
@@ -1856,9 +1914,6 @@
         }
       }
     },
-    "Organize your transactions by type." : {
-
-    },
     "Outgoing" : {
 
     },
@@ -1991,6 +2046,9 @@
         }
       }
     },
+    "Periods are how PiggyPulse slices your timeline for tracking. The default — monthly, starting on the 1st — works for most people." : {
+
+    },
     "PiggyPulse" : {
       "comment" : "App name / logo label",
       "localizations" : {
@@ -2082,7 +2140,6 @@
     },
     "Saturday" : {
       "comment" : "Weekend adjustment row label",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2114,6 +2171,9 @@
           }
         }
       }
+    },
+    "Save Preferences" : {
+
     },
     "SCHEDULE" : {
       "comment" : "Section header in Periods screen",
@@ -2353,7 +2413,6 @@
     },
     "Sunday" : {
       "comment" : "Weekend adjustment row label",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2570,6 +2629,9 @@
         }
       }
     },
+    "Use default" : {
+
+    },
     "Vendor" : {
       "comment" : "Form field label / picker label",
       "localizations" : {
@@ -2658,6 +2720,9 @@
         }
       }
     },
+    "Weekend Days" : {
+
+    },
     "Weeks" : {
       "comment" : "Duration unit option",
       "localizations" : {
@@ -2679,6 +2744,15 @@
           }
         }
       }
+    },
+    "Welcome to PiggyPulse" : {
+
+    },
+    "You can further customize periods later in the Periods screen, including renaming them or adjusting individual start dates." : {
+
+    },
+    "You're all set — here's what will be configured when you enter PiggyPulse." : {
+
     },
     "you@example.com" : {
       "comment" : "Email field placeholder",

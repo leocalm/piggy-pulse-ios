@@ -27,6 +27,8 @@ struct PeriodSelectorBar: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.ppTextPrimary)
 
+                        Spacer()
+                        
                         switch placement {
                         case .inline:
                             Text(period.statusText)
