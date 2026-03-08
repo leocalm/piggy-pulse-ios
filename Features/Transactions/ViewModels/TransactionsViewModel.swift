@@ -106,10 +106,25 @@ final class TransactionsViewModel: ObservableObject {
 
         async let accounts: [AccountOption] = (try? repository.apiClient.request(.accountOptions)) ?? []
         async let categories: [CategoryOption] = (try? repository.apiClient.request(.categoryOptions)) ?? []
-        async let vendors: PaginatedResponse<VendorOption> = (try? repository.apiClient.request(.vendors)) ?? PaginatedResponse(data: [], nextCursor: nil)
 
-        let (a, c, v) = await (accounts, categories, vendors)
-        filterOptions = TransactionFilterOptions(accounts: a, categories: c, vendors: v.data)
+        // Fetch all pages of vendors
+        var allVendors: [VendorOption] = []
+        var vendorCursor: String? = nil
+        repeat {
+            var queryItems: [URLQueryItem] = [URLQueryItem(name: "limit", value: "100")]
+            if let cursor = vendorCursor {
+                queryItems.append(URLQueryItem(name: "cursor", value: cursor))
+            }
+            if let page: PaginatedResponse<VendorOption> = try? await repository.apiClient.request(.vendors, queryItems: queryItems) {
+                allVendors.append(contentsOf: page.data)
+                vendorCursor = page.nextCursor
+            } else {
+                break
+            }
+        } while vendorCursor != nil
+
+        let (a, c) = await (accounts, categories)
+        filterOptions = TransactionFilterOptions(accounts: a, categories: c, vendors: allVendors)
     }
 
     func applyFilters(
