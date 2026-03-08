@@ -28,7 +28,7 @@ struct SummaryStepView: View {
                 summarySection(title: "Accounts") {
                     if let currencyId = vm.selectedCurrencyId,
                        let currency = vm.currencies.first(where: { $0.id == currencyId }) {
-                        labeledRow("Currency", "\(currency.symbol) \(currency.code)")
+                        labeledRow("Currency", "\(currency.symbol) \(currency.currency)")
                     }
                     ForEach(vm.accounts) { account in
                         HStack {

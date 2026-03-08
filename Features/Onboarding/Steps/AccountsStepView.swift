@@ -26,7 +26,7 @@ struct AccountsStepView: View {
                     } else {
                         Picker("Currency", selection: $vm.selectedCurrencyId) {
                             ForEach(vm.currencies) { currency in
-                                Text("\(currency.symbol) \(currency.code) — \(currency.name)")
+                                Text("\(currency.symbol) \(currency.currency) — \(currency.name)")
                                     .tag(Optional(currency.id))
                             }
                         }

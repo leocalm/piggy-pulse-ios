@@ -81,11 +81,8 @@ final class OnboardingViewModel: ObservableObject {
     func loadCurrencies() async {
         guard currencies.isEmpty else { return }
         do {
-            struct CurrencyListResponse: Codable {
-                let currencies: [Currency]
-            }
-            let response: CurrencyListResponse = try await apiClient.request(.currencies)
-            currencies = response.currencies
+            let list: [Currency] = try await apiClient.request(.currencies)
+            currencies = list
             if selectedCurrencyId == nil {
                 selectedCurrencyId = currencies.first?.id
             }
