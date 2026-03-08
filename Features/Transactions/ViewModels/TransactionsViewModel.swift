@@ -96,7 +96,8 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func loadFilterOptions() async {
-        guard filterOptions.accounts.isEmpty &&
+        guard !isLoadingFilterOptions &&
+              filterOptions.accounts.isEmpty &&
               filterOptions.categories.isEmpty &&
               filterOptions.vendors.isEmpty else { return }
 
