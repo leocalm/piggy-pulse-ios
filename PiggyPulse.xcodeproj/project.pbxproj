@@ -82,7 +82,20 @@
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
-/* End PBXBuildFile section */
+		E934EF0AF8E642ED83AEF2BE /* DashboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203C3F81D5E4D728B8A0812 /* DashboardLayout.swift */; };
+		44CFF9C9B00A4701B7A65D56 /* DashboardCustomizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F37EFA4FC44C28AF84C062 /* DashboardCustomizationView.swift */; };
+		8A100B7D5A37426A857DB6F0 /* CurrentPeriodCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F6484101D848158273E6C3 /* CurrentPeriodCardView.swift */; };
+		2BC3E610AD564BA3BC233285 /* BudgetStabilityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8B9E254842499A8B45D48F /* BudgetStabilityCardView.swift */; };
+		4C13CE0F3FA242AFAD10437A /* NetPositionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969C2CB46F14483DA27B6B52 /* NetPositionCardView.swift */; };
+		D80EAB2BDFB248CCB172826A /* EntityPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A299BAF685442BB90D2BD5 /* EntityPickerView.swift */; };
+		CB6BC376346F4DFC923A0DEC /* RecentTransactionsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F6693B8A334856B205752F /* RecentTransactionsCardView.swift */; };
+		3305B561781D478483AFF13A /* BudgetPerDayCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484A3847640E4A58B2F31BB6 /* BudgetPerDayCardView.swift */; };
+		40642B5897B442E4BED1357A /* RemainingBudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0C7B9E814948DFA426C15D /* RemainingBudgetCardView.swift */; };
+		23AEC498C53B42EF9E075B6A /* TopCategoriesCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8954CF563D444C78BB74FADF /* TopCategoriesCardView.swift */; };
+		A322376B147B478A98BFE028 /* BalanceOverTimeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FE0AD334F4B56B4EEE8B2 /* BalanceOverTimeCardView.swift */; };
+		08BC26EB866B4284BA1EF662 /* AccountSummaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB8A34012AD4ACE9A5308A7 /* AccountSummaryCardView.swift */; };
+		CBFEC0B54A58422894F1FEC1 /* CategoryBreakdownCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74373A7142154AEFAF94EB84 /* CategoryBreakdownCardView.swift */; };
+		/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		009EF4876FF657BCAD295807 /* AccountsStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsStepView.swift; sourceTree = "<group>"; };
@@ -161,7 +174,20 @@
 		6209A42534C14F2167B98336 /* NumberStepperView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NumberStepperView.swift; sourceTree = "<group>"; };
 		65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9AF8DDC560849A681137F2C6 /* Onboarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		F203C3F81D5E4D728B8A0812 /* DashboardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardLayout.swift; sourceTree = "<group>"; };
+		00F37EFA4FC44C28AF84C062 /* DashboardCustomizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCustomizationView.swift; sourceTree = "<group>"; };
+		D9F6484101D848158273E6C3 /* CurrentPeriodCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPeriodCardView.swift; sourceTree = "<group>"; };
+		1E8B9E254842499A8B45D48F /* BudgetStabilityCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStabilityCardView.swift; sourceTree = "<group>"; };
+		969C2CB46F14483DA27B6B52 /* NetPositionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetPositionCardView.swift; sourceTree = "<group>"; };
+		04A299BAF685442BB90D2BD5 /* EntityPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityPickerView.swift; sourceTree = "<group>"; };
+		E6F6693B8A334856B205752F /* RecentTransactionsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTransactionsCardView.swift; sourceTree = "<group>"; };
+		484A3847640E4A58B2F31BB6 /* BudgetPerDayCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPerDayCardView.swift; sourceTree = "<group>"; };
+		4E0C7B9E814948DFA426C15D /* RemainingBudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingBudgetCardView.swift; sourceTree = "<group>"; };
+		8954CF563D444C78BB74FADF /* TopCategoriesCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCategoriesCardView.swift; sourceTree = "<group>"; };
+		D05FE0AD334F4B56B4EEE8B2 /* BalanceOverTimeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceOverTimeCardView.swift; sourceTree = "<group>"; };
+		9EB8A34012AD4ACE9A5308A7 /* AccountSummaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryCardView.swift; sourceTree = "<group>"; };
+		74373A7142154AEFAF94EB84 /* CategoryBreakdownCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBreakdownCardView.swift; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		020853A42F5898F7004E2FD4 /* Frameworks */ = {
@@ -267,6 +293,7 @@
 				027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */,
 				027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */,
 				02F038D72F59A127008DD1E7 /* Transaction.swift */,
+				F203C3F81D5E4D728B8A0812 /* DashboardLayout.swift */,
 				02F038CC2F5999B0008DD1E7 /* Dashboard.swift */,
 				02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */,
 				02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */,
@@ -494,6 +521,7 @@
 		02F038D22F599A6A008DD1E7 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				EC8FC41E7EB045489672CFC9 /* Cards */,
 				02F038D42F599A84008DD1E7 /* Views */,
 				02F038D32F599A71008DD1E7 /* ViewModels */,
 			);
@@ -512,6 +540,8 @@
 			isa = PBXGroup;
 			children = (
 				02F038D52F599A8F008DD1E7 /* DashboardView.swift */,
+				00F37EFA4FC44C28AF84C062 /* DashboardCustomizationView.swift */,
+				04A299BAF685442BB90D2BD5 /* EntityPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -603,7 +633,25 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-/* End PBXGroup section */
+
+		EC8FC41E7EB045489672CFC9 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				D9F6484101D848158273E6C3 /* CurrentPeriodCardView.swift */,
+				1E8B9E254842499A8B45D48F /* BudgetStabilityCardView.swift */,
+				969C2CB46F14483DA27B6B52 /* NetPositionCardView.swift */,
+				E6F6693B8A334856B205752F /* RecentTransactionsCardView.swift */,
+				484A3847640E4A58B2F31BB6 /* BudgetPerDayCardView.swift */,
+				4E0C7B9E814948DFA426C15D /* RemainingBudgetCardView.swift */,
+				8954CF563D444C78BB74FADF /* TopCategoriesCardView.swift */,
+				D05FE0AD334F4B56B4EEE8B2 /* BalanceOverTimeCardView.swift */,
+				9EB8A34012AD4ACE9A5308A7 /* AccountSummaryCardView.swift */,
+				74373A7142154AEFAF94EB84 /* CategoryBreakdownCardView.swift */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		/* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		020853A62F5898F7004E2FD4 /* PiggyPulse */ = {
@@ -676,6 +724,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6BC376346F4DFC923A0DEC /* RecentTransactionsCardView.swift in Sources */,
+				3305B561781D478483AFF13A /* BudgetPerDayCardView.swift in Sources */,
+				40642B5897B442E4BED1357A /* RemainingBudgetCardView.swift in Sources */,
+				23AEC498C53B42EF9E075B6A /* TopCategoriesCardView.swift in Sources */,
+				A322376B147B478A98BFE028 /* BalanceOverTimeCardView.swift in Sources */,
+				08BC26EB866B4284BA1EF662 /* AccountSummaryCardView.swift in Sources */,
+				CBFEC0B54A58422894F1FEC1 /* CategoryBreakdownCardView.swift in Sources */,
+
+				E934EF0AF8E642ED83AEF2BE /* DashboardLayout.swift in Sources */,
+				44CFF9C9B00A4701B7A65D56 /* DashboardCustomizationView.swift in Sources */,
+				8A100B7D5A37426A857DB6F0 /* CurrentPeriodCardView.swift in Sources */,
+				2BC3E610AD564BA3BC233285 /* BudgetStabilityCardView.swift in Sources */,
+				4C13CE0F3FA242AFAD10437A /* NetPositionCardView.swift in Sources */,
+				CB6BC376346F4DFC923A0DEC /* RecentTransactionsCardView.swift in Sources */,
+				3305B561781D478483AFF13A /* BudgetPerDayCardView.swift in Sources */,
+				40642B5897B442E4BED1357A /* RemainingBudgetCardView.swift in Sources */,
+				23AEC498C53B42EF9E075B6A /* TopCategoriesCardView.swift in Sources */,
+				A322376B147B478A98BFE028 /* BalanceOverTimeCardView.swift in Sources */,
+				08BC26EB866B4284BA1EF662 /* AccountSummaryCardView.swift in Sources */,
+				CBFEC0B54A58422894F1FEC1 /* CategoryBreakdownCardView.swift in Sources */,
+				D80EAB2BDFB248CCB172826A /* EntityPickerView.swift in Sources */,
+
 				027B34792F5B325700E96DF6 /* BudgetPlanView.swift in Sources */,
 				02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */,
 				02F038C92F598D78008DD1E7 /* PeriodSelectorBar.swift in Sources */,
