@@ -9,6 +9,7 @@ extension Color {
     static let ppAmber = Color(red: 1.00, green: 0.66, blue: 0.25)        // #ffa940
     static let ppTeal = Color(red: 0.00, green: 0.71, blue: 0.78)         // #00b4c8
     static let ppDestructive = Color(red: 0.97, green: 0.32, blue: 0.29)  // #f85149
+    static let ppSuccess = Color(red: 0.20, green: 0.78, blue: 0.35)     // #34c759
 
     // Adaptive backgrounds
     static func ppBackground(_ scheme: ColorScheme) -> Color {
