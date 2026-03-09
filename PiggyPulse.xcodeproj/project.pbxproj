@@ -11,7 +11,6 @@
 		027B346C2F5B237400E96DF6 /* CreatePeriodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B346B2F5B237100E96DF6 /* CreatePeriodSheet.swift */; };
 		027B346E2F5B2A5400E96DF6 /* FormOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */; };
 		027B34702F5B2B2400E96DF6 /* AddTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B346F2F5B2B2100E96DF6 /* AddTransactionSheet.swift */; };
-		027B34722F5B320E00E96DF6 /* BudgetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34712F5B320200E96DF6 /* BudgetCategory.swift */; };
 		027B34762F5B324100E96DF6 /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34752F5B324000E96DF6 /* BudgetViewModel.swift */; };
 		027B34792F5B325700E96DF6 /* BudgetPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34782F5B325500E96DF6 /* BudgetPlanView.swift */; };
 		027B347B2F5B426200E96DF6 /* PeriodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */; };
@@ -98,7 +97,6 @@
 		027B346B2F5B237100E96DF6 /* CreatePeriodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePeriodSheet.swift; sourceTree = "<group>"; };
 		027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormOptions.swift; sourceTree = "<group>"; };
 		027B346F2F5B2B2100E96DF6 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
-		027B34712F5B320200E96DF6 /* BudgetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategory.swift; sourceTree = "<group>"; };
 		027B34752F5B324000E96DF6 /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		027B34782F5B325500E96DF6 /* BudgetPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPlanView.swift; sourceTree = "<group>"; };
 		027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailView.swift; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				027B34822F5B4A3B00E96DF6 /* Category.swift */,
 				027B34802F5B4A2900E96DF6 /* Account.swift */,
 				027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */,
-				027B34712F5B320200E96DF6 /* BudgetCategory.swift */,
 				027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */,
 				02F038D72F59A127008DD1E7 /* Transaction.swift */,
 				02F038CC2F5999B0008DD1E7 /* Dashboard.swift */,
@@ -723,7 +720,6 @@
 				02F038B02F58DFCD008DD1E7 /* TokenManager.swift in Sources */,
 				027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */,
 				027B34892F5B4AA700E96DF6 /* AccountsView.swift in Sources */,
-				027B34722F5B320E00E96DF6 /* BudgetCategory.swift in Sources */,
 				027B34A12F5B532600E96DF6 /* AddAccountSheet.swift in Sources */,
 				02F038C02F5984DF008DD1E7 /* RegisterView.swift in Sources */,
 				027B34762F5B324100E96DF6 /* BudgetViewModel.swift in Sources */,
