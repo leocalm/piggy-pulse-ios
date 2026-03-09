@@ -43,6 +43,8 @@
 		02ADDBBA819B39E550E59149 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8DDC560849A681137F2C6 /* Onboarding.swift */; };
 		02BBBBBB2F5B6D5900E96DF7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */; };
 		02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */; };
+		02AB12342F5B320E00E96DF6 /* CategoryTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12312F5B320200E96DF6 /* CategoryTarget.swift */; };
+		02AB12352F5B320E00E96DF6 /* EditCategoryTargetSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */; };
 		02F038A22F589EC5008DD1E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFD2F589B4500E8DCEF /* User.swift */; };
 		02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF62F589B0100E8DCEF /* Theme.swift */; };
 		02F038A42F589EC5008DD1E7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF12F589AAF00E8DCEF /* AppState.swift */; };
@@ -93,6 +95,8 @@
 		02218DFA2F589B2700E8DCEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		02218DFD2F589B4500E8DCEF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPeriod.swift; sourceTree = "<group>"; };
+		02AB12312F5B320200E96DF6 /* CategoryTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTarget.swift; sourceTree = "<group>"; };
+		02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryTargetSheet.swift; sourceTree = "<group>"; };
 		027B34692F5B21D300E96DF6 /* PeriodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodsView.swift; sourceTree = "<group>"; };
 		027B346B2F5B237100E96DF6 /* CreatePeriodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePeriodSheet.swift; sourceTree = "<group>"; };
 		027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormOptions.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 				02F038CC2F5999B0008DD1E7 /* Dashboard.swift */,
 				02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */,
 				02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */,
+				02AB12312F5B320200E96DF6 /* CategoryTarget.swift */,
 				02218DFD2F589B4500E8DCEF /* User.swift */,
 				9AF8DDC560849A681137F2C6 /* Onboarding.swift */,
 			);
@@ -304,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				027B34782F5B325500E96DF6 /* BudgetPlanView.swift */,
+				02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -684,6 +690,8 @@
 				027B348D2F5B4AC200E96DF6 /* CategoriesView.swift in Sources */,
 				027B34832F5B4A4200E96DF6 /* Category.swift in Sources */,
 				02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */,
+				02AB12342F5B320E00E96DF6 /* CategoryTarget.swift in Sources */,
+				02AB12352F5B320E00E96DF6 /* EditCategoryTargetSheet.swift in Sources */,
 				02F038C22F5984F1008DD1E7 /* ForgotPasswordView.swift in Sources */,
 				027B346C2F5B237400E96DF6 /* CreatePeriodSheet.swift in Sources */,
 				027B347D2F5B463F00E96DF6 /* PeriodSchedule.swift in Sources */,
