@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.colorScheme) private var colorScheme
     @State private var selectedTab = 0
     @State private var showAddTransaction = false
     @Environment(\.horizontalSizeClass) var sizeClass
@@ -9,7 +10,7 @@ struct MainTabView: View {
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
-        appearance.backgroundColor = UIColor(Color.ppBackground.opacity(0.8))
+        appearance.backgroundColor = UIColor(Color.ppBackground(.dark).opacity(0.8))
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -36,7 +37,7 @@ struct MainTabView: View {
         }
         .tabBarMinimizeBehavior(.onScrollDown)
         .tint(.ppPrimary)
-        .background(Color.ppBackground)
+        .background(Color.ppBackground(colorScheme))
         .sheet(isPresented: $showAddTransaction) {
             AddTransactionSheet(onCreated: { selectedTab = 1 })
                 .environmentObject(appState)
@@ -68,7 +69,7 @@ struct MainTabView: View {
                     VStack(alignment: .leading, spacing: PPSpacing.md) {
                         Text("STRUCTURE")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                             .tracking(1)
                             .padding(.horizontal, PPSpacing.lg)
 
@@ -92,7 +93,7 @@ struct MainTabView: View {
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
+                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
                         )
                     }
 
@@ -100,7 +101,7 @@ struct MainTabView: View {
                     VStack(alignment: .leading, spacing: PPSpacing.md) {
                         Text("APP")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                             .tracking(1)
                             .padding(.horizontal, PPSpacing.lg)
 
@@ -110,7 +111,7 @@ struct MainTabView: View {
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
+                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
                         )
                     }
 
@@ -127,17 +128,17 @@ struct MainTabView: View {
                         }
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.lg)
-                        .background(Color.ppCard)
+                        .background(Color.ppCard(colorScheme))
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
+                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
                         )
                     }
                 }
                 .padding(PPSpacing.lg)
             }
-            .background(Color.ppBackground)
+            .background(Color.ppBackground(colorScheme))
             .navigationTitle("More")
         }
     }
@@ -155,15 +156,15 @@ struct MainTabView: View {
             HStack {
                 Label(title, systemImage: icon)
                     .font(.ppBody)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
                 Spacer()
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.ppTextTertiary)
+                    .foregroundColor(.ppTextTertiary(colorScheme))
             }
             .padding(.horizontal, PPSpacing.lg)
             .padding(.vertical, PPSpacing.lg)
-            .background(Color.ppCard)
+            .background(Color.ppCard(colorScheme))
         }
     }
 }

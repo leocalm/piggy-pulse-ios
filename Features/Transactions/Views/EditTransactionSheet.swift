@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EditTransactionSheet: View {
     @EnvironmentObject var appState: AppState
+@Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     let transaction: Transaction
@@ -50,10 +51,10 @@ struct EditTransactionSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground.ignoresSafeArea()
+                Color.ppBackground(colorScheme).ignoresSafeArea()
 
                 if isLoadingOptions {
-                    ProgressView().tint(.ppTextSecondary)
+                    ProgressView().tint(.ppTextSecondary(colorScheme))
                 } else {
                     ScrollView {
                         VStack(spacing: PPSpacing.xl) {
@@ -63,18 +64,18 @@ struct EditTransactionSheet: View {
 
                             // Amount
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                                Text("Amount").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                Text("Amount").font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
                                 HStack {
-                                    Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
-                                    TextField("0.00", text: $amountText).font(.ppAmount).foregroundColor(.ppTextPrimary).keyboardType(.decimalPad)
+                                    Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary(colorScheme))
+                                    TextField("0.00", text: $amountText).font(.ppAmount).foregroundColor(.ppTextPrimary(colorScheme)).keyboardType(.decimalPad)
                                 }
-                                .padding(PPSpacing.lg).background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                .padding(PPSpacing.lg).background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
 
                                 Toggle(isOn: $isTransfer) {
                                     Text("Transfer between accounts")
                                         .font(.ppCallout)
-                                        .foregroundColor(.ppTextPrimary)
+                                        .foregroundColor(.ppTextPrimary(colorScheme))
                                 }
                                 .tint(.ppPrimary)
                                 .onChange(of: isTransfer) { _, transfer in
@@ -89,38 +90,38 @@ struct EditTransactionSheet: View {
                                     }
                                 }
                             }
-                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                            .padding(PPSpacing.lg).background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
 
                             // Details
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                                Text("Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                Text("Details").font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
-                                        Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                     }
                                     TextField("e.g. Groceries", text: $description)
-                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                        .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                                 }
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                    Text("Date").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("Date").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                     DatePicker("", selection: $occurredAt, displayedComponents: .date).datePickerStyle(.compact).labelsHidden().tint(.ppPrimary)
                                 }
                             }
-                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                            .padding(PPSpacing.lg).background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
 
                             // Classification
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                                Text("Classification").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                Text("Classification").font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
 
                                 if !isTransfer {
                                     HStack {
-                                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                         Spacer()
                                         Picker("Category", selection: $selectedCategory) {
                                             Text("Select").tag(Optional<CategoryOption>.none)
@@ -134,7 +135,7 @@ struct EditTransactionSheet: View {
                                 }
 
                                 HStack {
-                                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                     Spacer()
                                     Picker("From Account", selection: $selectedFromAccount) {
                                         Text("Select").tag(Optional<AccountOption>.none)
@@ -148,7 +149,7 @@ struct EditTransactionSheet: View {
 
                                 if isTransfer {
                                     HStack {
-                                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                         Spacer()
                                         Picker("To Account", selection: $selectedToAccount) {
                                             Text("Select").tag(Optional<AccountOption>.none)
@@ -161,7 +162,7 @@ struct EditTransactionSheet: View {
                                     }
                                 } else {
                                     HStack {
-                                        Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                         Spacer()
                                         Picker("Vendor", selection: $selectedVendor) {
                                             Text("None").tag(Optional<VendorOption>.none)
@@ -174,15 +175,15 @@ struct EditTransactionSheet: View {
                                     }
                                 }
                             }
-                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                            .padding(PPSpacing.lg).background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                         }
                         .padding(PPSpacing.xl)
                     }
                 }
             }
             .navigationTitle("Edit Transaction").navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
@@ -190,7 +191,7 @@ struct EditTransactionSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -202,7 +203,7 @@ struct EditTransactionSheet: View {
                             Image(systemName: "checkmark")
                         }
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
                 }

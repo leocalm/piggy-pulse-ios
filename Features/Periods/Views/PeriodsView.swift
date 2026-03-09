@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PeriodsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: PeriodsViewModel
     @State private var showCreateSheet = false
 
@@ -22,41 +23,41 @@ struct PeriodsView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Auto-Creation")
                                     .font(.ppHeadline)
-                                    .foregroundColor(.ppTextPrimary)
+                                    .foregroundColor(.ppTextPrimary(colorScheme))
                                 Text("Configure automatic period generation")
                                     .font(.ppCaption)
-                                    .foregroundColor(.ppTextSecondary)
+                                    .foregroundColor(.ppTextSecondary(colorScheme))
                             }
                             Spacer()
                         }
                         .padding(PPSpacing.lg)
-                        .background(Color.ppCard)
+                        .background(Color.ppCard(colorScheme))
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
+                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
                         )
                     }
                     .buttonStyle(.plain)
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                 } header: {
                     Text("SCHEDULE")
                         .font(.ppOverline)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                         .tracking(1)
                 }
-                
+
                 if viewModel.isLoading {
                     Section {
                         HStack {
                             Spacer()
-                            ProgressView().tint(.ppTextSecondary)
+                            ProgressView().tint(.ppTextSecondary(colorScheme))
                             Spacer()
                         }
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                     }
                 } else if let error = viewModel.errorMessage {
@@ -67,7 +68,7 @@ struct PeriodsView: View {
                                 .foregroundColor(.ppAmber)
                             Text(error)
                                 .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
+                                .foregroundColor(.ppTextSecondary(colorScheme))
                             Button("Retry") {
                                 Task { await viewModel.load() }
                             }
@@ -76,23 +77,23 @@ struct PeriodsView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                     }
                 } else {
                     // Current Period
                     currentPeriodSection
-                    
+
                     // Upcoming Periods
                     upcomingSection
-                    
+
                     // Past Periods
                     pastSection
                 }
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color.ppBackground)
+            .background(Color.ppBackground(colorScheme))
             .refreshable {
                 await viewModel.load()
             }
@@ -134,24 +135,24 @@ struct PeriodsView: View {
                     periodCard(period, highlight: true)
                 }
                 .buttonStyle(.plain)
-                .listRowBackground(Color.ppBackground)
+                .listRowBackground(Color.ppBackground(colorScheme))
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
             } else {
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     Text("No current period found.")
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(PPSpacing.xl)
-                .background(Color.ppCard)
+                .background(Color.ppCard(colorScheme))
                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                 .overlay(
                     RoundedRectangle(cornerRadius: PPRadius.lg)
                         .stroke(Color.ppPrimary.opacity(0.3), lineWidth: 1)
                 )
-                .listRowBackground(Color.ppBackground)
+                .listRowBackground(Color.ppBackground(colorScheme))
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
             }
@@ -167,9 +168,9 @@ struct PeriodsView: View {
             if viewModel.upcomingPeriods.isEmpty {
                 Text("No upcoming periods.")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextTertiary)
+                    .foregroundColor(.ppTextTertiary(colorScheme))
                     .padding(.vertical, PPSpacing.md)
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: 0, trailing: PPSpacing.lg))
             } else {
@@ -187,7 +188,7 @@ struct PeriodsView: View {
                             Label("Delete", systemImage: "trash")
                         }
                     }
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                 }
@@ -198,15 +199,15 @@ struct PeriodsView: View {
                 Spacer()
                 Text("\(viewModel.upcomingPeriods.count)")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                     .padding(.horizontal, PPSpacing.sm)
                     .padding(.vertical, 2)
-                    .background(Color.ppCard)
+                    .background(Color.ppCard(colorScheme))
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             }
         }
     }
-    
+
     private func deletePeriod(_ period: BudgetPeriod) async {
         do {
             try await appState.apiClient.requestVoid(.deletePeriod(period.id))
@@ -221,9 +222,9 @@ struct PeriodsView: View {
             if viewModel.pastPeriods.isEmpty {
                 Text("No past periods.")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextTertiary)
+                    .foregroundColor(.ppTextTertiary(colorScheme))
                     .padding(.vertical, PPSpacing.md)
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: 0, trailing: PPSpacing.lg))
             } else if viewModel.showPastPeriods {
@@ -235,7 +236,7 @@ struct PeriodsView: View {
                         periodCard(period, highlight: true)
                     }
                     .buttonStyle(.plain)
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                 }
@@ -249,14 +250,14 @@ struct PeriodsView: View {
                     Spacer()
                     Text("\(viewModel.pastPeriods.count)")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                         .padding(.horizontal, PPSpacing.sm)
                         .padding(.vertical, 2)
-                        .background(Color.ppCard)
+                        .background(Color.ppCard(colorScheme))
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     Image(systemName: viewModel.showPastPeriods ? "chevron.up" : "chevron.down")
                         .font(.system(size: 12))
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                 }
             }
         }
@@ -270,15 +271,15 @@ struct PeriodsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(period.name)
                         .font(.ppHeadline)
-                        .foregroundColor(.ppTextPrimary)
+                        .foregroundColor(.ppTextPrimary(colorScheme))
 
                     HStack(spacing: 4) {
                         Text(period.dateRangeText)
                             .font(.ppCaption)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                         Text("·")
                             .font(.ppCaption)
-                            .foregroundColor(.ppTextTertiary)
+                            .foregroundColor(.ppTextTertiary(colorScheme))
                         Text(period.statusText)
                             .font(.ppCaption)
                             .foregroundColor(statusColor(period.status))
@@ -290,30 +291,30 @@ struct PeriodsView: View {
                 if period.isAutoGenerated {
                     Image(systemName: "arrow.triangle.2.circlepath")
                         .font(.system(size: 12))
-                        .foregroundColor(.ppTextTertiary)
+                        .foregroundColor(.ppTextTertiary(colorScheme))
                 }
             }
 
             HStack {
                 Label("\(period.transactionCount) transactions", systemImage: "arrow.left.arrow.right")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
 
                 Spacer()
 
                 if period.budgetUsedPercentage > 0 {
                     Text("\(Int(period.budgetUsedPercentage))% used")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                 }
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(highlight ? Color.ppPrimary.opacity(0.5) : Color.ppBorder, lineWidth: highlight ? 1.5 : 1)
+                .stroke(highlight ? Color.ppPrimary.opacity(0.5) : Color.ppBorder(colorScheme), lineWidth: highlight ? 1.5 : 1)
         )
         .shadow(color: highlight ? Color.ppPrimary.opacity(0.15) : .clear, radius: 8, x: 0, y: 0)
     }
@@ -323,16 +324,16 @@ struct PeriodsView: View {
     private func sectionHeader(_ title: String) -> some View {
         Text(title)
             .font(.ppOverline)
-            .foregroundColor(.ppTextSecondary)
+            .foregroundColor(.ppTextSecondary(colorScheme))
             .tracking(1)
     }
 
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
         case .active: return .ppCyan
-        case .ended: return .ppTextTertiary
+        case .ended: return .ppTextTertiary(colorScheme)
         case .upcoming: return .ppAmber
-        case .unknown: return .ppTextTertiary
+        case .unknown: return .ppTextTertiary(colorScheme)
         }
     }
 }

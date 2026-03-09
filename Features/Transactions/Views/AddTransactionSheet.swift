@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AddTransactionSheet: View {
     @EnvironmentObject var appState: AppState
+@Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     // Form fields
@@ -52,11 +53,11 @@ struct AddTransactionSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground.ignoresSafeArea()
+                Color.ppBackground(colorScheme).ignoresSafeArea()
 
                 if isLoadingOptions {
                     ProgressView()
-                        .tint(.ppTextSecondary)
+                        .tint(.ppTextSecondary(colorScheme))
                 } else {
                     ScrollView {
                         VStack(spacing: PPSpacing.xl) {
@@ -82,7 +83,7 @@ struct AddTransactionSheet: View {
             }
             .navigationTitle("Add Transaction")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground, for: .navigationBar)
+            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -91,7 +92,7 @@ struct AddTransactionSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -103,7 +104,7 @@ struct AddTransactionSheet: View {
                             Image(systemName: "checkmark")
                         }
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
                 }
@@ -120,30 +121,30 @@ struct AddTransactionSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("Amount")
                 .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary)
+                .foregroundColor(.ppTextPrimary(colorScheme))
 
             HStack(alignment: .center, spacing: PPSpacing.sm) {
                 Text(currencySymbol)
                     .font(.ppAmount)
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
 
                 TextField("0.00", text: $amountText)
                     .font(.ppAmount)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
                     .keyboardType(.decimalPad)
             }
             .padding(PPSpacing.lg)
-            .background(Color.ppSurface)
+            .background(Color.ppSurface(colorScheme))
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.md)
-                    .stroke(Color.ppBorder, lineWidth: 1)
+                    .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
             )
 
             Toggle(isOn: $isTransfer) {
                 Text("Transfer between accounts")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
             }
             .tint(.ppPrimary)
             .onChange(of: isTransfer) { _, transfer in
@@ -159,11 +160,11 @@ struct AddTransactionSheet: View {
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder, lineWidth: 1)
+                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
         )
     }
 
@@ -173,25 +174,25 @@ struct AddTransactionSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("Details")
                 .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary)
+                .foregroundColor(.ppTextPrimary(colorScheme))
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("e.g. Groceries at Albert Heijn", text: $description)
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
             }
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 Text("Date")
                     .font(.ppCallout)
                     .fontWeight(.semibold)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
 
                 DatePicker("", selection: $occurredAt, displayedComponents: .date)
                     .datePickerStyle(.compact)
@@ -200,11 +201,11 @@ struct AddTransactionSheet: View {
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder, lineWidth: 1)
+                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
         )
     }
 
@@ -214,13 +215,13 @@ struct AddTransactionSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("Classification")
                 .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary)
+                .foregroundColor(.ppTextPrimary(colorScheme))
 
             // Category picker (hidden when transfer — category is auto-set)
             if !isTransfer {
                 HStack {
                     HStack(spacing: 2) {
-                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     Spacer()
@@ -238,7 +239,7 @@ struct AddTransactionSheet: View {
             // From account picker
             HStack {
                 HStack(spacing: 2) {
-                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 Spacer()
@@ -256,7 +257,7 @@ struct AddTransactionSheet: View {
             if isTransfer {
                 HStack {
                     HStack(spacing: 2) {
-                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     Spacer()
@@ -271,7 +272,7 @@ struct AddTransactionSheet: View {
                 }
             } else {
                 HStack {
-                    Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                     Spacer()
                     Picker("Vendor", selection: $selectedVendor) {
                         Text("None").tag(Optional<VendorOption>.none)
@@ -285,11 +286,11 @@ struct AddTransactionSheet: View {
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder, lineWidth: 1)
+                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
         )
     }
 

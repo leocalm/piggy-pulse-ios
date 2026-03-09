@@ -3,28 +3,48 @@ import SwiftUI
 // MARK: - Colors
 
 extension Color {
-    // Backgrounds
-    static let ppBackground = Color(red: 0.04, green: 0.05, blue: 0.07)       // #0a0e14
-    static let ppSurface = Color(red: 0.06, green: 0.07, blue: 0.10)          // #0f1319
-    static let ppCard = Color(red: 0.08, green: 0.11, blue: 0.15)             // #151b26
+    // Brand (unchanged — work on both backgrounds)
+    static let ppPrimary = Color(red: 0.00, green: 0.48, blue: 1.00)      // #007AFF
+    static let ppCyan = Color(red: 0.00, green: 0.83, blue: 1.00)         // #00d4ff
+    static let ppAmber = Color(red: 1.00, green: 0.66, blue: 0.25)        // #ffa940
+    static let ppTeal = Color(red: 0.00, green: 0.71, blue: 0.78)         // #00b4c8
+    static let ppDestructive = Color(red: 0.97, green: 0.32, blue: 0.29)  // #f85149
 
-    // Brand
-    static let ppPrimary = Color(red: 0.00, green: 0.48, blue: 1.00)          // #007AFF (Apple Blue)
-    static let ppCyan = Color(red: 0.00, green: 0.83, blue: 1.00)             // #00d4ff
-    static let ppAmber = Color(red: 1.00, green: 0.66, blue: 0.25)            // #ffa940
-    static let ppTeal = Color(red: 0.00, green: 0.71, blue: 0.78)             // #00b4c8
-
-    // Text
-    static let ppTextPrimary = Color.white
-    static let ppTextSecondary = Color(red: 0.51, green: 0.55, blue: 0.62)    // #828c9e
-    static let ppTextTertiary = Color(red: 0.35, green: 0.38, blue: 0.45)     // #5a6272
-
-    // Borders
-    static let ppBorder = Color.white.opacity(0.06)
-    static let ppBorderHover = Color.white.opacity(0.12)
-
-    // System (HIG only — not for financial data)
-    static let ppDestructive = Color(red: 0.97, green: 0.32, blue: 0.29)      // #f85149
+    // Adaptive backgrounds
+    static func ppBackground(_ scheme: ColorScheme) -> Color {
+        scheme == .dark
+            ? Color(red: 0.04, green: 0.05, blue: 0.07)   // #0a0e14
+            : Color(red: 0.95, green: 0.96, blue: 0.97)   // #F2F4F7
+    }
+    static func ppSurface(_ scheme: ColorScheme) -> Color {
+        scheme == .dark
+            ? Color(red: 0.06, green: 0.07, blue: 0.10)   // #0f1319
+            : Color.white
+    }
+    static func ppCard(_ scheme: ColorScheme) -> Color {
+        scheme == .dark
+            ? Color(red: 0.08, green: 0.11, blue: 0.15)   // #151b26
+            : Color.white
+    }
+    static func ppTextPrimary(_ scheme: ColorScheme) -> Color {
+        scheme == .dark ? Color.white : Color.black
+    }
+    static func ppTextSecondary(_ scheme: ColorScheme) -> Color {
+        scheme == .dark
+            ? Color(red: 0.51, green: 0.55, blue: 0.62)   // #828c9e
+            : Color(red: 0.35, green: 0.38, blue: 0.45)   // #5a6272
+    }
+    static func ppTextTertiary(_ scheme: ColorScheme) -> Color {
+        scheme == .dark
+            ? Color(red: 0.35, green: 0.38, blue: 0.45)   // #5a6272
+            : Color(red: 0.51, green: 0.55, blue: 0.62)   // #828c9e
+    }
+    static func ppBorder(_ scheme: ColorScheme) -> Color {
+        scheme == .dark ? Color.white.opacity(0.06) : Color.black.opacity(0.08)
+    }
+    static func ppBorderHover(_ scheme: ColorScheme) -> Color {
+        scheme == .dark ? Color.white.opacity(0.12) : Color.black.opacity(0.15)
+    }
 }
 
 // MARK: - Typography

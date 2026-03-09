@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AddAccountSheet: View {
     @EnvironmentObject var appState: AppState
+@Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     @State private var name = ""
@@ -53,7 +54,7 @@ struct AddAccountSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground.ignoresSafeArea()
+                Color.ppBackground(colorScheme).ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: PPSpacing.xl) {
                         if let error = errorMessage {
@@ -63,24 +64,24 @@ struct AddAccountSheet: View {
                         // Details
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
                             Text("Account Details")
-                                .font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                .font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("e.g. Main Checking", text: $name)
-                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                             }
 
                             // Account Type
                             HStack {
                                 Text("Account Type")
-                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                 Spacer()
                                 Picker("Account Type", selection: $accountType) {
                                     ForEach(accountTypes, id: \.self) { type in
@@ -94,43 +95,43 @@ struct AddAccountSheet: View {
                             // Starting Balance
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 Text("Starting Balance")
-                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                 HStack {
-                                    Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary)
+                                    Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
                                     TextField("0.00", text: $balanceText).keyboardType(.decimalPad)
-                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                                 }
                                 .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                             }
                             
                             // Spend Limit (for CreditCard and Allowance)
                             if showSpendLimit {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     Text("Spend Limit")
-                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                     HStack {
-                                        Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary)
+                                        Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
                                         TextField("0.00", text: $spendLimitText).keyboardType(.decimalPad)
-                                            .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                            .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                                     }
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                        .padding(PPSpacing.lg).background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
 
                         // Appearance
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
                             Text("Appearance")
-                                .font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                .font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Color").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text("Color").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
                                         Circle()
@@ -144,14 +145,14 @@ struct AddAccountSheet: View {
                                 }
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                        .padding(PPSpacing.lg).background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                     }
                     .padding(PPSpacing.xl)
                 }
             }
             .navigationTitle("Add Account").navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
@@ -159,7 +160,7 @@ struct AddAccountSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -171,7 +172,7 @@ struct AddAccountSheet: View {
                             Image(systemName: "checkmark")
                         }
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
                 }

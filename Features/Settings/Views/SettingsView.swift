@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.colorScheme) private var colorScheme
     @State private var profile: ProfileResponse?
     @State private var preferences: PreferencesResponse?
     @State private var isLoading = false
@@ -18,12 +19,12 @@ struct SettingsView: View {
         ScrollView {
                 VStack(alignment: .leading, spacing: PPSpacing.xl) {
                     if isLoading {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary(colorScheme)); Spacer() }
                             .padding(.vertical, PPSpacing.xxxl)
                     } else if let error = errorMessage {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
                             Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
@@ -32,20 +33,20 @@ struct SettingsView: View {
                         if let p = profile {
                             profileCard(p)
                         }
-                        
+
                         // Security card
                         securityCard
-                        
+
                         // Preferences card
                         preferencesCard
-                        
+
                         // App info
                         appInfoCard
                     }
                 }
                 .padding(PPSpacing.lg)
             }
-            .background(Color.ppBackground)
+            .background(Color.ppBackground(colorScheme))
             .sheet(isPresented: $showChangePassword) {
                 ChangePasswordSheet()
                     .environmentObject(appState)
@@ -65,14 +66,14 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("PROFILE")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
                 .tracking(1)
 
             settingsRow("Name", value: p.name)
             settingsRow("Email", value: p.email)
             settingsRow("Currency", value: currencyDisplay)
 
-            Divider().background(Color.ppBorder)
+            Divider().background(Color.ppBorder(colorScheme))
 
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -85,15 +86,15 @@ struct SettingsView: View {
                     Spacer()
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(.ppTextTertiary)
+                        .foregroundColor(.ppTextTertiary(colorScheme))
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
     }
 
     // MARK: - Security
@@ -102,7 +103,7 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("SECURITY")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
                 .tracking(1)
 
             Button {
@@ -112,19 +113,19 @@ struct SettingsView: View {
                 HStack {
                     Label("Change Password", systemImage: "key")
                         .font(.ppBody)
-                        .foregroundColor(.ppTextPrimary)
+                        .foregroundColor(.ppTextPrimary(colorScheme))
                     Spacer()
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(.ppTextTertiary)
+                        .foregroundColor(.ppTextTertiary(colorScheme))
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
     }
 
     // MARK: - Preferences
@@ -133,7 +134,7 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("PREFERENCES")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
                 .tracking(1)
 
             preferenceRow("Theme", selection: $selectedTheme, options: [
@@ -156,7 +157,7 @@ struct SettingsView: View {
             .onChange(of: selectedNumberFormat) { _, _ in preferencesDirty = true }
 
             if preferencesDirty {
-                Divider().background(Color.ppBorder)
+                Divider().background(Color.ppBorder(colorScheme))
 
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -168,7 +169,7 @@ struct SettingsView: View {
                             .foregroundColor(.ppPrimary)
                         Spacer()
                         if isSavingPreferences {
-                            ProgressView().tint(.ppTextSecondary)
+                            ProgressView().tint(.ppTextSecondary(colorScheme))
                         }
                     }
                 }
@@ -177,9 +178,9 @@ struct SettingsView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
         .animation(.easeInOut(duration: 0.2), value: preferencesDirty)
     }
 
@@ -187,7 +188,7 @@ struct SettingsView: View {
         HStack {
             Text(label)
                 .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
             Spacer()
             Picker("", selection: selection) {
                 ForEach(options, id: \.0) { value, display in
@@ -195,7 +196,7 @@ struct SettingsView: View {
                 }
             }
             .pickerStyle(.menu)
-            .tint(.ppTextPrimary)
+            .tint(.ppTextPrimary(colorScheme))
         }
     }
 
@@ -205,7 +206,7 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("APP")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
                 .tracking(1)
 
             settingsRow("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
@@ -213,9 +214,9 @@ struct SettingsView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
     }
 
     private var currencyDisplay: String {
@@ -234,11 +235,11 @@ struct SettingsView: View {
         HStack {
             Text(label)
                 .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
             Spacer()
             Text(value)
                 .font(.ppBody)
-                .foregroundColor(.ppTextPrimary)
+                .foregroundColor(.ppTextPrimary(colorScheme))
         }
     }
 
@@ -274,6 +275,7 @@ struct SettingsView: View {
             let updated: PreferencesResponse = try await appState.apiClient.request(.updatePreferences, body: req)
             preferences = updated
             preferencesDirty = false
+            appState.applyTheme(themeValue)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         } catch {
             UINotificationFeedbackGenerator().notificationOccurred(.error)

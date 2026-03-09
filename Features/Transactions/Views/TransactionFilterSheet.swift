@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TransactionFilterSheet: View {
     @Environment(\.dismiss) private var dismiss
+@Environment(\.colorScheme) private var colorScheme
 
     let filterOptions: TransactionFilterOptions
     let isLoadingOptions: Bool
@@ -38,7 +39,7 @@ struct TransactionFilterSheet: View {
                 if isLoadingOptions {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .tint(.ppTextSecondary)
+                        .tint(.ppTextSecondary(colorScheme))
                 } else {
                     List {
                         if !filterOptions.accounts.isEmpty {
@@ -127,7 +128,7 @@ struct TransactionFilterSheet: View {
         } label: {
             HStack {
                 Text(title)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
                 Spacer()
                 if selected.wrappedValue.contains(id) {
                     Image(systemName: "checkmark")

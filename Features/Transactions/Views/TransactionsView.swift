@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: TransactionsViewModel
     @State private var showAddSheet = false
     @State private var showFilterSheet = false
@@ -19,7 +20,7 @@ struct TransactionsView: View {
                 Section {
                     // Direction tabs
                     directionTabs
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets(top: PPSpacing.sm, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
                 }
@@ -29,11 +30,11 @@ struct TransactionsView: View {
                     Section {
                         HStack {
                             Spacer()
-                            ProgressView().tint(.ppTextSecondary)
+                            ProgressView().tint(.ppTextSecondary(colorScheme))
                             Spacer()
                         }
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                     }
                 } else if let error = viewModel.errorMessage {
@@ -44,7 +45,7 @@ struct TransactionsView: View {
                                 .foregroundColor(.ppAmber)
                             Text(error)
                                 .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
+                                .foregroundColor(.ppTextSecondary(colorScheme))
                             Button("Retry") {
                                 if let periodId = appState.selectedPeriod?.id {
                                     Task { await viewModel.load(periodId: periodId) }
@@ -55,7 +56,7 @@ struct TransactionsView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                     }
                 } else if viewModel.transactions.isEmpty {
@@ -63,25 +64,25 @@ struct TransactionsView: View {
                         VStack(spacing: PPSpacing.lg) {
                             Image(systemName: "tray")
                                 .font(.system(size: 40))
-                                .foregroundColor(.ppTextTertiary)
+                                .foregroundColor(.ppTextTertiary(colorScheme))
                             Text("No transactions found")
                                 .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
+                                .foregroundColor(.ppTextSecondary(colorScheme))
                             Text("Start tracking your spending by adding your first transaction.")
                                 .font(.ppCallout)
-                                .foregroundColor(.ppTextTertiary)
+                                .foregroundColor(.ppTextTertiary(colorScheme))
                                 .multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                     }
                 } else {
                     Section {
                         ForEach(viewModel.transactions) { transaction in
                             transactionRow(transaction)
-                                .listRowBackground(Color.ppBackground)
+                                .listRowBackground(Color.ppBackground(colorScheme))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                 .onTapGesture {
@@ -112,10 +113,10 @@ struct TransactionsView: View {
                         if viewModel.isLoadingMore {
                             HStack {
                                 Spacer()
-                                ProgressView().tint(.ppTextSecondary)
+                                ProgressView().tint(.ppTextSecondary(colorScheme))
                                 Spacer()
                             }
-                            .listRowBackground(Color.ppBackground)
+                            .listRowBackground(Color.ppBackground(colorScheme))
                             .listRowSeparator(.hidden)
                         }
                     }
@@ -123,7 +124,7 @@ struct TransactionsView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color.ppBackground)
+            .background(Color.ppBackground(colorScheme))
             .refreshable {
                 if let periodId = appState.selectedPeriod?.id {
                     await viewModel.refresh(periodId: periodId)
@@ -223,14 +224,14 @@ struct TransactionsView: View {
                             .fontWeight(viewModel.selectedDirection == direction ? .semibold : .regular)
                             .foregroundColor(
                                 viewModel.selectedDirection == direction
-                                    ? .ppTextPrimary
-                                    : .ppTextSecondary
+                                    ? .ppTextPrimary(colorScheme)
+                                    : .ppTextSecondary(colorScheme)
                             )
                             .padding(.horizontal, PPSpacing.lg)
                             .padding(.vertical, PPSpacing.sm)
                             .background(
                                 viewModel.selectedDirection == direction
-                                    ? Color.ppCard
+                                    ? Color.ppCard(colorScheme)
                                     : Color.clear
                             )
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
@@ -238,7 +239,7 @@ struct TransactionsView: View {
                                 RoundedRectangle(cornerRadius: PPRadius.full)
                                     .stroke(
                                         viewModel.selectedDirection == direction
-                                            ? Color.ppBorder
+                                            ? Color.ppBorder(colorScheme)
                                             : Color.clear,
                                         lineWidth: 1
                                     )
@@ -267,21 +268,21 @@ struct TransactionsView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(tx.description)
                     .font(.ppBody)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
                     .lineLimit(1)
 
                 HStack(spacing: 4) {
                     Text(tx.category.name)
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
 
                     if let vendor = tx.vendor {
                         Text("·")
                             .font(.ppCaption)
-                            .foregroundColor(.ppTextTertiary)
+                            .foregroundColor(.ppTextTertiary(colorScheme))
                         Text(vendor.name)
                             .font(.ppCaption)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                     }
                 }
             }
@@ -292,19 +293,19 @@ struct TransactionsView: View {
             VStack(alignment: .trailing, spacing: 2) {
                 Text(formatAmount(tx))
                     .font(.ppAmountSmall)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
 
                 Text(tx.formattedDate)
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextTertiary)
+                    .foregroundColor(.ppTextTertiary(colorScheme))
             }
         }
         .padding(PPSpacing.md)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.md)
-                .stroke(Color.ppBorder, lineWidth: 1)
+                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
         )
     }
 

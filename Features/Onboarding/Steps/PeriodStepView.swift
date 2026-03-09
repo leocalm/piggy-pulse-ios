@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PeriodStepView: View {
     @ObservedObject var vm: OnboardingViewModel
+@Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         ScrollView {
@@ -10,15 +11,15 @@ struct PeriodStepView: View {
                 // Description
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     Text("Periods are how PiggyPulse slices your timeline for tracking. The default — monthly, starting on the 1st — works for most people.")
-                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                        .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                     Text("You can further customize periods later in the Periods screen, including renaming them or adjusting individual start dates.")
-                        .font(.ppCallout).foregroundColor(.ppTextSecondary)
+                        .font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
                 }
 
                 // Customize toggle
                 VStack(alignment: .leading, spacing: PPSpacing.md) {
                     Text("Configuration")
-                        .font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                        .font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
 
                     Picker("", selection: $vm.customize) {
                         Text("Use default").tag(false)
@@ -49,13 +50,13 @@ struct PeriodStepView: View {
                         // Weekend adjustments
                         VStack(alignment: .leading, spacing: PPSpacing.md) {
                             Text("Weekend Days")
-                                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                             Text("If the period start date falls on a weekend, PiggyPulse can shift it to the nearest weekday. This only affects when a period is recorded as starting — it does not change how long the period lasts.")
-                                .font(.ppCaption).foregroundColor(.ppTextSecondary)
+                                .font(.ppCaption).foregroundColor(.ppTextSecondary(colorScheme))
 
                             HStack {
                                 Text("If it lands on Saturday")
-                                    .font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                    .font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
                                 Spacer()
                                 Picker("Saturday", selection: $vm.saturdayBehavior) {
                                     ForEach(WeekendBehavior.allCases, id: \.self) { opt in
@@ -68,7 +69,7 @@ struct PeriodStepView: View {
 
                             HStack {
                                 Text("If it lands on Sunday")
-                                    .font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                    .font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
                                 Spacer()
                                 Picker("Sunday", selection: $vm.sundayBehavior) {
                                     ForEach(WeekendBehavior.allCases, id: \.self) { opt in
@@ -80,9 +81,9 @@ struct PeriodStepView: View {
                             }
                         }
                         .padding(PPSpacing.lg)
-                        .background(Color.ppCard)
+                        .background(Color.ppCard(colorScheme))
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                     }
                     .animation(.easeInOut(duration: 0.2), value: vm.customize)
                 }

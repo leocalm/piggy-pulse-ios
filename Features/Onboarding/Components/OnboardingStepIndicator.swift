@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct OnboardingStepIndicator: View {
+    @Environment(\.colorScheme) private var colorScheme
     let currentStep: OnboardingStep
 
     var body: some View {
@@ -16,11 +17,11 @@ struct OnboardingStepIndicator: View {
                     } else {
                         Text("\(idx + 1)")
                             .font(.ppCaption).fontWeight(.semibold)
-                            .foregroundColor(isCurrent ? .ppPrimary : .ppTextTertiary)
+                            .foregroundColor(isCurrent ? .ppPrimary : .ppTextTertiary(colorScheme))
                     }
                     Text(step.title)
                         .font(.ppCaption).fontWeight(isCurrent ? .semibold : .regular)
-                        .foregroundColor(isCurrent ? .ppTextPrimary : .ppTextTertiary)
+                        .foregroundColor(isCurrent ? .ppTextPrimary(colorScheme) : .ppTextTertiary(colorScheme))
                         .lineLimit(1)
                 }
                 .padding(.horizontal, PPSpacing.sm)
@@ -28,7 +29,7 @@ struct OnboardingStepIndicator: View {
                 .background(isCurrent ? Color.ppPrimary.opacity(0.15) : Color.clear)
                 .clipShape(Capsule())
                 .overlay(
-                    Capsule().stroke(isCurrent ? Color.ppPrimary : Color.ppBorder, lineWidth: 1)
+                    Capsule().stroke(isCurrent ? Color.ppPrimary : Color.ppBorder(colorScheme), lineWidth: 1)
                 )
 
                 if idx < OnboardingStep.allCases.count - 1 {
