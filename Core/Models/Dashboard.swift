@@ -48,34 +48,3 @@ struct BudgetStabilityPeriod: Codable {
     let periodId: String
     let isOutsideTolerance: Bool
 }
-
-// MARK: - Top Categories (Top Categories card)
-
-struct CategorySpending: Codable, Identifiable {
-    let categoryId: UUID
-    let name: String
-    let color: String
-    let amount: Int64
-
-    var id: UUID { categoryId }
-}
-
-// MARK: - Balance Over Time (Balance Over Time card)
-
-struct BalanceDataPoint: Codable, Identifiable {
-    let date: String
-    let balance: Int64
-
-    var id: String { date }
-}
-
-// MARK: - Category Breakdown (Category Breakdown entity card)
-
-struct CategoryBreakdownItem: Codable, Identifiable {
-    let subcategoryId: UUID
-    let name: String
-    let color: String
-    let amount: Int64
-
-    var id: UUID { subcategoryId }
-}

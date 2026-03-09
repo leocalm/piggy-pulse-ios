@@ -163,31 +163,6 @@ extension APIEndpoint {
     static let monthProgress = APIEndpoint(path: "/dashboard/month-progress", method: .get, requiresAuth: true)
     static let netPosition = APIEndpoint(path: "/dashboard/net-position", method: .get, requiresAuth: true)
     static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
-    static let topCategories = APIEndpoint(path: "/dashboard/top-categories", method: .get, requiresAuth: true)
-    static let recentTransactions = APIEndpoint(path: "/dashboard/recent-transactions", method: .get, requiresAuth: true)
-    static let balanceOverTime = APIEndpoint(path: "/dashboard/balance-over-time", method: .get, requiresAuth: true)
-    static func categoryBreakdown(_ categoryId: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/dashboard/category-breakdown/\(categoryId)", method: .get, requiresAuth: true)
-    }
-    static func accountSnapshot(_ accountId: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/dashboard/account-snapshot/\(accountId)", method: .get, requiresAuth: true)
-    }
-}
-
-// MARK: - Dashboard Layout
-
-extension APIEndpoint {
-    static let dashboardLayout = APIEndpoint(path: "/dashboard-layout", method: .get, requiresAuth: true)
-    static let createDashboardCard = APIEndpoint(path: "/dashboard-layout", method: .post, requiresAuth: true)
-    static func updateDashboardCard(_ id: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/dashboard-layout/\(id)", method: .put, requiresAuth: true)
-    }
-    static let reorderDashboardCards = APIEndpoint(path: "/dashboard-layout/reorder", method: .put, requiresAuth: true)
-    static func deleteDashboardCard(_ id: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/dashboard-layout/\(id)", method: .delete, requiresAuth: true)
-    }
-    static let availableCards = APIEndpoint(path: "/dashboard-layout/available-cards", method: .get, requiresAuth: true)
-    static let resetDashboardLayout = APIEndpoint(path: "/dashboard-layout/reset", method: .post, requiresAuth: true)
 }
 
 // MARK: - Settings
