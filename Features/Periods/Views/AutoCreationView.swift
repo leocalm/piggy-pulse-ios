@@ -3,6 +3,7 @@ import SwiftUI
 struct AutoCreationView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var schedule: PeriodSchedule?
     @State private var isLoading = true
@@ -26,7 +27,7 @@ struct AutoCreationView: View {
                 if isLoading {
                     HStack {
                         Spacer()
-                        ProgressView().tint(.ppTextSecondary)
+                        ProgressView().tint(.ppTextSecondary(colorScheme))
                         Spacer()
                     }
                     .padding(.vertical, PPSpacing.xxxl)
@@ -38,10 +39,10 @@ struct AutoCreationView: View {
             }
             .padding(PPSpacing.lg)
         }
-        .background(Color.ppBackground)
+        .background(Color.ppBackground(colorScheme))
         .navigationTitle("Auto-Creation")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Color.ppBackground, for: .navigationBar)
+        .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .task {
             await loadSchedule()
@@ -55,15 +56,15 @@ struct AutoCreationView: View {
             VStack(spacing: PPSpacing.md) {
                 Image(systemName: "calendar.badge.clock")
                     .font(.system(size: 40))
-                    .foregroundColor(.ppTextTertiary)
+                    .foregroundColor(.ppTextTertiary(colorScheme))
 
                 Text("Auto-Creation is disabled")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
 
                 Text("Enable a schedule to generate future periods automatically.")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                     .multilineTextAlignment(.center)
             }
 
@@ -81,11 +82,11 @@ struct AutoCreationView: View {
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
         }
         .padding(PPSpacing.xl)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder, lineWidth: 1)
+                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
         )
     }
 
@@ -104,13 +105,13 @@ struct AutoCreationView: View {
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
                 Text("Period Setup")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
 
                 // Start Day
                 HStack {
                     Text("Start Day of Month")
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                     Spacer()
                     Picker("", selection: $startDay) {
                         ForEach(1...31, id: \.self) { day in
@@ -124,7 +125,7 @@ struct AutoCreationView: View {
                 HStack {
                     Text("Duration")
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                     Spacer()
                     HStack(spacing: PPSpacing.sm) {
                         TextField("1", value: $durationValue, format: .number)
@@ -132,7 +133,7 @@ struct AutoCreationView: View {
                             .frame(width: 50)
                             .multilineTextAlignment(.trailing)
                             .font(.ppBody)
-                            .foregroundColor(.ppTextPrimary)
+                            .foregroundColor(.ppTextPrimary(colorScheme))
 
                         Picker("", selection: $durationUnit) {
                             Text("Days").tag("days")
@@ -147,68 +148,68 @@ struct AutoCreationView: View {
                 HStack {
                     Text("Generate Ahead")
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
+                        .foregroundColor(.ppTextSecondary(colorScheme))
                     Spacer()
                     Stepper("\(generateAhead) periods", value: $generateAhead, in: 0...12)
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextPrimary)
+                        .foregroundColor(.ppTextPrimary(colorScheme))
                 }
             }
             .padding(PPSpacing.lg)
-            .background(Color.ppCard)
+            .background(Color.ppCard(colorScheme))
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.lg)
-                    .stroke(Color.ppBorder, lineWidth: 1)
+                    .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
             )
 
             // Weekend Adjustments
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
                 Text("Weekend Adjustments")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
 
                 weekendRow("Saturday", selection: $saturdayAdj)
                 weekendRow("Sunday", selection: $sundayAdj)
             }
             .padding(PPSpacing.lg)
-            .background(Color.ppCard)
+            .background(Color.ppCard(colorScheme))
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.lg)
-                    .stroke(Color.ppBorder, lineWidth: 1)
+                    .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
             )
 
             // Naming
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
                 Text("Naming")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
 
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Name Pattern").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text("Name Pattern").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     TextField("{month} {year}", text: $namePattern)
                         .autocapitalization(.none)
                         .autocorrectionDisabled()
-                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                        .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                 }
 
                 Text("Use {month} and {year} as placeholders.")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextTertiary)
+                    .foregroundColor(.ppTextTertiary(colorScheme))
             }
             .padding(PPSpacing.lg)
-            .background(Color.ppCard)
+            .background(Color.ppCard(colorScheme))
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.lg)
-                    .stroke(Color.ppBorder, lineWidth: 1)
+                    .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
             )
 
             // Actions
@@ -251,7 +252,7 @@ struct AutoCreationView: View {
         HStack {
             Text("If \(day)")
                 .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
             Spacer()
             Picker("", selection: selection) {
                 Text("Keep").tag("keep")

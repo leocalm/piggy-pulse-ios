@@ -2,13 +2,14 @@ import SwiftUI
 
 struct SummaryStepView: View {
     @ObservedObject var vm: OnboardingViewModel
+@Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
                 Text("You're all set — here's what will be configured when you enter PiggyPulse.")
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
                     .padding(.horizontal, PPSpacing.xl)
 
                 // Period summary
@@ -21,7 +22,7 @@ struct SummaryStepView: View {
                         labeledRow("If Sunday", vm.sundayBehavior.label)
                     } else {
                         Text("Monthly, starting on the 1st (default)")
-                            .font(.ppCallout).foregroundColor(.ppTextSecondary)
+                            .font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
                     }
                 }
 
@@ -35,10 +36,10 @@ struct SummaryStepView: View {
                         HStack {
                             Text(account.defaultIcon)
                             Text(account.name.isEmpty ? "Unnamed" : account.name)
-                                .font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                .font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
                             Spacer()
                             Text(account.balanceText.isEmpty ? "0.00" : account.balanceText)
-                                .font(.ppCallout).foregroundColor(.ppTextSecondary)
+                                .font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
                         }
                     }
                 }
@@ -50,14 +51,14 @@ struct SummaryStepView: View {
                     if !incoming.isEmpty {
                         Text("Incoming").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTeal)
                         ForEach(incoming) { cat in
-                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
+                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme)) }
                         }
                     }
                     if !outgoing.isEmpty {
                         Text("Outgoing").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppDestructive)
                             .padding(.top, 4)
                         ForEach(outgoing) { cat in
-                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
+                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme)) }
                         }
                     }
                 }
@@ -69,28 +70,28 @@ struct SummaryStepView: View {
     @ViewBuilder
     private func summarySection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.md) {
-            Text(title).font(.ppTitle3).foregroundColor(.ppTextPrimary)
+            Text(title).font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 content()
             }
         }
         .padding(PPSpacing.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .overlay(
             VStack {
-                Divider().background(Color.ppBorder)
+                Divider().background(Color.ppBorder(colorScheme))
                 Spacer()
-                Divider().background(Color.ppBorder)
+                Divider().background(Color.ppBorder(colorScheme))
             }
         )
     }
 
     private func labeledRow(_ label: String, _ value: String) -> some View {
         HStack {
-            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary)
+            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
             Spacer()
-            Text(value).font(.ppCallout).foregroundColor(.ppTextPrimary)
+            Text(value).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
         }
     }
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BudgetPlanView: View {
     @EnvironmentObject var appState: AppState
+@Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: BudgetViewModel
     @State private var selectedTarget: CategoryTarget?
 
@@ -15,11 +16,11 @@ struct BudgetPlanView: View {
                 Section {
                     HStack {
                         Spacer()
-                        ProgressView().tint(.ppTextSecondary)
+                        ProgressView().tint(.ppTextSecondary(colorScheme))
                         Spacer()
                     }
                     .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                 }
             } else if let error = viewModel.errorMessage {
@@ -30,7 +31,7 @@ struct BudgetPlanView: View {
                             .foregroundColor(.ppAmber)
                         Text(error)
                             .font(.ppBody)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                         Button("Retry") {
                             if let periodId = appState.selectedPeriod?.id {
                                 Task { await viewModel.load(periodId: periodId) }
@@ -41,7 +42,7 @@ struct BudgetPlanView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
+                    .listRowBackground(Color.ppBackground(colorScheme))
                     .listRowSeparator(.hidden)
                 }
             } else {
@@ -49,7 +50,7 @@ struct BudgetPlanView: View {
                 if let burnIn = viewModel.burnIn {
                     Section {
                         summaryCard(burnIn: burnIn)
-                            .listRowBackground(Color.ppBackground)
+                            .listRowBackground(Color.ppBackground(colorScheme))
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
@@ -63,7 +64,7 @@ struct BudgetPlanView: View {
                     Section {
                         ForEach(withTarget) { target in
                             targetRow(target)
-                                .listRowBackground(Color.ppBackground)
+                                .listRowBackground(Color.ppBackground(colorScheme))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                 .swipeActions(edge: .trailing) {
@@ -81,7 +82,7 @@ struct BudgetPlanView: View {
                     } header: {
                         Text("WITH TARGET")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                             .tracking(1)
                     }
                 }
@@ -90,7 +91,7 @@ struct BudgetPlanView: View {
                     Section {
                         ForEach(noTarget) { target in
                             noTargetRow(target)
-                                .listRowBackground(Color.ppBackground)
+                                .listRowBackground(Color.ppBackground(colorScheme))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                 .onTapGesture { selectedTarget = target }
@@ -98,7 +99,7 @@ struct BudgetPlanView: View {
                     } header: {
                         Text("NO TARGET")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                             .tracking(1)
                     }
                 }
@@ -107,7 +108,7 @@ struct BudgetPlanView: View {
                     Section {
                         ForEach(excluded) { target in
                             excludedRow(target)
-                                .listRowBackground(Color.ppBackground)
+                                .listRowBackground(Color.ppBackground(colorScheme))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                 .swipeActions(edge: .trailing) {
@@ -125,7 +126,7 @@ struct BudgetPlanView: View {
                     } header: {
                         Text("EXCLUDED")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
+                            .foregroundColor(.ppTextSecondary(colorScheme))
                             .tracking(1)
                     }
                 }
@@ -135,18 +136,18 @@ struct BudgetPlanView: View {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "chart.pie")
                                 .font(.system(size: 32))
-                                .foregroundColor(.ppTextTertiary)
+                                .foregroundColor(.ppTextTertiary(colorScheme))
                             Text("No categories yet")
                                 .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
+                                .foregroundColor(.ppTextSecondary(colorScheme))
                             Text("Create categories to set budget targets.")
                                 .font(.ppCallout)
-                                .foregroundColor(.ppTextTertiary)
+                                .foregroundColor(.ppTextTertiary(colorScheme))
                                 .multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xl)
-                        .listRowBackground(Color.ppBackground)
+                        .listRowBackground(Color.ppBackground(colorScheme))
                         .listRowSeparator(.hidden)
                     }
                 }
@@ -154,7 +155,7 @@ struct BudgetPlanView: View {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
+        .background(Color.ppBackground(colorScheme))
         .refreshable {
             if let periodId = appState.selectedPeriod?.id {
                 await viewModel.load(periodId: periodId)
@@ -197,19 +198,19 @@ struct BudgetPlanView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("BUDGET BREAKDOWN")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary)
+                .foregroundColor(.ppTextSecondary(colorScheme))
                 .tracking(1)
 
             VStack(spacing: PPSpacing.md) {
                 breakdownRow("Total Budget", value: burnIn.totalBudget, color: .ppPrimary)
-                breakdownRow("Currently Spent", value: burnIn.spentBudget, color: .ppTextSecondary)
+                breakdownRow("Currently Spent", value: burnIn.spentBudget, color: .ppTextSecondary(colorScheme))
                 breakdownRow("Remaining Budget", value: burnIn.remainingBudget, color: .ppCyan)
             }
 
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.ppBorder)
+                        .fill(Color.ppBorder(colorScheme))
                         .frame(height: 8)
                     RoundedRectangle(cornerRadius: 4)
                         .fill(burnIn.spentPercentage > 1.0 ? Color.ppDestructive : Color.ppPrimary)
@@ -220,18 +221,18 @@ struct BudgetPlanView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
     }
 
     private func breakdownRow(_ label: LocalizedStringKey, value: Int64, color: Color) -> some View {
         HStack {
             Circle().fill(color).frame(width: 8, height: 8)
-            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary)
+            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
             Spacer()
             Text(formatCurrency(value, code: appState.currencyCode))
-                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
         }
     }
 
@@ -245,20 +246,20 @@ struct BudgetPlanView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(target.categoryName)
                     .font(.ppHeadline)
-                    .foregroundColor(.ppTextPrimary)
+                    .foregroundColor(.ppTextPrimary(colorScheme))
                 Text(formatCurrency(Int64(target.targetValue), code: appState.currencyCode))
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
             }
             Spacer()
             Image(systemName: "chevron.right")
                 .font(.ppCaption)
-                .foregroundColor(.ppTextTertiary)
+                .foregroundColor(.ppTextTertiary(colorScheme))
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard)
+        .background(Color.ppCard(colorScheme))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
     }
 
     private func noTargetRow(_ target: CategoryTarget) -> some View {
@@ -269,19 +270,19 @@ struct BudgetPlanView: View {
                 .opacity(0.5)
             Text(target.categoryName)
                 .font(.ppHeadline)
-                .foregroundColor(.ppTextTertiary)
+                .foregroundColor(.ppTextTertiary(colorScheme))
             Spacer()
             Text("No target")
                 .font(.ppCaption)
-                .foregroundColor(.ppTextTertiary)
+                .foregroundColor(.ppTextTertiary(colorScheme))
             Image(systemName: "plus.circle")
                 .font(.ppCallout)
                 .foregroundColor(.ppPrimary)
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard.opacity(0.5))
+        .background(Color.ppCard(colorScheme).opacity(0.5))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder.opacity(0.5), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme).opacity(0.5), lineWidth: 1))
     }
 
     private func excludedRow(_ target: CategoryTarget) -> some View {
@@ -293,8 +294,8 @@ struct BudgetPlanView: View {
                 .opacity(0.4)
             Text(target.categoryName)
                 .font(.ppHeadline)
-                .foregroundColor(.ppTextTertiary)
-                .strikethrough(true, color: .ppTextTertiary)
+                .foregroundColor(.ppTextTertiary(colorScheme))
+                .strikethrough(true, color: .ppTextTertiary(colorScheme))
             Spacer()
             Text("Excluded")
                 .font(.ppCaption)
@@ -305,8 +306,8 @@ struct BudgetPlanView: View {
                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard.opacity(0.3))
+        .background(Color.ppCard(colorScheme).opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder.opacity(0.3), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme).opacity(0.3), lineWidth: 1))
     }
 }

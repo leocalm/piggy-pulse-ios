@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EditCategoryTargetSheet: View {
     @EnvironmentObject var appState: AppState
+@Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     let target: CategoryTarget
@@ -27,7 +28,7 @@ struct EditCategoryTargetSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground.ignoresSafeArea()
+                Color.ppBackground(colorScheme).ignoresSafeArea()
                 VStack(spacing: PPSpacing.xl) {
                     // Header
                     HStack(spacing: PPSpacing.md) {
@@ -36,7 +37,7 @@ struct EditCategoryTargetSheet: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(target.categoryName)
                                 .font(.ppTitle)
-                                .foregroundColor(.ppTextPrimary)
+                                .foregroundColor(.ppTextPrimary(colorScheme))
                             if target.excluded {
                                 Text("Currently excluded")
                                     .font(.ppCaption)
@@ -46,32 +47,32 @@ struct EditCategoryTargetSheet: View {
                         Spacer()
                     }
                     .padding(PPSpacing.xl)
-                    .background(Color.ppCard)
+                    .background(Color.ppCard(colorScheme))
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
 
                     // Amount input
                     if !target.excluded {
                         VStack(alignment: .leading, spacing: PPSpacing.sm) {
                             Text("TARGET AMOUNT")
                                 .font(.ppOverline)
-                                .foregroundColor(.ppTextSecondary)
+                                .foregroundColor(.ppTextSecondary(colorScheme))
                                 .tracking(1)
 
                             HStack {
                                 Text(appState.currencyCode)
                                     .font(.ppCallout)
-                                    .foregroundColor(.ppTextTertiary)
+                                    .foregroundColor(.ppTextTertiary(colorScheme))
                                     .frame(width: 40)
                                 TextField("0.00", text: $amountText)
                                     .font(.ppAmount)
-                                    .foregroundColor(.ppTextPrimary)
+                                    .foregroundColor(.ppTextPrimary(colorScheme))
                                     .keyboardType(.decimalPad)
                             }
                             .padding(PPSpacing.lg)
-                            .background(Color.ppSurface)
+                            .background(Color.ppSurface(colorScheme))
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
                         }
                     }
 
@@ -143,7 +144,7 @@ struct EditCategoryTargetSheet: View {
             }
             .navigationTitle("Set Target")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground, for: .navigationBar)
+            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -152,7 +153,7 @@ struct EditCategoryTargetSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary)
+                    .foregroundColor(.ppTextSecondary(colorScheme))
                 }
             }
             .onAppear {
