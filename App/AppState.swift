@@ -55,11 +55,11 @@ final class AppState: ObservableObject {
     }
 
     init() {
-        loadTheme()
         let tm = TokenManager()
         self.tokenManager = tm
         self.apiClient = APIClient(tokenManager: tm)
         self.isAuthenticated = tm.isAuthenticated
+        loadTheme()
     }
 
     /// Called on app launch to validate existing tokens
