@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PeriodSelectorBar: View {
     @EnvironmentObject var appState: AppState
-@Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     @State private var periods: [BudgetPeriod] = []
     @State private var showPicker = false
     @State private var isLoading = true

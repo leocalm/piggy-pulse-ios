@@ -2,7 +2,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @EnvironmentObject var appState: AppState
-@Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: DashboardViewModel
 
     init(apiClient: APIClient) {

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
-@Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: TransactionsViewModel
     @State private var showAddSheet = false
     @State private var showFilterSheet = false
