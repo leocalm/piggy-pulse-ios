@@ -323,6 +323,7 @@ struct SettingsView: View {
                 do {
                     try await BiometricHelper.authenticate(reason: "Confirm to enable biometric unlock")
                     appState.biometricEnabled = true
+                    biometricEnabled = true
                     UINotificationFeedbackGenerator().notificationOccurred(.success)
                 } catch {
                     // Revert toggle if auth failed or was cancelled
