@@ -393,6 +393,14 @@ final class NotificationSchedulerTests: XCTestCase {
 xcodebuild test -scheme PiggyPulse -destination 'platform=iOS Simulator,name=iPhone 16' -only-testing PiggyPulseTests/NotificationSchedulerTests 2>&1 | tail -20
 ```
 
+- [ ] **Step 2b: Confirm BudgetPeriod computed date properties exist**
+
+```bash
+grep "startDateFormatted\|endDateFormatted" /Volumes/T7/opt/piggy-pulse/piggy-pulse-ios/Core/Models/BudgetPeriod.swift
+```
+
+Expected: two computed properties returning `Date?`. The scheduler uses these. If they are missing, add them to `BudgetPeriod.swift` before creating the scheduler.
+
 - [ ] **Step 3: Create NotificationCenterProtocol**
 
 Add to top of `Core/Notifications/NotificationScheduler.swift`:
@@ -634,13 +642,23 @@ git commit -m "feat(notifications): wire NotificationScheduler into AppState"
 - Modify: `App/PiggyPulseApp.swift`
 - Modify: `PiggyPulse-Info.plist`
 
-- [ ] **Step 1: Add BGTaskSchedulerPermittedIdentifiers to Info.plist**
+- [ ] **Step 1: Read existing PiggyPulseApp.swift**
+
+```bash
+cat /Volumes/T7/opt/piggy-pulse/piggy-pulse-ios/App/PiggyPulseApp.swift
+```
+
+Note any existing `init()`, scene modifiers, or environment setup that must be preserved in Step 2.
+
+- [ ] **Step 2: Add BGTaskSchedulerPermittedIdentifiers to Info.plist**
 
 Open `PiggyPulse-Info.plist`. Add key `BGTaskSchedulerPermittedIdentifiers` (Array) with one String item: `com.piggypulse.notifications.refresh`.
 
 Or via Xcode: Project → PiggyPulse target → Info tab → add the key.
 
-- [ ] **Step 2: Update PiggyPulseApp.swift**
+- [ ] **Step 3: Update PiggyPulseApp.swift**
+
+Preserve any existing environment setup from Step 1. Add the BGTask registration, background handler, and `scheduleNextBackgroundRefresh` helper. The background handler re-submits the next refresh so the chain continues after each background execution.
 
 ```swift
 import SwiftUI
@@ -654,7 +672,11 @@ struct PiggyPulseApp: App {
 
     init() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.bgTaskIdentifier, using: nil) { task in
-            Self.handleBackgroundRefresh(task: task as! BGAppRefreshTask)
+            guard let refreshTask = task as? BGAppRefreshTask else {
+                task.setTaskCompleted(success: false)
+                return
+            }
+            Self.handleBackgroundRefresh(task: refreshTask)
         }
     }
 
@@ -677,12 +699,16 @@ struct PiggyPulseApp: App {
     }
 
     private static func handleBackgroundRefresh(task: BGAppRefreshTask) {
-        // Note: a fresh AppState is created here intentionally — background tasks run in
-        // a separate execution context and cannot access the live appState from the main scene.
-        // This instance creates its own APIClient and auth tokens from Keychain.
+        // A fresh AppState is created intentionally — background tasks run in a separate
+        // execution context and cannot access the live appState from the main scene.
+        // This instance reads auth tokens from Keychain independently.
         let appState = AppState()
         let taskHandle = Task {
             await appState.scheduleNotifications()
+            // Re-submit so the background refresh chain continues
+            let request = BGAppRefreshTaskRequest(identifier: bgTaskIdentifier)
+            request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 60)
+            try? BGTaskScheduler.shared.submit(request)
             task.setTaskCompleted(success: true)
         }
         task.expirationHandler = {
@@ -693,13 +719,13 @@ struct PiggyPulseApp: App {
 }
 ```
 
-- [ ] **Step 3: Build — expect success**
+- [ ] **Step 4: Build — expect success**
 
 ```bash
 xcodebuild build -scheme PiggyPulse -destination 'platform=iOS Simulator,name=iPhone 16' 2>&1 | grep -E "error:|BUILD SUCCEEDED|BUILD FAILED"
 ```
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add App/PiggyPulseApp.swift PiggyPulse-Info.plist
@@ -822,7 +848,9 @@ private var notificationsCard: some View {
 }
 ```
 
-- [ ] **Step 3: Add the master toggle handler**
+- [ ] **Step 4: Add the master toggle handler**
+
+When enabling, request system authorization. If denied, snap the toggle back to `false` and update `UserDefaults` — the toggle must reflect the real system state. Also re-sync all sub-toggle `@State` values from `UserDefaults` when re-enabling so they're consistent.
 
 ```swift
 private func handleNotificationMasterToggle(_ enabled: Bool) {
@@ -831,7 +859,21 @@ private func handleNotificationMasterToggle(_ enabled: Bool) {
     if enabled {
         Task {
             try? await appState.notificationScheduler.requestAuthorization()
-            await appState.scheduleNotifications()
+            // Check actual system authorization after requesting
+            let settings = await UNUserNotificationCenter.current().notificationSettings()
+            if settings.authorizationStatus == .denied {
+                // System blocked — snap toggle back to off
+                var p = NotificationPreferences()
+                p.isEnabled = false
+                notificationsEnabled = false
+            } else {
+                // Re-sync sub-toggles from UserDefaults in case they changed
+                let p = NotificationPreferences()
+                notificationPeriodStarting = p.periodStarting
+                notificationPeriodSummary = p.periodSummary
+                notificationOverlayLifecycle = p.overlayLifecycle
+                await appState.scheduleNotifications()
+            }
         }
     } else {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -839,7 +881,7 @@ private func handleNotificationMasterToggle(_ enabled: Bool) {
 }
 ```
 
-- [ ] **Step 4: Load notification preferences on appear**
+- [ ] **Step 5: Load notification preferences on appear**
 
 In the `load()` function, after setting `selectedNumberFormat`, add:
 
@@ -851,7 +893,7 @@ notificationPeriodSummary = prefs.periodSummary
 notificationOverlayLifecycle = prefs.overlayLifecycle
 ```
 
-- [ ] **Step 5: Insert notificationsCard into view body**
+- [ ] **Step 6: Insert notificationsCard into view body**
 
 In `body`, after `preferencesCard` and before `appInfoCard`:
 
@@ -859,7 +901,7 @@ In `body`, after `preferencesCard` and before `appInfoCard`:
 notificationsCard
 ```
 
-- [ ] **Step 6: Add UserNotifications import**
+- [ ] **Step 7: Add UserNotifications import**
 
 At the top of `SettingsView.swift`, add:
 
@@ -867,13 +909,13 @@ At the top of `SettingsView.swift`, add:
 import UserNotifications
 ```
 
-- [ ] **Step 7: Build — expect success**
+- [ ] **Step 8: Build — expect success**
 
 ```bash
 xcodebuild build -scheme PiggyPulse -destination 'platform=iOS Simulator,name=iPhone 16' 2>&1 | grep -E "error:|BUILD SUCCEEDED|BUILD FAILED"
 ```
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
 git add Features/Settings/Views/SettingsView.swift
@@ -900,10 +942,10 @@ Expected: all tests pass, no errors.
 2. Log in — system notification permission prompt should appear **exactly once**
 3. Force-quit and relaunch the app — the system prompt must NOT appear again
 4. Open Settings → confirm NOTIFICATIONS card is present with 3 sub-toggles
-5. Confirm sub-toggles are **visible but tappable** (not hidden) when master is on
+5. Toggle master off → confirm sub-toggles are **visible but greyed out** (disabled, not hidden), and pending notifications are cleared
 6. Toggle "Period starting" off → confirm `UserDefaults` key `notifications.periodStarting` is `false` (Xcode debugger: `po UserDefaults.standard.bool(forKey: "notifications.periodStarting")`)
-7. Toggle master off → confirm sub-toggles become **disabled/greyed out** (not hidden), pending notifications cleared
-8. Toggle master back on → confirm sub-toggles become enabled again
+7. Toggle master back on → confirm sub-toggles become enabled again
+8. Deny system permissions (via Simulator Settings), re-enable master toggle → confirm toggle snaps back to off
 
 - [ ] **Step 3: Final commit + push**
 
