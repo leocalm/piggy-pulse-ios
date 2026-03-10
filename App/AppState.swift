@@ -102,6 +102,7 @@ final class AppState: ObservableObject {
         biometricAuthFailed = false
         do {
             try await BiometricHelper.authenticate()
+            lastBackgroundedAt = nil
             isBiometricLocked = false
         } catch {
             biometricAuthFailed = true
@@ -132,6 +133,9 @@ final class AppState: ObservableObject {
             let user: User = try await apiClient.request(.me)
             currentUser = user
             isAuthenticated = true
+            if biometricEnabled {
+                isBiometricLocked = true
+            }
             await loadUserCurrency()
             await scheduleNotifications()
         } catch {

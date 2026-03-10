@@ -28,9 +28,10 @@ struct BiometricLockView: View {
             Color.ppBackground.ignoresSafeArea()
 
             VStack(spacing: PPSpacing.xl) {
-                Image(systemName: "chart.pie.fill")
-                    .font(.system(size: 56))
-                    .foregroundColor(.ppPrimary)
+                Image("piggy-coin-logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
 
                 Text("PiggyPulse")
                     .font(.ppLargeTitle)

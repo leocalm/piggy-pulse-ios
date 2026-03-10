@@ -342,6 +342,9 @@
         }
       }
     },
+    "Authentication failed. Try again." : {
+
+    },
     "Auto-Creation" : {
       "comment" : "Navigation link and screen title for auto-creation of periods",
       "localizations" : {
@@ -1900,6 +1903,12 @@
     "Not set up" : {
 
     },
+    "Notifications" : {
+
+    },
+    "NOTIFICATIONS" : {
+
+    },
     "Number Format" : {
       "comment" : "Settings preferences row label",
       "localizations" : {
@@ -1964,6 +1973,9 @@
 
     },
     "Overlay Details" : {
+
+    },
+    "Overlay lifecycle" : {
 
     },
     "Overlays" : {
@@ -2080,6 +2092,12 @@
           }
         }
       }
+    },
+    "Period starting" : {
+
+    },
+    "Period summary" : {
+
     },
     "Periods" : {
       "comment" : "Tab bar item — budget periods",
@@ -2804,6 +2822,15 @@
       }
     },
     "Welcome to PiggyPulse" : {
+
+    },
+    "When a new period begins" : {
+
+    },
+    "When a period ends" : {
+
+    },
+    "When an overlay starts or ends" : {
 
     },
     "WITH TARGET" : {
