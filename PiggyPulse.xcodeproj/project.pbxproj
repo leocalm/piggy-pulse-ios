@@ -84,6 +84,9 @@
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
 AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* NotificationPreferences.swift */; };
+AA000016000000000000AA16 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015000000000000AA15 /* BiometricHelper.swift */; };
+AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
+AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017000000000000AA17 /* BiometricPreferenceTests.swift */; };
 AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003000000000000AA03 /* NotificationPreferencesTests.swift */; };
 AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011000000000000AA11 /* NotificationScheduler.swift */; };
 AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013000000000000AA13 /* NotificationSchedulerTests.swift */; };
@@ -168,6 +171,9 @@ AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {is
 		65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9AF8DDC560849A681137F2C6 /* Onboarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 AA000001000000000000AA01 /* NotificationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferences.swift; sourceTree = "<group>"; };
+AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
+AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
+AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
 AA000003000000000000AA03 /* NotificationPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesTests.swift; sourceTree = "<group>"; };
 AA000011000000000000AA11 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 AA000013000000000000AA13 /* NotificationSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerTests.swift; sourceTree = "<group>"; };
@@ -272,6 +278,7 @@ AA000007000000000000AA07 /* Frameworks */ = {
 				02F038C12F5984EF008DD1E7 /* ForgotPasswordView.swift */,
 				02F038BF2F5984DC008DD1E7 /* RegisterView.swift */,
 				02218DFA2F589B2700E8DCEF /* LoginView.swift */,
+				AA00001B000000000000AA1B /* BiometricLockView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -280,6 +287,7 @@ AA000007000000000000AA07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				AA00000E000000000000AA0E /* Notifications */,
+				AA000019000000000000AA19 /* Biometrics */,
 				027B34B22F5B74CE00E96DF6 /* Utilities */,
 				02F038C32F598BF9008DD1E7 /* Repositories */,
 				02F038AC2F58DF94008DD1E7 /* Network */,
@@ -645,11 +653,20 @@ AA00000E000000000000AA0E /* Notifications */ = {
 	path = Notifications;
 	sourceTree = "<group>";
 };
+AA000019000000000000AA19 /* Biometrics */ = {
+	isa = PBXGroup;
+	children = (
+		AA000015000000000000AA15 /* BiometricHelper.swift */,
+	);
+	path = Biometrics;
+	sourceTree = "<group>";
+};
 AA000010000000000000AA10 /* PiggyPulseTests */ = {
 	isa = PBXGroup;
 	children = (
 		AA000003000000000000AA03 /* NotificationPreferencesTests.swift */,
 		AA000013000000000000AA13 /* NotificationSchedulerTests.swift */,
+		AA000017000000000000AA17 /* BiometricPreferenceTests.swift */,
 	);
 	path = PiggyPulseTests;
 	sourceTree = "<group>";
@@ -792,6 +809,7 @@ AA000005000000000000AA05 /* PiggyPulseTests */ = {
 				027B34972F5B4EA300E96DF6 /* SettingsView.swift in Sources */,
 				02F038A52F589EC5008DD1E7 /* PiggyPulseApp.swift in Sources */,
 				02F038A62F589EC5008DD1E7 /* LoginView.swift in Sources */,
+				AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */,
 				02F038DA2F59A15D008DD1E7 /* TransactionRepository.swift in Sources */,
 				02F038D82F59A129008DD1E7 /* Transaction.swift in Sources */,
 				02F038A72F589EC5008DD1E7 /* MainTabView.swift in Sources */,
@@ -828,6 +846,7 @@ AA000005000000000000AA05 /* PiggyPulseTests */ = {
 				02ADDBBA819B39E550E59149 /* Onboarding.swift in Sources */,
 				AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */,
 			AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */,
+			AA000016000000000000AA16 /* BiometricHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +856,7 @@ AA000006000000000000AA06 /* Sources */ = {
 	files = (
 		AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */,
 		AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */,
+		AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */,
 	);
 	runOnlyForDeploymentPostprocessing = 0;
 };

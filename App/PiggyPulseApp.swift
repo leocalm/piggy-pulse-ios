@@ -4,6 +4,7 @@ import BackgroundTasks
 @main
 struct PiggyPulseApp: App {
     @StateObject private var appState = AppState()
+    @Environment(\.scenePhase) private var scenePhase
 
     private static let bgTaskIdentifier = "com.piggypulse.notifications.refresh"
 
@@ -25,6 +26,16 @@ struct PiggyPulseApp: App {
                 .task {
                     await appState.checkAuth()
                     scheduleNextBackgroundRefresh()
+                }
+                .onChange(of: scenePhase) { _, phase in
+                    switch phase {
+                    case .background:
+                        appState.lastBackgroundedAt = Date()
+                    case .active:
+                        appState.lockIfNeeded()
+                    default:
+                        break
+                    }
                 }
         }
     }

@@ -1,3 +1,4 @@
+import LocalAuthentication
 import SwiftUI
 import UserNotifications
 
@@ -19,6 +20,10 @@ struct SettingsView: View {
     @State private var notificationPeriodStarting = true
     @State private var notificationPeriodSummary = true
     @State private var notificationOverlayLifecycle = true
+    @State private var biometricEnabled = false
+    @State private var biometricAvailable = false
+    @State private var biometricUnavailableReason = ""
+    @State private var biometricLabel = "Biometrics"
 
     var body: some View {
         ScrollView {
@@ -126,6 +131,27 @@ struct SettingsView: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.ppTextTertiary)
+                }
+            }
+
+            Divider().background(Color.ppBorder)
+
+            VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                Toggle(isOn: $biometricEnabled) {
+                    Text(biometricLabel)
+                        .font(.ppBody)
+                        .foregroundColor(biometricAvailable ? .ppTextPrimary : .ppTextTertiary)
+                }
+                .tint(.ppPrimary)
+                .disabled(!biometricAvailable)
+                .onChange(of: biometricEnabled) { _, enabled in
+                    handleBiometricToggle(enabled)
+                }
+
+                if !biometricAvailable {
+                    Text(biometricUnavailableReason)
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
                 }
             }
         }
@@ -290,6 +316,27 @@ struct SettingsView: View {
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
+    private func handleBiometricToggle(_ enabled: Bool) {
+        if enabled {
+            // Require a successful auth before persisting — confirms enrollment
+            Task {
+                do {
+                    try await BiometricHelper.authenticate(reason: "Confirm to enable biometric unlock")
+                    appState.biometricEnabled = true
+                    biometricEnabled = true
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                } catch {
+                    // Revert toggle if auth failed or was cancelled
+                    biometricEnabled = false
+                    UINotificationFeedbackGenerator().notificationOccurred(.error)
+                }
+            }
+        } else {
+            appState.biometricEnabled = false
+            appState.isBiometricLocked = false
+        }
+    }
+
     private func handleNotificationMasterToggle(_ enabled: Bool) {
         var prefs = NotificationPreferences()
         prefs.isEnabled = enabled
@@ -377,6 +424,22 @@ struct SettingsView: View {
             notificationPeriodStarting = prefs.periodStarting
             notificationPeriodSummary = prefs.periodSummary
             notificationOverlayLifecycle = prefs.overlayLifecycle
+            let biometryType = BiometricHelper.availableBiometryType()
+            switch biometryType {
+            case .faceID:
+                biometricLabel = "Face ID"
+                biometricAvailable = true
+                biometricUnavailableReason = ""
+            case .touchID:
+                biometricLabel = "Touch ID"
+                biometricAvailable = true
+                biometricUnavailableReason = ""
+            default:
+                biometricLabel = "Biometrics"
+                biometricAvailable = false
+                biometricUnavailableReason = "Biometric authentication is not available on this device"
+            }
+            biometricEnabled = appState.biometricEnabled
         } catch {
             errorMessage = String(localized: "Failed to load settings.")
         }

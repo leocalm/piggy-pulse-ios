@@ -24,6 +24,17 @@ final class AppState: ObservableObject {
             .currencySymbol ?? currencyCode
     }
     @Published var appColorScheme: ColorScheme? = nil
+    @Published var isBiometricLocked = false
+    @Published var biometricAuthFailed = false
+    var lastBackgroundedAt: Date?
+
+    var biometricEnabled: Bool {
+        get { BiometricPreferences().isEnabled }
+        set {
+            var prefs = BiometricPreferences()
+            prefs.isEnabled = newValue
+        }
+    }
 
     func loadUserCurrency() async {
         // Try to get from settings profile
@@ -63,6 +74,37 @@ final class AppState: ObservableObject {
         case "light": return .light
         case "dark":  return .dark
         default:      return nil   // "system" / "auto"
+        }
+    }
+
+    /// Pure logic: determines whether the app should lock.
+    /// Static for unit-testability without an AppState instance.
+    nonisolated static func shouldLock(
+        biometricEnabled: Bool,
+        lastBackgroundedAt: Date?,
+        gracePeriod: TimeInterval = 10
+    ) -> Bool {
+        guard biometricEnabled, let backgroundedAt = lastBackgroundedAt else { return false }
+        return Date().timeIntervalSince(backgroundedAt) > gracePeriod
+    }
+
+    /// Called when the app comes to foreground. Locks if grace period elapsed.
+    func lockIfNeeded() {
+        guard !isBiometricLocked else { return }
+        if Self.shouldLock(biometricEnabled: biometricEnabled, lastBackgroundedAt: lastBackgroundedAt) {
+            isBiometricLocked = true
+        }
+    }
+
+    /// Attempts biometric authentication. Sets `isBiometricLocked = false` on success,
+    /// sets `biometricAuthFailed = true` on failure so the UI can show "Try Again".
+    func unlockWithBiometrics() async {
+        biometricAuthFailed = false
+        do {
+            try await BiometricHelper.authenticate()
+            isBiometricLocked = false
+        } catch {
+            biometricAuthFailed = true
         }
     }
 
@@ -123,5 +165,7 @@ final class AppState: ObservableObject {
         currentUser = nil
         selectedPeriod = nil
         isAuthenticated = false
+        isBiometricLocked = false
+        biometricAuthFailed = false
     }
 }
