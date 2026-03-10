@@ -9,6 +9,7 @@ final class PeriodsViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var errorMessage: String?
     @Published var showPastPeriods = false
+    @Published var hasSchedule = false
 
     private let repository: PeriodRepository
 
@@ -30,6 +31,7 @@ final class PeriodsViewModel: ObservableObject {
             errorMessage = String(localized: "Failed to load periods.")
         }
 
+        hasSchedule = await repository.fetchScheduleExists()
         isLoading = false
     }
 }
