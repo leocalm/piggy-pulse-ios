@@ -9,7 +9,7 @@ struct ForgotPasswordView: View {
 
     var body: some View {
         ZStack {
-            Color.ppBackground(colorScheme)
+            Color.ppBackground
                 .ignoresSafeArea()
 
             ScrollView {
@@ -43,11 +43,11 @@ struct ForgotPasswordView: View {
                         }
                     }
                     .padding(PPSpacing.xxl)
-                    .background(Color.ppCard(colorScheme))
+                    .background(Color.ppCard)
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
                     .overlay(
                         RoundedRectangle(cornerRadius: PPRadius.xl)
-                            .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                            .stroke(Color.ppBorder, lineWidth: 1)
                     )
                     .padding(.horizontal, PPSpacing.lg)
 
@@ -71,11 +71,11 @@ struct ForgotPasswordView: View {
             VStack(spacing: PPSpacing.sm) {
                 Text("Password recovery")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
 
                 Text("Enter your email address. If it is registered, you will receive a reset link.")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
             }
 
@@ -89,7 +89,7 @@ struct ForgotPasswordView: View {
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                    Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("name@example.com", text: $viewModel.forgotEmail)
@@ -97,10 +97,10 @@ struct ForgotPasswordView: View {
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
-                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
             }
 
             Button {
@@ -143,11 +143,11 @@ struct ForgotPasswordView: View {
             VStack(spacing: PPSpacing.sm) {
                 Text("Check your email")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
 
                 Text("If an account exists for that email, we've sent a password reset link. Check your inbox and spam folder.")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
             }
 

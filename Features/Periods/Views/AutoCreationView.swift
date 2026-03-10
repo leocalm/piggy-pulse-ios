@@ -38,9 +38,6 @@ struct AutoCreationView: View {
         }
         .background(Color.ppBackground)
         .navigationTitle("Auto-Creation")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Color.ppBackground, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
         .task {
             await loadSchedule()
         }

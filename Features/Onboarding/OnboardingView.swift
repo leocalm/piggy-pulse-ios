@@ -11,7 +11,7 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            Color.ppBackground(colorScheme).ignoresSafeArea()
+            Color.ppBackground.ignoresSafeArea()
 
             if vm.isLoading {
                 ProgressView()
@@ -20,7 +20,7 @@ struct OnboardingView: View {
                     // Header
                     VStack(spacing: PPSpacing.md) {
                         Text("Welcome to PiggyPulse")
-                            .font(.ppTitle).fontWeight(.bold).foregroundColor(.ppTextPrimary(colorScheme))
+                            .font(.ppTitle).fontWeight(.bold).foregroundColor(.ppTextPrimary)
                         OnboardingStepIndicator(currentStep: vm.currentStep)
                     }
                     .padding(.top, PPSpacing.xl)
@@ -49,7 +49,7 @@ struct OnboardingView: View {
                     HStack(spacing: PPSpacing.md) {
                         if vm.currentStep != .period {
                             Button("Back") { vm.goBack() }
-                                .font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
+                                .font(.ppCallout).foregroundColor(.ppTextSecondary)
                                 .frame(minWidth: 80)
                         }
                         Spacer()

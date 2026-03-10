@@ -11,9 +11,9 @@ struct NumberStepperView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: PPSpacing.xs) {
             Text(label)
-                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
             Text(description)
-                .font(.ppCaption).foregroundColor(.ppTextSecondary(colorScheme))
+                .font(.ppCaption).foregroundColor(.ppTextSecondary)
             HStack {
                 Button {
                     if value > min { value -= 1 }
@@ -21,15 +21,15 @@ struct NumberStepperView: View {
                 } label: {
                     Image(systemName: "minus")
                         .frame(width: 36, height: 36)
-                        .background(Color.ppSurface(colorScheme))
+                        .background(Color.ppSurface)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                 }
                 .disabled(value <= min)
-                .foregroundColor(value <= min ? .ppTextTertiary(colorScheme) : .ppTextPrimary(colorScheme))
+                .foregroundColor(value <= min ? .ppTextTertiary : .ppTextPrimary)
 
                 Spacer()
                 Text("\(value)")
-                    .font(.ppTitle3).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                    .font(.ppTitle3).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     .frame(minWidth: 40, alignment: .center)
                 Spacer()
 
@@ -39,16 +39,16 @@ struct NumberStepperView: View {
                 } label: {
                     Image(systemName: "plus")
                         .frame(width: 36, height: 36)
-                        .background(Color.ppSurface(colorScheme))
+                        .background(Color.ppSurface)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                 }
                 .disabled(value >= max)
-                .foregroundColor(value >= max ? .ppTextTertiary(colorScheme) : .ppTextPrimary(colorScheme))
+                .foregroundColor(value >= max ? .ppTextTertiary : .ppTextPrimary)
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 }

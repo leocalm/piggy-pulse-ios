@@ -14,12 +14,12 @@ struct CategoriesStepView: View {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
                 Text("Categories are how you organize your spendings.")
-                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
 
                 // Template selector
                 VStack(alignment: .leading, spacing: PPSpacing.md) {
                     Text("Choose a starting point")
-                        .font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
+                        .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                     ForEach(templates, id: \.title) { item in
                         let isSelected = templateMatches(item.template)
@@ -27,8 +27,8 @@ struct CategoriesStepView: View {
                             HStack(spacing: PPSpacing.md) {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(item.title).font(.ppCallout).fontWeight(.semibold)
-                                        .foregroundColor(isSelected ? .ppPrimary : .ppTextPrimary(colorScheme))
-                                    Text(item.subtitle).font(.ppCaption).foregroundColor(.ppTextSecondary(colorScheme))
+                                        .foregroundColor(isSelected ? .ppPrimary : .ppTextPrimary)
+                                    Text(item.subtitle).font(.ppCaption).foregroundColor(.ppTextSecondary)
                                 }
                                 Spacer()
                                 if isSelected {
@@ -36,10 +36,10 @@ struct CategoriesStepView: View {
                                 }
                             }
                             .padding(PPSpacing.lg)
-                            .background(isSelected ? Color.ppPrimary.opacity(0.08) : Color.ppCard(colorScheme))
+                            .background(isSelected ? Color.ppPrimary.opacity(0.08) : Color.ppCard)
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.md)
-                                .stroke(isSelected ? Color.ppPrimary : Color.ppBorder(colorScheme), lineWidth: isSelected ? 2 : 1))
+                                .stroke(isSelected ? Color.ppPrimary : Color.ppBorder, lineWidth: isSelected ? 2 : 1))
                         }
                         .buttonStyle(.plain)
                     }
@@ -71,16 +71,16 @@ struct CategoriesStepView: View {
     private func categoryRow(_ cat: DraftCategory) -> some View {
         HStack {
             Text(cat.icon).font(.title3)
-            Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
+            Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary)
             Spacer()
             Button(role: .destructive) {
                 vm.categories.removeAll { $0.id == cat.id }
             } label: {
-                Image(systemName: "xmark").font(.caption).foregroundColor(.ppTextTertiary(colorScheme))
+                Image(systemName: "xmark").font(.caption).foregroundColor(.ppTextTertiary)
             }
         }
         .padding(.horizontal, PPSpacing.md).padding(.vertical, PPSpacing.sm)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
     }
 

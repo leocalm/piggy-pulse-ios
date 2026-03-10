@@ -74,9 +74,6 @@ struct PeriodsView: View {
                 Text("This will permanently remove the period.")
             }
             .navigationTitle("Periods")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbarBackground(Color.ppBackground, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showCreateSheet = true } label: { Image(systemName: "plus") }

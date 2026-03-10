@@ -7,8 +7,8 @@ struct CategoryTarget: Codable, Identifiable {
     let categoryType: String
     let categoryIcon: String
     let categoryColor: String
-    let currentTarget: Int32   // cents; 0 means "no target set"
-    let previousTarget: Int32
+    let currentTarget: Int32?   // cents; nil means no target set
+    let previousTarget: Int32?
     let isExcluded: Bool
     let exclusionReason: String?
 }

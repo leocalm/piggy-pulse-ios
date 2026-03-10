@@ -20,13 +20,13 @@ struct PeriodSelectorBar: View {
 
                     if isLoading {
                         ProgressView()
-                            .tint(.ppTextSecondary(colorScheme))
+                            .tint(.ppTextSecondary)
                             .scaleEffect(0.8)
                     } else if let period = appState.selectedPeriod {
                         Text(period.name)
                             .font(.ppCallout)
                             .fontWeight(.semibold)
-                            .foregroundColor(.ppTextPrimary(colorScheme))
+                            .foregroundColor(.ppTextPrimary)
 
                         Spacer()
                         
@@ -39,12 +39,12 @@ struct PeriodSelectorBar: View {
                             HStack(spacing: 4) {
                                 Text(period.dateRangeText)
                                     .font(.ppCaption)
-                                    .foregroundColor(.ppTextSecondary(colorScheme))
+                                    .foregroundColor(.ppTextSecondary)
 
                                 if !period.statusText.isEmpty {
                                     Text("·")
                                         .font(.ppCaption)
-                                        .foregroundColor(.ppTextTertiary(colorScheme))
+                                        .foregroundColor(.ppTextTertiary)
                                     Text(period.statusText)
                                         .font(.ppCaption)
                                         .foregroundColor(statusColor(period.status))
@@ -53,12 +53,12 @@ struct PeriodSelectorBar: View {
                         default:
                             Text("No period selected")
                                 .font(.ppCallout)
-                                .foregroundColor(.ppTextSecondary(colorScheme))
+                                .foregroundColor(.ppTextSecondary)
                         }
                     } else {
                         Text("No period selected")
                             .font(.ppCallout)
-                            .foregroundColor(.ppTextSecondary(colorScheme))
+                            .foregroundColor(.ppTextSecondary)
                     }
                 }
                 .padding(.horizontal, PPSpacing.lg)
@@ -106,9 +106,9 @@ struct PeriodSelectorBar: View {
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
         case .active: return .ppCyan
-        case .ended: return .ppTextTertiary(colorScheme)
+        case .ended: return .ppTextTertiary
         case .upcoming: return .ppAmber
-        case .unknown: return .ppTextTertiary(colorScheme)
+        case .unknown: return .ppTextTertiary
         }
     }
 }
@@ -133,15 +133,15 @@ struct PeriodPickerSheet: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(period.name)
                                         .font(.ppHeadline)
-                                        .foregroundColor(.ppTextPrimary(colorScheme))
+                                        .foregroundColor(.ppTextPrimary)
 
                                     HStack(spacing: 4) {
                                         Text(period.dateRangeText)
                                             .font(.ppCaption)
-                                            .foregroundColor(.ppTextSecondary(colorScheme))
+                                            .foregroundColor(.ppTextSecondary)
                                         Text("·")
                                             .font(.ppCaption)
-                                            .foregroundColor(.ppTextTertiary(colorScheme))
+                                            .foregroundColor(.ppTextTertiary)
                                         Text(period.statusText)
                                             .font(.ppCaption)
                                             .foregroundColor(statusColor(period.status))
@@ -159,7 +159,7 @@ struct PeriodPickerSheet: View {
                             .background(
                                 period.id == selectedPeriod?.id
                                     ? Color.ppPrimary.opacity(0.1)
-                                    : Color.ppCard(colorScheme)
+                                    : Color.ppCard
                             )
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(
@@ -167,7 +167,7 @@ struct PeriodPickerSheet: View {
                                     .stroke(
                                         period.id == selectedPeriod?.id
                                             ? Color.ppPrimary.opacity(0.3)
-                                            : Color.ppBorder(colorScheme),
+                                            : Color.ppBorder,
                                         lineWidth: 1
                                     )
                             )
@@ -176,10 +176,10 @@ struct PeriodPickerSheet: View {
                 }
                 .padding(PPSpacing.lg)
             }
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .navigationTitle("Select Period")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar)
+            .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
         }
     }
@@ -187,9 +187,9 @@ struct PeriodPickerSheet: View {
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
         case .active: return .ppCyan
-        case .ended: return .ppTextTertiary(colorScheme)
+        case .ended: return .ppTextTertiary
         case .upcoming: return .ppAmber
-        case .unknown: return .ppTextTertiary(colorScheme)
+        case .unknown: return .ppTextTertiary
         }
     }
 }

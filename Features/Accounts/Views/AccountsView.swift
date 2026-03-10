@@ -16,15 +16,15 @@ struct AccountsView: View {
         List {
                 if isLoading {
                     Section {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary(colorScheme)); Spacer() }
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
                             .padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground(colorScheme))
+                            .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                     }
                 } else if let error = errorMessage {
                     Section {
                         errorView(error)
-                            .listRowBackground(Color.ppBackground(colorScheme))
+                            .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                     }
                 } else {
@@ -32,7 +32,7 @@ struct AccountsView: View {
                     if let s = summary {
                         Section {
                             summaryCard(s)
-                                .listRowBackground(Color.ppBackground(colorScheme))
+                                .listRowBackground(Color.ppBackground)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
@@ -46,7 +46,7 @@ struct AccountsView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .refreshable { await load() }
             .task(id: appState.selectedPeriod?.id) { await load() }
             .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
@@ -115,7 +115,7 @@ struct AccountsView: View {
                                     Label("Edit", systemImage: "pencil")
                                 }
                             }
-                            .listRowBackground(Color.ppBackground(colorScheme))
+                            .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
@@ -123,12 +123,12 @@ struct AccountsView: View {
                     HStack {
                         Text(title)
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary(colorScheme))
+                            .foregroundColor(.ppTextSecondary)
                             .tracking(1)
                         Spacer()
                         Text(formatCurrency(accounts.reduce(0) { $0 + $1.balance }, code: appState.currencyCode))
                             .font(.ppCaption)
-                            .foregroundColor(.ppTextSecondary(colorScheme))
+                            .foregroundColor(.ppTextSecondary)
                     }
                 }
             }
@@ -155,7 +155,7 @@ struct AccountsView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("NET POSITION")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             Text(formatCurrency(s.totalNetWorth, code: appState.currencyCode))
@@ -166,28 +166,28 @@ struct AccountsView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Assets")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary(colorScheme))
+                        .foregroundColor(.ppTextTertiary)
                     Text(formatCurrency(s.totalAssets, code: appState.currencyCode))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
-                        .foregroundColor(.ppTextPrimary(colorScheme))
+                        .foregroundColor(.ppTextPrimary)
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Liabilities")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary(colorScheme))
+                        .foregroundColor(.ppTextTertiary)
                     Text(formatCurrency(s.totalLiabilities))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
-                        .foregroundColor(.ppTextPrimary(colorScheme))
+                        .foregroundColor(.ppTextPrimary)
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     private func accountRow(_ account: AccountListItem) -> some View {
@@ -199,17 +199,17 @@ struct AccountsView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(account.name)
                     .font(.ppHeadline)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
 
                 HStack(spacing: 4) {
                     Text("\(account.transactionCount) tx")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary(colorScheme))
+                        .foregroundColor(.ppTextSecondary)
 
                     let changePrefix = account.balanceChangeThisPeriod >= 0 ? "+" : ""
                     Text("\(changePrefix)\(formatCurrency(account.balanceChangeThisPeriod, code: appState.currencyCode))")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary(colorScheme))
+                        .foregroundColor(.ppTextTertiary)
                 }
             }
 
@@ -217,18 +217,18 @@ struct AccountsView: View {
 
             Text(formatCurrency(account.balance, code: appState.currencyCode))
                 .font(.ppAmountSmall)
-                .foregroundColor(.ppTextPrimary(colorScheme))
+                .foregroundColor(.ppTextPrimary)
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     private func errorView(_ message: String) -> some View {
         VStack(spacing: PPSpacing.md) {
             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-            Text(message).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
+            Text(message).font(.ppBody).foregroundColor(.ppTextSecondary)
             Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
         }
         .frame(maxWidth: .infinity)

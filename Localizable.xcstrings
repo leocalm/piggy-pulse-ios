@@ -375,6 +375,9 @@
         }
       }
     },
+    "Automatic period generation" : {
+
+    },
     "Back" : {
 
     },
@@ -636,6 +639,7 @@
     },
     "Configure automatic period generation" : {
       "comment" : "Subtitle under Auto-Creation link in Periods",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -668,6 +672,9 @@
       }
     },
     "Continue" : {
+
+    },
+    "Create" : {
 
     },
     "Create an account" : {
@@ -833,6 +840,9 @@
       }
     },
     "Delete \"%@\"?" : {
+
+    },
+    "Delete this period?" : {
 
     },
     "Delete transaction?" : {
@@ -1054,6 +1064,9 @@
         }
       }
     },
+    "Enabled" : {
+
+    },
     "End" : {
       "comment" : "End date column label in Period Detail",
       "localizations" : {
@@ -1192,6 +1205,9 @@
           }
         }
       }
+    },
+    "Failed to delete period." : {
+
     },
     "Failed to disable auto-creation." : {
       "comment" : "Error message when disabling auto-creation fails",
@@ -1756,6 +1772,9 @@
         }
       }
     },
+    "No active period." : {
+
+    },
     "No budget categories yet" : {
       "comment" : "Empty state heading on Category Targets screen",
       "extractionState" : "stale",
@@ -1784,6 +1803,7 @@
     },
     "No current period found." : {
       "comment" : "Empty state when no current budget period exists",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1806,6 +1826,7 @@
     },
     "No past periods." : {
       "comment" : "Empty state when no past budget periods exist",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1875,6 +1896,9 @@
           }
         }
       }
+    },
+    "Not set up" : {
+
     },
     "Number Format" : {
       "comment" : "Settings preferences row label",
@@ -2199,11 +2223,9 @@
     "Save Preferences" : {
 
     },
-    "Save Target" : {
-
-    },
     "SCHEDULE" : {
       "comment" : "Section header in Periods screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2524,6 +2546,9 @@
           }
         }
       }
+    },
+    "This will permanently remove the period." : {
+
     },
     "Timezone" : {
       "comment" : "Settings row label",

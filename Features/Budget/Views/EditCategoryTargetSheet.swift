@@ -36,8 +36,6 @@ struct EditCategoryTargetSheet: View {
                             Text(target.categoryName)
                                 .font(.ppTitle)
                                 .foregroundColor(.ppTextPrimary)
-                            if target.excluded {
-                                .foregroundColor(.ppTextPrimary)
                             if target.isExcluded {
                                 Text("Currently excluded")
                                     .font(.ppCaption)
@@ -157,9 +155,8 @@ struct EditCategoryTargetSheet: View {
                 }
             }
             .onAppear {
-                if target.currentTarget > 0 {
-                    let amount = Double(target.currentTarget) / 100.0
-                    amountText = String(format: "%.2f", amount)
+                if let cents = target.currentTarget, cents > 0 {
+                    amountText = String(format: "%.2f", Double(cents) / 100.0)
                 }
             }
         }
