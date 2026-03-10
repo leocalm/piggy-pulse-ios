@@ -133,9 +133,8 @@ struct LoginView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+            .buttonBorderShape(.capsule)
             .disabled(viewModel.isLoginDisabled)
-            .opacity(viewModel.isLoginDisabled ? 0.6 : 1)
 
             VStack(spacing: PPSpacing.md) {
                 NavigationLink("Forgot password?") {
@@ -214,9 +213,8 @@ struct LoginView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+            .buttonBorderShape(.capsule)
             .disabled(viewModel.is2FADisabled)
-            .opacity(viewModel.is2FADisabled ? 0.6 : 1)
 
             Button("Back to login") {
                 viewModel.needs2FA = false

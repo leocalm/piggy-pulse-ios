@@ -72,7 +72,7 @@ struct AutoCreationView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+            .buttonBorderShape(.capsule)
         }
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
@@ -223,7 +223,7 @@ struct AutoCreationView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.ppPrimary)
-                .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                .buttonBorderShape(.capsule)
                 .disabled(isSaving || namePattern.trimmingCharacters(in: .whitespaces).isEmpty)
 
                 if schedule != nil {

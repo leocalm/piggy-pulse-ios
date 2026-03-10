@@ -123,9 +123,8 @@ struct RegisterView: View {
                             }
                             .buttonStyle(.borderedProminent)
                             .tint(.ppPrimary)
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                            .buttonBorderShape(.capsule)
                             .disabled(viewModel.isRegisterDisabled)
-                            .opacity(viewModel.isRegisterDisabled ? 0.6 : 1)
 
                             HStack(spacing: 4) {
                                 Text("Already have an account?")
