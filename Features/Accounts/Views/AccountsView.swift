@@ -81,7 +81,6 @@ struct AccountsView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .tint(.white)
                 }
             }
     }

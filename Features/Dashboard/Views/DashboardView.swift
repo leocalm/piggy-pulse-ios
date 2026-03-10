@@ -4,6 +4,7 @@ struct DashboardView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: DashboardViewModel
+    @State private var showAddTransaction = false
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: DashboardViewModel(apiClient: apiClient))
@@ -44,6 +45,20 @@ struct DashboardView: View {
             }
             .navigationTitle("Dashboard")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        showAddTransaction = true
+                    } label: {
+                        Image("custom.arrow.left.arrow.right.badge.plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddTransaction) {
+                AddTransactionSheet(onCreated: {})
+                    .environmentObject(appState)
+            }
         }
     }
 

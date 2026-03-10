@@ -4,7 +4,6 @@ struct MainTabView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
     @State private var selectedTab = 0
-    @State private var showAddTransaction = false
     @Environment(\.horizontalSizeClass) var sizeClass
 
     init() {
@@ -19,11 +18,9 @@ struct MainTabView: View {
         TabView(selection: $selectedTab) {
             Tab("Dashboard", systemImage: "square.grid.2x2", value: 0) {
                 DashboardView(apiClient: appState.apiClient)
-                    .overlay(alignment: .bottomTrailing) { addTransactionFAB }
             }
             Tab("Transactions", systemImage: "arrow.left.arrow.right", value: 1) {
                 TransactionsView(apiClient: appState.apiClient)
-                    .overlay(alignment: .bottomTrailing) { addTransactionFAB }
             }
             Tab("Periods", systemImage: "calendar", value: 2) {
                 PeriodsView(apiClient: appState.apiClient)
@@ -38,25 +35,6 @@ struct MainTabView: View {
         .tabBarMinimizeBehavior(.onScrollDown)
         .tint(.ppPrimary)
         .background(Color.ppBackground(colorScheme))
-        .sheet(isPresented: $showAddTransaction) {
-            AddTransactionSheet(onCreated: { selectedTab = 1 })
-                .environmentObject(appState)
-        }
-    }
-
-    private var addTransactionFAB: some View {
-        Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            showAddTransaction = true
-        } label: {
-            Image("custom.arrow.left.arrow.right.badge.plus")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(Color.ppPrimary)
-                .frame(width: 56, height: 56)
-                .glassEffect(.regular, in: Circle())
-        }
-        .padding(.trailing, PPSpacing.lg)
-        .padding(.bottom, PPSpacing.xl)
     }
 
     // MARK: - More Tab

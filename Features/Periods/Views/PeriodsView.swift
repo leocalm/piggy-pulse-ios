@@ -117,7 +117,6 @@ struct PeriodsView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .tint(.white)
                 }
             }
         }
