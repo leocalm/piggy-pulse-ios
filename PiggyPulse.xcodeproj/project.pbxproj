@@ -66,6 +66,7 @@
 		02F038CB2F598F4F008DD1E7 /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */; };
 		02F038CD2F5999B2008DD1E7 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CC2F5999B0008DD1E7 /* Dashboard.swift */; };
 		02F038CF2F599A04008DD1E7 /* DashboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CE2F5999F7008DD1E7 /* DashboardRepository.swift */; };
+		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
 		02F038D12F599A25008DD1E7 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D02F599A21008DD1E7 /* DashboardViewModel.swift */; };
 		02F038D62F599A90008DD1E7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D52F599A8F008DD1E7 /* DashboardView.swift */; };
 		02F038D82F59A129008DD1E7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D72F59A127008DD1E7 /* Transaction.swift */; };
@@ -148,6 +149,7 @@ AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {
 		02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
 		02F038CC2F5999B0008DD1E7 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		02F038CE2F5999F7008DD1E7 /* DashboardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRepository.swift; sourceTree = "<group>"; };
+		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
 		02F038D02F599A21008DD1E7 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		02F038D52F599A8F008DD1E7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		02F038D72F59A127008DD1E7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@ AA000007000000000000AA07 /* Frameworks */ = {
 				02F038D92F59A159008DD1E7 /* TransactionRepository.swift */,
 				02F038CE2F5999F7008DD1E7 /* DashboardRepository.swift */,
 				02F038C42F598C03008DD1E7 /* PeriodRepository.swift */,
+				PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
