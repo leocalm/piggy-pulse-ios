@@ -165,5 +165,7 @@ final class AppState: ObservableObject {
         currentUser = nil
         selectedPeriod = nil
         isAuthenticated = false
+        isBiometricLocked = false
+        biometricAuthFailed = false
     }
 }
