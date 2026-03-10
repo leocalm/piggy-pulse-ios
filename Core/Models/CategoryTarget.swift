@@ -9,6 +9,7 @@ struct CategoryTarget: Codable, Identifiable {
     let categoryColor: String
     let currentTarget: Int32?   // cents; nil means no target set
     let previousTarget: Int32?
+    let spentAmount: Int64?     // cents; actual spending for this category in the period
     let isExcluded: Bool
     let exclusionReason: String?
 }
