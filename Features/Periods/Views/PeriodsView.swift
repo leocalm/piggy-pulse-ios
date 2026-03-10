@@ -2,9 +2,9 @@ import SwiftUI
 
 struct PeriodsView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: PeriodsViewModel
     @State private var showCreateSheet = false
+    @State private var periodToDelete: BudgetPeriod?
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: PeriodsViewModel(apiClient: apiClient))
@@ -12,56 +12,16 @@ struct PeriodsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-               // Schedule section
-                Section {
-                    NavigationLink {
-                        AutoCreationView()
-                            .environmentObject(appState)
-                    } label: {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Auto-Creation")
-                                    .font(.ppHeadline)
-                                    .foregroundColor(.ppTextPrimary)
-                                Text("Configure automatic period generation")
-                                    .font(.ppCaption)
-                                    .foregroundColor(.ppTextSecondary)
-                            }
-                            Spacer()
-                        }
-                        .padding(PPSpacing.lg)
-                        .background(Color.ppCard)
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                } header: {
-                    Text("SCHEDULE")
-                        .font(.ppOverline)
-                        .foregroundColor(.ppTextSecondary)
-                        .tracking(1)
-                }
-
-                if viewModel.isLoading {
-                    Section {
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: PPSpacing.xl) {
+                    if viewModel.isLoading {
                         HStack {
                             Spacer()
                             ProgressView().tint(.ppTextSecondary)
                             Spacer()
                         }
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
-                        .listRowSeparator(.hidden)
-                    }
-                } else if let error = viewModel.errorMessage {
-                    Section {
+                    } else if let error = viewModel.errorMessage {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle")
                                 .font(.system(size: 32))
@@ -77,55 +37,99 @@ struct PeriodsView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground)
-                        .listRowSeparator(.hidden)
+                    } else {
+                        scheduleSection
+                        currentPeriodSection
+                        upcomingSection
+                        pastSection
                     }
-                } else {
-                    // Current Period
-                    currentPeriodSection
-
-                    // Upcoming Periods
-                    upcomingSection
-
-                    // Past Periods
-                    pastSection
                 }
+                .padding(PPSpacing.lg)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
             .background(Color.ppBackground)
-            .refreshable {
-                await viewModel.load()
-            }
-            .task {
-                await viewModel.load()
-            }
+            .refreshable { await viewModel.load() }
+            .task { await viewModel.load() }
             .sheet(isPresented: $showCreateSheet, onDismiss: {
                 Task { await viewModel.load() }
             }) {
-                CreatePeriodSheet {
-                    // No need to reload here, onDismiss handles it
+                CreatePeriodSheet { }
+                    .environmentObject(appState)
+            }
+            .confirmationDialog(
+                "Delete this period?",
+                isPresented: Binding(
+                    get: { periodToDelete != nil },
+                    set: { if !$0 { periodToDelete = nil } }
+                ),
+                titleVisibility: .visible
+            ) {
+                Button("Delete", role: .destructive) {
+                    if let p = periodToDelete {
+                        Task { await deletePeriod(p) }
+                    }
+                    periodToDelete = nil
                 }
-                .environmentObject(appState)
+                Button("Cancel", role: .cancel) { periodToDelete = nil }
+            } message: {
+                Text("This will permanently remove the period.")
             }
             .navigationTitle("Periods")
             .navigationBarTitleDisplayMode(.large)
+            .toolbarBackground(Color.ppBackground, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showCreateSheet = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                    Button { showCreateSheet = true } label: { Image(systemName: "plus") }
                 }
             }
+        }
+    }
+
+    // MARK: - Schedule Section
+
+    private var scheduleSection: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            sectionHeader("SCHEDULE")
+            NavigationLink {
+                AutoCreationView()
+                    .environmentObject(appState)
+            } label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Auto-Creation")
+                            .font(.ppHeadline)
+                            .foregroundColor(.ppTextPrimary)
+                        Text("Automatic period generation")
+                            .font(.ppCaption)
+                            .foregroundColor(.ppTextSecondary)
+                    }
+                    Spacer()
+                    Text(viewModel.hasSchedule ? "Enabled" : "Not set up")
+                        .font(.ppCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(viewModel.hasSchedule ? .ppCyan : .ppAmber)
+                        .padding(.horizontal, PPSpacing.sm)
+                        .padding(.vertical, 4)
+                        .background((viewModel.hasSchedule ? Color.ppCyan : Color.ppAmber).opacity(0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.ppTextTertiary)
+                }
+                .padding(PPSpacing.lg)
+                .background(Color.ppCard)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
         }
     }
 
     // MARK: - Current Period
 
     private var currentPeriodSection: some View {
-        Section {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            sectionHeader("CURRENT PERIOD")
             if let period = viewModel.currentPeriod {
                 NavigationLink {
                     PeriodDetailView(period: period)
@@ -134,44 +138,32 @@ struct PeriodsView: View {
                     periodCard(period, highlight: true)
                 }
                 .buttonStyle(.plain)
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
             } else {
-                VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text("No current period found.")
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(PPSpacing.xl)
-                .background(Color.ppCard)
-                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                .overlay(
-                    RoundedRectangle(cornerRadius: PPRadius.lg)
-                        .stroke(Color.ppPrimary.opacity(0.3), lineWidth: 1)
-                )
-                .listRowBackground(Color.ppBackground)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                Text("No active period.")
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(PPSpacing.lg)
+                    .background(Color.ppCard)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
             }
-        } header: {
-            sectionHeader("CURRENT PERIOD")
         }
     }
 
     // MARK: - Upcoming
 
     private var upcomingSection: some View {
-        Section {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            HStack {
+                sectionHeader("UPCOMING PERIODS")
+                Spacer()
+                countBadge(viewModel.upcomingPeriods.count)
+            }
             if viewModel.upcomingPeriods.isEmpty {
                 Text("No upcoming periods.")
                     .font(.ppCallout)
                     .foregroundColor(.ppTextTertiary)
-                    .padding(.vertical, PPSpacing.md)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: 0, trailing: PPSpacing.lg))
             } else {
                 ForEach(viewModel.upcomingPeriods) { period in
                     NavigationLink {
@@ -181,85 +173,47 @@ struct PeriodsView: View {
                         periodCard(period, highlight: false)
                     }
                     .buttonStyle(.plain)
-                    .swipeActions(edge: .trailing) {
+                    .contextMenu {
                         Button(role: .destructive) {
-                            Task { await deletePeriod(period) }
+                            periodToDelete = period
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
                     }
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                 }
             }
-        } header: {
-            HStack {
-                sectionHeader("UPCOMING PERIODS")
-                Spacer()
-                Text("\(viewModel.upcomingPeriods.count)")
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
-                    .padding(.horizontal, PPSpacing.sm)
-                    .padding(.vertical, 2)
-                    .background(Color.ppCard)
-                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
-            }
         }
-    }
-
-    private func deletePeriod(_ period: BudgetPeriod) async {
-        do {
-            try await appState.apiClient.requestVoid(.deletePeriod(period.id))
-            await viewModel.load()
-        } catch {}
     }
 
     // MARK: - Past
 
     private var pastSection: some View {
-        Section {
-            if viewModel.pastPeriods.isEmpty {
-                Text("No past periods.")
-                    .font(.ppCallout)
-                    .foregroundColor(.ppTextTertiary)
-                    .padding(.vertical, PPSpacing.md)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 0, leading: PPSpacing.lg, bottom: 0, trailing: PPSpacing.lg))
-            } else if viewModel.showPastPeriods {
-                ForEach(viewModel.pastPeriods) { period in
-                    NavigationLink {
-                        PeriodDetailView(period: period)
-                            .environmentObject(appState)
-                    } label: {
-                        periodCard(period, highlight: true)
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            DisclosureGroup(
+                isExpanded: $viewModel.showPastPeriods,
+                content: {
+                    VStack(spacing: PPSpacing.sm) {
+                        ForEach(viewModel.pastPeriods) { period in
+                            NavigationLink {
+                                PeriodDetailView(period: period)
+                                    .environmentObject(appState)
+                            } label: {
+                                periodCard(period, highlight: false)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    .padding(.top, PPSpacing.sm)
+                },
+                label: {
+                    HStack {
+                        sectionHeader("PAST PERIODS")
+                        Spacer()
+                        countBadge(viewModel.pastPeriods.count)
+                    }
                 }
-            }
-        } header: {
-            Button {
-                withAnimation { viewModel.showPastPeriods.toggle() }
-            } label: {
-                HStack {
-                    sectionHeader("PAST PERIODS")
-                    Spacer()
-                    Text("\(viewModel.pastPeriods.count)")
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
-                        .padding(.horizontal, PPSpacing.sm)
-                        .padding(.vertical, 2)
-                        .background(Color.ppCard)
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
-                    Image(systemName: viewModel.showPastPeriods ? "chevron.up" : "chevron.down")
-                        .font(.system(size: 12))
-                        .foregroundColor(.ppTextSecondary)
-                }
-            }
+            )
+            .tint(.ppTextSecondary)
         }
     }
 
@@ -328,6 +282,16 @@ struct PeriodsView: View {
             .tracking(1)
     }
 
+    private func countBadge(_ count: Int) -> some View {
+        Text("\(count)")
+            .font(.ppCaption)
+            .foregroundColor(.ppTextSecondary)
+            .padding(.horizontal, PPSpacing.sm)
+            .padding(.vertical, 2)
+            .background(Color.ppCard)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+    }
+
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
         case .active: return .ppCyan
@@ -335,5 +299,12 @@ struct PeriodsView: View {
         case .upcoming: return .ppAmber
         case .unknown: return .ppTextTertiary
         }
+    }
+
+    private func deletePeriod(_ period: BudgetPeriod) async {
+        do {
+            try await appState.apiClient.requestVoid(.deletePeriod(period.id))
+            await viewModel.load()
+        } catch {}
     }
 }
