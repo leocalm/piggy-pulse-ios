@@ -56,9 +56,9 @@ struct BudgetPlanView: View {
                     }
                 }
 
-                let withTarget = viewModel.targets.filter { !$0.isExcluded && $0.currentTarget > 0 }
+                let withTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) > 0 }
                 let excluded = viewModel.targets.filter { $0.isExcluded }
-                let noTarget = viewModel.targets.filter { !$0.isExcluded && $0.currentTarget == 0 }
+                let noTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) == 0 }
 
                 if !withTarget.isEmpty {
                     Section {
@@ -197,19 +197,19 @@ struct BudgetPlanView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("BUDGET BREAKDOWN")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             VStack(spacing: PPSpacing.md) {
                 breakdownRow("Total Budget", value: burnIn.totalBudget, color: .ppPrimary)
-                breakdownRow("Currently Spent", value: burnIn.spentBudget, color: .ppTextSecondary(colorScheme))
+                breakdownRow("Currently Spent", value: burnIn.spentBudget, color: .ppTextSecondary)
                 breakdownRow("Remaining Budget", value: burnIn.remainingBudget, color: .ppCyan)
             }
 
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.ppBorder(colorScheme))
+                        .fill(Color.ppBorder)
                         .frame(height: 8)
                     RoundedRectangle(cornerRadius: 4)
                         .fill(burnIn.spentPercentage > 1.0 ? Color.ppDestructive : Color.ppPrimary)
@@ -220,7 +220,7 @@ struct BudgetPlanView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
@@ -245,9 +245,9 @@ struct BudgetPlanView: View {
                 Text(target.categoryName)
                     .font(.ppHeadline)
                     .foregroundColor(.ppTextPrimary)
-                Text(formatCurrency(Int64(target.targetValue), code: appState.currencyCode))
+                Text(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))
                     .foregroundColor(.ppTextPrimary)
-                Text(formatCurrency(Int64(target.currentTarget), code: appState.currencyCode))
+                Text(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
             }
@@ -257,7 +257,7 @@ struct BudgetPlanView: View {
                 .foregroundColor(.ppTextTertiary)
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }

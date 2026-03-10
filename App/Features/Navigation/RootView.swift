@@ -9,7 +9,7 @@ struct RootView: View {
             if appState.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.ppBackground(colorScheme))
+                    .background(Color.ppBackground)
             } else if appState.isAuthenticated {
                 if appState.currentUser?.onboardingStatus == "completed" {
                     MainTabView()

@@ -9,7 +9,7 @@ struct SummaryStepView: View {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
                 Text("You're all set — here's what will be configured when you enter PiggyPulse.")
-                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
                     .padding(.horizontal, PPSpacing.xl)
 
                 // Period summary
@@ -22,7 +22,7 @@ struct SummaryStepView: View {
                         labeledRow("If Sunday", vm.sundayBehavior.label)
                     } else {
                         Text("Monthly, starting on the 1st (default)")
-                            .font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
+                            .font(.ppCallout).foregroundColor(.ppTextSecondary)
                     }
                 }
 
@@ -36,10 +36,10 @@ struct SummaryStepView: View {
                         HStack {
                             Text(account.defaultIcon)
                             Text(account.name.isEmpty ? "Unnamed" : account.name)
-                                .font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
+                                .font(.ppCallout).foregroundColor(.ppTextPrimary)
                             Spacer()
                             Text(account.balanceText.isEmpty ? "0.00" : account.balanceText)
-                                .font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
+                                .font(.ppCallout).foregroundColor(.ppTextSecondary)
                         }
                     }
                 }
@@ -51,14 +51,14 @@ struct SummaryStepView: View {
                     if !incoming.isEmpty {
                         Text("Incoming").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTeal)
                         ForEach(incoming) { cat in
-                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme)) }
+                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
                         }
                     }
                     if !outgoing.isEmpty {
                         Text("Outgoing").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppDestructive)
                             .padding(.top, 4)
                         ForEach(outgoing) { cat in
-                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme)) }
+                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
                         }
                     }
                 }
@@ -70,28 +70,28 @@ struct SummaryStepView: View {
     @ViewBuilder
     private func summarySection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.md) {
-            Text(title).font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
+            Text(title).font(.ppTitle3).foregroundColor(.ppTextPrimary)
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 content()
             }
         }
         .padding(PPSpacing.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .overlay(
             VStack {
-                Divider().background(Color.ppBorder(colorScheme))
+                Divider().background(Color.ppBorder)
                 Spacer()
-                Divider().background(Color.ppBorder(colorScheme))
+                Divider().background(Color.ppBorder)
             }
         )
     }
 
     private func labeledRow(_ label: String, _ value: String) -> some View {
         HStack {
-            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary(colorScheme))
+            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary)
             Spacer()
-            Text(value).font(.ppCallout).foregroundColor(.ppTextPrimary(colorScheme))
+            Text(value).font(.ppCallout).foregroundColor(.ppTextPrimary)
         }
     }
 }

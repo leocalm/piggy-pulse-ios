@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 // MARK: - Colors
 
@@ -11,40 +12,44 @@ extension Color {
     static let ppDestructive = Color(red: 0.97, green: 0.32, blue: 0.29)  // #f85149
 
     // Adaptive backgrounds
-    static func ppBackground(_ scheme: ColorScheme) -> Color {
-        scheme == .dark
-            ? Color(red: 0.04, green: 0.05, blue: 0.07)   // #0a0e14
-            : Color(red: 0.95, green: 0.96, blue: 0.97)   // #F2F4F7
-    }
-    static func ppSurface(_ scheme: ColorScheme) -> Color {
-        scheme == .dark
-            ? Color(red: 0.06, green: 0.07, blue: 0.10)   // #0f1319
-            : Color.white
-    }
-    static func ppCard(_ scheme: ColorScheme) -> Color {
-        scheme == .dark
-            ? Color(red: 0.08, green: 0.11, blue: 0.15)   // #151b26
-            : Color.white
-    }
-    static func ppTextPrimary(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white : Color.black
-    }
-    static func ppTextSecondary(_ scheme: ColorScheme) -> Color {
-        scheme == .dark
-            ? Color(red: 0.51, green: 0.55, blue: 0.62)   // #828c9e
-            : Color(red: 0.35, green: 0.38, blue: 0.45)   // #5a6272
-    }
-    static func ppTextTertiary(_ scheme: ColorScheme) -> Color {
-        scheme == .dark
-            ? Color(red: 0.35, green: 0.38, blue: 0.45)   // #5a6272
-            : Color(red: 0.51, green: 0.55, blue: 0.62)   // #828c9e
-    }
-    static func ppBorder(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.06) : Color.black.opacity(0.08)
-    }
-    static func ppBorderHover(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.12) : Color.black.opacity(0.15)
-    }
+    static let ppBackground = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor(red: 0.04, green: 0.05, blue: 0.07, alpha: 1)   // #0a0e14
+            : UIColor(red: 0.95, green: 0.96, blue: 0.97, alpha: 1)   // #F2F4F7
+    })
+    static let ppSurface = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor(red: 0.06, green: 0.07, blue: 0.10, alpha: 1)   // #0f1319
+            : UIColor.white
+    })
+    static let ppCard = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor(red: 0.08, green: 0.11, blue: 0.15, alpha: 1)   // #151b26
+            : UIColor.white
+    })
+    static let ppTextPrimary = Color(UIColor { t in
+        t.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
+    })
+    static let ppTextSecondary = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor(red: 0.51, green: 0.55, blue: 0.62, alpha: 1)   // #828c9e
+            : UIColor(red: 0.35, green: 0.38, blue: 0.45, alpha: 1)   // #5a6272
+    })
+    static let ppTextTertiary = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor(red: 0.35, green: 0.38, blue: 0.45, alpha: 1)   // #5a6272
+            : UIColor(red: 0.51, green: 0.55, blue: 0.62, alpha: 1)   // #828c9e
+    })
+    static let ppBorder = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor.white.withAlphaComponent(0.06)
+            : UIColor.black.withAlphaComponent(0.08)
+    })
+    static let ppBorderHover = Color(UIColor { t in
+        t.userInterfaceStyle == .dark
+            ? UIColor.white.withAlphaComponent(0.12)
+            : UIColor.black.withAlphaComponent(0.15)
+    })
 }
 
 // MARK: - Typography

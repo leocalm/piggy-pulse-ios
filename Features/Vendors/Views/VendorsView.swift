@@ -15,29 +15,29 @@ struct VendorsView: View {
         List {
                 if isLoading {
                     Section {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary(colorScheme)); Spacer() }
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
                             .padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
                             Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else if vendors.isEmpty {
                     Section {
                         VStack(spacing: PPSpacing.lg) {
-                            Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary(colorScheme))
-                            Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
-                            Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary(colorScheme)).multilineTextAlignment(.center)
+                            Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
+                            Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else {
                     Section {
@@ -63,21 +63,21 @@ struct VendorsView: View {
                                 .swipeActions(edge: .leading) {
                                     Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
                                 }
-                                .listRowBackground(Color.ppBackground(colorScheme))
+                                .listRowBackground(Color.ppBackground)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
                     } header: {
                         Text("ALL VENDORS")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary(colorScheme))
+                            .foregroundColor(.ppTextSecondary)
                             .tracking(1)
                     }
                 }
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .refreshable { await load() }
             .task(id: appState.selectedPeriod?.id) { await load() }
             .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
@@ -137,12 +137,12 @@ struct VendorsView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(vendor.name)
                     .font(.ppHeadline)
-                    .foregroundColor(vendor.archived ? .ppTextTertiary(colorScheme) : .ppTextPrimary(colorScheme))
+                    .foregroundColor(vendor.archived ? .ppTextTertiary : .ppTextPrimary)
 
                 if let desc = vendor.description, !desc.isEmpty {
                     Text(desc)
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary(colorScheme))
+                        .foregroundColor(.ppTextSecondary)
                         .lineLimit(1)
                 }
             }
@@ -152,24 +152,24 @@ struct VendorsView: View {
             VStack(alignment: .trailing, spacing: 2) {
                 Text("\(vendor.transactionCount) tx")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
 
                 if vendor.archived {
                     Text("Archived")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary(colorScheme))
+                        .foregroundColor(.ppTextTertiary)
                         .padding(.horizontal, PPSpacing.sm)
                         .padding(.vertical, 2)
-                        .background(Color.ppSurface(colorScheme))
+                        .background(Color.ppSurface)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 }
             }
         }
         .padding(PPSpacing.lg)
         .frame(minHeight: 68)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     private func load() async {

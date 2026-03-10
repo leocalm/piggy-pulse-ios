@@ -9,7 +9,7 @@ struct MainTabView: View {
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
-        appearance.backgroundColor = UIColor(Color.ppBackground(.dark).opacity(0.8))
+        appearance.backgroundColor = UIColor(Color.ppBackground).withAlphaComponent(0.8)
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -34,7 +34,7 @@ struct MainTabView: View {
         }
         .tabBarMinimizeBehavior(.onScrollDown)
         .tint(.ppPrimary)
-        .background(Color.ppBackground(colorScheme))
+        .background(Color.ppBackground)
     }
 
     // MARK: - More Tab
@@ -47,7 +47,7 @@ struct MainTabView: View {
                     VStack(alignment: .leading, spacing: PPSpacing.md) {
                         Text("STRUCTURE")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary(colorScheme))
+                            .foregroundColor(.ppTextSecondary)
                             .tracking(1)
                             .padding(.horizontal, PPSpacing.lg)
 
@@ -71,7 +71,7 @@ struct MainTabView: View {
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                                .stroke(Color.ppBorder, lineWidth: 1)
                         )
                     }
 
@@ -79,7 +79,7 @@ struct MainTabView: View {
                     VStack(alignment: .leading, spacing: PPSpacing.md) {
                         Text("APP")
                             .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary(colorScheme))
+                            .foregroundColor(.ppTextSecondary)
                             .tracking(1)
                             .padding(.horizontal, PPSpacing.lg)
 
@@ -89,7 +89,7 @@ struct MainTabView: View {
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                                .stroke(Color.ppBorder, lineWidth: 1)
                         )
                     }
 
@@ -106,17 +106,17 @@ struct MainTabView: View {
                         }
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.lg)
-                        .background(Color.ppCard(colorScheme))
+                        .background(Color.ppCard)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                                .stroke(Color.ppBorder, lineWidth: 1)
                         )
                     }
                 }
                 .padding(PPSpacing.lg)
             }
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .navigationTitle("More")
         }
     }
@@ -134,15 +134,15 @@ struct MainTabView: View {
             HStack {
                 Label(title, systemImage: icon)
                     .font(.ppBody)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
                 Spacer()
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.ppTextTertiary(colorScheme))
+                    .foregroundColor(.ppTextTertiary)
             }
             .padding(.horizontal, PPSpacing.lg)
             .padding(.vertical, PPSpacing.lg)
-            .background(Color.ppCard(colorScheme))
+            .background(Color.ppCard)
         }
     }
 }

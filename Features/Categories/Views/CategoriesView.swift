@@ -20,11 +20,11 @@ struct CategoriesView: View {
                     Section {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
                             Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else {
                     categorySection("INCOMING", categories: incoming, color: .ppCyan)
@@ -35,7 +35,7 @@ struct CategoriesView: View {
                             if showArchived {
                                 ForEach(archived) { cat in
                                     categoryRow(cat, dimmed: true)
-                                        .listRowBackground(Color.ppBackground(colorScheme))
+                                        .listRowBackground(Color.ppBackground)
                                         .listRowSeparator(.hidden)
                                         .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                 }
@@ -45,13 +45,13 @@ struct CategoriesView: View {
                                 withAnimation { showArchived.toggle() }
                             } label: {
                                 HStack {
-                                    Text("ARCHIVED").font(.ppOverline).foregroundColor(.ppTextSecondary(colorScheme)).tracking(1)
+                                    Text("ARCHIVED").font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
                                     Spacer()
-                                    Text("\(archived.count)").font(.ppCaption).foregroundColor(.ppTextSecondary(colorScheme))
+                                    Text("\(archived.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                                        .background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                                        .background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                                     Image(systemName: showArchived ? "chevron.up" : "chevron.down")
-                                        .font(.system(size: 12)).foregroundColor(.ppTextSecondary(colorScheme))
+                                        .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
                                 }
                             }
                         }
@@ -60,7 +60,7 @@ struct CategoriesView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .refreshable { await load() }
             .task { await load() }
             .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
@@ -126,15 +126,15 @@ struct CategoriesView: View {
                                     Button { editingCategory = cat } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
                                 }
                             }
-                            .listRowBackground(Color.ppBackground(colorScheme))
+                            .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 } header: {
                     HStack {
-                        Text(title).font(.ppOverline).foregroundColor(.ppTextSecondary(colorScheme)).tracking(1)
+                        Text(title).font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
                         Spacer()
-                        Text("\(categories.count)").font(.ppCaption).foregroundColor(.ppTextSecondary(colorScheme))
+                        Text("\(categories.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                     }
                 }
             }
@@ -168,11 +168,11 @@ struct CategoriesView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(cat.name)
                     .font(.ppHeadline)
-                    .foregroundColor(dimmed ? .ppTextTertiary(colorScheme) : .ppTextPrimary(colorScheme))
+                    .foregroundColor(dimmed ? .ppTextTertiary : .ppTextPrimary)
 
                 Text("\(cat.globalTransactionCount) transactions")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
             }
 
             Spacer()
@@ -180,17 +180,17 @@ struct CategoriesView: View {
             if cat.isSystem {
                 Text("System")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextTertiary(colorScheme))
+                    .foregroundColor(.ppTextTertiary)
                     .padding(.horizontal, PPSpacing.sm)
                     .padding(.vertical, 2)
-                    .background(Color.ppSurface(colorScheme))
+                    .background(Color.ppSurface)
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     private func load() async {

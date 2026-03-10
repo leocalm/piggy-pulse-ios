@@ -17,11 +17,11 @@ struct OnboardingStepIndicator: View {
                     } else {
                         Text("\(idx + 1)")
                             .font(.ppCaption).fontWeight(.semibold)
-                            .foregroundColor(isCurrent ? .ppPrimary : .ppTextTertiary(colorScheme))
+                            .foregroundColor(isCurrent ? .ppPrimary : .ppTextTertiary)
                     }
                     Text(step.title)
                         .font(.ppCaption).fontWeight(isCurrent ? .semibold : .regular)
-                        .foregroundColor(isCurrent ? .ppTextPrimary(colorScheme) : .ppTextTertiary(colorScheme))
+                        .foregroundColor(isCurrent ? .ppTextPrimary : .ppTextTertiary)
                         .lineLimit(1)
                 }
                 .padding(.horizontal, PPSpacing.sm)
@@ -29,7 +29,7 @@ struct OnboardingStepIndicator: View {
                 .background(isCurrent ? Color.ppPrimary.opacity(0.15) : Color.clear)
                 .clipShape(Capsule())
                 .overlay(
-                    Capsule().stroke(isCurrent ? Color.ppPrimary : Color.ppBorder(colorScheme), lineWidth: 1)
+                    Capsule().stroke(isCurrent ? Color.ppPrimary : Color.ppBorder, lineWidth: 1)
                 )
 
                 if idx < OnboardingStep.allCases.count - 1 {

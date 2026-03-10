@@ -19,7 +19,7 @@ struct AddVendorSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground(colorScheme).ignoresSafeArea()
+                Color.ppBackground.ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: PPSpacing.xl) {
                         if let error = errorMessage {
@@ -28,36 +28,36 @@ struct AddVendorSheet: View {
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
                             Text("Vendor Details")
-                                .font(.ppTitle3).foregroundColor(.ppTextPrimary(colorScheme))
+                                .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("e.g. Albert Heijn", text: $name)
-                                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                                Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 TextField("Optional description", text: $description)
-                                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
                         }
-                        .padding(PPSpacing.lg).background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
                     }
                     .padding(PPSpacing.xl)
                 }
             }
             .navigationTitle("Add Vendor").navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
@@ -65,7 +65,7 @@ struct AddVendorSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -77,7 +77,7 @@ struct AddVendorSheet: View {
                             Image(systemName: "checkmark")
                         }
                     }
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
                 }

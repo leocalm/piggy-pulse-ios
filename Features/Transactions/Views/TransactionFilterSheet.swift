@@ -39,7 +39,7 @@ struct TransactionFilterSheet: View {
                 if isLoadingOptions {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .tint(.ppTextSecondary(colorScheme))
+                        .tint(.ppTextSecondary)
                 } else {
                     List {
                         if !filterOptions.accounts.isEmpty {
@@ -128,7 +128,7 @@ struct TransactionFilterSheet: View {
         } label: {
             HStack {
                 Text(title)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
                 Spacer()
                 if selected.wrappedValue.contains(id) {
                     Image(systemName: "checkmark")

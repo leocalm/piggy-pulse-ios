@@ -9,7 +9,7 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            Color.ppBackground(colorScheme)
+            Color.ppBackground
                 .ignoresSafeArea()
 
             ScrollView {
@@ -38,7 +38,7 @@ struct LoginView: View {
 
                             Text("Clarity begins with structure.")
                                 .font(.ppCallout)
-                                .foregroundColor(.ppTextSecondary(colorScheme))
+                                .foregroundColor(.ppTextSecondary)
                         }
 
                         if viewModel.needs2FA {
@@ -48,11 +48,11 @@ struct LoginView: View {
                         }
                     }
                     .padding(PPSpacing.xxl)
-                    .background(Color.ppCard(colorScheme))
+                    .background(Color.ppCard)
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
                     .overlay(
                         RoundedRectangle(cornerRadius: PPRadius.xl)
-                            .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                            .stroke(Color.ppBorder, lineWidth: 1)
                     )
                     .padding(.horizontal, PPSpacing.lg)
 
@@ -75,7 +75,7 @@ struct LoginView: View {
         VStack(spacing: PPSpacing.xl) {
             Text("Welcome back")
                 .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary(colorScheme))
+                .foregroundColor(.ppTextPrimary)
 
             if let error = viewModel.errorMessage {
                 Text(error)
@@ -88,7 +88,7 @@ struct LoginView: View {
             VStack(spacing: PPSpacing.lg) {
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                        Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     TextField("you@example.com", text: $viewModel.email)
@@ -96,23 +96,23 @@ struct LoginView: View {
                         .textContentType(.emailAddress)
                         .autocapitalization(.none)
                         .autocorrectionDisabled()
-                        .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                        .font(.ppBody).foregroundColor(.ppTextPrimary)
                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                        .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                 }
 
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                        Text("Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     SecureField("Your password", text: $viewModel.password)
                         .textContentType(.password)
-                        .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                        .font(.ppBody).foregroundColor(.ppTextPrimary)
                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                        .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                 }
             }
 
@@ -148,7 +148,7 @@ struct LoginView: View {
                 HStack(spacing: 4) {
                     Text("Don't have an account?")
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary(colorScheme))
+                        .foregroundColor(.ppTextSecondary)
                     NavigationLink("Sign up") {
                         RegisterView()
                             .environmentObject(appState)
@@ -167,11 +167,11 @@ struct LoginView: View {
             VStack(spacing: PPSpacing.sm) {
                 Text("Two-Factor Authentication")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
 
                 Text("Enter the code from your authenticator app.")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
             }
 
@@ -185,16 +185,16 @@ struct LoginView: View {
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Code").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                    Text("Code").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("123456", text: $viewModel.twoFactorCode)
                     .keyboardType(.numberPad)
                     .textContentType(.oneTimeCode)
-                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
             }
 
             Button {

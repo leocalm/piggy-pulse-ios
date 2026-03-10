@@ -3,7 +3,6 @@ import SwiftUI
 struct CreatePeriodSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) private var colorScheme
 
     // Period Setup
     @State private var startDate = Date()
@@ -52,7 +51,7 @@ struct CreatePeriodSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground(colorScheme)
+                Color.ppBackground
                     .ignoresSafeArea()
 
                 ScrollView {
@@ -80,7 +79,7 @@ struct CreatePeriodSheet: View {
             }
             .navigationTitle("Create Budget Period")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar)
+            .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -89,7 +88,7 @@ struct CreatePeriodSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -98,12 +97,11 @@ struct CreatePeriodSheet: View {
                         if isLoading {
                             ProgressView()
                         } else {
-                            Image(systemName: "checkmark")
+                            Text("Create")
+                                .fontWeight(.semibold)
                         }
                     }
-                    .foregroundColor(.ppTextSecondary(colorScheme))
                     .disabled(isDisabled || isLoading)
-                    .opacity(isDisabled ? 0.6 : 1)
                 }
             }
         }
@@ -116,10 +114,10 @@ struct CreatePeriodSheet: View {
             VStack(alignment: .leading, spacing: PPSpacing.xs) {
                 Text("Period Setup")
                     .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
                 Text("Period boundaries are structural and can reclassify transactions.")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
             }
 
             // Start Date
@@ -128,7 +126,7 @@ struct CreatePeriodSheet: View {
                     Text("Start Date")
                         .font(.ppCallout)
                         .fontWeight(.semibold)
-                        .foregroundColor(.ppTextPrimary(colorScheme))
+                        .foregroundColor(.ppTextPrimary)
                     Text("*")
                         .font(.ppCallout)
                         .foregroundColor(.ppDestructive)
@@ -149,7 +147,7 @@ struct CreatePeriodSheet: View {
                             Text("Duration")
                                 .font(.ppCallout)
                                 .fontWeight(.semibold)
-                                .foregroundColor(.ppTextPrimary(colorScheme))
+                                .foregroundColor(.ppTextPrimary)
                             Text("*")
                                 .font(.ppCallout)
                                 .foregroundColor(.ppDestructive)
@@ -159,7 +157,7 @@ struct CreatePeriodSheet: View {
                             TextField("1", value: $duration, format: .number)
                                 .keyboardType(.numberPad)
                                 .font(.ppBody)
-                                .foregroundColor(.ppTextPrimary(colorScheme))
+                                .foregroundColor(.ppTextPrimary)
 
                             Stepper("", value: $duration, in: 1...365)
                                 .labelsHidden()
@@ -167,11 +165,11 @@ struct CreatePeriodSheet: View {
                         }
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.sm)
-                        .background(Color.ppSurface(colorScheme))
+                        .background(Color.ppSurface)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                         .overlay(
                             RoundedRectangle(cornerRadius: PPRadius.md)
-                                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                                .stroke(Color.ppBorder, lineWidth: 1)
                         )
                     }
 
@@ -180,7 +178,7 @@ struct CreatePeriodSheet: View {
                         Text("Duration Unit")
                             .font(.ppCallout)
                             .fontWeight(.semibold)
-                            .foregroundColor(.ppTextPrimary(colorScheme))
+                            .foregroundColor(.ppTextPrimary)
 
                         Picker("Duration Unit", selection: $durationUnit) {
                             ForEach(DurationUnitOption.allCases, id: \.self) { unit in
@@ -194,11 +192,11 @@ struct CreatePeriodSheet: View {
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                .stroke(Color.ppBorder, lineWidth: 1)
         )
     }
 
@@ -208,7 +206,7 @@ struct CreatePeriodSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("End Rule")
                 .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary(colorScheme))
+                .foregroundColor(.ppTextPrimary)
 
             Picker("End Rule", selection: $endRuleMode) {
                 Text("By Duration").tag(EndRuleMode.byDuration)
@@ -221,14 +219,14 @@ struct CreatePeriodSheet: View {
                 VStack(alignment: .leading, spacing: PPSpacing.xs) {
                     Text("Calculated End Date")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary(colorScheme))
+                        .foregroundColor(.ppTextSecondary)
                     Text(formatDate(calculatedEndDate))
                         .font(.ppHeadline)
-                        .foregroundColor(.ppTextPrimary(colorScheme))
+                        .foregroundColor(.ppTextPrimary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(PPSpacing.lg)
-                .background(Color.ppSurface(colorScheme))
+                .background(Color.ppSurface)
                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
             } else {
                 // Manual end date picker
@@ -237,7 +235,7 @@ struct CreatePeriodSheet: View {
                         Text("Manual End Date")
                             .font(.ppCallout)
                             .fontWeight(.semibold)
-                            .foregroundColor(.ppTextPrimary(colorScheme))
+                            .foregroundColor(.ppTextPrimary)
                         Text("*")
                             .font(.ppCallout)
                             .foregroundColor(.ppDestructive)
@@ -251,11 +249,11 @@ struct CreatePeriodSheet: View {
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                .stroke(Color.ppBorder, lineWidth: 1)
         )
     }
 
@@ -265,26 +263,26 @@ struct CreatePeriodSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("Naming")
                 .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary(colorScheme))
+                .foregroundColor(.ppTextPrimary)
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Period Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
+                    Text("Period Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("e.g. March 2026", text: $name)
-                    .font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                    .font(.ppBody).foregroundColor(.ppTextPrimary)
                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                    .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                .stroke(Color.ppBorder, lineWidth: 1)
         )
     }
 

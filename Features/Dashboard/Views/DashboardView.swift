@@ -37,7 +37,7 @@ struct DashboardView: View {
                 }
                 .padding(PPSpacing.lg)
             }
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .task(id: appState.selectedPeriod?.id) {
                 if let periodId = appState.selectedPeriod?.id {
                     await viewModel.load(periodId: periodId)
@@ -68,7 +68,7 @@ struct DashboardView: View {
         VStack(spacing: PPSpacing.lg) {
             ForEach(0..<3, id: \.self) { _ in
                 RoundedRectangle(cornerRadius: PPRadius.lg)
-                    .fill(Color.ppCard(colorScheme))
+                    .fill(Color.ppCard)
                     .frame(height: 160)
             }
         }
@@ -83,7 +83,7 @@ struct DashboardView: View {
                 .foregroundColor(.ppAmber)
             Text(message)
                 .font(.ppBody)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
                 .multilineTextAlignment(.center)
             Button("Retry") {
                 if let periodId = appState.selectedPeriod?.id {
@@ -103,28 +103,28 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("CURRENT PERIOD")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             // Spent amount
             Text(formatCurrency(burnIn.spentBudget, code: appState.currencyCode))
                 .font(.ppAmount)
-                .foregroundColor(.ppTextPrimary(colorScheme))
+                .foregroundColor(.ppTextPrimary)
 
             Text("of \(formatCurrency(burnIn.totalBudget, code: appState.currencyCode))")
                 .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
 
             // Remaining info
             Text("\(progress.remainingDays) days remaining. \(formatCurrency(burnIn.remainingBudget, code: appState.currencyCode)) remaining in this period.")
                 .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
 
             // Progress bar
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.ppBorder(colorScheme))
+                        .fill(Color.ppBorder)
                         .frame(height: 6)
 
                     RoundedRectangle(cornerRadius: 4)
@@ -138,10 +138,10 @@ struct DashboardView: View {
             let projectedSpend = projectedSpendAmount(burnIn: burnIn, progress: progress)
             Text("Projected spend at current pace: \(formatCurrency(projectedSpend, code: appState.currencyCode))")
                 .font(.ppCaption)
-                .foregroundColor(.ppTextTertiary(colorScheme))
+                .foregroundColor(.ppTextTertiary)
         }
         .padding(PPSpacing.xl)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
@@ -155,23 +155,23 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("SPENDING CONSISTENCY")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             Text("\(stability.withinTolerancePercentage)%")
                 .font(.ppAmount)
-                .foregroundColor(.ppTextPrimary(colorScheme))
+                .foregroundColor(.ppTextPrimary)
 
             Text("\(stability.periodsWithinTolerance) of \(stability.totalClosedPeriods) periods within range")
                 .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
 
             // Period dots
             HStack(spacing: PPSpacing.sm) {
                 ForEach(stability.recentClosedPeriods.indices, id: \.self) { index in
                     let period = stability.recentClosedPeriods[index]
                     Circle()
-                        .fill(period.isOutsideTolerance ? Color.ppTextTertiary(colorScheme) : Color.ppPrimary)
+                        .fill(period.isOutsideTolerance ? Color.ppTextTertiary : Color.ppPrimary)
                         .frame(width: 10, height: 10)
                 }
             }
@@ -180,15 +180,15 @@ struct DashboardView: View {
             let total = stability.recentClosedPeriods.count
             Text("\(outsideCount) of the last \(total) closed periods were outside tolerance.")
                 .font(.ppCaption)
-                .foregroundColor(.ppTextTertiary(colorScheme))
+                .foregroundColor(.ppTextTertiary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                .stroke(Color.ppBorder, lineWidth: 1)
         )
     }
 
@@ -198,7 +198,7 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("NET POSITION")
                 .font(.ppOverline)
-                .foregroundColor(.ppTextSecondary(colorScheme))
+                .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             Text(formatCurrency(net.totalNetPosition, code: appState.currencyCode))
@@ -209,14 +209,14 @@ struct DashboardView: View {
                 let changePrefix = net.changeThisPeriod >= 0 ? "+" : ""
                 Text("\(changePrefix)\(formatCurrency(net.changeThisPeriod, code: appState.currencyCode)) this period")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
 
                 Text("·")
-                    .foregroundColor(.ppTextTertiary(colorScheme))
+                    .foregroundColor(.ppTextTertiary)
 
                 Text("Across \(net.accountCount) accounts")
                     .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
             }
 
             // Balance breakdown bar
@@ -247,14 +247,14 @@ struct DashboardView: View {
             // Breakdown text
             Text("Liquid \(formatCurrency(net.liquidBalance, code: appState.currencyCode)) · Protected \(formatCurrency(net.protectedBalance, code: appState.currencyCode)) · Debt \(formatCurrency(net.debtBalance, code: appState.currencyCode))")
                 .font(.ppCaption)
-                .foregroundColor(.ppTextTertiary(colorScheme))
+                .foregroundColor(.ppTextTertiary)
         }
         .padding(PPSpacing.xl)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(Color.ppBorder(colorScheme), lineWidth: 1)
+                .stroke(Color.ppBorder, lineWidth: 1)
         )
     }
 

@@ -18,29 +18,29 @@ struct OverlaysView: View {
         List {
                 if isLoading {
                     Section {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary(colorScheme)); Spacer() }
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
                             .padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
+                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
                             Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else if overlays.isEmpty {
                     Section {
                         VStack(spacing: PPSpacing.lg) {
-                            Image(systemName: "square.stack").font(.system(size: 40)).foregroundColor(.ppTextTertiary(colorScheme))
-                            Text("No overlays yet").font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
-                            Text("Tap + to create your first overlay.").font(.ppCallout).foregroundColor(.ppTextTertiary(colorScheme)).multilineTextAlignment(.center)
+                            Image(systemName: "square.stack").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
+                            Text("No overlays yet").font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Text("Tap + to create your first overlay.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground(colorScheme)).listRowSeparator(.hidden)
+                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else {
                     // Active
@@ -55,7 +55,7 @@ struct OverlaysView: View {
                             if showPast {
                                 ForEach(past) { overlay in
                                     overlayCard(overlay)
-                                        .listRowBackground(Color.ppBackground(colorScheme))
+                                        .listRowBackground(Color.ppBackground)
                                         .listRowSeparator(.hidden)
                                         .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                 }
@@ -65,13 +65,13 @@ struct OverlaysView: View {
                                 withAnimation { showPast.toggle() }
                             } label: {
                                 HStack {
-                                    Text("PAST OVERLAYS").font(.ppOverline).foregroundColor(.ppTextSecondary(colorScheme)).tracking(1)
+                                    Text("PAST OVERLAYS").font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
                                     Spacer()
-                                    Text("\(past.count)").font(.ppCaption).foregroundColor(.ppTextSecondary(colorScheme))
+                                    Text("\(past.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                                        .background(Color.ppCard(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+                                        .background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                                     Image(systemName: showPast ? "chevron.up" : "chevron.down")
-                                        .font(.system(size: 12)).foregroundColor(.ppTextSecondary(colorScheme))
+                                        .font(.system(size: 12)).foregroundColor(.ppTextSecondary)
                                 }
                             }
                         }
@@ -80,7 +80,7 @@ struct OverlaysView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color.ppBackground(colorScheme))
+            .background(Color.ppBackground)
             .refreshable { await load() }
             .task { await load() }
             .navigationTitle("Overlays")
@@ -117,17 +117,17 @@ struct OverlaysView: View {
                 Section {
                     ForEach(items) { overlay in
                         overlayCard(overlay)
-                            .listRowBackground(Color.ppBackground(colorScheme))
+                            .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 } header: {
                     HStack {
-                        Text(title).font(.ppOverline).foregroundColor(.ppTextSecondary(colorScheme)).tracking(1)
+                        Text(title).font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
                         Spacer()
                         Text("\(items.count)").font(.ppCaption).foregroundColor(.white)
                             .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                            .background(badge ? Color.ppPrimary : Color.ppCard(colorScheme))
+                            .background(badge ? Color.ppPrimary : Color.ppCard)
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     }
                 }
@@ -144,7 +144,7 @@ struct OverlaysView: View {
                 }
                 Text(overlay.name)
                     .font(.ppHeadline)
-                    .foregroundColor(.ppTextPrimary(colorScheme))
+                    .foregroundColor(.ppTextPrimary)
                 Spacer()
 
                 // Status badges
@@ -152,23 +152,23 @@ struct OverlaysView: View {
                     statusBadge(overlay.status)
                     Text(overlay.inclusionMode.uppercased())
                         .font(.system(size: 10, weight: .bold))
-                        .foregroundColor(.ppTextSecondary(colorScheme))
+                        .foregroundColor(.ppTextSecondary)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color.ppSurface(colorScheme))
+                        .background(Color.ppSurface)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                 }
             }
 
             // Date range
             HStack(spacing: 4) {
-                Image(systemName: "calendar").font(.system(size: 12)).foregroundColor(.ppTextTertiary(colorScheme))
+                Image(systemName: "calendar").font(.system(size: 12)).foregroundColor(.ppTextTertiary)
                 Text(formatDateRange(overlay.startDate, overlay.endDate))
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
 
                 if overlay.status == .active {
-                    Text("·").foregroundColor(.ppTextTertiary(colorScheme))
+                    Text("·").foregroundColor(.ppTextTertiary)
                     Text("\(overlay.daysRemaining) days left")
                         .font(.ppCaption)
                         .foregroundColor(.ppAmber)
@@ -180,15 +180,15 @@ struct OverlaysView: View {
                 HStack {
                     Text(formatCurrency(overlay.spentAmount, code: appState.currencyCode))
                         .font(.ppAmountSmall)
-                        .foregroundColor(.ppTextPrimary(colorScheme))
+                        .foregroundColor(.ppTextPrimary)
                     Text("/ \(formatCurrency(cap, code: appState.currencyCode))")
                         .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary(colorScheme))
+                        .foregroundColor(.ppTextSecondary)
                 }
 
                 GeometryReader { geo in
                     ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 3).fill(Color.ppBorder(colorScheme)).frame(height: 4)
+                        RoundedRectangle(cornerRadius: 3).fill(Color.ppBorder).frame(height: 4)
                         RoundedRectangle(cornerRadius: 3)
                             .fill(overlay.spentPercentage > 1.0 ? Color.ppDestructive : Color.ppCyan)
                             .frame(width: geo.size.width * min(overlay.spentPercentage, 1.0), height: 4)
@@ -199,7 +199,7 @@ struct OverlaysView: View {
                 if let remaining = overlay.remainingAmount {
                     Text("\(formatCurrency(remaining)) remaining")
                         .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary(colorScheme))
+                        .foregroundColor(.ppTextTertiary)
                 }
             }
 
@@ -207,14 +207,14 @@ struct OverlaysView: View {
             HStack {
                 Text("\(overlay.transactionCount) transactions")
                     .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
                 Spacer()
             }
         }
         .padding(PPSpacing.lg)
-        .background(Color.ppCard(colorScheme))
+        .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
         .contextMenu {
             Button {
                 overlayToEdit = overlay
@@ -256,8 +256,8 @@ struct OverlaysView: View {
         switch status {
         case .active: return .ppCyan
         case .upcoming: return .ppAmber
-        case .ended: return .ppTextTertiary(colorScheme)
-        case .unknown: return .ppTextTertiary(colorScheme)
+        case .ended: return .ppTextTertiary
+        case .unknown: return .ppTextTertiary
         }
     }
 
