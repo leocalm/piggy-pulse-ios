@@ -5,9 +5,7 @@ import LocalAuthentication
 struct BiometricLockView: View {
     @EnvironmentObject var appState: AppState
 
-    private var biometryType: LABiometryType {
-        BiometricHelper.availableBiometryType()
-    }
+    private let biometryType: LABiometryType = BiometricHelper.availableBiometryType()
 
     private var iconName: String {
         switch biometryType {
@@ -46,7 +44,6 @@ struct BiometricLockView: View {
                 } label: {
                     Label(unlockLabel, systemImage: iconName)
                         .font(.ppHeadline)
-                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.lg)
                 }
@@ -66,4 +63,9 @@ struct BiometricLockView: View {
         .task { await appState.unlockWithBiometrics() }
         .animation(.easeInOut(duration: 0.2), value: appState.biometricAuthFailed)
     }
+}
+
+#Preview {
+    BiometricLockView()
+        .environmentObject(AppState())
 }
