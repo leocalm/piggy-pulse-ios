@@ -11,6 +11,11 @@ final class BiometricPreferenceTests: XCTestCase {
         defaults.removePersistentDomain(forName: "test-biometric")
     }
 
+    override func tearDown() {
+        defaults.removePersistentDomain(forName: "test-biometric")
+        super.tearDown()
+    }
+
     func testDefaultIsDisabled() {
         let prefs = BiometricPreferences(defaults: defaults)
         XCTAssertFalse(prefs.isEnabled)

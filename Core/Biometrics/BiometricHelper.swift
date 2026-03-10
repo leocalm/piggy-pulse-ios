@@ -1,4 +1,5 @@
 // Core/Biometrics/BiometricHelper.swift
+import Foundation
 import LocalAuthentication
 
 /// Persists the user's biometric lock preference.
@@ -10,8 +11,12 @@ struct BiometricPreferences {
     }
 
     var isEnabled: Bool {
-        get { defaults.object(forKey: "biometricEnabled") as? Bool ?? false }
-        set { defaults.set(newValue, forKey: "biometricEnabled") }
+        get { defaults.object(forKey: Key.enabled) as? Bool ?? false }
+        set { defaults.set(newValue, forKey: Key.enabled) }
+    }
+
+    private enum Key {
+        static let enabled = "biometrics.enabled"
     }
 }
 
