@@ -120,9 +120,8 @@ struct ForgotPasswordView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.ppPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+            .buttonBorderShape(.capsule)
             .disabled(viewModel.isForgotDisabled)
-            .opacity(viewModel.isForgotDisabled ? 0.6 : 1)
 
             Button("Back to login") {
                 dismiss()
@@ -154,12 +153,11 @@ struct ForgotPasswordView: View {
             Button("Back to login") {
                 dismiss()
             }
-            .font(.ppHeadline)
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(.ppPrimary)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, PPSpacing.md)
-            .background(Color.ppPrimary)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+            .controlSize(.large)
         }
     }
 }
