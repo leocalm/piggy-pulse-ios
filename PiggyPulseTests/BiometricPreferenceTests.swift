@@ -36,3 +36,42 @@ final class BiometricPreferenceTests: XCTestCase {
         XCTAssertFalse(prefs2.isEnabled)
     }
 }
+
+final class LockGracePeriodTests: XCTestCase {
+
+    func testNoLockWhenBiometricDisabled() {
+        let shouldLock = AppState.shouldLock(
+            biometricEnabled: false,
+            lastBackgroundedAt: Date(timeIntervalSinceNow: -20),
+            gracePeriod: 10
+        )
+        XCTAssertFalse(shouldLock)
+    }
+
+    func testNoLockWithinGracePeriod() {
+        let shouldLock = AppState.shouldLock(
+            biometricEnabled: true,
+            lastBackgroundedAt: Date(timeIntervalSinceNow: -5),
+            gracePeriod: 10
+        )
+        XCTAssertFalse(shouldLock)
+    }
+
+    func testLocksAfterGracePeriod() {
+        let shouldLock = AppState.shouldLock(
+            biometricEnabled: true,
+            lastBackgroundedAt: Date(timeIntervalSinceNow: -11),
+            gracePeriod: 10
+        )
+        XCTAssertTrue(shouldLock)
+    }
+
+    func testNoLockIfNeverBackgrounded() {
+        let shouldLock = AppState.shouldLock(
+            biometricEnabled: true,
+            lastBackgroundedAt: nil,
+            gracePeriod: 10
+        )
+        XCTAssertFalse(shouldLock)
+    }
+}
