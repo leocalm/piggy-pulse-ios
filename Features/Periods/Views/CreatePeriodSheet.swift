@@ -3,7 +3,6 @@ import SwiftUI
 struct CreatePeriodSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) private var colorScheme
 
     // Period Setup
     @State private var startDate = Date()

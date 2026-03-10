@@ -305,6 +305,8 @@ struct PeriodsView: View {
         do {
             try await appState.apiClient.requestVoid(.deletePeriod(period.id))
             await viewModel.load()
-        } catch {}
+        } catch {
+            viewModel.errorMessage = String(localized: "Failed to delete period.")
+        }
     }
 }

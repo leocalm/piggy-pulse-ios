@@ -21,9 +21,11 @@ final class PeriodsViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        do {
-            let all = try await repository.fetchPeriods()
+        async let periodsTask = repository.fetchPeriods()
+        async let scheduleTask = repository.fetchScheduleExists()
 
+        do {
+            let all = try await periodsTask
             currentPeriod = all.first(where: { $0.status == .active })
             upcomingPeriods = all.filter { $0.status == .upcoming }
             pastPeriods = all.filter { $0.status == .ended }.reversed()
@@ -31,7 +33,8 @@ final class PeriodsViewModel: ObservableObject {
             errorMessage = String(localized: "Failed to load periods.")
         }
 
-        hasSchedule = await repository.fetchScheduleExists()
+        hasSchedule = await scheduleTask
+
         isLoading = false
     }
 }
