@@ -785,6 +785,7 @@ AA000005000000000000AA05 /* PiggyPulseTests */ = {
 				027B34A72F5B647C00E96DF6 /* EditProfileSheet.swift in Sources */,
 				02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */,
 				02F038C52F598C04008DD1E7 /* PeriodRepository.swift in Sources */,
+				O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */,
 				02F038A42F589EC5008DD1E7 /* AppState.swift in Sources */,
 				027B347F2F5B466E00E96DF6 /* AutoCreationView.swift in Sources */,
 				02F038E22F59A1CD008DD1E7 /* TransactionsView.swift in Sources */,
