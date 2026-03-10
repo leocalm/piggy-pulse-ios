@@ -393,7 +393,7 @@ final class NotificationSchedulerTests: XCTestCase {
 xcodebuild test -scheme PiggyPulse -destination 'platform=iOS Simulator,name=iPhone 16' -only-testing PiggyPulseTests/NotificationSchedulerTests 2>&1 | tail -20
 ```
 
-- [ ] **Step 2b: Confirm BudgetPeriod computed date properties exist**
+- [ ] **Step 3: Confirm BudgetPeriod computed date properties exist**
 
 ```bash
 grep "startDateFormatted\|endDateFormatted" /Volumes/T7/opt/piggy-pulse/piggy-pulse-ios/Core/Models/BudgetPeriod.swift
@@ -401,7 +401,7 @@ grep "startDateFormatted\|endDateFormatted" /Volumes/T7/opt/piggy-pulse/piggy-pu
 
 Expected: two computed properties returning `Date?`. The scheduler uses these. If they are missing, add them to `BudgetPeriod.swift` before creating the scheduler.
 
-- [ ] **Step 3: Create NotificationCenterProtocol**
+- [ ] **Step 4: Create NotificationCenterProtocol**
 
 Add to top of `Core/Notifications/NotificationScheduler.swift`:
 
@@ -422,7 +422,7 @@ protocol NotificationCenterProtocol {
 extension UNUserNotificationCenter: NotificationCenterProtocol {}
 ```
 
-- [ ] **Step 4: Create NotificationScheduler actor**
+- [ ] **Step 5: Create NotificationScheduler actor**
 
 Append to same file:
 
@@ -528,7 +528,7 @@ actor NotificationScheduler {
 }
 ```
 
-- [ ] **Step 5: Check DateFormatter.apiDate exists**
+- [ ] **Step 6: Check DateFormatter.apiDate exists**
 
 Search for `apiDate` in the codebase:
 
@@ -552,17 +552,17 @@ extension DateFormatter {
 }
 ```
 
-- [ ] **Step 6: Run tests — expect PASS**
+- [ ] **Step 7: Run tests — expect PASS**
 
 ```bash
 xcodebuild test -scheme PiggyPulse -destination 'platform=iOS Simulator,name=iPhone 16' -only-testing PiggyPulseTests/NotificationSchedulerTests 2>&1 | grep -E "PASS|FAIL|error:"
 ```
 
-- [ ] **Step 7: Add files to Xcode project**
+- [ ] **Step 8: Add files to Xcode project**
 
 Add `Core/Notifications/NotificationScheduler.swift` to PiggyPulse target. Add test file to PiggyPulseTests target.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
 git add Core/Notifications/NotificationScheduler.swift PiggyPulseTests/NotificationSchedulerTests.swift
@@ -706,7 +706,7 @@ struct PiggyPulseApp: App {
         let taskHandle = Task {
             await appState.scheduleNotifications()
             // Re-submit so the background refresh chain continues
-            let request = BGAppRefreshTaskRequest(identifier: bgTaskIdentifier)
+            let request = BGAppRefreshTaskRequest(identifier: Self.bgTaskIdentifier)
             request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 60)
             try? BGTaskScheduler.shared.submit(request)
             task.setTaskCompleted(success: true)
