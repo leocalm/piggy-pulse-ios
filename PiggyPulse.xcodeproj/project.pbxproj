@@ -85,6 +85,8 @@
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
 AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* NotificationPreferences.swift */; };
 AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003000000000000AA03 /* NotificationPreferencesTests.swift */; };
+AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011000000000000AA11 /* NotificationScheduler.swift */; };
+AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013000000000000AA13 /* NotificationSchedulerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +169,8 @@ AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {
 		9AF8DDC560849A681137F2C6 /* Onboarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 AA000001000000000000AA01 /* NotificationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferences.swift; sourceTree = "<group>"; };
 AA000003000000000000AA03 /* NotificationPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesTests.swift; sourceTree = "<group>"; };
+AA000011000000000000AA11 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+AA000013000000000000AA13 /* NotificationSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerTests.swift; sourceTree = "<group>"; };
 AA000008000000000000AA08 /* PiggyPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiggyPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -636,6 +640,7 @@ AA00000E000000000000AA0E /* Notifications */ = {
 	isa = PBXGroup;
 	children = (
 		AA000001000000000000AA01 /* NotificationPreferences.swift */,
+		AA000011000000000000AA11 /* NotificationScheduler.swift */,
 	);
 	path = Notifications;
 	sourceTree = "<group>";
@@ -644,6 +649,7 @@ AA000010000000000000AA10 /* PiggyPulseTests */ = {
 	isa = PBXGroup;
 	children = (
 		AA000003000000000000AA03 /* NotificationPreferencesTests.swift */,
+		AA000013000000000000AA13 /* NotificationSchedulerTests.swift */,
 	);
 	path = PiggyPulseTests;
 	sourceTree = "<group>";
@@ -820,6 +826,7 @@ AA000005000000000000AA05 /* PiggyPulseTests */ = {
 				6EF02EAE215F5094A4EE7EF1 /* SummaryStepView.swift in Sources */,
 				02ADDBBA819B39E550E59149 /* Onboarding.swift in Sources */,
 				AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */,
+			AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,6 +835,7 @@ AA000006000000000000AA06 /* Sources */ = {
 	buildActionMask = 2147483647;
 	files = (
 		AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */,
+		AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */,
 	);
 	runOnlyForDeploymentPostprocessing = 0;
 };
