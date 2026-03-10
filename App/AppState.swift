@@ -5,6 +5,9 @@ internal import Combine
 final class AppState: ObservableObject {
     let tokenManager: TokenManager
     let apiClient: APIClient
+    let periodRepository: PeriodRepository
+    let overlayRepository: OverlayRepository
+    let notificationScheduler: NotificationScheduler
 
     @Published var isAuthenticated = false
     @Published var currentUser: User?
@@ -67,6 +70,9 @@ final class AppState: ObservableObject {
         let tm = TokenManager()
         self.tokenManager = tm
         self.apiClient = APIClient(tokenManager: tm)
+        self.periodRepository = PeriodRepository(apiClient: apiClient)
+        self.overlayRepository = OverlayRepository(apiClient: apiClient)
+        self.notificationScheduler = NotificationScheduler()
         self.isAuthenticated = tm.isAuthenticated
         loadTheme()
     }
@@ -85,6 +91,7 @@ final class AppState: ObservableObject {
             currentUser = user
             isAuthenticated = true
             await loadUserCurrency()
+            await scheduleNotifications()
         } catch {
             tokenManager.clearTokens()
             isAuthenticated = false
@@ -93,6 +100,17 @@ final class AppState: ObservableObject {
         isLoading = false
         loadTheme()
     }
+    func scheduleNotifications() async {
+        do {
+            async let periodsTask = periodRepository.fetchPeriods()
+            async let overlaysTask = overlayRepository.fetchOverlays()
+            let (periods, overlays) = try await (periodsTask, overlaysTask)
+            try await notificationScheduler.scheduleAll(periods: periods, overlays: overlays)
+        } catch {
+            // Notifications are best-effort; do not surface errors to user
+        }
+    }
+
     func logout() async {
         if let refreshToken = tokenManager.getRefreshToken() {
             struct RevokeRequest: Encodable {

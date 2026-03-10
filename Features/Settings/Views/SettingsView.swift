@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
@@ -14,6 +15,10 @@ struct SettingsView: View {
     @State private var selectedNumberFormat = "1,234.56"
     @State private var isSavingPreferences = false
     @State private var preferencesDirty = false
+    @State private var notificationsEnabled = true
+    @State private var notificationPeriodStarting = true
+    @State private var notificationPeriodSummary = true
+    @State private var notificationOverlayLifecycle = true
 
     var body: some View {
         ScrollView {
@@ -39,6 +44,9 @@ struct SettingsView: View {
 
                         // Preferences card
                         preferencesCard
+
+                        // Notifications card
+                        notificationsCard
 
                         // App info
                         appInfoCard
@@ -200,6 +208,115 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Notifications
+
+    private var notificationsCard: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.lg) {
+            Text("NOTIFICATIONS")
+                .font(.ppOverline)
+                .foregroundColor(.ppTextSecondary)
+                .tracking(1)
+
+            Toggle(isOn: $notificationsEnabled) {
+                Text("Notifications")
+                    .font(.ppBody)
+                    .foregroundColor(.ppTextPrimary)
+            }
+            .tint(.ppPrimary)
+            .onChange(of: notificationsEnabled) { _, enabled in
+                handleNotificationMasterToggle(enabled)
+            }
+
+            Divider().background(Color.ppBorder)
+
+            Toggle(isOn: $notificationPeriodStarting) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Period starting")
+                        .font(.ppBody)
+                        .foregroundColor(.ppTextPrimary)
+                    Text("When a new period begins")
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
+            }
+            .tint(.ppPrimary)
+            .disabled(!notificationsEnabled)
+            .onChange(of: notificationPeriodStarting) { _, v in
+                var prefs = NotificationPreferences()
+                prefs.periodStarting = v
+                Task { await appState.scheduleNotifications() }
+            }
+
+            Toggle(isOn: $notificationPeriodSummary) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Period summary")
+                        .font(.ppBody)
+                        .foregroundColor(.ppTextPrimary)
+                    Text("When a period ends")
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
+            }
+            .tint(.ppPrimary)
+            .disabled(!notificationsEnabled)
+            .onChange(of: notificationPeriodSummary) { _, v in
+                var prefs = NotificationPreferences()
+                prefs.periodSummary = v
+                Task { await appState.scheduleNotifications() }
+            }
+
+            Toggle(isOn: $notificationOverlayLifecycle) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Overlay lifecycle")
+                        .font(.ppBody)
+                        .foregroundColor(.ppTextPrimary)
+                    Text("When an overlay starts or ends")
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
+            }
+            .tint(.ppPrimary)
+            .disabled(!notificationsEnabled)
+            .onChange(of: notificationOverlayLifecycle) { _, v in
+                var prefs = NotificationPreferences()
+                prefs.overlayLifecycle = v
+                Task { await appState.scheduleNotifications() }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(PPSpacing.xl)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private func handleNotificationMasterToggle(_ enabled: Bool) {
+        var prefs = NotificationPreferences()
+        prefs.isEnabled = enabled
+        if enabled {
+            Task {
+                try? await appState.notificationScheduler.requestAuthorization()
+                // Check actual system authorization after requesting
+                let settings = await UNUserNotificationCenter.current().notificationSettings()
+                if settings.authorizationStatus == .denied {
+                    // System blocked — snap toggle back to off
+                    var p = NotificationPreferences()
+                    p.isEnabled = false
+                    notificationsEnabled = false
+                } else {
+                    // Re-sync sub-toggles from UserDefaults in case they changed
+                    let p = NotificationPreferences()
+                    notificationPeriodStarting = p.periodStarting
+                    notificationPeriodSummary = p.periodSummary
+                    notificationOverlayLifecycle = p.overlayLifecycle
+                    await appState.scheduleNotifications()
+                }
+            }
+        } else {
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        }
+    }
+
     // MARK: - App Info
 
     private var appInfoCard: some View {
@@ -255,6 +372,11 @@ struct SettingsView: View {
             selectedTheme = pr.theme == "auto" ? "system" : pr.theme
             selectedDateFormat = pr.dateFormat
             selectedNumberFormat = pr.numberFormat
+            let prefs = NotificationPreferences()
+            notificationsEnabled = prefs.isEnabled
+            notificationPeriodStarting = prefs.periodStarting
+            notificationPeriodSummary = prefs.periodSummary
+            notificationOverlayLifecycle = prefs.overlayLifecycle
         } catch {
             errorMessage = String(localized: "Failed to load settings.")
         }
