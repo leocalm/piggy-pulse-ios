@@ -85,7 +85,7 @@
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
 AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* NotificationPreferences.swift */; };
 AA000016000000000000AA16 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015000000000000AA15 /* BiometricHelper.swift */; };
-AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019000000000000AA19 /* BiometricLockView.swift */; };
+AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
 AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017000000000000AA17 /* BiometricPreferenceTests.swift */; };
 AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003000000000000AA03 /* NotificationPreferencesTests.swift */; };
 AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011000000000000AA11 /* NotificationScheduler.swift */; };
@@ -172,7 +172,7 @@ AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {is
 		9AF8DDC560849A681137F2C6 /* Onboarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 AA000001000000000000AA01 /* NotificationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferences.swift; sourceTree = "<group>"; };
 AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
-AA000019000000000000AA19 /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
+AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
 AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
 AA000003000000000000AA03 /* NotificationPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesTests.swift; sourceTree = "<group>"; };
 AA000011000000000000AA11 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@ AA000007000000000000AA07 /* Frameworks */ = {
 				02F038C12F5984EF008DD1E7 /* ForgotPasswordView.swift */,
 				02F038BF2F5984DC008DD1E7 /* RegisterView.swift */,
 				02218DFA2F589B2700E8DCEF /* LoginView.swift */,
-				AA000019000000000000AA19 /* BiometricLockView.swift */,
+				AA00001B000000000000AA1B /* BiometricLockView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

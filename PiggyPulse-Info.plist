@@ -15,5 +15,7 @@
 	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>PiggyPulse uses Face ID to keep your financial data secure.</string>
 </dict>
 </plist>
