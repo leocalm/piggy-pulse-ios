@@ -40,11 +40,11 @@
 		027B34B72F5B764E00E96DF6 /* CurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34B62F5B764C00E96DF6 /* CurrencyHelper.swift */; };
 		027B34C12F5C000000E96DF6 /* OverlayFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34C02F5C000000E96DF6 /* OverlayFormSheet.swift */; };
 		027B34C32F5C000100E96DF6 /* EmojiPickerGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34C22F5C000100E96DF6 /* EmojiPickerGrid.swift */; };
+		02AB12342F5B320E00E96DF6 /* CategoryTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12312F5B320200E96DF6 /* CategoryTarget.swift */; };
+		02AB12352F5B320E00E96DF6 /* EditCategoryTargetSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */; };
 		02ADDBBA819B39E550E59149 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8DDC560849A681137F2C6 /* Onboarding.swift */; };
 		02BBBBBB2F5B6D5900E96DF7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */; };
 		02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */; };
-		02AB12342F5B320E00E96DF6 /* CategoryTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12312F5B320200E96DF6 /* CategoryTarget.swift */; };
-		02AB12352F5B320E00E96DF6 /* EditCategoryTargetSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */; };
 		02F038A22F589EC5008DD1E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFD2F589B4500E8DCEF /* User.swift */; };
 		02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF62F589B0100E8DCEF /* Theme.swift */; };
 		02F038A42F589EC5008DD1E7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF12F589AAF00E8DCEF /* AppState.swift */; };
@@ -66,7 +66,6 @@
 		02F038CB2F598F4F008DD1E7 /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */; };
 		02F038CD2F5999B2008DD1E7 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CC2F5999B0008DD1E7 /* Dashboard.swift */; };
 		02F038CF2F599A04008DD1E7 /* DashboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CE2F5999F7008DD1E7 /* DashboardRepository.swift */; };
-		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
 		02F038D12F599A25008DD1E7 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D02F599A21008DD1E7 /* DashboardViewModel.swift */; };
 		02F038D62F599A90008DD1E7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D52F599A8F008DD1E7 /* DashboardView.swift */; };
 		02F038D82F59A129008DD1E7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D72F59A127008DD1E7 /* Transaction.swift */; };
@@ -80,17 +79,28 @@
 		6EF02EAE215F5094A4EE7EF1 /* SummaryStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CE78C71FBEC1E705C286DD /* SummaryStepView.swift */; };
 		6F27D7755ABDFAC055F0A784 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5387D46E2C06BBF30DE7429B /* OnboardingViewModel.swift */; };
 		7352FA8DE4D850AB38450768 /* AccountsStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009EF4876FF657BCAD295807 /* AccountsStepView.swift */; };
+		AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* NotificationPreferences.swift */; };
+		AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003000000000000AA03 /* NotificationPreferencesTests.swift */; };
+		AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011000000000000AA11 /* NotificationScheduler.swift */; };
+		AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013000000000000AA13 /* NotificationSchedulerTests.swift */; };
+		AA000016000000000000AA16 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015000000000000AA15 /* BiometricHelper.swift */; };
+		AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017000000000000AA17 /* BiometricPreferenceTests.swift */; };
+		AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
-AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* NotificationPreferences.swift */; };
-AA000016000000000000AA16 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015000000000000AA15 /* BiometricHelper.swift */; };
-AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
-AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017000000000000AA17 /* BiometricPreferenceTests.swift */; };
-AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003000000000000AA03 /* NotificationPreferencesTests.swift */; };
-AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011000000000000AA11 /* NotificationScheduler.swift */; };
-AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013000000000000AA13 /* NotificationSchedulerTests.swift */; };
+		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA00000D000000000000AA0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 020853A62F5898F7004E2FD4;
+			remoteInfo = PiggyPulse;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		009EF4876FF657BCAD295807 /* AccountsStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsStepView.swift; sourceTree = "<group>"; };
@@ -103,8 +113,6 @@ AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {is
 		02218DFA2F589B2700E8DCEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		02218DFD2F589B4500E8DCEF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPeriod.swift; sourceTree = "<group>"; };
-		02AB12312F5B320200E96DF6 /* CategoryTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTarget.swift; sourceTree = "<group>"; };
-		02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryTargetSheet.swift; sourceTree = "<group>"; };
 		027B34692F5B21D300E96DF6 /* PeriodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodsView.swift; sourceTree = "<group>"; };
 		027B346B2F5B237100E96DF6 /* CreatePeriodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePeriodSheet.swift; sourceTree = "<group>"; };
 		027B346D2F5B2A4F00E96DF6 /* FormOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormOptions.swift; sourceTree = "<group>"; };
@@ -139,6 +147,8 @@ AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {is
 		027B34C02F5C000000E96DF6 /* OverlayFormSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayFormSheet.swift; sourceTree = "<group>"; };
 		027B34C22F5C000100E96DF6 /* EmojiPickerGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerGrid.swift; sourceTree = "<group>"; };
 		02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		02AB12312F5B320200E96DF6 /* CategoryTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTarget.swift; sourceTree = "<group>"; };
+		02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryTargetSheet.swift; sourceTree = "<group>"; };
 		02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		02F038AD2F58DF9E008DD1E7 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
@@ -154,7 +164,6 @@ AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {is
 		02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
 		02F038CC2F5999B0008DD1E7 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		02F038CE2F5999F7008DD1E7 /* DashboardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRepository.swift; sourceTree = "<group>"; };
-		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
 		02F038D02F599A21008DD1E7 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		02F038D52F599A8F008DD1E7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		02F038D72F59A127008DD1E7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -170,26 +179,16 @@ AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */ = {is
 		6209A42534C14F2167B98336 /* NumberStepperView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NumberStepperView.swift; sourceTree = "<group>"; };
 		65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9AF8DDC560849A681137F2C6 /* Onboarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
-AA000001000000000000AA01 /* NotificationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferences.swift; sourceTree = "<group>"; };
-AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
-AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
-AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
-AA000003000000000000AA03 /* NotificationPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesTests.swift; sourceTree = "<group>"; };
-AA000011000000000000AA11 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
-AA000013000000000000AA13 /* NotificationSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerTests.swift; sourceTree = "<group>"; };
-AA000008000000000000AA08 /* PiggyPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiggyPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000001000000000000AA01 /* NotificationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferences.swift; sourceTree = "<group>"; };
+		AA000003000000000000AA03 /* NotificationPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesTests.swift; sourceTree = "<group>"; };
+		AA000008000000000000AA08 /* PiggyPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiggyPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000011000000000000AA11 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		AA000013000000000000AA13 /* NotificationSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerTests.swift; sourceTree = "<group>"; };
+		AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
+		AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
+		AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
+		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-
-/* Begin PBXContainerItemProxy section */
-		AA00000D000000000000AA0D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 020853A62F5898F7004E2FD4;
-			remoteInfo = PiggyPulse;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		020853A42F5898F7004E2FD4 /* Frameworks */ = {
@@ -199,13 +198,13 @@ AA000008000000000000AA08 /* PiggyPulseTests.xctest */ = {isa = PBXFileReference;
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-AA000007000000000000AA07 /* Frameworks */ = {
-	isa = PBXFrameworksBuildPhase;
-	buildActionMask = 2147483647;
-	files = (
-	);
-	runOnlyForDeploymentPostprocessing = 0;
-};
+		AA000007000000000000AA07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -618,7 +617,6 @@ AA000007000000000000AA07 /* Frameworks */ = {
 				125697D5718FA1710F492888 /* CategoriesStepView.swift */,
 				11CE78C71FBEC1E705C286DD /* SummaryStepView.swift */,
 			);
-			name = Steps;
 			path = Steps;
 			sourceTree = "<group>";
 		};
@@ -628,8 +626,34 @@ AA000007000000000000AA07 /* Frameworks */ = {
 				6209A42534C14F2167B98336 /* NumberStepperView.swift */,
 				218D425998B41C87A5820AA6 /* OnboardingStepIndicator.swift */,
 			);
-			name = Components;
 			path = Components;
+			sourceTree = "<group>";
+		};
+		AA00000E000000000000AA0E /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000AA01 /* NotificationPreferences.swift */,
+				AA000011000000000000AA11 /* NotificationScheduler.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		AA000010000000000000AA10 /* PiggyPulseTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA000003000000000000AA03 /* NotificationPreferencesTests.swift */,
+				AA000013000000000000AA13 /* NotificationSchedulerTests.swift */,
+				AA000017000000000000AA17 /* BiometricPreferenceTests.swift */,
+			);
+			path = PiggyPulseTests;
+			sourceTree = "<group>";
+		};
+		AA000019000000000000AA19 /* Biometrics */ = {
+			isa = PBXGroup;
+			children = (
+				AA000015000000000000AA15 /* BiometricHelper.swift */,
+			);
+			path = Biometrics;
 			sourceTree = "<group>";
 		};
 		D65B984A52C3F21DA80F719E /* Onboarding */ = {
@@ -640,47 +664,10 @@ AA000007000000000000AA07 /* Frameworks */ = {
 				65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */,
 				5387D46E2C06BBF30DE7429B /* OnboardingViewModel.swift */,
 			);
-			name = Onboarding;
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-AA00000E000000000000AA0E /* Notifications */ = {
-	isa = PBXGroup;
-	children = (
-		AA000001000000000000AA01 /* NotificationPreferences.swift */,
-		AA000011000000000000AA11 /* NotificationScheduler.swift */,
-	);
-	path = Notifications;
-	sourceTree = "<group>";
-};
-AA000019000000000000AA19 /* Biometrics */ = {
-	isa = PBXGroup;
-	children = (
-		AA000015000000000000AA15 /* BiometricHelper.swift */,
-	);
-	path = Biometrics;
-	sourceTree = "<group>";
-};
-AA000010000000000000AA10 /* PiggyPulseTests */ = {
-	isa = PBXGroup;
-	children = (
-		AA000003000000000000AA03 /* NotificationPreferencesTests.swift */,
-		AA000013000000000000AA13 /* NotificationSchedulerTests.swift */,
-		AA000017000000000000AA17 /* BiometricPreferenceTests.swift */,
-	);
-	path = PiggyPulseTests;
-	sourceTree = "<group>";
-};
 /* End PBXGroup section */
-
-
-/* Begin PBXTargetDependency section */
-		AA00000C000000000000AA0C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 020853A62F5898F7004E2FD4 /* PiggyPulse */;
-			targetProxy = AA00000D000000000000AA0D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXNativeTarget section */
 		020853A62F5898F7004E2FD4 /* PiggyPulse */ = {
@@ -700,23 +687,23 @@ AA000010000000000000AA10 /* PiggyPulseTests */ = {
 			productReference = 020853A72F5898F7004E2FD4 /* PiggyPulse.app */;
 			productType = "com.apple.product-type.application";
 		};
-AA000005000000000000AA05 /* PiggyPulseTests */ = {
-	isa = PBXNativeTarget;
-	buildConfigurationList = AA00000B000000000000AA0B /* Build configuration list for PBXNativeTarget "PiggyPulseTests" */;
-	buildPhases = (
-		AA000006000000000000AA06 /* Sources */,
-		AA000007000000000000AA07 /* Frameworks */,
-	);
-	buildRules = (
-	);
-	dependencies = (
-		AA00000C000000000000AA0C /* PBXTargetDependency */,
-	);
-	name = PiggyPulseTests;
-	productName = PiggyPulseTests;
-	productReference = AA000008000000000000AA08 /* PiggyPulseTests.xctest */;
-	productType = "com.apple.product-type.bundle.unit-test";
-};
+		AA000005000000000000AA05 /* PiggyPulseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA00000B000000000000AA0B /* Build configuration list for PBXNativeTarget "PiggyPulseTests" */;
+			buildPhases = (
+				AA000006000000000000AA06 /* Sources */,
+				AA000007000000000000AA07 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA00000C000000000000AA0C /* PBXTargetDependency */,
+			);
+			name = PiggyPulseTests;
+			productName = PiggyPulseTests;
+			productReference = AA000008000000000000AA08 /* PiggyPulseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -845,22 +832,30 @@ AA000005000000000000AA05 /* PiggyPulseTests */ = {
 				6EF02EAE215F5094A4EE7EF1 /* SummaryStepView.swift in Sources */,
 				02ADDBBA819B39E550E59149 /* Onboarding.swift in Sources */,
 				AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */,
-			AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */,
-			AA000016000000000000AA16 /* BiometricHelper.swift in Sources */,
+				AA000012000000000000AA12 /* NotificationScheduler.swift in Sources */,
+				AA000016000000000000AA16 /* BiometricHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-AA000006000000000000AA06 /* Sources */ = {
-	isa = PBXSourcesBuildPhase;
-	buildActionMask = 2147483647;
-	files = (
-		AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */,
-		AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */,
-		AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */,
-	);
-	runOnlyForDeploymentPostprocessing = 0;
-};
+		AA000006000000000000AA06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */,
+				AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */,
+				AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA00000C000000000000AA0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 020853A62F5898F7004E2FD4 /* PiggyPulse */;
+			targetProxy = AA00000D000000000000AA0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		020853B02F5898F9004E2FD4 /* Debug */ = {
@@ -989,17 +984,21 @@ AA000006000000000000AA06 /* Sources */ = {
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PiggyPulse-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "PiggyPulse uses Face ID to keep your financial data secure.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1007,6 +1006,7 @@ AA000006000000000000AA06 /* Sources */ = {
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -1022,17 +1022,21 @@ AA000006000000000000AA06 /* Sources */ = {
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PiggyPulse-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "PiggyPulse uses Face ID to keep your financial data secure.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1040,6 +1044,7 @@ AA000006000000000000AA06 /* Sources */ = {
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -1050,44 +1055,44 @@ AA000006000000000000AA06 /* Sources */ = {
 			};
 			name = Release;
 		};
-AA000009000000000000AA09 /* Debug */ = {
-	isa = XCBuildConfiguration;
-	buildSettings = {
-		BUNDLE_LOADER = "$(TEST_HOST)";
-		CODE_SIGN_STYLE = Automatic;
-		CURRENT_PROJECT_VERSION = 1;
-		DEVELOPMENT_TEAM = 742MF6AGHS;
-		GENERATE_INFOPLIST_FILE = YES;
-		IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-		MARKETING_VERSION = 1.0;
-		PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app.tests;
-		PRODUCT_NAME = "$(TARGET_NAME)";
-		SDKROOT = iphoneos;
-		SWIFT_VERSION = 5.0;
-		TARGETED_DEVICE_FAMILY = "1,2";
-		TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PiggyPulse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PiggyPulse";
-	};
-	name = Debug;
-};
-AA00000A000000000000AA0A /* Release */ = {
-	isa = XCBuildConfiguration;
-	buildSettings = {
-		BUNDLE_LOADER = "$(TEST_HOST)";
-		CODE_SIGN_STYLE = Automatic;
-		CURRENT_PROJECT_VERSION = 1;
-		DEVELOPMENT_TEAM = 742MF6AGHS;
-		GENERATE_INFOPLIST_FILE = YES;
-		IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-		MARKETING_VERSION = 1.0;
-		PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app.tests;
-		PRODUCT_NAME = "$(TARGET_NAME)";
-		SDKROOT = iphoneos;
-		SWIFT_VERSION = 5.0;
-		TARGETED_DEVICE_FAMILY = "1,2";
-		TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PiggyPulse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PiggyPulse";
-	};
-	name = Release;
-};
+		AA000009000000000000AA09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 742MF6AGHS;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PiggyPulse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PiggyPulse";
+			};
+			name = Debug;
+		};
+		AA00000A000000000000AA0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 742MF6AGHS;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PiggyPulse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PiggyPulse";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1109,15 +1114,15 @@ AA00000A000000000000AA0A /* Release */ = {
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-AA00000B000000000000AA0B /* Build configuration list for PBXNativeTarget "PiggyPulseTests" */ = {
-	isa = XCConfigurationList;
-	buildConfigurations = (
-		AA000009000000000000AA09 /* Debug */,
-		AA00000A000000000000AA0A /* Release */,
-	);
-	defaultConfigurationIsVisible = 0;
-	defaultConfigurationName = Release;
-};
+		AA00000B000000000000AA0B /* Build configuration list for PBXNativeTarget "PiggyPulseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000009000000000000AA09 /* Debug */,
+				AA00000A000000000000AA0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 	};
 	rootObject = 0208539F2F5898F7004E2FD4 /* Project object */;
