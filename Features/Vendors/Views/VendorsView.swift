@@ -112,7 +112,6 @@ struct VendorsView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .tint(.white)
                 }
             }
     }

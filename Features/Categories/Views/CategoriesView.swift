@@ -94,7 +94,6 @@ struct CategoriesView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .tint(.white)
                 }
             }
     }

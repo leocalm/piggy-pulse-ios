@@ -22,16 +22,6 @@
     "/ %@" : {
 
     },
-    "%@ — %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ — %2$@"
-          }
-        }
-      }
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -137,9 +127,6 @@
 
     },
     "%lld%% used" : {
-
-    },
-    "€" : {
 
     },
     "0.00" : {
@@ -345,6 +332,7 @@
     },
     "Assign budgets to your categories from the web app to see them here." : {
       "comment" : "Empty state body on Category Targets screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -435,11 +423,9 @@
         }
       }
     },
-    "Budget: %@" : {
-
-    },
     "BUDGETED CATEGORIES" : {
       "comment" : "Section header on Category Targets screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -706,6 +692,9 @@
         }
       }
     },
+    "Create categories to set budget targets." : {
+
+    },
     "Create Overlay" : {
 
     },
@@ -753,6 +742,9 @@
           }
         }
       }
+    },
+    "Currently excluded" : {
+
     },
     "Currently Spent" : {
       "comment" : "Breakdown row label in Category Targets",
@@ -1123,6 +1115,18 @@
         }
       }
     },
+    "Exclude" : {
+
+    },
+    "Exclude from budget" : {
+
+    },
+    "Excluded" : {
+
+    },
+    "EXCLUDED" : {
+
+    },
     "Failed to change password." : {
       "comment" : "Error message when password change fails",
       "localizations" : {
@@ -1199,6 +1203,9 @@
           }
         }
       }
+    },
+    "Failed to exclude category." : {
+
     },
     "Failed to load accounts." : {
       "comment" : "Error message when accounts fail to load",
@@ -1321,6 +1328,9 @@
         }
       }
     },
+    "Failed to re-include category." : {
+
+    },
     "Failed to save overlay." : {
 
     },
@@ -1334,6 +1344,9 @@
           }
         }
       }
+    },
+    "Failed to save target." : {
+
     },
     "Failed to update account." : {
       "comment" : "Error message when account update fails",
@@ -1478,6 +1491,9 @@
 
     },
     "If the period start date falls on a weekend, PiggyPulse can shift it to the nearest weekday. This only affects when a period is recorded as starting — it does not change how long the period lasts." : {
+
+    },
+    "Include" : {
 
     },
     "Inclusion Rules" : {
@@ -1742,6 +1758,7 @@
     },
     "No budget categories yet" : {
       "comment" : "Empty state heading on Category Targets screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1756,7 +1773,6 @@
     },
     "No categories yet" : {
       "comment" : "Empty state heading on Categories screen",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1809,6 +1825,12 @@
           }
         }
       }
+    },
+    "No target" : {
+
+    },
+    "NO TARGET" : {
+
     },
     "No transactions found" : {
       "comment" : "Empty state heading on Transactions screen",
@@ -2096,6 +2118,9 @@
     "Projected spend at current pace: %@" : {
 
     },
+    "Re-include in budget" : {
+
+    },
     "Recommended" : {
 
     },
@@ -2173,6 +2198,9 @@
       }
     },
     "Save Preferences" : {
+
+    },
+    "Save Target" : {
 
     },
     "SCHEDULE" : {
@@ -2291,6 +2319,9 @@
           }
         }
       }
+    },
+    "Set Target" : {
+
     },
     "Set up Auto-Creation" : {
       "comment" : "Button to enable auto-creation schedule",
@@ -2426,6 +2457,9 @@
 
     },
     "Tap + to create your first overlay." : {
+
+    },
+    "TARGET AMOUNT" : {
 
     },
     "Theme" : {
@@ -2746,6 +2780,9 @@
       }
     },
     "Welcome to PiggyPulse" : {
+
+    },
+    "WITH TARGET" : {
 
     },
     "You can further customize periods later in the Periods screen, including renaming them or adjusting individual start dates." : {

@@ -15,7 +15,6 @@ struct OverlaysView: View {
     private var past: [OverlayItem] { overlays.filter { $0.status == .ended } }
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
         List {
                 if isLoading {
                     Section {
@@ -86,20 +85,16 @@ struct OverlaysView: View {
             .task { await load() }
             .navigationTitle("Overlays")
             .navigationBarTitleDisplayMode(.large)
-
-        Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            showCreateSheet = true
-        } label: {
-            Image(systemName: "plus")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(Color.ppPrimary)
-                .frame(width: 56, height: 56)
-                .glassEffect(.regular, in: Circle())
-        }
-        .padding(.trailing, PPSpacing.lg)
-        .padding(.bottom, PPSpacing.xl)
-        }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        showCreateSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
         .sheet(isPresented: $showCreateSheet) {
             OverlayFormSheet(overlay: nil, onSaved: {
                 Task { await load() }

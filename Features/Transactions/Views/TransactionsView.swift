@@ -165,6 +165,14 @@ struct TransactionsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        showAddSheet = true
+                    } label: {
+                        Image("custom.arrow.left.arrow.right.badge.plus")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
                         showFilterSheet = true
                         Task { await viewModel.loadFilterOptions() }
                     } label: {
