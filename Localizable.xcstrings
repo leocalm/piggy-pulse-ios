@@ -2176,7 +2176,6 @@
     },
     "Save" : {
       "comment" : "Save button in forms",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

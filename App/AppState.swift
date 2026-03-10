@@ -11,6 +11,15 @@ final class AppState: ObservableObject {
     @Published var selectedPeriod: BudgetPeriod?
     @Published var isLoading = true
     @Published var currencyCode: String = "EUR"
+    
+
+    var currencySymbol: String {
+        Locale.availableIdentifiers
+            .lazy
+            .map { Locale(identifier: $0) }
+            .first { $0.currency?.identifier == currencyCode }?
+            .currencySymbol ?? currencyCode
+    }
     @Published var appColorScheme: ColorScheme? = nil
 
     func loadUserCurrency() async {

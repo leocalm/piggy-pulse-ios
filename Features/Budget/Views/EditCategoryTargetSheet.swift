@@ -2,11 +2,9 @@ import SwiftUI
 
 struct EditCategoryTargetSheet: View {
     @EnvironmentObject var appState: AppState
-@Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     let target: CategoryTarget
-    let detail: CategoryListItem?
     var onSave: (Int32) async -> Void
     var onExclude: () async -> Void
     var onInclude: () async -> Void
@@ -28,17 +26,19 @@ struct EditCategoryTargetSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.ppBackground(colorScheme).ignoresSafeArea()
+                Color.ppBackground.ignoresSafeArea()
                 VStack(spacing: PPSpacing.xl) {
                     // Header
                     HStack(spacing: PPSpacing.md) {
-                        Text(detail?.icon ?? "📂")
+                        Text(target.categoryIcon)
                             .font(.system(size: 32))
                         VStack(alignment: .leading, spacing: 2) {
                             Text(target.categoryName)
                                 .font(.ppTitle)
-                                .foregroundColor(.ppTextPrimary(colorScheme))
+                                .foregroundColor(.ppTextPrimary)
                             if target.excluded {
+                                .foregroundColor(.ppTextPrimary)
+                            if target.isExcluded {
                                 Text("Currently excluded")
                                     .font(.ppCaption)
                                     .foregroundColor(.ppAmber)
@@ -47,104 +47,83 @@ struct EditCategoryTargetSheet: View {
                         Spacer()
                     }
                     .padding(PPSpacing.xl)
-                    .background(Color.ppCard(colorScheme))
+                    .background(Color.ppCard)
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
 
                     // Amount input
-                    if !target.excluded {
+                    if !target.isExcluded {
                         VStack(alignment: .leading, spacing: PPSpacing.sm) {
                             Text("TARGET AMOUNT")
                                 .font(.ppOverline)
-                                .foregroundColor(.ppTextSecondary(colorScheme))
+                                .foregroundColor(.ppTextSecondary)
                                 .tracking(1)
 
                             HStack {
                                 Text(appState.currencyCode)
                                     .font(.ppCallout)
-                                    .foregroundColor(.ppTextTertiary(colorScheme))
+                                    .foregroundColor(.ppTextTertiary)
+                                Text(appState.currencySymbol)
+                                    .font(.ppAmount)
+                                    .foregroundColor(.ppTextTertiary)
                                     .frame(width: 40)
                                 TextField("0.00", text: $amountText)
                                     .font(.ppAmount)
-                                    .foregroundColor(.ppTextPrimary(colorScheme))
+                                    .foregroundColor(.ppTextPrimary)
                                     .keyboardType(.decimalPad)
                             }
                             .padding(PPSpacing.lg)
-                            .background(Color.ppSurface(colorScheme))
+                            .background(Color.ppSurface)
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder(colorScheme), lineWidth: 1))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                         }
                     }
 
                     Spacer()
 
-                    // Action buttons
-                    VStack(spacing: PPSpacing.md) {
-                        if !target.excluded {
-                            Button {
-                                guard let cents = parsedCents else { return }
-                                Task {
-                                    isLoading = true
-                                    defer { isLoading = false }
-                                    await onSave(cents)
-                                    dismiss()
-                                }
-                            } label: {
-                                Group {
-                                    if isLoading {
-                                        ProgressView().tint(.white)
-                                    } else {
-                                        Text("Save Target")
-                                            .font(.ppHeadline)
-                                            .foregroundColor(.white)
-                                    }
-                                }
+                    // Exclude / Re-include button
+                    if !target.isExcluded {
+                        Button(role: .destructive) {
+                            Task {
+                                isLoading = true
+                                defer { isLoading = false }
+                                await onExclude()
+                                dismiss()
+                            }
+                        } label: {
+                            Text("Exclude from budget")
+                                .font(.ppHeadline)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, PPSpacing.lg)
-                                .background(isSaveDisabled ? Color.ppPrimary.opacity(0.4) : Color.ppPrimary)
-                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            }
-                            .disabled(isSaveDisabled)
-
-                            Button {
-                                Task {
-                                    isLoading = true
-                                    defer { isLoading = false }
-                                    await onExclude()
-                                    dismiss()
-                                }
-                            } label: {
-                                Text("Exclude from budget")
-                                    .font(.ppCallout)
-                                    .foregroundColor(.ppAmber)
-                            }
-                            .disabled(isLoading)
-                        } else {
-                            Button {
-                                Task {
-                                    isLoading = true
-                                    defer { isLoading = false }
-                                    await onInclude()
-                                    dismiss()
-                                }
-                            } label: {
-                                Text("Re-include in budget")
-                                    .font(.ppHeadline)
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, PPSpacing.lg)
-                                    .background(Color.ppCyan)
-                                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            }
-                            .disabled(isLoading)
                         }
+                        .buttonStyle(.bordered)
+                        .tint(.ppDestructive)
+                        .disabled(isLoading)
+                    } else {
+                        Button {
+                            Task {
+                                isLoading = true
+                                defer { isLoading = false }
+                                await onInclude()
+                                dismiss()
+                            }
+                        } label: {
+                            Text("Re-include in budget")
+                                .font(.ppHeadline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, PPSpacing.lg)
+                                .background(Color.ppCyan)
+                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        }
+                        .disabled(isLoading)
                     }
                 }
                 .padding(PPSpacing.xl)
             }
             .navigationTitle("Set Target")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.ppBackground(colorScheme), for: .navigationBar)
+            .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -153,12 +132,33 @@ struct EditCategoryTargetSheet: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .foregroundColor(.ppTextSecondary(colorScheme))
+                    .foregroundColor(.ppTextSecondary)
+                }
+                if !target.isExcluded {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            guard let cents = parsedCents else { return }
+                            Task {
+                                isLoading = true
+                                defer { isLoading = false }
+                                await onSave(cents)
+                                dismiss()
+                            }
+                        } label: {
+                            if isLoading {
+                                ProgressView()
+                            } else {
+                                Text("Save")
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .disabled(isSaveDisabled)
+                    }
                 }
             }
             .onAppear {
-                if target.targetValue > 0 {
-                    let amount = Double(target.targetValue) / 100.0
+                if target.currentTarget > 0 {
+                    let amount = Double(target.currentTarget) / 100.0
                     amountText = String(format: "%.2f", amount)
                 }
             }

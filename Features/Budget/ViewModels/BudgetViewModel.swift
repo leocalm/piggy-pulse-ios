@@ -5,7 +5,6 @@ internal import Combine
 final class BudgetViewModel: ObservableObject {
     @Published var burnIn: MonthlyBurnIn?
     @Published var targets: [CategoryTarget] = []
-    @Published var allCategories: [CategoryListItem] = []
     @Published var isLoading = false
     @Published var isSaving = false
     @Published var errorMessage: String?
@@ -31,15 +30,10 @@ final class BudgetViewModel: ObservableObject {
                 .categoryTargets,
                 queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
             )
-            async let categoriesTask: PaginatedResponse<CategoryListItem> = apiClient.request(
-                .categories,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
-            )
 
-            let (b, t, c) = try await (burnInTask, targetsTask, categoriesTask)
+            let (b, t) = try await (burnInTask, targetsTask)
             burnIn = b
-            targets = t.targets
-            allCategories = c.data
+            targets = t.allTargets
         } catch {
             errorMessage = String(localized: "Failed to load budget data.")
         }
@@ -53,7 +47,7 @@ final class BudgetViewModel: ObservableObject {
         isSaving = true
         let body = BatchUpsertTargetsRequest(
             periodId: periodId,
-            targets: [.init(categoryId: categoryId, targetValue: value)]
+            targets: [.init(categoryId: categoryId, budgetedValue: value)]
         )
         do {
             try await apiClient.request(.upsertCategoryTargets, body: body)
@@ -84,12 +78,5 @@ final class BudgetViewModel: ObservableObject {
             errorMessage = String(localized: "Failed to re-include category.")
         }
         isSaving = false
-    }
-
-    // MARK: - Helpers
-
-    /// Returns the CategoryListItem (for icon/color) matching a given CategoryTarget, if available.
-    func categoryDetail(for target: CategoryTarget) -> CategoryListItem? {
-        allCategories.first { $0.id == target.categoryId }
     }
 }

@@ -463,7 +463,12 @@ struct OverlayFormSheet: View {
                             .foregroundColor(.ppTextSecondary(colorScheme))
                         TextField("0.00", text: $totalCapText)
                             .font(.ppBody)
-                            .foregroundColor(.ppTextPrimary(colorScheme))
+                            .foregroundColor(.ppTextPrimary)
+                            .font(.ppAmount)
+                            .foregroundColor(.ppTextSecondary)
+                        TextField("0.00", text: $totalCapText)
+                            .font(.ppAmount)
+                            .foregroundColor(.ppTextPrimary)
                             .keyboardType(.decimalPad)
                     }
                     .padding(.horizontal, PPSpacing.lg)
@@ -548,13 +553,17 @@ struct OverlayFormSheet: View {
                                             HStack {
                                                 Text(currencySymbol)
                                                     .font(.ppCallout)
-                                                    .foregroundColor(.ppTextSecondary(colorScheme))
+                                                    .foregroundColor(.ppTextSecondary)
+                                                    .font(.ppAmount)
+                                                    .foregroundColor(.ppTextSecondary)
                                                 TextField("0.00", text: Binding(
                                                     get: { categoryCaps[category.id] ?? "" },
                                                     set: { categoryCaps[category.id] = $0 }
                                                 ))
                                                 .font(.ppCallout)
-                                                .foregroundColor(.ppTextPrimary(colorScheme))
+                                                .foregroundColor(.ppTextPrimary)
+                                                .font(.ppAmount)
+                                                .foregroundColor(.ppTextPrimary)
                                                 .keyboardType(.decimalPad)
                                             }
                                             .padding(.horizontal, PPSpacing.md)

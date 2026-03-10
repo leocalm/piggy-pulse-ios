@@ -76,8 +76,8 @@ struct EditAccountSheet: View {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     Text("Spend Limit").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary(colorScheme))
                                     HStack {
-                                        Text(currencySymbol).font(.ppBody).foregroundColor(.ppTextSecondary(colorScheme))
-                                        TextField("0.00", text: $spendLimitText).keyboardType(.decimalPad).font(.ppBody).foregroundColor(.ppTextPrimary(colorScheme))
+                                        Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary(colorScheme))
+                                        TextField("0.00", text: $spendLimitText).keyboardType(.decimalPad).font(.ppAmount).foregroundColor(.ppTextPrimary(colorScheme))
                                     }
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                     .background(Color.ppSurface(colorScheme)).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
