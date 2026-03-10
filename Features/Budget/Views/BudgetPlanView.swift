@@ -46,19 +46,19 @@ struct BudgetPlanView: View {
                     .listRowSeparator(.hidden)
                 }
             } else {
-                // Budget Summary card
-                if let burnIn = viewModel.burnIn {
+                let withTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) > 0 }
+                let excluded = viewModel.targets.filter { $0.isExcluded }
+                let noTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) == 0 }
+
+                // Budget Summary card (computed from non-excluded targets only)
+                if viewModel.burnIn != nil {
                     Section {
-                        summaryCard(burnIn: burnIn)
+                        summaryCard(withTarget: withTarget)
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 }
-
-                let withTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) > 0 }
-                let excluded = viewModel.targets.filter { $0.isExcluded }
-                let noTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) == 0 }
 
                 if !withTarget.isEmpty {
                     Section {
@@ -193,17 +193,22 @@ struct BudgetPlanView: View {
 
     // MARK: - Summary Card
 
-    private func summaryCard(burnIn: MonthlyBurnIn) -> some View {
-        VStack(alignment: .leading, spacing: PPSpacing.lg) {
+    private func summaryCard(withTarget: [CategoryTarget]) -> some View {
+        let totalBudget = withTarget.reduce(0) { $0 + Int64($1.currentTarget ?? 0) }
+        let spentBudget = withTarget.reduce(0) { $0 + ($1.spentAmount ?? 0) }
+        let remainingBudget = totalBudget - spentBudget
+        let spentPercentage = totalBudget > 0 ? Double(spentBudget) / Double(totalBudget) : 0.0
+
+        return VStack(alignment: .leading, spacing: PPSpacing.lg) {
             Text("BUDGET BREAKDOWN")
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             VStack(spacing: PPSpacing.md) {
-                breakdownRow("Total Budget", value: burnIn.totalBudget, color: .ppPrimary)
-                breakdownRow("Currently Spent", value: burnIn.spentBudget, color: .ppTextSecondary)
-                breakdownRow("Remaining Budget", value: burnIn.remainingBudget, color: .ppCyan)
+                breakdownRow("Total Budget", value: totalBudget, color: .ppPrimary)
+                breakdownRow("Currently Spent", value: spentBudget, color: .ppTextSecondary)
+                breakdownRow("Remaining Budget", value: remainingBudget, color: .ppCyan)
             }
 
             GeometryReader { geo in
@@ -212,8 +217,8 @@ struct BudgetPlanView: View {
                         .fill(Color.ppBorder)
                         .frame(height: 8)
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(burnIn.spentPercentage > 1.0 ? Color.ppDestructive : Color.ppPrimary)
-                        .frame(width: geo.size.width * min(burnIn.spentPercentage, 1.0), height: 8)
+                        .fill(spentPercentage > 1.0 ? Color.ppDestructive : Color.ppPrimary)
+                        .frame(width: geo.size.width * min(spentPercentage, 1.0), height: 8)
                 }
             }
             .frame(height: 8)
@@ -245,9 +250,9 @@ struct BudgetPlanView: View {
                 Text(target.categoryName)
                     .font(.ppHeadline)
                     .foregroundColor(.ppTextPrimary)
-                Text(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))
+                Text(formatCurrency(target.spentAmount ?? 0, code: appState.currencyCode))
                     .foregroundColor(.ppTextPrimary)
-                Text(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))
+                Text("of \(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))")
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
             }

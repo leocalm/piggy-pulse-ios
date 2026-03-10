@@ -24,14 +24,14 @@ struct DashboardView: View {
                             currentPeriodCard(burnIn: burnIn, progress: progress)
                         }
                         
-                        // Spending Consistency card
-                        if let stability = viewModel.stability, stability.totalClosedPeriods > 0 {
-                            stabilityCard(stability: stability)
-                        }
-                        
                         // Net Position card
                         if let net = viewModel.netPosition {
                             netPositionCard(net: net)
+                        }
+                        
+                        // Spending Consistency card
+                        if let stability = viewModel.stability, stability.totalClosedPeriods > 0 {
+                            stabilityCard(stability: stability)
                         }
                     }
                 }
@@ -249,6 +249,7 @@ struct DashboardView: View {
                 .font(.ppCaption)
                 .foregroundColor(.ppTextTertiary)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
