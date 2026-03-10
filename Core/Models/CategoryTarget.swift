@@ -4,19 +4,30 @@ struct CategoryTarget: Codable, Identifiable {
     let id: UUID
     let categoryId: UUID
     let categoryName: String
-    let targetValue: Int32   // cents; 0 means "no target set"
-    let excluded: Bool
+    let categoryType: String
+    let categoryIcon: String
+    let categoryColor: String
+    let currentTarget: Int32   // cents; 0 means "no target set"
+    let previousTarget: Int32
+    let isExcluded: Bool
+    let exclusionReason: String?
 }
 
 struct CategoryTargetsResponse: Codable {
     let periodId: UUID
-    let targets: [CategoryTarget]
+    let outgoingTargets: [CategoryTarget]
+    let incomingTargets: [CategoryTarget]
+    let excludedCategories: [CategoryTarget]
+
+    var allTargets: [CategoryTarget] {
+        outgoingTargets + incomingTargets + excludedCategories
+    }
 }
 
 struct BatchUpsertTargetsRequest: Encodable {
     struct TargetItem: Encodable {
         let categoryId: UUID
-        let targetValue: Int32
+        let budgetedValue: Int32
     }
     let periodId: UUID
     let targets: [TargetItem]
