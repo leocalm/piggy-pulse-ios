@@ -24,6 +24,7 @@ struct SettingsView: View {
     @State private var biometricAvailable = false
     @State private var biometricUnavailableReason = ""
     @State private var biometricLabel = "Biometrics"
+    @State private var showDeleteAccount = false
 
     var body: some View {
         ScrollView {
@@ -55,6 +56,9 @@ struct SettingsView: View {
 
                         // App info
                         appInfoCard
+
+                        // Danger zone
+                        dangerZoneCard
                     }
                 }
                 .padding(PPSpacing.lg)
@@ -62,6 +66,10 @@ struct SettingsView: View {
             .background(Color.ppBackground)
             .sheet(isPresented: $showChangePassword) {
                 ChangePasswordSheet()
+                    .environmentObject(appState)
+            }
+            .sheet(isPresented: $showDeleteAccount) {
+                DeleteAccountSheet()
                     .environmentObject(appState)
             }
             .sheet(isPresented: $showEditProfile, onDismiss: { Task { await load() } }) {
@@ -391,6 +399,41 @@ struct SettingsView: View {
         let symbol = fmt.currencySymbol ?? code
         let name = Locale.current.localizedString(forCurrencyCode: code) ?? code
         return "\(symbol) \(name)"
+    }
+
+    // MARK: - Danger Zone
+
+    private var dangerZoneCard: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.lg) {
+            Text("DANGER ZONE")
+                .font(.ppOverline)
+                .foregroundColor(.ppDestructive)
+                .tracking(1)
+
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                showDeleteAccount = true
+            } label: {
+                HStack {
+                    Label("Delete Account", systemImage: "trash")
+                        .font(.ppBody)
+                        .foregroundColor(.ppDestructive)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.ppTextTertiary)
+                }
+            }
+
+            Text("Permanently delete your account and all associated data.")
+                .font(.ppCaption)
+                .foregroundColor(.ppTextSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(PPSpacing.xl)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     // MARK: - Helpers

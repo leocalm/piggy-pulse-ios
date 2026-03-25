@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 internal import Combine
 
 @MainActor
@@ -155,6 +156,20 @@ final class AppState: ObservableObject {
         } catch {
             // Notifications are best-effort; do not surface errors to user
         }
+    }
+
+    func deleteAccount(confirmation: String) async throws {
+        struct DeleteAccountRequest: Encodable {
+            let confirmation: String
+        }
+        try await apiClient.request(.deleteUserAccount, body: DeleteAccountRequest(confirmation: confirmation))
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        tokenManager.clearTokens()
+        currentUser = nil
+        selectedPeriod = nil
+        isAuthenticated = false
+        isBiometricLocked = false
+        biometricAuthFailed = false
     }
 
     func logout() async {
