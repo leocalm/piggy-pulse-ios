@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 internal import Combine
 
 @MainActor
@@ -162,6 +163,7 @@ final class AppState: ObservableObject {
             let confirmation: String
         }
         try await apiClient.request(.deleteUserAccount, body: DeleteAccountRequest(confirmation: confirmation))
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         tokenManager.clearTokens()
         currentUser = nil
         selectedPeriod = nil

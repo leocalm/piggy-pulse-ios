@@ -62,11 +62,13 @@ struct DeleteAccountSheet: View {
                             showConfirmation = true
                         } label: {
                             HStack {
-                                if isLoading {
-                                    ProgressView().tint(.white)
-                                } else {
-                                    Text("Delete My Account")
-                                        .font(.ppHeadline)
+                                Group {
+                                    if isLoading {
+                                        ProgressView().tint(.white)
+                                    } else {
+                                        Text("Delete My Account")
+                                            .font(.ppHeadline)
+                                    }
                                 }
                             }
                             .frame(maxWidth: .infinity)
@@ -116,7 +118,6 @@ struct DeleteAccountSheet: View {
         do {
             try await appState.deleteAccount(confirmation: confirmationText)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
-            dismiss()
         } catch let error as APIError {
             errorMessage = error.errorDescription
             UINotificationFeedbackGenerator().notificationOccurred(.error)
