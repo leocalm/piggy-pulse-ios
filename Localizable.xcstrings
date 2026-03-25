@@ -327,6 +327,9 @@
     "ARCHIVED" : {
 
     },
+    "Are you sure?" : {
+
+    },
     "Assets" : {
 
     },
@@ -770,6 +773,9 @@
     "Customize" : {
 
     },
+    "DANGER ZONE" : {
+
+    },
     "Dashboard" : {
       "comment" : "Tab bar item — main dashboard screen",
       "localizations" : {
@@ -842,7 +848,16 @@
         }
       }
     },
+    "DELETE" : {
+
+    },
     "Delete \"%@\"?" : {
+
+    },
+    "Delete Account" : {
+
+    },
+    "Delete My Account" : {
 
     },
     "Delete this period?" : {
@@ -1208,6 +1223,9 @@
           }
         }
       }
+    },
+    "Failed to delete account." : {
+
     },
     "Failed to delete period." : {
 
@@ -2113,6 +2131,9 @@
     "Periods are how PiggyPulse slices your timeline for tracking. The default — monthly, starting on the 1st — works for most people." : {
 
     },
+    "Permanently delete your account and all associated data." : {
+
+    },
     "PiggyPulse" : {
       "comment" : "App name / logo label",
       "localizations" : {
@@ -2565,6 +2586,9 @@
         }
       }
     },
+    "This will permanently delete your account and all associated data. This action cannot be undone." : {
+
+    },
     "This will permanently remove the period." : {
 
     },
@@ -2647,6 +2671,9 @@
           }
         }
       }
+    },
+    "Type **DELETE** to confirm" : {
+
     },
     "UPCOMING" : {
       "comment" : "Status badge label for upcoming overlay",
@@ -2852,6 +2879,9 @@
           }
         }
       }
+    },
+    "Your account and all data will be permanently deleted. This cannot be undone." : {
+
     },
     "Your name" : {
       "comment" : "Name field placeholder in Edit Profile",

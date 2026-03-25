@@ -171,6 +171,7 @@ extension APIEndpoint {
     static let profile = APIEndpoint(path: "/settings/profile", method: .get, requiresAuth: true)
     static let preferences = APIEndpoint(path: "/settings/preferences", method: .get, requiresAuth: true)
     static let changePassword = APIEndpoint(path: "/settings/security/password", method: .post, requiresAuth: true)
+    static let deleteUserAccount = APIEndpoint(path: "/settings/danger/delete-account", method: .post, requiresAuth: true)
 }
 
 // MARK: - Onboarding

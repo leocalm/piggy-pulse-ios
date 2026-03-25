@@ -157,6 +157,19 @@ final class AppState: ObservableObject {
         }
     }
 
+    func deleteAccount(confirmation: String) async throws {
+        struct DeleteAccountRequest: Encodable {
+            let confirmation: String
+        }
+        try await apiClient.request(.deleteUserAccount, body: DeleteAccountRequest(confirmation: confirmation))
+        tokenManager.clearTokens()
+        currentUser = nil
+        selectedPeriod = nil
+        isAuthenticated = false
+        isBiometricLocked = false
+        biometricAuthFailed = false
+    }
+
     func logout() async {
         if let refreshToken = tokenManager.getRefreshToken() {
             struct RevokeRequest: Encodable {
