@@ -76,10 +76,16 @@ extension DateFormatter {
 }
 
 enum TransactionDirection: String, CaseIterable {
-    case all = "All"
-    case incoming = "Incoming"
-    case outgoing = "Outgoing"
-    case transfers = "Transfers"
+    case all, incoming, outgoing, transfers
+
+    var label: String {
+        switch self {
+        case .all: return String(localized: "All")
+        case .incoming: return String(localized: "Incoming")
+        case .outgoing: return String(localized: "Outgoing")
+        case .transfers: return String(localized: "Transfers")
+        }
+    }
 
     var queryValue: String? {
         switch self {

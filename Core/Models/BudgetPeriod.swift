@@ -39,9 +39,9 @@ struct BudgetPeriod: Codable, Identifiable {
 
     var statusText: String {
         switch status {
-        case .active: return "Active"
-        case .ended: return "Ended"
-        case .upcoming: return "Upcoming"
+        case .active: return String(localized: "Active")
+        case .ended: return String(localized: "Ended")
+        case .upcoming: return String(localized: "Upcoming")
         case .unknown: return ""
         }
     }

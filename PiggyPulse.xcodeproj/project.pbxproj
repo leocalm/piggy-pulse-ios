@@ -25,7 +25,6 @@
 		027B34932F5B4E4D00E96DF6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34922F5B4E4900E96DF6 /* Settings.swift */; };
 		027B34972F5B4EA300E96DF6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34962F5B4E9E00E96DF6 /* SettingsView.swift */; };
 		027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */; };
-		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
 		027B349B2F5B4FAB00E96DF6 /* Overlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349A2F5B4FA900E96DF6 /* Overlays.swift */; };
 		027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */; };
 		027B34A12F5B532600E96DF6 /* AddAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A02F5B532500E96DF6 /* AddAccountSheet.swift */; };
@@ -90,6 +89,7 @@
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
+		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
 		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
 /* End PBXBuildFile section */
 
@@ -132,7 +132,6 @@
 		027B34922F5B4E4900E96DF6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		027B34962F5B4E9E00E96DF6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSheet.swift; sourceTree = "<group>"; };
-		FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountSheet.swift; sourceTree = "<group>"; };
 		027B349A2F5B4FA900E96DF6 /* Overlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlays.swift; sourceTree = "<group>"; };
 		027B349E2F5B4FD300E96DF6 /* OverlaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysView.swift; sourceTree = "<group>"; };
 		027B34A02F5B532500E96DF6 /* AddAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountSheet.swift; sourceTree = "<group>"; };
@@ -189,6 +188,7 @@
 		AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
 		AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
 		AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
+		FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountSheet.swift; sourceTree = "<group>"; };
 		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -727,6 +727,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"pt-BR",
 				Base,
 			);
 			mainGroup = 0208539E2F5898F7004E2FD4;
@@ -990,7 +991,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1031,7 +1032,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

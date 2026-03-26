@@ -27,8 +27,8 @@ struct CategoriesView: View {
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else {
-                    categorySection("INCOMING", categories: incoming, color: .ppCyan)
-                    categorySection("OUTGOING", categories: outgoing, color: .ppPrimary)
+                    categorySection(String(localized: "INCOMING"), categories: incoming, color: .ppCyan)
+                    categorySection(String(localized: "OUTGOING"), categories: outgoing, color: .ppPrimary)
                     
                     if !archived.isEmpty {
                         Section {
