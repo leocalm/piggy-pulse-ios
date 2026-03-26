@@ -272,7 +272,7 @@ struct PeriodsView: View {
 
     // MARK: - Helpers
 
-    private func sectionHeader(_ title: String) -> some View {
+    private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.ppOverline)
             .foregroundColor(.ppTextSecondary)
