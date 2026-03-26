@@ -16,7 +16,7 @@ struct SummaryStepView: View {
                 summarySection(title: "Period") {
                     if vm.customize {
                         labeledRow("Start Day", "\(vm.startDay)")
-                        labeledRow("Period Length", "\(vm.periodLength) month\(vm.periodLength == 1 ? "" : "s")")
+                        labeledRow("Period Length", vm.periodLength == 1 ? String(localized: "1 month") : String(localized: "\(vm.periodLength) months"))
                         labeledRow("Periods to Prepare", "\(vm.periodsToPrepare)")
                         labeledRow("If Saturday", vm.saturdayBehavior.label)
                         labeledRow("If Sunday", vm.sundayBehavior.label)
@@ -68,7 +68,7 @@ struct SummaryStepView: View {
     }
 
     @ViewBuilder
-    private func summarySection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+    private func summarySection<Content: View>(title: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.md) {
             Text(title).font(.ppTitle3).foregroundColor(.ppTextPrimary)
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
@@ -87,7 +87,7 @@ struct SummaryStepView: View {
         )
     }
 
-    private func labeledRow(_ label: String, _ value: String) -> some View {
+    private func labeledRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         HStack {
             Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary)
             Spacer()

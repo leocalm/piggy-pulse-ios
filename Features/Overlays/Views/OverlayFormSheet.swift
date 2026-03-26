@@ -749,7 +749,7 @@ struct OverlayFormSheet: View {
         let startStr = formatter.string(from: startDate)
         let endStr = formatter.string(from: endDate)
         let days = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day.map { $0 + 1 } ?? 1
-        let daysLabel = String(localized: "\(days) days")
+        let daysLabel = days == 1 ? String(localized: "1 day") : String(localized: "\(days) days")
         return "\(startStr) – \(endStr) · \(daysLabel)"
     }
 

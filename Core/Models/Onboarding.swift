@@ -17,10 +17,10 @@ enum OnboardingStep: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .period:     return "Periods"
-        case .accounts:   return "Accounts"
-        case .categories: return "Categories"
-        case .summary:    return "Review"
+        case .period:     return String(localized: "Periods")
+        case .accounts:   return String(localized: "Accounts")
+        case .categories: return String(localized: "Categories")
+        case .summary:    return String(localized: "Review")
         }
     }
 
@@ -38,9 +38,9 @@ enum WeekendBehavior: String, CaseIterable {
 
     var label: String {
         switch self {
-        case .keep:        return "Keep on weekend"
-        case .shiftFriday: return "Shift to Friday"
-        case .shiftMonday: return "Shift to Monday"
+        case .keep:        return String(localized: "Keep on weekend")
+        case .shiftFriday: return String(localized: "Shift to Friday")
+        case .shiftMonday: return String(localized: "Shift to Monday")
         }
     }
 }

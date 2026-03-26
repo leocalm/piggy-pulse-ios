@@ -4,10 +4,10 @@ struct CategoriesStepView: View {
     @ObservedObject var vm: OnboardingViewModel
 @Environment(\.colorScheme) private var colorScheme
 
-    private let templates: [(title: String, subtitle: String, template: CategoryTemplate)] = [
-        ("Essential 5",  "5 basic categories to get started",        .essential),
-        ("Detailed 12",  "12 categories for detailed tracking",       .detailed),
-    ]
+    private var templates: [(title: String, subtitle: String, template: CategoryTemplate)] {[
+        (String(localized: "Essential 5"),  String(localized: "5 basic categories to get started"),        .essential),
+        (String(localized: "Detailed 12"),  String(localized: "12 categories for detailed tracking"),       .detailed),
+    ]}
 
     var body: some View {
         ScrollView {
