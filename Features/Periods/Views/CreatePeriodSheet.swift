@@ -343,9 +343,9 @@ enum DurationUnitOption: String, CaseIterable {
 
     var label: String {
         switch self {
-        case .days: return "Days"
-        case .weeks: return "Weeks"
-        case .months: return "Months"
+        case .days: return String(localized: "Days")
+        case .weeks: return String(localized: "Weeks")
+        case .months: return String(localized: "Months")
         }
     }
 }

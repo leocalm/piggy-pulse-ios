@@ -234,7 +234,7 @@ struct SettingsView: View {
             Spacer()
             Picker("", selection: selection) {
                 ForEach(options, id: \.0) { value, display in
-                    Text(display).tag(value)
+                    Text(LocalizedStringKey(display)).tag(value)
                 }
             }
             .pickerStyle(.menu)

@@ -16,7 +16,9 @@ struct AddAccountSheet: View {
     var onCreated: () -> Void
 
     private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
-    private let typeLabels = ["Checking": "Checking", "Savings": "Savings", "CreditCard": "Credit Card", "Wallet": "Wallet", "Allowance": "Allowance"]
+    private var typeLabels: [String: String] {
+        ["Checking": String(localized: "Checking"), "Savings": String(localized: "Savings"), "CreditCard": String(localized: "Credit Card"), "Wallet": String(localized: "Wallet"), "Allowance": String(localized: "Allowance")]
+    }
     private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
     private var currencySymbol: String {

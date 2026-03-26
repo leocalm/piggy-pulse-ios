@@ -227,7 +227,7 @@ struct TransactionsView: View {
                             Task { await viewModel.changeDirection(direction, periodId: periodId) }
                         }
                     } label: {
-                        Text(direction.rawValue)
+                        Text(direction.label)
                             .font(.ppCallout)
                             .fontWeight(viewModel.selectedDirection == direction ? .semibold : .regular)
                             .foregroundColor(

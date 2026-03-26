@@ -295,9 +295,9 @@ struct OverlayFormSheet: View {
                     .foregroundColor(.ppTextPrimary)
 
                 VStack(spacing: PPSpacing.sm) {
-                    inclusionModeRow(.manual, title: "Manual", description: "You decide what to include manually.", recommended: true)
-                    inclusionModeRow(.rulesBased, title: "Rules-based", description: "Include transactions automatically from category, vendor, or account rules.", recommended: false)
-                    inclusionModeRow(.includeAll, title: "Include everything", description: "Include every transaction inside the date range.", recommended: false)
+                    inclusionModeRow(.manual, title: String(localized: "Manual"), description: String(localized: "You decide what to include manually."), recommended: true)
+                    inclusionModeRow(.rulesBased, title: String(localized: "Rules-based"), description: String(localized: "Include transactions automatically from category, vendor, or account rules."), recommended: false)
+                    inclusionModeRow(.includeAll, title: String(localized: "Include everything"), description: String(localized: "Include every transaction inside the date range."), recommended: false)
                 }
             }
             .padding(PPSpacing.lg)
@@ -732,7 +732,7 @@ struct OverlayFormSheet: View {
 
     // MARK: - Review Helpers
 
-    private func reviewRow<Content: View>(label: String, @ViewBuilder content: () -> Content) -> some View {
+    private func reviewRow<Content: View>(label: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
         HStack(alignment: .top) {
             Text(label)
                 .font(.ppCallout)
@@ -749,14 +749,15 @@ struct OverlayFormSheet: View {
         let startStr = formatter.string(from: startDate)
         let endStr = formatter.string(from: endDate)
         let days = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day.map { $0 + 1 } ?? 1
-        return "\(startStr) – \(endStr) · \(days) day\(days == 1 ? "" : "s")"
+        let daysLabel = String(localized: "\(days) days")
+        return "\(startStr) – \(endStr) · \(daysLabel)"
     }
 
     private func inclusionModeLabel(_ mode: OverlayInclusionMode) -> String {
         switch mode {
-        case .manual: return "Manual"
-        case .rulesBased: return "Rules-based"
-        case .includeAll: return "Include everything"
+        case .manual: return String(localized: "Manual")
+        case .rulesBased: return String(localized: "Rules-based")
+        case .includeAll: return String(localized: "Include everything")
         }
     }
 
