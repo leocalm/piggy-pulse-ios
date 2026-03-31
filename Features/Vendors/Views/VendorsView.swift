@@ -324,7 +324,7 @@ struct VendorsView: View {
         do {
             let response: PaginatedResponse<VendorListItem> = try await appState.apiClient.request(
                 .vendors,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
+                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
             )
             vendors = response.data
         } catch {

@@ -110,7 +110,7 @@ extension APIEndpoint {
     static func archiveCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)/archive", method: .post, requiresAuth: true)
     }
-static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
+    static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
     static let transferCategory = APIEndpoint(path: "/categories/transfer", method: .get, requiresAuth: true)
     static let categoriesManagement = APIEndpoint(path: "/categories/management", method: .get, requiresAuth: true)
     static let categoriesOverview = APIEndpoint(path: "/categories/overview", method: .get, requiresAuth: true)
@@ -130,10 +130,6 @@ extension APIEndpoint {
     }
     static func archiveVendor(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/vendors/\(id)/archive", method: .post, requiresAuth: true)
-    }
-    // Add to Vendors section
-    static func vendorsForPeriod(periodId: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/vendors/", method: .get, requiresAuth: true)
     }
 }
 
@@ -158,14 +154,6 @@ extension APIEndpoint {
 }
 
 // MARK: - Dashboard
-
-extension APIEndpoint {
-    static let monthlyBurnIn = APIEndpoint(path: "/dashboard/monthly-burn-in", method: .get, requiresAuth: true)
-    static let monthProgress = APIEndpoint(path: "/dashboard/month-progress", method: .get, requiresAuth: true)
-    static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
-}
-
-// MARK: - Dashboard V2
 
 extension APIEndpoint {
     static let dashboardCurrentPeriod = APIEndpoint(path: "/dashboard/current-period", method: .get, requiresAuth: true)

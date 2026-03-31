@@ -3,7 +3,7 @@ internal import Combine
 
 @MainActor
 final class BudgetViewModel: ObservableObject {
-    @Published var burnIn: MonthlyBurnIn?
+    @Published var burnIn: DashboardCurrentPeriod?
     @Published var targets: [CategoryTarget] = []
     @Published var isLoading = false
     @Published var isSaving = false
@@ -30,13 +30,13 @@ final class BudgetViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            async let burnInTask: MonthlyBurnIn = apiClient.request(
-                .monthlyBurnIn,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
+            async let burnInTask: DashboardCurrentPeriod = apiClient.request(
+                .dashboardCurrentPeriod,
+                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
             )
             async let targetsTask: CategoryTargetsResponse = apiClient.request(
                 .categoryTargets,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
+                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
             )
 
             let (b, t) = try await (burnInTask, targetsTask)

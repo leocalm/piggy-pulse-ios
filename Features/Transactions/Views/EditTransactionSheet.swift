@@ -228,7 +228,7 @@ struct EditTransactionSheet: View {
             let periodId = appState.selectedPeriod?.id
             async let vendorsTask: PaginatedResponse<VendorOption> = appState.apiClient.request(
                 .vendors,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId?.uuidString.lowercased() ?? "")]
+                queryItems: [URLQueryItem(name: "periodId", value: periodId?.uuidString ?? "")]
             )
 
             transferCategory = try? await appState.apiClient.request(.transferCategory)

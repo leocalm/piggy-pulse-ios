@@ -322,7 +322,7 @@ struct AddTransactionSheet: View {
             // Fetch vendors (paginated)
             let vendorsResponse: PaginatedResponse<VendorOption> = try await appState.apiClient.request(
                 .vendors,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
+                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
             )
             vendors = vendorsResponse.data
         } catch {

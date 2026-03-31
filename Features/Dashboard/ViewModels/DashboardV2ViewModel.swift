@@ -12,7 +12,7 @@ final class DashboardV2ViewModel: ObservableObject {
     @Published var fixedCategories: DashboardFixedCategories?
     @Published var subscriptions: DashboardSubscriptions?
     @Published var budgetStability: DashboardBudgetStabilityV2?
-    @Published var recentTransactions: [RecentTransactionItem]?
+    @Published var recentTransactions: [Transaction]?
 
     @Published var isLoading = true
     @Published var errorMessage: String?
@@ -47,7 +47,7 @@ final class DashboardV2ViewModel: ObservableObject {
         async let fcTask: DashboardFixedCategories? = Self.tryFetch { try await repository.fetchFixedCategories(periodId: periodId) }
         async let subTask: DashboardSubscriptions? = Self.tryFetch { try await repository.fetchSubscriptions(periodId: periodId) }
         async let bsTask: DashboardBudgetStabilityV2? = Self.tryFetch { try await repository.fetchBudgetStability(periodId: periodId) }
-        async let rtTask: [RecentTransactionItem]? = Self.tryFetch { try await repository.fetchRecentTransactions(periodId: periodId).data }
+        async let rtTask: [Transaction]? = Self.tryFetch { try await repository.fetchRecentTransactions(periodId: periodId) }
 
         currentPeriod = await cpTask
         netPosition = await npTask
