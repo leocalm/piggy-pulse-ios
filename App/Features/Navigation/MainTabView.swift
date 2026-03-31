@@ -4,28 +4,19 @@ struct MainTabView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
     @State private var selectedTab = 0
-    @Environment(\.horizontalSizeClass) var sizeClass
-
-    init() {
-        let appearance = UITabBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.backgroundColor = UIColor(Color.ppBackground).withAlphaComponent(0.8)
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            Tab("Dashboard", systemImage: "square.grid.2x2", value: 0) {
+            Tab(String(localized: "tab.dashboard"), systemImage: "house.fill", value: 0) {
                 DashboardView(apiClient: appState.apiClient)
             }
-            Tab("Transactions", systemImage: "arrow.left.arrow.right", value: 1) {
+            Tab(String(localized: "tab.transactions"), systemImage: "arrow.left.arrow.right", value: 1) {
                 TransactionsView(apiClient: appState.apiClient)
             }
-            Tab("Periods", systemImage: "calendar", value: 2) {
-                PeriodsView(apiClient: appState.apiClient)
+            Tab(String(localized: "tab.accounts"), systemImage: "creditcard.fill", value: 2) {
+                AccountsView().environmentObject(appState)
             }
-            Tab("More", systemImage: "ellipsis.circle", value: 3) {
+            Tab(String(localized: "tab.more"), systemImage: "ellipsis.circle", value: 3) {
                 moreTab
             }
         }
@@ -33,7 +24,7 @@ struct MainTabView: View {
             PeriodSelectorBar()
         }
         .tabBarMinimizeBehavior(.onScrollDown)
-        .tint(.ppPrimary)
+        .tint(appState.themeManager.primary)
         .background(Color.ppBackground)
     }
 
@@ -43,54 +34,35 @@ struct MainTabView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: PPSpacing.xl) {
-                    // Structure section
-                    VStack(alignment: .leading, spacing: PPSpacing.md) {
-                        Text("STRUCTURE")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
-                            .padding(.horizontal, PPSpacing.lg)
-
-                        VStack(spacing: 1) {
-                            moreLink("Accounts", icon: "building.columns") {
-                                AccountsView().environmentObject(appState)
-                            }
-                            moreLink("Categories", icon: "tag") {
-                                CategoriesView().environmentObject(appState)
-                            }
-                            moreLink("Vendors", icon: "storefront") {
-                                VendorsView().environmentObject(appState)
-                            }
-                            moreLink("Category Targets", icon: "chart.pie") {
-                                BudgetPlanView(apiClient: appState.apiClient).environmentObject(appState)
-                            }
-                            moreLink("Overlays", icon: "square.stack") {
-                                OverlaysView().environmentObject(appState)
-                            }
+                    // Planning section
+                    moreSection(String(localized: "more.planning")) {
+                        moreLink("more.periods", icon: "calendar") {
+                            PeriodsView(apiClient: appState.apiClient).environmentObject(appState)
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
-                        )
+                        moreLink("more.categories", icon: "tag") {
+                            CategoriesView().environmentObject(appState)
+                        }
+                        moreLink("more.targets", icon: "chart.pie") {
+                            BudgetPlanView(apiClient: appState.apiClient).environmentObject(appState)
+                        }
+                    }
+
+                    // Tracking section
+                    moreSection(String(localized: "more.tracking")) {
+                        moreLink("more.subscriptions", icon: "repeat") {
+                            // TODO: SubscriptionsView — Phase 2
+                            Text("Subscriptions — coming soon")
+                        }
+                        moreLink("more.vendors", icon: "storefront") {
+                            VendorsView().environmentObject(appState)
+                        }
                     }
 
                     // App section
-                    VStack(alignment: .leading, spacing: PPSpacing.md) {
-                        Text("APP")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
-                            .padding(.horizontal, PPSpacing.lg)
-
-                        moreLink("Settings", icon: "gearshape") {
+                    moreSection(String(localized: "more.app")) {
+                        moreLink("more.settings", icon: "gearshape") {
                             SettingsView().environmentObject(appState)
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: PPRadius.lg)
-                                .stroke(Color.ppBorder, lineWidth: 1)
-                        )
                     }
 
                     // Logout
@@ -99,9 +71,9 @@ struct MainTabView: View {
                         Task { await appState.logout() }
                     } label: {
                         HStack {
-                            Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
+                            Label(String(localized: "more.logout"), systemImage: "rectangle.portrait.and.arrow.right")
                                 .font(.ppBody)
-                                .foregroundColor(.ppDestructive)
+                                .foregroundColor(.sharedDestructive)
                             Spacer()
                         }
                         .padding(.horizontal, PPSpacing.lg)
@@ -117,14 +89,33 @@ struct MainTabView: View {
                 .padding(PPSpacing.lg)
             }
             .background(Color.ppBackground)
-            .navigationTitle("More")
+            .navigationTitle(String(localized: "tab.more"))
         }
     }
 
-    // MARK: - More Tab Link Helper
+    // MARK: - Helpers
+
+    private func moreSection(_ title: String, @ViewBuilder content: () -> some View) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.md) {
+            Text(title.uppercased())
+                .font(.ppOverline)
+                .foregroundColor(.ppTextSecondary)
+                .tracking(1)
+                .padding(.horizontal, PPSpacing.lg)
+
+            VStack(spacing: 1) {
+                content()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+            .overlay(
+                RoundedRectangle(cornerRadius: PPRadius.lg)
+                    .stroke(Color.ppBorder, lineWidth: 1)
+            )
+        }
+    }
 
     private func moreLink<Destination: View>(
-        _ title: LocalizedStringKey,
+        _ titleKey: LocalizedStringResource,
         icon: String,
         @ViewBuilder destination: @escaping () -> Destination
     ) -> some View {
@@ -132,7 +123,7 @@ struct MainTabView: View {
             destination()
         } label: {
             HStack {
-                Label(title, systemImage: icon)
+                Label(String(localized: titleKey), systemImage: icon)
                     .font(.ppBody)
                     .foregroundColor(.ppTextPrimary)
                 Spacer()

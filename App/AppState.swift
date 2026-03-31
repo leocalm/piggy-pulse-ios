@@ -24,6 +24,7 @@ final class AppState: ObservableObject {
             .first { $0.currency?.identifier == currencyCode }?
             .currencySymbol ?? currencyCode
     }
+    let themeManager = ThemeManager()
     @Published var appColorScheme: ColorScheme? = nil
     @Published var isBiometricLocked = false
     @Published var biometricAuthFailed = false
