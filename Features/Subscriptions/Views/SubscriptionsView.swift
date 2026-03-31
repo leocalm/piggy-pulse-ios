@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct SubscriptionsView: View {
     @EnvironmentObject var appState: AppState
@@ -10,6 +11,8 @@ struct SubscriptionsView: View {
     @State private var subscriptionToDelete: Subscription?
     @State private var selectedSubscription: Subscription?
     @State private var showCancelled = false
+
+    private let subscriptionsTip = SubscriptionsTip()
 
     let apiClient: APIClient
 
@@ -24,6 +27,14 @@ struct SubscriptionsView: View {
                 NoPeriodStateView(pageTitle: String(localized: "more.subscriptions"), showTitle: false)
             } else {
                 List {
+                    // Tip
+                    Section {
+                        TipView(subscriptionsTip)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    }
+
                     if viewModel.isLoading {
                         Section {
                             HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -43,13 +54,35 @@ struct SubscriptionsView: View {
                         }
                     } else if viewModel.subscriptions.isEmpty {
                         Section {
-                            VStack(spacing: PPSpacing.lg) {
-                                Image(systemName: "repeat").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                                Text(String(localized: "subscription.empty.title")).font(.ppBody).foregroundColor(.ppTextSecondary)
-                                Text(String(localized: "subscription.empty.subtitle")).font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
-                            }
-                            .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                            EmptyStateView(
+                                icon: "repeat",
+                                title: String(localized: "subscriptions.empty.title"),
+                                message: String(localized: "subscriptions.empty.message"),
+                                steps: [
+                                    EmptyStateStep(
+                                        title: String(localized: "subscriptions.empty.step1.title"),
+                                        description: String(localized: "subscriptions.empty.step1.description")
+                                    ),
+                                    EmptyStateStep(
+                                        title: String(localized: "subscriptions.empty.step2.title"),
+                                        description: String(localized: "subscriptions.empty.step2.description")
+                                    ),
+                                    EmptyStateStep(
+                                        title: String(localized: "subscriptions.empty.step3.title"),
+                                        description: String(localized: "subscriptions.empty.step3.description")
+                                    ),
+                                ],
+                                tips: [
+                                    String(localized: "subscriptions.empty.tip1"),
+                                    String(localized: "subscriptions.empty.tip2"),
+                                    String(localized: "subscriptions.empty.tip3"),
+                                ],
+                                actionLabel: String(localized: "subscriptions.empty.action"),
+                                action: { showAddSheet = true }
+                            )
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
                     } else {
                         // Stats bar

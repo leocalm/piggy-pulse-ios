@@ -83,6 +83,7 @@
 		410E0A67E994B01A5C322D16 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */; };
 		438B8A35E1A2EEE2AAEC013B /* DashboardCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC1266FA5F9008EC31D0E72 /* DashboardCardStyle.swift */; };
 		48B7E956527EE37B6016880E /* CancelSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075AFDCD4DB916D66358E382 /* CancelSubscriptionSheet.swift */; };
+		585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC8F45593269B73F9767AA8 /* AppTips.swift */; };
 		594CFFC8227767181047BBAD /* CurrentPeriodCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E53F608D1028A3D810AE21 /* CurrentPeriodCard.swift */; };
 		5C0104D5FB8DB480948DBB1A /* NoPeriodStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */; };
 		6997DB49D5EC16DA70365FAF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */; };
@@ -241,6 +242,7 @@
 		C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Repository.swift; sourceTree = "<group>"; };
 		C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionCard.swift; sourceTree = "<group>"; };
 		CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionRepository.swift; path = Core/Repositories/SubscriptionRepository.swift; sourceTree = "<group>"; };
+		DEC8F45593269B73F9767AA8 /* AppTips.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppTips.swift; sourceTree = "<group>"; };
 		E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailView.swift; path = Features/Subscriptions/Views/SubscriptionDetailView.swift; sourceTree = "<group>"; };
 		E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Models.swift; sourceTree = "<group>"; };
 		F8EBCA62AA85E9444E9E35E4 /* DashboardLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardLayout.swift; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 				02F038AA2F58DF42008DD1E7 /* Utilities */,
 				64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */,
 				11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */,
+				DEC8F45593269B73F9767AA8 /* AppTips.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1025,6 +1028,7 @@
 				10397A3AEC49F6F3C76601C3 /* EditSubscriptionSheet.swift in Sources */,
 				48B7E956527EE37B6016880E /* CancelSubscriptionSheet.swift in Sources */,
 				F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */,
+				585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

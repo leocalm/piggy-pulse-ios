@@ -1,5 +1,6 @@
 import SwiftUI
 import BackgroundTasks
+import TipKit
 
 @main
 struct PiggyPulseApp: App {
@@ -9,6 +10,12 @@ struct PiggyPulseApp: App {
     private static let bgTaskIdentifier = "com.piggypulse.notifications.refresh"
 
     init() {
+        #if DEBUG
+        try? Tips.configure([.displayFrequency(.immediate)])
+        #else
+        try? Tips.configure([.displayFrequency(.daily)])
+        #endif
+
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.bgTaskIdentifier, using: nil) { task in
             guard let refreshTask = task as? BGAppRefreshTask else {
                 task.setTaskCompleted(success: false)

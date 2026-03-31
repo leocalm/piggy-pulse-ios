@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
@@ -12,6 +13,8 @@ struct VendorsView: View {
     @State private var vendorToArchive: VendorListItem?
     @State private var searchText = ""
 
+    private let vendorsTip = VendorsTip()
+
     private var filteredVendors: [VendorListItem] {
         if searchText.isEmpty { return vendors }
         return vendors.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
@@ -23,6 +26,14 @@ struct VendorsView: View {
                 NoPeriodStateView(pageTitle: String(localized: "more.vendors"), showTitle: false)
             } else {
                 List {
+                    // Tip
+                    Section {
+                        TipView(vendorsTip)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    }
+
                     if isLoading {
                         Section {
                             HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -71,17 +82,37 @@ struct VendorsView: View {
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
-                    }
-
-                    if vendors.isEmpty {
+                    } else if vendors.isEmpty {
                         Section {
-                            VStack(spacing: PPSpacing.lg) {
-                                Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                                Text(String(localized: "vendors.emptyTitle")).font(.ppBody).foregroundColor(.ppTextSecondary)
-                                Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
-                            }
-                            .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                            EmptyStateView(
+                                icon: "storefront",
+                                title: String(localized: "vendors.empty.title"),
+                                message: String(localized: "vendors.empty.message"),
+                                steps: [
+                                    EmptyStateStep(
+                                        title: String(localized: "vendors.empty.step1.title"),
+                                        description: String(localized: "vendors.empty.step1.description")
+                                    ),
+                                    EmptyStateStep(
+                                        title: String(localized: "vendors.empty.step2.title"),
+                                        description: String(localized: "vendors.empty.step2.description")
+                                    ),
+                                    EmptyStateStep(
+                                        title: String(localized: "vendors.empty.step3.title"),
+                                        description: String(localized: "vendors.empty.step3.description")
+                                    ),
+                                ],
+                                tips: [
+                                    String(localized: "vendors.empty.tip1"),
+                                    String(localized: "vendors.empty.tip2"),
+                                    String(localized: "vendors.empty.tip3"),
+                                ],
+                                actionLabel: String(localized: "vendors.empty.action"),
+                                action: { showAddSheet = true }
+                            )
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
                     } else if !filteredVendors.isEmpty {
                         Section {

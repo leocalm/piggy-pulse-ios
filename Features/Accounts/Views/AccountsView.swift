@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct AccountsView: View {
     @EnvironmentObject var appState: AppState
@@ -12,12 +13,22 @@ struct AccountsView: View {
     @State private var accountToDelete: AccountListItem?
     @State private var accountToArchive: AccountListItem?
 
+    private let accountsTip = AccountsTip()
+
     var body: some View {
         NavigationStack {
             if appState.selectedPeriod == nil {
                 NoPeriodStateView(pageTitle: String(localized: "tab.accounts"), showTitle: false)
             } else {
                 List {
+                    // Tip
+                    Section {
+                        TipView(accountsTip)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    }
+
                     if isLoading {
                         Section {
                             HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -30,6 +41,38 @@ struct AccountsView: View {
                             errorView(error)
                                 .listRowBackground(Color.ppBackground)
                                 .listRowSeparator(.hidden)
+                        }
+                    } else if accounts.isEmpty {
+                        Section {
+                            EmptyStateView(
+                                icon: "building.columns",
+                                title: String(localized: "accounts.empty.title"),
+                                message: String(localized: "accounts.empty.message"),
+                                steps: [
+                                    EmptyStateStep(
+                                        title: String(localized: "accounts.empty.step1.title"),
+                                        description: String(localized: "accounts.empty.step1.description")
+                                    ),
+                                    EmptyStateStep(
+                                        title: String(localized: "accounts.empty.step2.title"),
+                                        description: String(localized: "accounts.empty.step2.description")
+                                    ),
+                                    EmptyStateStep(
+                                        title: String(localized: "accounts.empty.step3.title"),
+                                        description: String(localized: "accounts.empty.step3.description")
+                                    ),
+                                ],
+                                tips: [
+                                    String(localized: "accounts.empty.tip1"),
+                                    String(localized: "accounts.empty.tip2"),
+                                    String(localized: "accounts.empty.tip3"),
+                                ],
+                                actionLabel: String(localized: "accounts.empty.action"),
+                                action: { showAddSheet = true }
+                            )
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
                     } else {
                         // Summary

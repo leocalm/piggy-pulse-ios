@@ -8811,6 +8811,1382 @@
           }
         }
       }
+    },
+    "tip.dashboard.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Dashboard"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu Painel"
+          }
+        }
+      }
+    },
+    "tip.dashboard.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your dashboard shows a snapshot of your finances for the selected period. Use the Customize button to choose which widgets to display and reorder them."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu painel mostra um resumo das suas finanças para o período selecionado. Use o botão Personalizar para escolher quais widgets exibir e reordená-los."
+          }
+        }
+      }
+    },
+    "tip.transactions.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track Transactions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acompanhe Transações"
+          }
+        }
+      }
+    },
+    "tip.transactions.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transactions are the core of your budget. Each one is linked to a category and account, which lets you track where your money goes during each period."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transações são o núcleo do seu orçamento. Cada uma é vinculada a uma categoria e conta, permitindo acompanhar para onde seu dinheiro vai em cada período."
+          }
+        }
+      }
+    },
+    "tip.accounts.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage Accounts"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerencie Contas"
+          }
+        }
+      }
+    },
+    "tip.accounts.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accounts represent where your money is held — checking, savings, credit cards, or wallets. Their balances are updated as you add transactions."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contas representam onde seu dinheiro está — corrente, poupança, cartões de crédito ou carteiras. Seus saldos são atualizados conforme você adiciona transações."
+          }
+        }
+      }
+    },
+    "tip.categories.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organize with Categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organize com Categorias"
+          }
+        }
+      }
+    },
+    "tip.categories.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories help you organize your transactions and set budget targets. Create income and expense categories to define your budgeting structure."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categorias ajudam a organizar suas transações e definir metas de orçamento. Crie categorias de receita e despesa para definir sua estrutura orçamentária."
+          }
+        }
+      }
+    },
+    "tip.periods.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Budget Periods"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Períodos de Orçamento"
+          }
+        }
+      }
+    },
+    "tip.periods.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Periods are time windows for your budget — typically monthly. All transactions and budget targets are scoped to the active period."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Períodos são janelas de tempo para seu orçamento — geralmente mensais. Todas as transações e metas são vinculadas ao período ativo."
+          }
+        }
+      }
+    },
+    "tip.subscriptions.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track Subscriptions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acompanhe Assinaturas"
+          }
+        }
+      }
+    },
+    "tip.subscriptions.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscriptions track recurring charges like streaming services, memberships, and bills. Adding them here helps you see upcoming costs."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assinaturas rastreiam cobranças recorrentes como serviços de streaming, mensalidades e contas. Adicioná-las aqui ajuda a ver custos futuros."
+          }
+        }
+      }
+    },
+    "tip.vendors.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track Vendors"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acompanhe Fornecedores"
+          }
+        }
+      }
+    },
+    "tip.vendors.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vendors represent the places where you spend money. Linking transactions to vendors helps you see spending patterns over time."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fornecedores representam os locais onde você gasta dinheiro. Vincular transações a fornecedores ajuda a ver padrões de gastos ao longo do tempo."
+          }
+        }
+      }
+    },
+    "transactions.empty.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No transactions yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma transação ainda"
+          }
+        }
+      }
+    },
+    "transactions.empty.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start tracking your spending by adding your first transaction."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comece a acompanhar seus gastos adicionando sua primeira transação."
+          }
+        }
+      }
+    },
+    "transactions.empty.step1.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a transaction"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione uma transação"
+          }
+        }
+      }
+    },
+    "transactions.empty.step1.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the button above to record your first transaction."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use o botão acima para registrar sua primeira transação."
+          }
+        }
+      }
+    },
+    "transactions.empty.step2.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assign a category"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atribua uma categoria"
+          }
+        }
+      }
+    },
+    "transactions.empty.step2.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick an income or expense category so the transaction counts toward your budget."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha uma categoria de receita ou despesa para que a transação conte no seu orçamento."
+          }
+        }
+      }
+    },
+    "transactions.empty.step3.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review in your dashboard"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revise no seu painel"
+          }
+        }
+      }
+    },
+    "transactions.empty.step3.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your transactions will appear in dashboard widgets like Cash Flow and Recent Transactions."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suas transações aparecerão em widgets do painel como Fluxo de Caixa e Transações Recentes."
+          }
+        }
+      }
+    },
+    "transactions.empty.tip1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the + button to enter transactions quickly."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use o botão + para registrar transações rapidamente."
+          }
+        }
+      }
+    },
+    "transactions.empty.tip2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each transaction is linked to a category, which determines how it appears in your budget."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada transação é vinculada a uma categoria, que determina como ela aparece no seu orçamento."
+          }
+        }
+      }
+    },
+    "transactions.empty.tip3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the direction and category filters to find specific transactions."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use os filtros de direção e categoria para encontrar transações específicas."
+          }
+        }
+      }
+    },
+    "transactions.empty.action": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Transaction"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Transação"
+          }
+        }
+      }
+    },
+    "accounts.empty.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No accounts yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma conta ainda"
+          }
+        }
+      }
+    },
+    "accounts.empty.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first account to start tracking your balances."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione sua primeira conta para começar a acompanhar seus saldos."
+          }
+        }
+      }
+    },
+    "accounts.empty.step1.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create an account"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie uma conta"
+          }
+        }
+      }
+    },
+    "accounts.empty.step1.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the account type and enter a name and starting balance."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha o tipo de conta e insira um nome e saldo inicial."
+          }
+        }
+      }
+    },
+    "accounts.empty.step2.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set the initial balance"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defina o saldo inicial"
+          }
+        }
+      }
+    },
+    "accounts.empty.step2.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter your real-world balance so the app matches your actual finances."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insira seu saldo real para que o app corresponda às suas finanças reais."
+          }
+        }
+      }
+    },
+    "accounts.empty.step3.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use in transactions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use nas transações"
+          }
+        }
+      }
+    },
+    "accounts.empty.step3.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When recording transactions, select which account the money came from or went to."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao registrar transações, selecione de qual conta o dinheiro veio ou para qual foi."
+          }
+        }
+      }
+    },
+    "accounts.empty.tip1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can add checking, savings, credit card, wallet, or allowance accounts."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você pode adicionar contas corrente, poupança, cartão de crédito, carteira ou mesada."
+          }
+        }
+      }
+    },
+    "accounts.empty.tip2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set your current balance when creating an account — it updates as you add transactions."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defina seu saldo atual ao criar uma conta — ele é atualizado conforme você adiciona transações."
+          }
+        }
+      }
+    },
+    "accounts.empty.tip3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accounts you no longer use can be archived to keep your list focused."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contas que você não usa mais podem ser arquivadas para manter sua lista organizada."
+          }
+        }
+      }
+    },
+    "accounts.empty.action": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Account"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Conta"
+          }
+        }
+      }
+    },
+    "categories.empty.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No categories yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma categoria ainda"
+          }
+        }
+      }
+    },
+    "categories.empty.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create your first category to start categorizing transactions and define your budgeting structure."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie sua primeira categoria para começar a categorizar transações e definir sua estrutura de orçamento."
+          }
+        }
+      }
+    },
+    "categories.empty.step1.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a category"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie uma categoria"
+          }
+        }
+      }
+    },
+    "categories.empty.step1.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose income or expense, give it a name, and pick an icon and color."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha receita ou despesa, dê um nome e escolha um ícone e cor."
+          }
+        }
+      }
+    },
+    "categories.empty.step2.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set a budget target (optional)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defina uma meta (opcional)"
+          }
+        }
+      }
+    },
+    "categories.empty.step2.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a monthly spending or income target to track progress against your budget."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione uma meta mensal de gastos ou receita para acompanhar seu progresso."
+          }
+        }
+      }
+    },
+    "categories.empty.step3.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assign to transactions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atribua às transações"
+          }
+        }
+      }
+    },
+    "categories.empty.step3.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When adding transactions, select a category so spending is organized automatically."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao adicionar transações, selecione uma categoria para que os gastos sejam organizados automaticamente."
+          }
+        }
+      }
+    },
+    "categories.empty.tip1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories are split into income (incoming) and expense (outgoing) types."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categorias são divididas em tipos de receita (entrada) e despesa (saída)."
+          }
+        }
+      }
+    },
+    "categories.empty.tip2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set budget targets on categories to track spending against your plan."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defina metas de orçamento nas categorias para acompanhar gastos em relação ao planejado."
+          }
+        }
+      }
+    },
+    "categories.empty.tip3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories you no longer need can be archived to keep your list clean."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categorias que você não precisa mais podem ser arquivadas para manter sua lista limpa."
+          }
+        }
+      }
+    },
+    "categories.empty.action": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Category"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Categoria"
+          }
+        }
+      }
+    },
+    "vendors.empty.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No vendors yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum fornecedor ainda"
+          }
+        }
+      }
+    },
+    "vendors.empty.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vendors help you track where your money goes. Add your first vendor to start categorizing spending."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fornecedores ajudam a rastrear para onde seu dinheiro vai. Adicione seu primeiro fornecedor para categorizar gastos."
+          }
+        }
+      }
+    },
+    "vendors.empty.step1.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a vendor"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie um fornecedor"
+          }
+        }
+      }
+    },
+    "vendors.empty.step1.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add the name of a store, service, or payee you regularly transact with."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione o nome de uma loja, serviço ou beneficiário com quem você transaciona regularmente."
+          }
+        }
+      }
+    },
+    "vendors.empty.step2.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Link to transactions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vincule às transações"
+          }
+        }
+      }
+    },
+    "vendors.empty.step2.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When adding transactions, select a vendor to associate the spend."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao adicionar transações, selecione um fornecedor para associar o gasto."
+          }
+        }
+      }
+    },
+    "vendors.empty.step3.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track spending patterns"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acompanhe padrões de gastos"
+          }
+        }
+      }
+    },
+    "vendors.empty.step3.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View how much you spend per vendor over time from the vendor detail page."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veja quanto você gasta por fornecedor ao longo do tempo na página de detalhes."
+          }
+        }
+      }
+    },
+    "vendors.empty.tip1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vendors help you see which places you spend the most at over time."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fornecedores ajudam a ver em quais lugares você mais gasta ao longo do tempo."
+          }
+        }
+      }
+    },
+    "vendors.empty.tip2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you have duplicate vendor entries, you can merge them into one."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se você tiver entradas duplicadas de fornecedores, pode mesclá-las em uma só."
+          }
+        }
+      }
+    },
+    "vendors.empty.tip3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archive vendors you no longer use to keep your list clean."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arquive fornecedores que você não usa mais para manter sua lista limpa."
+          }
+        }
+      }
+    },
+    "vendors.empty.action": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Vendor"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Fornecedor"
+          }
+        }
+      }
+    },
+    "periods.empty.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No periods yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum período ainda"
+          }
+        }
+      }
+    },
+    "periods.empty.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create your first budget period to start organizing your finances by time window."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie seu primeiro período de orçamento para começar a organizar suas finanças por janela de tempo."
+          }
+        }
+      }
+    },
+    "periods.empty.step1.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a period"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie um período"
+          }
+        }
+      }
+    },
+    "periods.empty.step1.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set a start and end date to define your first budget window."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defina uma data de início e fim para sua primeira janela de orçamento."
+          }
+        }
+      }
+    },
+    "periods.empty.step2.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable auto-generation (optional)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ative a geração automática (opcional)"
+          }
+        }
+      }
+    },
+    "periods.empty.step2.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on automatic period creation so you do not have to manually create them each month."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ative a criação automática de períodos para não precisar criá-los manualmente todo mês."
+          }
+        }
+      }
+    },
+    "periods.empty.step3.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select the period"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione o período"
+          }
+        }
+      }
+    },
+    "periods.empty.step3.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the period selector to switch between periods across the app."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use o seletor de período para alternar entre períodos no aplicativo."
+          }
+        }
+      }
+    },
+    "periods.empty.tip1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A period defines the time window for your budget — most users create monthly periods."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um período define a janela de tempo do seu orçamento — a maioria dos usuários cria períodos mensais."
+          }
+        }
+      }
+    },
+    "periods.empty.tip2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable auto-generation to have new periods created automatically when the current one ends."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ative a geração automática para criar novos períodos automaticamente quando o atual terminar."
+          }
+        }
+      }
+    },
+    "periods.empty.tip3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With multiple periods, you can compare spending across different time windows."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Com múltiplos períodos, você pode comparar gastos em diferentes janelas de tempo."
+          }
+        }
+      }
+    },
+    "periods.empty.action": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create Period"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Criar Período"
+          }
+        }
+      }
+    },
+    "subscriptions.empty.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No subscriptions yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma assinatura ainda"
+          }
+        }
+      }
+    },
+    "subscriptions.empty.message": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track your recurring charges like streaming services, memberships, and bills."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acompanhe suas cobranças recorrentes como serviços de streaming, mensalidades e contas."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.step1.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a subscription"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione uma assinatura"
+          }
+        }
+      }
+    },
+    "subscriptions.empty.step1.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the service name, billing amount, and how often you are charged."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insira o nome do serviço, valor da cobrança e a frequência da cobrança."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.step2.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set the billing schedule"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defina o calendário de cobrança"
+          }
+        }
+      }
+    },
+    "subscriptions.empty.step2.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose monthly, quarterly, or yearly billing so upcoming charges are calculated."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha cobrança mensal, trimestral ou anual para que as próximas cobranças sejam calculadas."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.step3.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitor upcoming costs"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitore custos futuros"
+          }
+        }
+      }
+    },
+    "subscriptions.empty.step3.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The upcoming charges section shows what is due next and when."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A seção de próximas cobranças mostra o que vence em seguida e quando."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.tip1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscriptions are separate from regular transactions — they represent recurring commitments."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assinaturas são separadas das transações regulares — representam compromissos recorrentes."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.tip2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once added, upcoming charges appear on this page so you can plan ahead."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma vez adicionadas, as próximas cobranças aparecem nesta página para você se planejar."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.tip3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can pause or cancel subscriptions to track their lifecycle."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você pode pausar ou cancelar assinaturas para acompanhar seu ciclo de vida."
+          }
+        }
+      }
+    },
+    "subscriptions.empty.action": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Subscription"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Assinatura"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

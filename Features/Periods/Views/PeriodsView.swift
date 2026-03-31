@@ -1,10 +1,13 @@
 import SwiftUI
+import TipKit
 
 struct PeriodsView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var viewModel: PeriodsViewModel
     @State private var showCreateSheet = false
     @State private var periodToDelete: BudgetPeriod?
+
+    private let periodsTip = PeriodsTip()
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: PeriodsViewModel(apiClient: apiClient))
@@ -14,6 +17,8 @@ struct PeriodsView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: PPSpacing.xl) {
+                    TipView(periodsTip)
+
                     if viewModel.isLoading {
                         HStack {
                             Spacer()
@@ -37,6 +42,33 @@ struct PeriodsView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
+                    } else if periodsByYear.isEmpty {
+                        EmptyStateView(
+                            icon: "calendar",
+                            title: String(localized: "periods.empty.title"),
+                            message: String(localized: "periods.empty.message"),
+                            steps: [
+                                EmptyStateStep(
+                                    title: String(localized: "periods.empty.step1.title"),
+                                    description: String(localized: "periods.empty.step1.description")
+                                ),
+                                EmptyStateStep(
+                                    title: String(localized: "periods.empty.step2.title"),
+                                    description: String(localized: "periods.empty.step2.description")
+                                ),
+                                EmptyStateStep(
+                                    title: String(localized: "periods.empty.step3.title"),
+                                    description: String(localized: "periods.empty.step3.description")
+                                ),
+                            ],
+                            tips: [
+                                String(localized: "periods.empty.tip1"),
+                                String(localized: "periods.empty.tip2"),
+                                String(localized: "periods.empty.tip3"),
+                            ],
+                            actionLabel: String(localized: "periods.empty.action"),
+                            action: { showCreateSheet = true }
+                        )
                     } else {
                         // Schedule status pill
                         scheduleStatusPill
