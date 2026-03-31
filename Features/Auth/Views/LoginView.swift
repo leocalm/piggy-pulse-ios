@@ -3,6 +3,7 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = AuthViewModel(appState: AppState())
 
     @State private var viewModelReady = false
@@ -30,7 +31,7 @@ struct LoginView: View {
                                 .font(.ppTitle)
                                 .foregroundStyle(
                                     LinearGradient(
-                                        colors: [.ppCyan, .ppPrimary],
+                                        colors: [theme.tertiary, theme.primary],
                                         startPoint: .leading,
                                         endPoint: .trailing
                                     )
@@ -132,7 +133,7 @@ struct LoginView: View {
                 .padding(.vertical, PPSpacing.md)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.ppPrimary)
+            .tint(theme.primary)
             .buttonBorderShape(.capsule)
             .disabled(viewModel.isLoginDisabled)
 
@@ -142,7 +143,7 @@ struct LoginView: View {
                         .environmentObject(appState)
                 }
                 .font(.ppCallout)
-                .foregroundColor(.ppPrimary)
+                .foregroundColor(theme.primary)
 
                 HStack(spacing: 4) {
                     Text(String(localized: "auth.noAccount"))
@@ -153,7 +154,7 @@ struct LoginView: View {
                             .environmentObject(appState)
                     }
                     .font(.ppCallout)
-                    .foregroundColor(.ppPrimary)
+                    .foregroundColor(theme.primary)
                 }
             }
         }
@@ -212,7 +213,7 @@ struct LoginView: View {
                 .padding(.vertical, PPSpacing.md)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.ppPrimary)
+            .tint(theme.primary)
             .buttonBorderShape(.capsule)
             .disabled(viewModel.is2FADisabled)
 
@@ -222,7 +223,7 @@ struct LoginView: View {
                 viewModel.errorMessage = nil
             }
             .font(.ppCallout)
-            .foregroundColor(.ppPrimary)
+            .foregroundColor(theme.primary)
         }
     }
 }

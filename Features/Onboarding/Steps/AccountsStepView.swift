@@ -3,6 +3,7 @@ import SwiftUI
 struct AccountsStepView: View {
     @ObservedObject var vm: OnboardingViewModel
 @Environment(\.colorScheme) private var colorScheme
+@Environment(\.themeManager) private var theme
 
     private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
     private let typeLabels: [String: String] = [
@@ -32,7 +33,7 @@ struct AccountsStepView: View {
                             }
                         }
                         .pickerStyle(.menu)
-                        .tint(.ppPrimary)
+                        .tint(theme.primary)
                         .padding(PPSpacing.md)
                         .background(Color.ppCard)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
@@ -60,12 +61,12 @@ struct AccountsStepView: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         } label: {
                             HStack {
-                                Image(systemName: "plus.circle.fill").foregroundColor(.ppPrimary)
-                                Text(String(localized: "button.addAccount")).font(.ppCallout).foregroundColor(.ppPrimary)
+                                Image(systemName: "plus.circle.fill").foregroundColor(theme.primary)
+                                Text(String(localized: "button.addAccount")).font(.ppCallout).foregroundColor(theme.primary)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(PPSpacing.md)
-                            .background(Color.ppPrimary.opacity(0.08))
+                            .background(theme.primary.opacity(0.08))
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                         }
                     }
@@ -81,6 +82,7 @@ struct AccountsStepView: View {
 
 private struct AccountCardView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     @Binding var account: DraftAccount
     let typeLabels: [String: String]
     let accountTypes: [String]
@@ -118,7 +120,7 @@ private struct AccountCardView: View {
                         Text(typeLabels[t] ?? t).tag(t)
                     }
                 }
-                .pickerStyle(.menu).tint(.ppPrimary)
+                .pickerStyle(.menu).tint(theme.primary)
             }
 
             HStack {

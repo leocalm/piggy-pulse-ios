@@ -8,18 +8,22 @@ struct GettingStartedCard: View {
     @State private var hasCategories = false
     @State private var hasTransactions = false
 
-    private var steps: [(key: String, complete: Bool)] {
+    private var steps: [(key: String, title: String, desc: String, complete: Bool)] {
         [
-            ("createAccount", hasAccounts),
-            ("createPeriod", hasPeriods),
-            ("setCategories", hasCategories),
-            ("addTransaction", hasTransactions),
+            ("createAccount", String(localized: "gettingStarted.steps.createAccount.title"), String(localized: "gettingStarted.steps.createAccount.desc"), hasAccounts),
+            ("createPeriod", String(localized: "gettingStarted.steps.createPeriod.title"), String(localized: "gettingStarted.steps.createPeriod.desc"), hasPeriods),
+            ("setCategories", String(localized: "gettingStarted.steps.setCategories.title"), String(localized: "gettingStarted.steps.setCategories.desc"), hasCategories),
+            ("addTransaction", String(localized: "gettingStarted.steps.addTransaction.title"), String(localized: "gettingStarted.steps.addTransaction.desc"), hasTransactions),
         ]
     }
 
     private var completedCount: Int { steps.filter(\.complete).count }
+    private var allComplete: Bool { completedCount == steps.count }
 
     var body: some View {
+        if allComplete {
+            EmptyView()
+        } else {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             HStack {
                 VStack(alignment: .leading, spacing: PPSpacing.xs) {
@@ -44,13 +48,13 @@ struct GettingStartedCard: View {
                         .foregroundColor(step.complete ? theme.primary : .ppTextTertiary)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(String(localized: String.LocalizationValue("gettingStarted.steps.\(step.key).title")))
+                        Text(step.title)
                             .font(.ppCallout)
                             .fontWeight(.medium)
                             .foregroundColor(step.complete ? .ppTextTertiary : .ppTextPrimary)
                             .strikethrough(step.complete)
 
-                        Text(String(localized: String.LocalizationValue("gettingStarted.steps.\(step.key).desc")))
+                        Text(step.desc)
                             .font(.ppCaption)
                             .foregroundColor(.ppTextSecondary)
                     }
@@ -61,12 +65,14 @@ struct GettingStartedCard: View {
         .task {
             await checkProgress()
         }
+        } // else !allComplete
     }
 
     private func checkProgress() async {
         let api = appState.apiClient
 
-        async let accountsTask: PaginatedResponse<AccountListItem>? = try? api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")])
+        struct SimpleAccount: Codable { let id: UUID }
+        async let accountsTask: PaginatedResponse<SimpleAccount>? = try? api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")])
         async let periodsTask = try? PeriodRepository(apiClient: api).fetchPeriods()
         async let catsTask: PaginatedResponse<CategoryListItem>? = try? api.request(.categories, queryItems: [URLQueryItem(name: "limit", value: "1")])
 

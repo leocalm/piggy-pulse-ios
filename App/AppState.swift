@@ -14,6 +14,7 @@ final class AppState: ObservableObject {
     @Published var currentUser: User?
     @Published var selectedPeriod: BudgetPeriod?
     @Published var isLoading = true
+    @Published var onboardingCompleted = true
     @Published var currencyCode: String = "EUR"
     
 
@@ -47,15 +48,15 @@ final class AppState: ObservableObject {
         }
         struct CurrencyItem: Codable, Identifiable {
             let id: UUID
-            let currency: String
+            let code: String
         }
-        
+
         do {
             let profile: ProfileResponse = try await apiClient.request(.profile)
             if let currencyId = profile.defaultCurrencyId {
                 let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
                 if let match = currencies.first(where: { $0.id == currencyId }) {
-                    currencyCode = match.currency
+                    currencyCode = match.code
                 }
             }
         } catch {
@@ -135,6 +136,7 @@ final class AppState: ObservableObject {
                 isBiometricLocked = true
             }
             await loadUserCurrency()
+            await checkOnboardingStatus()
             await scheduleNotifications()
         } catch {
             tokenManager.clearTokens()
@@ -144,6 +146,19 @@ final class AppState: ObservableObject {
         isLoading = false
         loadTheme()
     }
+    func checkOnboardingStatus() async {
+        struct OnboardingStatus: Codable {
+            let status: String
+        }
+        do {
+            let response: OnboardingStatus = try await apiClient.request(.onboardingStatus)
+            onboardingCompleted = response.status == "completed"
+        } catch {
+            // If endpoint fails, assume completed (existing user)
+            onboardingCompleted = true
+        }
+    }
+
     func scheduleNotifications() async {
         do {
             async let periodsTask = periodRepository.fetchPeriods()

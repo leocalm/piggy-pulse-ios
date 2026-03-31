@@ -4,9 +4,11 @@ import TipKit
 struct CategoriesView: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
+@Environment(\.themeManager) private var theme
     @State private var incoming: [CategoryManagementItem] = []
     @State private var outgoing: [CategoryManagementItem] = []
     @State private var archived: [CategoryManagementItem] = []
+    @State private var overviewMap: [UUID: CategoriesOverviewSummaryItem] = [:]
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showArchived = false
@@ -90,9 +92,9 @@ struct CategoriesView: View {
                 } else if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
-                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
                             Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(theme.primary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -130,8 +132,8 @@ struct CategoriesView: View {
                         .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 } else {
-                    categorySection(String(localized: "INCOMING"), categories: filteredIncoming, color: .ppCyan)
-                    categorySection(String(localized: "OUTGOING"), categories: filteredOutgoing, color: .ppPrimary)
+                    categorySection(String(localized: "INCOMING"), categories: filteredIncoming, color: theme.tertiary)
+                    categorySection(String(localized: "OUTGOING"), categories: filteredOutgoing, color: theme.primary)
 
                     if !filteredArchived.isEmpty {
                         Section {
@@ -164,13 +166,13 @@ struct CategoriesView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .background(Color.ppBackground)
-            .refreshable { await load() }
+            .refreshable { await Task { @MainActor in await self.load() }.value }
             .task { await load() }
             .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
                 AddCategorySheet { }.environmentObject(appState)
             }
             .sheet(item: $editingCategory) { cat in
-                EditCategorySheet(category: cat) { Task { await load() } }
+                EditCategorySheet(category: cat, currentTarget: overviewMap[cat.id]?.budgeted) { Task { await load() } }
                     .environmentObject(appState)
             }
             .confirmationDialog("Archive \"\(categoryToArchive?.name ?? "")\"?", isPresented: Binding(get: { categoryToArchive != nil }, set: { if !$0 { categoryToArchive = nil } }), titleVisibility: .visible) {
@@ -269,7 +271,7 @@ struct CategoriesView: View {
                                     } label: {
                                         Label(String(localized: "common.archive"), systemImage: "archivebox")
                                     }
-                                    .tint(.ppAmber)
+                                    .tint(theme.secondary)
                                 } else {
                                     Button(role: .destructive) {
                                         categoryToDelete = cat
@@ -281,7 +283,7 @@ struct CategoriesView: View {
                             }
                             .swipeActions(edge: .leading) {
                                 if !cat.isSystem {
-                                    Button { editingCategory = cat } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(.ppPrimary)
+                                    Button { editingCategory = cat } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(theme.primary)
                                 }
                             }
                             .contextMenu {
@@ -344,37 +346,73 @@ struct CategoriesView: View {
     private func categoryRow(_ cat: CategoryManagementItem, dimmed: Bool) -> some View {
         HStack(spacing: PPSpacing.md) {
             Circle()
-                .fill(Color(hex: cat.color) ?? .ppPrimary)
+                .fill(Color(hex: cat.color) ?? theme.primary)
                 .frame(width: 36, height: 36)
                 .overlay(Text(cat.icon).font(.system(size: 16)))
                 .opacity(dimmed ? 0.5 : 1)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(cat.name)
-                    .font(.ppHeadline)
-                    .foregroundColor(dimmed ? .ppTextTertiary : .ppTextPrimary)
+                HStack(spacing: PPSpacing.sm) {
+                    Text(cat.name)
+                        .font(.ppHeadline)
+                        .foregroundColor(dimmed ? .ppTextTertiary : .ppTextPrimary)
 
-                Text(String(localized: "categories.transactionCount \(cat.globalTransactionCount)"))
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
+                    if let behavior = cat.behavior, !behavior.isEmpty {
+                        Text(behaviorLabel(behavior).uppercased())
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundColor(behaviorColor(behavior))
+                            .padding(.horizontal, PPSpacing.sm)
+                            .padding(.vertical, 2)
+                            .background(behaviorColor(behavior).opacity(0.15))
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
+                    }
+                }
+
+                let overview = overviewMap[cat.id]
+                let typeLabel = cat.type == "income" ? String(localized: "common.incoming") : String(localized: "common.outgoing")
+                if let budgeted = overview?.budgeted, budgeted > 0 {
+                    Text("\(typeLabel) · \(formatCurrency(budgeted, code: appState.currencyCode)) \(String(localized: "categories.budgetedLabel"))")
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                } else {
+                    Text(typeLabel)
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
             }
 
             Spacer()
 
-            if cat.isSystem {
-                Text(String(localized: "common.system"))
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextTertiary)
-                    .padding(.horizontal, PPSpacing.sm)
-                    .padding(.vertical, 2)
-                    .background(Color.ppSurface)
-                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+            // Spent amount
+            if let overview = overviewMap[cat.id] {
+                Text(formatCurrency(overview.actual, code: appState.currencyCode))
+                    .font(.ppCallout)
+                    .fontDesign(.monospaced)
+                    .foregroundColor(.ppTextPrimary)
             }
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private func behaviorLabel(_ behavior: String) -> String {
+        switch behavior {
+        case "fixed": return String(localized: "category.behavior.fixed")
+        case "variable": return String(localized: "category.behavior.variable")
+        case "subscription": return String(localized: "category.behavior.subscription")
+        default: return behavior
+        }
+    }
+
+    private func behaviorColor(_ behavior: String) -> Color {
+        switch behavior {
+        case "fixed": return theme.secondary
+        case "variable": return .ppTeal
+        case "subscription": return theme.tertiary
+        default: return .ppTextSecondary
+        }
     }
 
     private func load() async {
@@ -385,6 +423,16 @@ struct CategoriesView: View {
             incoming = response.incoming
             outgoing = response.outgoing
             archived = response.archived
+
+            // Load overview for spent/budgeted data
+            if let periodId = appState.selectedPeriod?.id {
+                if let overview: CategoriesOverviewResponse = try? await appState.apiClient.request(
+                    .categoriesOverview,
+                    queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
+                ) {
+                    overviewMap = Dictionary(uniqueKeysWithValues: overview.categories.map { ($0.id, $0) })
+                }
+            }
         } catch {
             errorMessage = String(localized: "Failed to load categories.")
         }
@@ -394,9 +442,14 @@ struct CategoriesView: View {
 
 // Response model
 struct CategoriesManagementResponse: Codable {
-    let incoming: [CategoryManagementItem]
-    let outgoing: [CategoryManagementItem]
-    let archived: [CategoryManagementItem]
+    let data: [CategoryManagementItem]
+    let totalCount: Int?
+    let hasMore: Bool?
+    let nextCursor: String?
+
+    var incoming: [CategoryManagementItem] { data.filter { !$0.isArchived && $0.type.lowercased() == "income" } }
+    var outgoing: [CategoryManagementItem] { data.filter { !$0.isArchived && $0.type.lowercased() == "expense" } }
+    var archived: [CategoryManagementItem] { data.filter { $0.isArchived } }
 }
 
 struct CategoryManagementItem: Codable, Identifiable {
@@ -404,9 +457,17 @@ struct CategoryManagementItem: Codable, Identifiable {
     let name: String
     let color: String
     let icon: String
-    let categoryType: String
-    let isArchived: Bool
-    let isSystem: Bool
-    let globalTransactionCount: Int64
-    let budgeted: Int64?
+    let type: String               // "income" | "expense" | "transfer"
+    let status: String             // "active" | "inactive"
+    let parentId: UUID?
+    let behavior: String?          // "fixed" | "variable" | "subscription" | nil
+    let description: String?
+    let numberOfTransactions: Int64
+
+    // MARK: - Backward compatibility
+    var categoryType: String { type }
+    var isArchived: Bool { status == "inactive" }
+    var isSystem: Bool { false }
+    var globalTransactionCount: Int64 { numberOfTransactions }
+    var budgeted: Int64? { nil }   // Not in v2 CategoryManagementListItem
 }

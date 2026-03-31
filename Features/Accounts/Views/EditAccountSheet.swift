@@ -4,6 +4,7 @@ struct EditAccountSheet: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     let account: AccountListItem
     var onUpdated: () -> Void
@@ -69,7 +70,7 @@ struct EditAccountSheet: View {
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                .tint(.ppPrimary)
+                                .tint(theme.primary)
                             }
 
                             if showSpendLimit {
@@ -94,7 +95,7 @@ struct EditAccountSheet: View {
                                 Text(String(localized: "field.color")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
-                                        Circle().fill(Color(hex: c) ?? .ppPrimary).frame(width: 32, height: 32)
+                                        Circle().fill(Color(hex: c) ?? theme.primary).frame(width: 32, height: 32)
                                             .overlay(Circle().stroke(Color.white, lineWidth: color == c ? 2 : 0))
                                             .onTapGesture { color = c }
                                     }
@@ -140,7 +141,7 @@ struct EditAccountSheet: View {
     private func prefill() {
         name = account.name
         color = account.color
-        accountType = account.accountType
+        accountType = account.type
         if let limit = account.spendLimit {
             spendLimitText = String(format: "%.2f", Double(limit) / 100.0)
         }
@@ -156,9 +157,9 @@ struct EditAccountSheet: View {
         }()
 
         struct Req: Encodable {
-            let name: String; let color: String; let icon: String; let accountType: String; let spendLimit: Int32?
+            let name: String; let color: String; let type: String; let initialBalance: Int64; let spendLimit: Int32?
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: defaultIcon, accountType: accountType, spendLimit: spendLimit)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, type: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit)
         do {
             try await appState.apiClient.request(.updateAccount(account.id), body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

@@ -34,9 +34,9 @@ final class PeriodsViewModel: ObservableObject {
 
         do {
             let all = try await periodsTask
-            currentPeriod = all.first(where: { $0.status == .active })
-            upcomingPeriods = all.filter { $0.status == .upcoming }
-            pastPeriods = all.filter { $0.status == .ended }.reversed()
+            currentPeriod = all.first(where: { $0.periodStatus == .active })
+            upcomingPeriods = all.filter { $0.periodStatus == .upcoming }
+            pastPeriods = all.filter { $0.periodStatus == .ended }.reversed()
         } catch {
             errorMessage = String(localized: "Failed to load periods.")
         }

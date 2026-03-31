@@ -3,7 +3,7 @@ import Foundation
 final class APIClient {
     static let baseURL = {
         #if DEBUG
-        return "http://127.0.0.1:8000/v2"
+        return "http://192.168.1.148:8000/v2"
         #else
         return "https://api.piggy-pulse.com/v2"
         #endif
@@ -22,7 +22,8 @@ final class APIClient {
         self.decoder.dateDecodingStrategy = .iso8601
 
         self.encoder = JSONEncoder()
-        self.encoder.keyEncodingStrategy = .convertToSnakeCase
+        // v2 API expects camelCase request bodies (not snake_case)
+        // self.encoder.keyEncodingStrategy = .convertToSnakeCase
         self.encoder.dateEncodingStrategy = .iso8601
 
         let config = URLSessionConfiguration.default

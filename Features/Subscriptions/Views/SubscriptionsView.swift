@@ -3,6 +3,7 @@ import TipKit
 
 struct SubscriptionsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = SubscriptionsViewModel()
     @State private var showAddSheet = false
     @State private var editingSubscription: Subscription?
@@ -36,10 +37,10 @@ struct SubscriptionsView: View {
                     } else if let error = viewModel.errorMessage {
                         Section {
                             VStack(spacing: PPSpacing.md) {
-                                Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                                Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
                                 Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
                                 Button(String(localized: "subscription.retry")) { Task { await viewModel.load() } }
-                                    .font(.ppHeadline).foregroundColor(.ppPrimary)
+                                    .font(.ppHeadline).foregroundColor(theme.primary)
                             }
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -109,13 +110,24 @@ struct SubscriptionsView: View {
                                             Button { cancellingSubscription = sub } label: {
                                                 Label(String(localized: "subscription.cancel"), systemImage: "xmark.circle")
                                             }
-                                            .tint(.ppAmber)
+                                            .tint(theme.secondary)
                                         }
                                         .swipeActions(edge: .leading) {
                                             Button { editingSubscription = sub } label: {
                                                 Label(String(localized: "subscription.edit"), systemImage: "pencil")
                                             }
-                                            .tint(.ppPrimary)
+                                            .tint(theme.primary)
+                                        }
+                                        .contextMenu {
+                                            Button { editingSubscription = sub } label: {
+                                                Label(String(localized: "common.edit"), systemImage: "pencil")
+                                            }
+                                            Button { cancellingSubscription = sub } label: {
+                                                Label(String(localized: "subscription.cancel"), systemImage: "xmark.circle")
+                                            }
+                                            Button(role: .destructive) { subscriptionToDelete = sub } label: {
+                                                Label(String(localized: "common.delete"), systemImage: "trash")
+                                            }
                                         }
                                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                                         .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -137,7 +149,15 @@ struct SubscriptionsView: View {
                                             Button { editingSubscription = sub } label: {
                                                 Label(String(localized: "subscription.edit"), systemImage: "pencil")
                                             }
-                                            .tint(.ppPrimary)
+                                            .tint(theme.primary)
+                                        }
+                                        .contextMenu {
+                                            Button { editingSubscription = sub } label: {
+                                                Label(String(localized: "common.edit"), systemImage: "pencil")
+                                            }
+                                            Button(role: .destructive) { subscriptionToDelete = sub } label: {
+                                                Label(String(localized: "common.delete"), systemImage: "trash")
+                                            }
                                         }
                                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                                         .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -179,6 +199,11 @@ struct SubscriptionsView: View {
                                                 }
                                                 .tint(.ppDestructive)
                                             }
+                                            .contextMenu {
+                                                Button(role: .destructive) { subscriptionToDelete = sub } label: {
+                                                    Label(String(localized: "common.delete"), systemImage: "trash")
+                                                }
+                                            }
                                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                                     }
@@ -190,7 +215,7 @@ struct SubscriptionsView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .background(Color.ppBackground)
-                .refreshable { await viewModel.load() }
+                .refreshable { let vm = viewModel; await Task { @MainActor in await vm.load() }.value }
                 .task {
                     viewModel.configure(apiClient: appState.apiClient)
                     await viewModel.load()

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct EmojiPickerGrid: View {
+    @Environment(\.themeManager) private var theme
     @Binding var selectedEmoji: String?
 
     private let emojis: [String] = [
@@ -28,14 +29,14 @@ struct EmojiPickerGrid: View {
                     .frame(width: 40, height: 40)
                     .background(
                         selectedEmoji == emoji
-                            ? Color.ppPrimary.opacity(0.2)
+                            ? theme.primary.opacity(0.2)
                             : Color.clear
                     )
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                     .overlay(
                         RoundedRectangle(cornerRadius: PPRadius.sm)
                             .stroke(
-                                selectedEmoji == emoji ? Color.ppPrimary : Color.clear,
+                                selectedEmoji == emoji ? theme.primary : Color.clear,
                                 lineWidth: 2
                             )
                     )

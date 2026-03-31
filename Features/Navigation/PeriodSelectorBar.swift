@@ -51,7 +51,7 @@ struct PeriodSelectorBar: View {
                             .foregroundColor(.ppTextSecondary)
                     }
 
-                    statusDot(period.status)
+                    statusDot(period.periodStatus)
 
                     Image(systemName: "chevron.up.chevron.down")
                         .font(.system(size: 10, weight: .medium))
@@ -97,7 +97,7 @@ struct PeriodSelectorBar: View {
             let fetched = try await repo.fetchPeriods()
             periods = fetched
             if appState.selectedPeriod == nil {
-                appState.selectedPeriod = fetched.first(where: { $0.status == .active })
+                appState.selectedPeriod = fetched.first(where: { $0.periodStatus == .active })
                     ?? fetched.first
             }
         } catch {}
@@ -150,7 +150,7 @@ struct PeriodSelectorTitleButton: View {
         } label: {
             HStack(spacing: PPSpacing.xs) {
                 if let period = appState.selectedPeriod {
-                    statusDot(period.status)
+                    statusDot(period.periodStatus)
 
                     Text(period.name)
                         .font(.system(size: 15, weight: .semibold))
@@ -242,7 +242,7 @@ struct PeriodPickerSheet: View {
                                             .foregroundColor(.ppTextTertiary)
                                         Text(period.statusText)
                                             .font(.ppCaption)
-                                            .foregroundColor(statusColor(period.status))
+                                            .foregroundColor(statusColor(period.periodStatus))
                                     }
                                 }
 

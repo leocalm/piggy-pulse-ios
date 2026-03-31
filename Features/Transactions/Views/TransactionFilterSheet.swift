@@ -3,6 +3,7 @@ import SwiftUI
 struct TransactionFilterSheet: View {
     @Environment(\.dismiss) private var dismiss
 @Environment(\.colorScheme) private var colorScheme
+@Environment(\.themeManager) private var theme
 
     let filterOptions: TransactionFilterOptions
     let isLoadingOptions: Bool
@@ -132,7 +133,7 @@ struct TransactionFilterSheet: View {
                 Spacer()
                 if selected.wrappedValue.contains(id) {
                     Image(systemName: "checkmark")
-                        .foregroundColor(.ppPrimary)
+                        .foregroundColor(theme.primary)
                         .fontWeight(.semibold)
                 }
             }

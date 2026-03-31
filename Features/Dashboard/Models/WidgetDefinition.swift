@@ -84,7 +84,7 @@ let widgetDefinitions: [WidgetDefinition] = [
         sfSymbol: "checkmark.rectangle.fill",
         nameKey: "widget.fixedCategories.name",
         descriptionKey: "widget.fixedCategories.desc",
-        defaultVisible: false,
+        defaultVisible: true,
         isHero: false
     ),
     WidgetDefinition(

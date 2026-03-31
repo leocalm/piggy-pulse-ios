@@ -134,7 +134,12 @@ enum CategoryTemplate: Equatable {
 
 struct Currency: Codable, Identifiable, Hashable {
     let id: UUID
-    let currency: String   // ISO code e.g. "EUR"
+    let code: String       // ISO code e.g. "EUR"
     let name: String
     let symbol: String
+    let decimalPlaces: Int?
+    let symbolPosition: String?
+
+    // MARK: - Backward compatibility
+    var currency: String { code }
 }

@@ -3,6 +3,7 @@ import SwiftUI
 struct CreatePeriodSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     // Period Setup
     @State private var startDate = Date()
@@ -135,7 +136,7 @@ struct CreatePeriodSheet: View {
                 DatePicker("", selection: $startDate, displayedComponents: .date)
                     .datePickerStyle(.compact)
                     .labelsHidden()
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
             }
 
             // Duration (only visible in duration mode)
@@ -161,7 +162,7 @@ struct CreatePeriodSheet: View {
 
                             Stepper("", value: $duration, in: 1...365)
                                 .labelsHidden()
-                                .tint(.ppPrimary)
+                                .tint(theme.primary)
                         }
                         .padding(.horizontal, PPSpacing.lg)
                         .padding(.vertical, PPSpacing.sm)
@@ -186,7 +187,7 @@ struct CreatePeriodSheet: View {
                             }
                         }
                         .pickerStyle(.menu)
-                        .tint(.ppPrimary)
+                        .tint(theme.primary)
                     }
                 }
             }
@@ -244,7 +245,7 @@ struct CreatePeriodSheet: View {
                     DatePicker("", selection: $manualEndDate, in: startDate..., displayedComponents: .date)
                         .datePickerStyle(.compact)
                         .labelsHidden()
-                        .tint(.ppPrimary)
+                        .tint(theme.primary)
                 }
             }
         }
@@ -298,13 +299,15 @@ struct CreatePeriodSheet: View {
         struct CreateRequest: Encodable {
             let name: String
             let startDate: String
-            let endDate: String
+            let periodType: String
+            let manualEndDate: String
         }
 
         let request = CreateRequest(
             name: name.trimmingCharacters(in: .whitespaces),
             startDate: fmt.string(from: startDate),
-            endDate: fmt.string(from: effectiveEndDate)
+            periodType: "ManualEndDate",
+            manualEndDate: fmt.string(from: effectiveEndDate)
         )
 
         do {

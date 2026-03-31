@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BudgetPlanView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = BudgetViewModel()
     @State private var selectedTarget: CategoryTarget?
 
@@ -27,7 +28,7 @@ struct BudgetPlanView: View {
                             VStack(spacing: PPSpacing.md) {
                                 Image(systemName: "exclamationmark.triangle")
                                     .font(.system(size: 32))
-                                    .foregroundColor(.ppAmber)
+                                    .foregroundColor(theme.secondary)
                                 Text(error)
                                     .font(.ppBody)
                                     .foregroundColor(.ppTextSecondary)
@@ -37,7 +38,7 @@ struct BudgetPlanView: View {
                                     }
                                 }
                                 .font(.ppHeadline)
-                                .foregroundColor(.ppPrimary)
+                                .foregroundColor(theme.primary)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, PPSpacing.xxxl)
@@ -82,7 +83,7 @@ struct BudgetPlanView: View {
                                             } label: {
                                                 Label(String(localized: "button.exclude"), systemImage: "eye.slash")
                                             }
-                                            .tint(.ppAmber)
+                                            .tint(theme.secondary)
                                         }
                                         .onTapGesture { selectedTarget = target }
                                 }
@@ -126,7 +127,7 @@ struct BudgetPlanView: View {
                                             } label: {
                                                 Label(String(localized: "button.include"), systemImage: "eye")
                                             }
-                                            .tint(.ppCyan)
+                                            .tint(theme.tertiary)
                                         }
                                         .onTapGesture { selectedTarget = target }
                                 }
@@ -205,8 +206,8 @@ struct BudgetPlanView: View {
 
     private func budgetStatsBar(withTarget: [CategoryTarget], noTarget: [CategoryTarget], excluded: [CategoryTarget]) -> some View {
         let periodName = appState.selectedPeriod?.name ?? ""
-        let expenseTargets = withTarget.filter { $0.categoryType == "outgoing" }
-        let incomeTargets = withTarget.filter { $0.categoryType == "incoming" }
+        let expenseTargets = withTarget.filter { $0.type == "expense" }
+        let incomeTargets = withTarget.filter { $0.type == "income" }
         let expenseBudget = expenseTargets.reduce(Int64(0)) { $0 + Int64($1.currentTarget ?? 0) }
         let incomeTarget = incomeTargets.reduce(Int64(0)) { $0 + Int64($1.currentTarget ?? 0) }
         let totalCategories = withTarget.count + noTarget.count + excluded.count
@@ -277,9 +278,9 @@ struct BudgetPlanView: View {
                 .tracking(1)
 
             VStack(spacing: PPSpacing.md) {
-                breakdownRow(String(localized: "budget.totalBudget"), value: totalBudget, color: .ppPrimary)
+                breakdownRow(String(localized: "budget.totalBudget"), value: totalBudget, color: theme.primary)
                 breakdownRow(String(localized: "budget.currentlySpent"), value: spentBudget, color: .ppTextSecondary)
-                breakdownRow(String(localized: "budget.remainingBudget"), value: remainingBudget, color: .ppCyan)
+                breakdownRow(String(localized: "budget.remainingBudget"), value: remainingBudget, color: theme.tertiary)
             }
 
             GeometryReader { geo in
@@ -288,7 +289,7 @@ struct BudgetPlanView: View {
                         .fill(Color.ppBorder)
                         .frame(height: 8)
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.ppPrimary)
+                        .fill(theme.primary)
                         .frame(width: geo.size.width * min(spentPercentage, 1.0), height: 8)
                 }
             }
@@ -352,7 +353,7 @@ struct BudgetPlanView: View {
                 .foregroundColor(.ppTextTertiary)
             Image(systemName: "plus.circle")
                 .font(.ppCallout)
-                .foregroundColor(.ppPrimary)
+                .foregroundColor(theme.primary)
         }
         .padding(PPSpacing.lg)
         .background(Color.ppCard.opacity(0.5))
@@ -373,10 +374,10 @@ struct BudgetPlanView: View {
             Spacer()
             Text(String(localized: "budget.excludedLabel"))
                 .font(.ppCaption)
-                .foregroundColor(.ppAmber)
+                .foregroundColor(theme.secondary)
                 .padding(.horizontal, PPSpacing.sm)
                 .padding(.vertical, 2)
-                .background(Color.ppAmber.opacity(0.15))
+                .background(theme.secondary.opacity(0.15))
                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
         }
         .padding(PPSpacing.lg)

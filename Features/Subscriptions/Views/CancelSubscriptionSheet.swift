@@ -4,6 +4,7 @@ struct CancelSubscriptionSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
     let subscription: Subscription
     let apiClient: APIClient
@@ -88,7 +89,7 @@ struct CancelSubscriptionSheet: View {
                                     Spacer()
                                 }
                                 .padding(.vertical, PPSpacing.md)
-                                .background(Color.ppAmber)
+                                .background(theme.secondary)
                                 .foregroundColor(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             }

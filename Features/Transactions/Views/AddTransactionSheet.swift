@@ -4,6 +4,7 @@ struct AddTransactionSheet: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     // Form fields
     @State private var amountText = ""
@@ -44,7 +45,7 @@ struct AddTransactionSheet: View {
     private var isDisabled: Bool {
         amountInCents <= 0 ||
         description.trimmingCharacters(in: .whitespaces).count < 3 ||
-        selectedCategory == nil ||
+        (!isTransfer && selectedCategory == nil) ||
         selectedFromAccount == nil ||
         (isTransfer && selectedToAccount == nil) ||
         isLoading
@@ -146,14 +147,14 @@ struct AddTransactionSheet: View {
                     .font(.ppCallout)
                     .foregroundColor(.ppTextPrimary)
             }
-            .tint(.ppPrimary)
+            .tint(theme.primary)
             .onChange(of: isTransfer) { _, transfer in
                 if transfer {
                     selectedCategory = transferCategory
                     selectedVendor = nil
                 } else {
                     selectedToAccount = nil
-                    if selectedCategory?.categoryType == "Transfer" {
+                    if selectedCategory?.id == transferCategory?.id {
                         selectedCategory = nil
                     }
                 }
@@ -197,7 +198,7 @@ struct AddTransactionSheet: View {
                 DatePicker("", selection: $occurredAt, displayedComponents: .date)
                     .datePickerStyle(.compact)
                     .labelsHidden()
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
             }
         }
         .padding(PPSpacing.lg)
@@ -232,7 +233,7 @@ struct AddTransactionSheet: View {
                         }
                     }
                     .pickerStyle(.menu)
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
                 }
             }
 
@@ -250,7 +251,7 @@ struct AddTransactionSheet: View {
                     }
                 }
                 .pickerStyle(.menu)
-                .tint(.ppPrimary)
+                .tint(theme.primary)
             }
 
             // To account (only for transfers)
@@ -268,7 +269,7 @@ struct AddTransactionSheet: View {
                         }
                     }
                     .pickerStyle(.menu)
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
                 }
             } else {
                 HStack {
@@ -281,7 +282,7 @@ struct AddTransactionSheet: View {
                         }
                     }
                     .pickerStyle(.menu)
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
                 }
             }
         }
@@ -311,11 +312,10 @@ struct AddTransactionSheet: View {
             )
             accounts = accountsResponse
 
-            // Fetch categories (options endpoint) — excludes transfer category
-            categories = try await appState.apiClient.request(.categoryOptions)
-
-            // Fetch transfer category separately for auto-assignment
-            transferCategory = try? await appState.apiClient.request(.transferCategory)
+            // Fetch categories (options endpoint) — now includes transfer category
+            let allOptions: [CategoryOption] = try await appState.apiClient.request(.categoryOptions)
+            transferCategory = allOptions.first(where: { $0.name == "Transfer" })
+            categories = allOptions.filter { $0.name != "Transfer" }
 
 
 
@@ -339,8 +339,8 @@ struct AddTransactionSheet: View {
         isLoading = true
         errorMessage = nil
 
-        guard let categoryId = selectedCategory?.id,
-              let fromAccountId = selectedFromAccount?.id else {
+        let categoryId = selectedCategory?.id ?? transferCategory?.id
+        guard let categoryId, let fromAccountId = selectedFromAccount?.id else {
             errorMessage = String(localized: "Please select a category and account.")
             UINotificationFeedbackGenerator().notificationOccurred(.error)
             isLoading = false
@@ -353,21 +353,37 @@ struct AddTransactionSheet: View {
         struct CreateTransactionRequest: Encodable {
             let amount: Int64
             let description: String
-            let occurredAt: String
+            let date: String
             let categoryId: UUID
             let fromAccountId: UUID
             let toAccountId: UUID?
             let vendorId: UUID?
+            let transactionType: String
+            enum CodingKeys: String, CodingKey {
+                case amount, description, date, categoryId, fromAccountId, toAccountId, vendorId, transactionType
+            }
+            func encode(to encoder: Encoder) throws {
+                var c = encoder.container(keyedBy: CodingKeys.self)
+                try c.encode(amount, forKey: .amount)
+                try c.encode(description, forKey: .description)
+                try c.encode(date, forKey: .date)
+                try c.encode(categoryId, forKey: .categoryId)
+                try c.encode(fromAccountId, forKey: .fromAccountId)
+                try c.encodeIfPresent(toAccountId, forKey: .toAccountId)
+                try c.encodeIfPresent(vendorId, forKey: .vendorId)
+                try c.encode(transactionType, forKey: .transactionType)
+            }
         }
 
         let request = CreateTransactionRequest(
             amount: amountInCents,
             description: description.trimmingCharacters(in: .whitespaces),
-            occurredAt: fmt.string(from: occurredAt),
+            date: fmt.string(from: occurredAt),
             categoryId: categoryId,
             fromAccountId: fromAccountId,
             toAccountId: isTransfer ? selectedToAccount?.id : nil,
-            vendorId: selectedVendor?.id
+            vendorId: selectedVendor?.id,
+            transactionType: isTransfer ? "Transfer" : "Regular"
         )
 
         do {

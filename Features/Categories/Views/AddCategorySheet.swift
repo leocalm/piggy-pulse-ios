@@ -4,12 +4,14 @@ struct AddCategorySheet: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     @State private var name = ""
     @State private var icon = "🛒"
     @State private var color = "#007AFF"
     @State private var categoryType = "Outgoing"
     @State private var targetAmountText = ""
+    @State private var behavior = "variable"
     @State private var isLoading = false
     @State private var errorMessage: String?
 
@@ -66,30 +68,33 @@ struct AddCategorySheet: View {
                                         Text(i)
                                             .font(.system(size: 24))
                                             .frame(width: 36, height: 36)
-                                            .background(icon == i ? Color.ppPrimary.opacity(0.3) : Color.clear)
+                                            .background(icon == i ? theme.primary.opacity(0.3) : Color.clear)
                                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: PPRadius.sm)
-                                                    .stroke(icon == i ? Color.ppPrimary : Color.clear, lineWidth: 1)
+                                                    .stroke(icon == i ? theme.primary : Color.clear, lineWidth: 1)
                                             )
                                             .onTapGesture { icon = i }
                                     }
                                 }
                             }
 
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text(String(localized: "field.color")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
-                                    ForEach(colorOptions, id: \.self) { c in
-                                        Circle().fill(Color(hex: c) ?? .ppPrimary).frame(width: 32, height: 32)
-                                            .overlay(Circle().stroke(Color.white, lineWidth: color == c ? 2 : 0))
-                                            .onTapGesture { color = c }
-                                    }
-                                }
-                            }
+                            // Color is determined by type+behavior on the server
 
                             // Target amount (optional)
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                            // Behavior
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                Text(String(localized: "category.behavior"))
+                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Picker("", selection: $behavior) {
+                                    Text(String(localized: "category.behavior.fixed")).tag("fixed")
+                                    Text(String(localized: "category.behavior.variable")).tag("variable")
+                                    Text(String(localized: "category.behavior.subscription")).tag("subscription")
+                                }
+                                .pickerStyle(.segmented)
+                            }
+
                                 Text(String(localized: "category.target"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
@@ -140,14 +145,26 @@ struct AddCategorySheet: View {
     private func create() async {
         isLoading = true; errorMessage = nil
         struct Req: Encodable {
-            let name: String; let color: String; let icon: String; let categoryType: String; let target: Int64?
+            let name: String; let color: String; let icon: String; let type: String; let target: Int64?; let behavior: String?
+            enum CodingKeys: String, CodingKey { case name, color, icon, type, target, behavior }
+            func encode(to encoder: Encoder) throws {
+                var c = encoder.container(keyedBy: CodingKeys.self)
+                try c.encode(name, forKey: .name)
+                try c.encode(color, forKey: .color)
+                try c.encode(icon, forKey: .icon)
+                try c.encode(type, forKey: .type)
+                try c.encodeIfPresent(target, forKey: .target)
+                try c.encodeIfPresent(behavior, forKey: .behavior)
+            }
         }
         let targetCents: Int64? = {
             let cleaned = targetAmountText.replacingOccurrences(of: ",", with: ".")
             guard let decimal = Decimal(string: cleaned), decimal > 0 else { return nil }
             return NSDecimalNumber(decimal: decimal * 100).int64Value
         }()
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: icon, categoryType: categoryType, target: targetCents)
+        // Map UI types to v2 types
+        let v2Type = categoryType == "Incoming" ? "income" : "expense"
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: "#000000", icon: icon, type: v2Type, target: targetCents, behavior: behavior.isEmpty ? nil : behavior)
         do {
             try await appState.apiClient.request(.createCategory, body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

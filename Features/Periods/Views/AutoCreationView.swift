@@ -3,6 +3,7 @@ import SwiftUI
 struct AutoCreationView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
     @State private var schedule: PeriodSchedule?
     @State private var isLoading = true
     @State private var isDisabled = false
@@ -71,7 +72,7 @@ struct AutoCreationView: View {
                     .padding(.vertical, PPSpacing.md)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.ppPrimary)
+            .tint(theme.primary)
             .buttonBorderShape(.capsule)
         }
         .padding(PPSpacing.xl)
@@ -111,7 +112,7 @@ struct AutoCreationView: View {
                             Text("\(day)").tag(day)
                         }
                     }
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
                 }
 
                 // Duration
@@ -133,7 +134,7 @@ struct AutoCreationView: View {
                             Text(String(localized: "unit.weeks")).tag("weeks")
                             Text(String(localized: "unit.months")).tag("months")
                         }
-                        .tint(.ppPrimary)
+                        .tint(theme.primary)
                     }
                 }
 
@@ -222,7 +223,7 @@ struct AutoCreationView: View {
                     .padding(.vertical, PPSpacing.md)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.ppPrimary)
+                .tint(theme.primary)
                 .buttonBorderShape(.capsule)
                 .disabled(isSaving || namePattern.trimmingCharacters(in: .whitespaces).isEmpty)
 
@@ -252,7 +253,7 @@ struct AutoCreationView: View {
                 Text(String(localized: "autoCreation.moveToFriday")).tag("friday")
                 Text(String(localized: "autoCreation.moveToMonday")).tag("monday")
             }
-            .tint(.ppPrimary)
+            .tint(theme.primary)
         }
     }
 
@@ -263,13 +264,13 @@ struct AutoCreationView: View {
         do {
             let s: PeriodSchedule = try await appState.apiClient.request(.schedule)
             schedule = s
-            startDay = s.startDay
-            durationValue = s.durationValue
-            durationUnit = s.durationUnit
-            saturdayAdj = s.saturdayAdjustment
-            sundayAdj = s.sundayAdjustment
-            namePattern = s.namePattern
-            generateAhead = s.generateAhead
+            startDay = s.startDayOfTheMonth ?? 1
+            durationValue = s.periodDuration ?? 1
+            durationUnit = s.durationUnit ?? "months"
+            saturdayAdj = s.saturdayPolicy ?? "keep"
+            sundayAdj = s.sundayPolicy ?? "keep"
+            namePattern = s.namePattern ?? "{month} {year}"
+            generateAhead = s.generateAhead ?? 3
             isDisabled = false
         } catch {
             // 404 means no schedule — show disabled state
@@ -283,21 +284,25 @@ struct AutoCreationView: View {
         errorMessage = nil
 
         struct ScheduleRequest: Encodable {
-            let startDay: Int
-            let durationValue: Int
+            let scheduleType: String
+            let recurrenceMethod: String
+            let startDayOfTheMonth: Int
+            let periodDuration: Int
             let durationUnit: String
-            let saturdayAdjustment: String
-            let sundayAdjustment: String
+            let saturdayPolicy: String
+            let sundayPolicy: String
             let namePattern: String
             let generateAhead: Int
         }
 
         let request = ScheduleRequest(
-            startDay: startDay,
-            durationValue: durationValue,
+            scheduleType: "automatic",
+            recurrenceMethod: "dayOfMonth",
+            startDayOfTheMonth: startDay,
+            periodDuration: durationValue,
             durationUnit: durationUnit,
-            saturdayAdjustment: saturdayAdj,
-            sundayAdjustment: sundayAdj,
+            saturdayPolicy: saturdayAdj,
+            sundayPolicy: sundayAdj,
             namePattern: namePattern.trimmingCharacters(in: .whitespaces),
             generateAhead: generateAhead
         )

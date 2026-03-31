@@ -23,18 +23,18 @@ struct RecentTransactionsCard: View {
                             .font(.system(size: 20))
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(txn.description ?? txn.vendor?.name ?? txn.category.name)
+                            Text(txn.description.isEmpty ? (txn.vendor?.name ?? txn.category.name) : txn.description)
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextPrimary)
                                 .lineLimit(1)
-                            Text(formatDateString(txn.occurredAt))
+                            Text(formatDateString(txn.date))
                                 .font(.ppCaption)
                                 .foregroundColor(.ppTextTertiary)
                         }
 
                         Spacer()
 
-                        let prefix = txn.category.categoryType == "incoming" ? "+" : ""
+                        let prefix = txn.category.type == "income" ? "+" : ""
                         Text("\(prefix)\(formatCurrency(txn.amount, code: currencyCode))")
                             .font(.ppCallout)
                             .fontWeight(.medium)

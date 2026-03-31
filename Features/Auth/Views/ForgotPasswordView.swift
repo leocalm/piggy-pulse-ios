@@ -3,6 +3,7 @@ import SwiftUI
 struct ForgotPasswordView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = AuthViewModel(appState: AppState())
     @State private var viewModelReady = false
     @Environment(\.dismiss) private var dismiss
@@ -29,7 +30,7 @@ struct ForgotPasswordView: View {
                                 .font(.ppTitle)
                                 .foregroundStyle(
                                     LinearGradient(
-                                        colors: [.ppCyan, .ppPrimary],
+                                        colors: [theme.tertiary, theme.primary],
                                         startPoint: .leading,
                                         endPoint: .trailing
                                     )
@@ -119,7 +120,7 @@ struct ForgotPasswordView: View {
                 .padding(.vertical, PPSpacing.md)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.ppPrimary)
+            .tint(theme.primary)
             .buttonBorderShape(.capsule)
             .disabled(viewModel.isForgotDisabled)
 
@@ -127,7 +128,7 @@ struct ForgotPasswordView: View {
                 dismiss()
             }
             .font(.ppCallout)
-            .foregroundColor(.ppPrimary)
+            .foregroundColor(theme.primary)
         }
     }
 
@@ -137,7 +138,7 @@ struct ForgotPasswordView: View {
         VStack(spacing: PPSpacing.xl) {
             Image(systemName: "envelope.badge.fill")
                 .font(.system(size: 48))
-                .foregroundColor(.ppPrimary)
+                .foregroundColor(theme.primary)
 
             VStack(spacing: PPSpacing.sm) {
                 Text(String(localized: "auth.checkEmail"))
@@ -155,7 +156,7 @@ struct ForgotPasswordView: View {
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(.ppPrimary)
+            .tint(theme.primary)
             .frame(maxWidth: .infinity)
             .controlSize(.large)
         }

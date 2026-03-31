@@ -36,9 +36,14 @@ struct DashboardView: View {
                 }
                 .background(Color.ppBackground)
                 .refreshable {
-                    if let periodId = appState.selectedPeriod?.id {
-                        await viewModel.load(periodId: periodId)
-                    }
+                    viewModel.configure(apiClient: appState.apiClient)
+                    guard let periodId = appState.selectedPeriod?.id else { return }
+                    // Use a detached task so SwiftUI's refreshable cancellation
+                    // doesn't abort the API calls mid-flight
+                    let vm = viewModel
+                    await Task { @MainActor in
+                        await vm.load(periodId: periodId)
+                    }.value
                 }
                 .task(id: appState.selectedPeriod?.id) {
                     viewModel.configure(apiClient: appState.apiClient)
@@ -77,7 +82,7 @@ struct DashboardView: View {
                 .sheet(isPresented: $showAddWidget, onDismiss: {
                     layoutVersion += 1 // Force re-render after widget customization
                 }) {
-                    AddWidgetSheet(layout: viewModel.layout)
+                    AddWidgetSheet(layout: viewModel.layout, accounts: viewModel.accounts ?? [])
                 }
             }
         }
@@ -96,39 +101,136 @@ struct DashboardView: View {
             }
         case "net_position":
             if let data = viewModel.netPosition {
-                NetPositionCard(data: data, currencyCode: appState.currencyCode)
+                NetPositionCard(data: data, accounts: viewModel.accounts ?? [], currencyCode: appState.currencyCode)
             }
         case "cash_flow":
             if let data = viewModel.cashFlow {
                 CashFlowCard(data: data, currencyCode: appState.currencyCode)
             }
         case "recent_transactions":
-            if let data = viewModel.recentTransactions {
-                RecentTransactionsCard(transactions: data, currencyCode: appState.currencyCode)
-            }
+            RecentTransactionsCard(transactions: viewModel.recentTransactions ?? [], currencyCode: appState.currencyCode)
         case "spending_trend":
-            if let data = viewModel.spendingTrend {
-                SpendingTrendCard(data: data, currencyCode: appState.currencyCode)
-            }
+            SpendingTrendCard(
+                data: viewModel.spendingTrend ?? DashboardSpendingTrend(periods: [], periodAverage: 0),
+                currencyCode: appState.currencyCode
+            )
         case "top_vendors":
-            if let data = viewModel.topVendors {
-                TopVendorsCard(vendors: data, currencyCode: appState.currencyCode)
-            }
+            TopVendorsCard(vendors: viewModel.topVendors ?? [], currencyCode: appState.currencyCode)
         case "variable_categories":
-            if let data = viewModel.variableCategories {
-                VariableCategoriesCard(data: data, currencyCode: appState.currencyCode)
-            }
+            VariableCategoriesCard(
+                data: viewModel.variableCategories ?? DashboardVariableCategories(totalBudgeted: 0, totalSpent: 0, categories: []),
+                currencyCode: appState.currencyCode
+            )
         case "fixed_categories":
-            if let data = viewModel.fixedCategories {
-                FixedCategoriesCard(data: data, currencyCode: appState.currencyCode)
-            }
+            FixedCategoriesCard(
+                data: viewModel.fixedCategories ?? DashboardFixedCategories(totalBudgeted: 0, totalPaid: 0, categories: []),
+                currencyCode: appState.currencyCode
+            )
         case "subscriptions":
-            if let data = viewModel.subscriptions {
-                SubscriptionsCard(data: data, currencyCode: appState.currencyCode)
-            }
+            SubscriptionsCard(
+                data: viewModel.subscriptions ?? DashboardSubscriptions(activeCount: 0, monthlyTotal: 0, yearlyTotal: 0, subscriptions: []),
+                currencyCode: appState.currencyCode
+            )
         default:
-            EmptyView()
+            // Account cards: "account:{uuid}"
+            if id.hasPrefix("account:"), let accountId = UUID(uuidString: String(id.dropFirst("account:".count))) {
+                if let account = viewModel.accounts?.first(where: { $0.id == accountId }) {
+                    accountCard(account)
+                }
+            } else {
+                EmptyView()
+            }
         }
+    }
+
+    // MARK: - Account Card
+
+    private func accountCard(_ account: AccountListItem) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.lg) {
+            // Header: name + type badge
+            HStack {
+                Text(account.name)
+                    .font(.ppHeadline)
+                    .foregroundColor(.ppTextPrimary)
+                Spacer()
+                Text(account.type.uppercased())
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(theme.primary)
+                    .padding(.horizontal, PPSpacing.sm)
+                    .padding(.vertical, PPSpacing.xs)
+                    .background(theme.primary.opacity(0.15))
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
+            }
+
+            // Balance
+            Text(formatCurrency(account.currentBalance, code: appState.currencyCode))
+                .font(.ppAmount)
+                .foregroundColor(.ppTextPrimary)
+
+            // Period change
+            let prefix = account.netChangeThisPeriod >= 0 ? "+" : ""
+            Text("\(prefix)\(formatCurrency(account.netChangeThisPeriod, code: appState.currencyCode)) \(String(localized: "widget.netPosition.thisPeriod"))")
+                .font(.ppCallout)
+                .foregroundColor(.ppTextSecondary)
+
+            // Type-specific info rows
+            if account.type == "Allowance" {
+                VStack(spacing: 0) {
+                    infoRow(String(localized: "account.card.availableToSpend"), value: formatCurrency(max(account.currentBalance, 0), code: appState.currencyCode))
+                    Divider().background(Color.ppBorder)
+                    infoRow(String(localized: "account.card.nextTopUp"), value: account.nextTransfer.map { formatDateString($0) } ?? "—")
+                    Divider().background(Color.ppBorder)
+                    infoRow(String(localized: "account.card.balanceAfterTopUp"), value: formatCurrency(account.balanceAfterNextTransfer ?? account.currentBalance, code: appState.currencyCode))
+                    Divider().background(Color.ppBorder)
+                    infoRow(String(localized: "account.card.spentThisCycle"), value: formatCurrency(abs(account.netChangeThisPeriod), code: appState.currencyCode))
+                }
+                .background(Color.ppElevated)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
+            } else {
+                // Standard stats: transactions + avg daily balance or limit
+                HStack(spacing: PPSpacing.md) {
+                    statBox(String(localized: "account.card.transactions"), value: "\(account.numberOfTransactions)")
+
+                    if account.type == "CreditCard" {
+                        statBox(String(localized: "account.card.creditLimit"), value: formatCurrency(Int64(account.spendLimit ?? 0), code: appState.currencyCode))
+                    } else {
+                        statBox(String(localized: "account.card.avgDailyBalance"), value: formatCurrency(account.currentBalance, code: appState.currencyCode))
+                    }
+                }
+            }
+        }
+        .dashboardCard()
+    }
+
+    private func infoRow(_ label: String, value: String) -> some View {
+        HStack {
+            Text(label)
+                .font(.ppCaption)
+                .foregroundColor(.ppTextSecondary)
+            Spacer()
+            Text(value)
+                .font(.ppCallout)
+                .fontDesign(.monospaced)
+                .foregroundColor(.ppTextPrimary)
+        }
+        .padding(.horizontal, PPSpacing.md)
+        .padding(.vertical, PPSpacing.sm)
+    }
+
+    private func statBox(_ label: String, value: String) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.xs) {
+            Text(label.uppercased())
+                .font(.system(size: 9, weight: .bold))
+                .foregroundColor(.ppTextTertiary)
+                .tracking(0.5)
+            Text(value)
+                .font(.ppHeadline)
+                .foregroundColor(.ppTextPrimary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(PPSpacing.sm)
+        .background(Color.ppElevated)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
     }
 
     // MARK: - Loading
@@ -178,28 +280,42 @@ extension View {
 
 struct AddWidgetSheet: View {
     let layout: DashboardLayout
+    let accounts: [AccountListItem]
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeManager) private var theme
+
+    private var accountMap: [String: AccountListItem] {
+        Dictionary(uniqueKeysWithValues: accounts.filter { $0.status == "active" }.map { ("account:\($0.id.uuidString)", $0) })
+    }
+
+    private func widgetLabel(for id: String) -> (icon: String, name: String) {
+        if let def = widgetDefinitions.first(where: { $0.id == id }) {
+            return (def.sfSymbol, def.name)
+        } else if id.hasPrefix("account:"), let account = accountMap[id] {
+            return ("creditcard", account.name)
+        }
+        return ("questionmark.circle", id)
+    }
 
     var body: some View {
         NavigationStack {
             List {
+                // Visible widgets (both standard + account cards, interleaved)
                 Section(String(localized: "dashboard.visibleWidgets")) {
                     ForEach(layout.visibleWidgets, id: \.self) { id in
-                        if let def = widgetDefinitions.first(where: { $0.id == id }) {
-                            HStack {
-                                Image(systemName: def.sfSymbol)
-                                    .foregroundColor(theme.primary)
-                                    .frame(width: 24)
-                                Text(def.name)
-                                    .font(.ppBody)
-                                Spacer()
-                                Button {
-                                    layout.removeWidget(id)
-                                } label: {
-                                    Image(systemName: "minus.circle.fill")
-                                        .foregroundColor(.sharedDestructive)
-                                }
+                        let info = widgetLabel(for: id)
+                        HStack {
+                            Image(systemName: info.icon)
+                                .foregroundColor(theme.primary)
+                                .frame(width: 24)
+                            Text(info.name)
+                                .font(.ppBody)
+                            Spacer()
+                            Button {
+                                layout.removeWidget(id)
+                            } label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundColor(.sharedDestructive)
                             }
                         }
                     }
@@ -208,10 +324,11 @@ struct AddWidgetSheet: View {
                     }
                 }
 
-                let hiddenIds = widgetDefinitions.filter { layout.hiddenWidgets.contains($0.id) }
-                if !hiddenIds.isEmpty {
+                // Hidden standard widgets
+                let hiddenDefs = widgetDefinitions.filter { layout.hiddenWidgets.contains($0.id) }
+                if !hiddenDefs.isEmpty {
                     Section(String(localized: "dashboard.hiddenWidgets")) {
-                        ForEach(hiddenIds) { def in
+                        ForEach(hiddenDefs) { def in
                             HStack {
                                 Image(systemName: def.sfSymbol)
                                     .foregroundColor(.ppTextTertiary)
@@ -223,6 +340,28 @@ struct AddWidgetSheet: View {
                                 Spacer()
                                 Button {
                                     layout.addWidget(def.id)
+                                } label: {
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundColor(theme.primary)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Hidden account cards (not yet added to dashboard)
+                let hiddenAccounts = accounts.filter { $0.status == "active" && !layout.visibleWidgets.contains("account:\($0.id.uuidString)") }
+                if !hiddenAccounts.isEmpty {
+                    Section(String(localized: "dashboard.accountCards")) {
+                        ForEach(hiddenAccounts) { account in
+                            HStack {
+                                Image(systemName: "creditcard")
+                                    .foregroundColor(.ppTextTertiary)
+                                    .frame(width: 24)
+                                Text(account.name).font(.ppBody)
+                                Spacer()
+                                Button {
+                                    layout.addWidget("account:\(account.id.uuidString)")
                                 } label: {
                                     Image(systemName: "plus.circle.fill")
                                         .foregroundColor(theme.primary)

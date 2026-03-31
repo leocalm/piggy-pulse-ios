@@ -3,6 +3,7 @@ import TipKit
 
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
     @State private var vendors: [VendorListItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -42,9 +43,9 @@ struct VendorsView: View {
                     } else if let error = errorMessage {
                         Section {
                             VStack(spacing: PPSpacing.md) {
-                                Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                                Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
                                 Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                                Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                                Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(theme.primary)
                             }
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -125,7 +126,7 @@ struct VendorsView: View {
                                             } label: {
                                                 Label(String(localized: "common.archive"), systemImage: "archivebox")
                                             }
-                                            .tint(.ppAmber)
+                                            .tint(theme.secondary)
                                         } else {
                                             Button(role: .destructive) {
                                                 vendorToDelete = vendor
@@ -136,7 +137,7 @@ struct VendorsView: View {
                                         }
                                     }
                                     .swipeActions(edge: .leading) {
-                                        Button { editingVendor = vendor } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(.ppPrimary)
+                                        Button { editingVendor = vendor } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(theme.primary)
                                     }
                                     .contextMenu {
                                         Button {
@@ -173,7 +174,7 @@ struct VendorsView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .background(Color.ppBackground)
-                .refreshable { await load() }
+                .refreshable { await Task { @MainActor in await self.load() }.value }
                 .task(id: appState.selectedPeriod?.id) { await load() }
                 .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
                     AddVendorSheet { }.environmentObject(appState)

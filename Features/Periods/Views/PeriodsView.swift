@@ -3,6 +3,7 @@ import TipKit
 
 struct PeriodsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = PeriodsViewModel()
     @State private var showCreateSheet = false
     @State private var periodToDelete: BudgetPeriod?
@@ -26,7 +27,7 @@ struct PeriodsView: View {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle")
                                 .font(.system(size: 32))
-                                .foregroundColor(.ppAmber)
+                                .foregroundColor(theme.secondary)
                             Text(error)
                                 .font(.ppBody)
                                 .foregroundColor(.ppTextSecondary)
@@ -34,7 +35,7 @@ struct PeriodsView: View {
                                 Task { await viewModel.load() }
                             }
                             .font(.ppHeadline)
-                            .foregroundColor(.ppPrimary)
+                            .foregroundColor(theme.primary)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
@@ -80,7 +81,7 @@ struct PeriodsView: View {
                 .padding(PPSpacing.lg)
             }
             .background(Color.ppBackground)
-            .refreshable { await viewModel.load() }
+            .refreshable { let vm = viewModel; await Task { @MainActor in await vm.load() }.value }
             .task {
                 viewModel.configure(apiClient: appState.apiClient)
                 await viewModel.load()
@@ -140,10 +141,10 @@ struct PeriodsView: View {
                     Text(viewModel.hasSchedule ? String(localized: "periods.enabled") : String(localized: "periods.notSetUp"))
                         .font(.ppCaption)
                         .fontWeight(.medium)
-                        .foregroundColor(viewModel.hasSchedule ? .ppCyan : .ppAmber)
+                        .foregroundColor(viewModel.hasSchedule ? theme.tertiary : theme.secondary)
                         .padding(.horizontal, PPSpacing.sm)
                         .padding(.vertical, 4)
-                        .background((viewModel.hasSchedule ? Color.ppCyan : Color.ppAmber).opacity(0.12))
+                        .background((viewModel.hasSchedule ? theme.tertiary : theme.secondary).opacity(0.12))
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
@@ -163,16 +164,16 @@ struct PeriodsView: View {
     private var scheduleStatusPill: some View {
         HStack(spacing: PPSpacing.sm) {
             Circle()
-                .fill(viewModel.hasSchedule ? Color.ppCyan : Color.ppAmber)
+                .fill(viewModel.hasSchedule ? theme.tertiary : theme.secondary)
                 .frame(width: 8, height: 8)
             Text(viewModel.hasSchedule ? String(localized: "periods.autoGeneration.active") : String(localized: "periods.autoGeneration.inactive"))
                 .font(.ppCaption)
                 .fontWeight(.medium)
-                .foregroundColor(viewModel.hasSchedule ? .ppCyan : .ppAmber)
+                .foregroundColor(viewModel.hasSchedule ? theme.tertiary : theme.secondary)
         }
         .padding(.horizontal, PPSpacing.md)
         .padding(.vertical, PPSpacing.sm)
-        .background((viewModel.hasSchedule ? Color.ppCyan : Color.ppAmber).opacity(0.12))
+        .background((viewModel.hasSchedule ? theme.tertiary : theme.secondary).opacity(0.12))
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
     }
 
@@ -215,11 +216,11 @@ struct PeriodsView: View {
                     PeriodDetailView(period: period)
                         .environmentObject(appState)
                 } label: {
-                    periodCard(period, highlight: period.status == .active)
+                    periodCard(period, highlight: period.periodStatus == .active)
                 }
                 .buttonStyle(.plain)
                 .contextMenu {
-                    if period.status != .active {
+                    if period.periodStatus != .active {
                         Button(role: .destructive) {
                             periodToDelete = period
                         } label: {
@@ -250,7 +251,7 @@ struct PeriodsView: View {
                             .foregroundColor(.ppTextTertiary)
                         Text(period.statusText)
                             .font(.ppCaption)
-                            .foregroundColor(statusColor(period.status))
+                            .foregroundColor(statusColor(period.periodStatus))
                     }
                 }
 
@@ -282,9 +283,9 @@ struct PeriodsView: View {
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(
             RoundedRectangle(cornerRadius: PPRadius.lg)
-                .stroke(highlight ? Color.ppPrimary.opacity(0.5) : Color.ppBorder, lineWidth: highlight ? 1.5 : 1)
+                .stroke(highlight ? theme.primary.opacity(0.5) : Color.ppBorder, lineWidth: highlight ? 1.5 : 1)
         )
-        .shadow(color: highlight ? Color.ppPrimary.opacity(0.15) : .clear, radius: 8, x: 0, y: 0)
+        .shadow(color: highlight ? theme.primary.opacity(0.15) : .clear, radius: 8, x: 0, y: 0)
     }
 
     // MARK: - Helpers
@@ -308,9 +309,9 @@ struct PeriodsView: View {
 
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
-        case .active: return .ppCyan
+        case .active: return theme.tertiary
         case .ended: return .ppTextTertiary
-        case .upcoming: return .ppAmber
+        case .upcoming: return theme.secondary
         case .unknown: return .ppTextTertiary
         }
     }

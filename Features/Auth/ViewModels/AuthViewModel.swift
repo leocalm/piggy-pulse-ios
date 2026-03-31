@@ -66,33 +66,30 @@ final class AuthViewModel: ObservableObject {
         struct LoginRequest: Encodable {
             let email: String
             let password: String
-            let deviceName: String
-            let deviceId: String
         }
 
         struct LoginResponse: Decodable {
-            let user: User
-            let accessToken: String
-            let refreshToken: String
-            let expiresIn: Int
-            let tokenType: String
+            let requiresTwoFactor: Bool
+            let user: User?
+            let token: String?
+            let twoFactorToken: String?
         }
 
         let request = LoginRequest(
             email: email.trimmingCharacters(in: .whitespaces).lowercased(),
-            password: password,
-            deviceName: appState.tokenManager.deviceName,
-            deviceId: appState.tokenManager.deviceId
+            password: password
         )
 
         do {
             let response: LoginResponse = try await appState.apiClient.request(.login, body: request)
-            appState.tokenManager.setTokens(access: response.accessToken, refresh: response.refreshToken)
-            appState.currentUser = response.user
-            appState.isAuthenticated = true
-        } catch APIError.twoFactorRequired(let token) {
-            twoFactorToken = token
-            needs2FA = true
+            if response.requiresTwoFactor, let tfToken = response.twoFactorToken {
+                twoFactorToken = tfToken
+                needs2FA = true
+            } else if let user = response.user, let token = response.token {
+                appState.tokenManager.setTokens(access: token, refresh: token)
+                appState.currentUser = user
+                appState.isAuthenticated = true
+            }
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
@@ -113,12 +110,10 @@ final class AuthViewModel: ObservableObject {
             let code: String
         }
 
-        struct LoginResponse: Decodable {
+        struct TwoFactorResponse: Decodable {
+            let requiresTwoFactor: Bool
             let user: User
-            let accessToken: String
-            let refreshToken: String
-            let expiresIn: Int
-            let tokenType: String
+            let token: String?
         }
 
         let request = TwoFactorRequest(
@@ -127,8 +122,10 @@ final class AuthViewModel: ObservableObject {
         )
 
         do {
-            let response: LoginResponse = try await appState.apiClient.request(.login2FA, body: request)
-            appState.tokenManager.setTokens(access: response.accessToken, refresh: response.refreshToken)
+            let response: TwoFactorResponse = try await appState.apiClient.request(.login2FA, body: request)
+            if let token = response.token {
+                appState.tokenManager.setTokens(access: token, refresh: token)
+            }
             appState.currentUser = response.user
             appState.isAuthenticated = true
             Task { await appState.loadUserCurrency() }
