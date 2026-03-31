@@ -3,15 +3,11 @@ import TipKit
 
 struct PeriodsView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var viewModel: PeriodsViewModel
+    @StateObject private var viewModel = PeriodsViewModel()
     @State private var showCreateSheet = false
     @State private var periodToDelete: BudgetPeriod?
 
     private let periodsTip = PeriodsTip()
-
-    init(apiClient: APIClient) {
-        _viewModel = StateObject(wrappedValue: PeriodsViewModel(apiClient: apiClient))
-    }
 
     var body: some View {
         NavigationStack {
@@ -34,7 +30,7 @@ struct PeriodsView: View {
                             Text(error)
                                 .font(.ppBody)
                                 .foregroundColor(.ppTextSecondary)
-                            Button("Retry") {
+                            Button(String(localized: "common.retry")) {
                                 Task { await viewModel.load() }
                             }
                             .font(.ppHeadline)
@@ -85,7 +81,10 @@ struct PeriodsView: View {
             }
             .background(Color.ppBackground)
             .refreshable { await viewModel.load() }
-            .task { await viewModel.load() }
+            .task {
+                viewModel.configure(apiClient: appState.apiClient)
+                await viewModel.load()
+            }
             .sheet(isPresented: $showCreateSheet, onDismiss: {
                 Task { await viewModel.load() }
             }) {
@@ -93,24 +92,24 @@ struct PeriodsView: View {
                     .environmentObject(appState)
             }
             .confirmationDialog(
-                "Delete this period?",
+                String(localized: "periods.deleteConfirm"),
                 isPresented: Binding(
                     get: { periodToDelete != nil },
                     set: { if !$0 { periodToDelete = nil } }
                 ),
                 titleVisibility: .visible
             ) {
-                Button("Delete", role: .destructive) {
+                Button(String(localized: "common.delete"), role: .destructive) {
                     if let p = periodToDelete {
                         Task { await deletePeriod(p) }
                     }
                     periodToDelete = nil
                 }
-                Button("Cancel", role: .cancel) { periodToDelete = nil }
+                Button(String(localized: "common.cancel"), role: .cancel) { periodToDelete = nil }
             } message: {
-                Text("This will permanently remove the period.")
+                Text(String(localized: "periods.deleteMessage"))
             }
-            .navigationTitle("Periods")
+            .navigationTitle(String(localized: "nav.periods"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showCreateSheet = true } label: { Image(systemName: "plus") }
@@ -123,22 +122,22 @@ struct PeriodsView: View {
 
     private var scheduleSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.sm) {
-            sectionHeader("SCHEDULE")
+            sectionHeader(String(localized: "section.schedule"))
             NavigationLink {
                 AutoCreationView()
                     .environmentObject(appState)
             } label: {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Auto-Creation")
+                        Text(String(localized: "periods.autoCreation"))
                             .font(.ppHeadline)
                             .foregroundColor(.ppTextPrimary)
-                        Text("Automatic period generation")
+                        Text(String(localized: "periods.autoCreationDesc"))
                             .font(.ppCaption)
                             .foregroundColor(.ppTextSecondary)
                     }
                     Spacer()
-                    Text(viewModel.hasSchedule ? "Enabled" : "Not set up")
+                    Text(viewModel.hasSchedule ? String(localized: "periods.enabled") : String(localized: "periods.notSetUp"))
                         .font(.ppCaption)
                         .fontWeight(.medium)
                         .foregroundColor(viewModel.hasSchedule ? .ppCyan : .ppAmber)
@@ -206,7 +205,7 @@ struct PeriodsView: View {
     private func yearSection(_ group: YearGroup) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.sm) {
             HStack {
-                sectionHeader(LocalizedStringKey(stringLiteral: "\(group.year)"))
+                sectionHeader("\(group.year)")
                 Spacer()
                 countBadge(group.periods.count)
             }
@@ -224,7 +223,7 @@ struct PeriodsView: View {
                         Button(role: .destructive) {
                             periodToDelete = period
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(String(localized: "common.delete"), systemImage: "trash")
                         }
                     }
                 }
@@ -265,14 +264,14 @@ struct PeriodsView: View {
             }
 
             HStack {
-                Label("\(period.transactionCount) transactions", systemImage: "arrow.left.arrow.right")
+                Label(String(localized: "periods.transactionCount \(period.transactionCount)"), systemImage: "arrow.left.arrow.right")
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
 
                 Spacer()
 
                 if period.budgetUsedPercentage > 0 {
-                    Text("\(Int(period.budgetUsedPercentage))% used")
+                    Text(String(localized: "periods.budgetUsed \(Int(period.budgetUsedPercentage))"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -290,7 +289,7 @@ struct PeriodsView: View {
 
     // MARK: - Helpers
 
-    private func sectionHeader(_ title: LocalizedStringKey) -> some View {
+    private func sectionHeader(_ title: String) -> some View {
         Text(title)
             .font(.ppOverline)
             .foregroundColor(.ppTextSecondary)

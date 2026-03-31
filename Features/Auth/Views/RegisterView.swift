@@ -37,7 +37,7 @@ struct RegisterView: View {
                         }
 
                         VStack(spacing: PPSpacing.xl) {
-                            Text("Create an account")
+                            Text(String(localized: "auth.createAccount"))
                                 .font(.ppTitle3)
                                 .foregroundColor(.ppTextPrimary)
 
@@ -52,7 +52,7 @@ struct RegisterView: View {
                             VStack(spacing: PPSpacing.lg) {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
-                                        Text("Full Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.fullName")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                     }
                                     TextField("John Doe", text: $viewModel.registerName)
@@ -65,7 +65,7 @@ struct RegisterView: View {
 
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
-                                        Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.email")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                     }
                                     TextField("you@example.com", text: $viewModel.registerEmail)
@@ -81,7 +81,7 @@ struct RegisterView: View {
 
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
-                                        Text("Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.password")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                     }
                                     SecureField("Your password", text: $viewModel.registerPassword)
@@ -94,7 +94,7 @@ struct RegisterView: View {
 
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
-                                        Text("Confirm Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.confirmPassword")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                     }
                                     SecureField("Confirm your password", text: $viewModel.registerConfirmPassword)
@@ -114,7 +114,7 @@ struct RegisterView: View {
                                         ProgressView()
                                             .tint(.white)
                                     } else {
-                                        Text("Register")
+                                        Text(String(localized: "button.register"))
                                             .font(.ppHeadline)
                                     }
                                 }
@@ -127,10 +127,10 @@ struct RegisterView: View {
                             .disabled(viewModel.isRegisterDisabled)
 
                             HStack(spacing: 4) {
-                                Text("Already have an account?")
+                                Text(String(localized: "auth.alreadyHaveAccount"))
                                     .font(.ppCallout)
                                     .foregroundColor(.ppTextSecondary)
-                                Button("Login") {
+                                Button(String(localized: "button.login")) {
                                     dismiss()
                                 }
                                 .font(.ppCallout)

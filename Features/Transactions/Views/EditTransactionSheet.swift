@@ -64,7 +64,7 @@ struct EditTransactionSheet: View {
 
                             // Amount
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                                Text("Amount").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.amount")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
                                 HStack {
                                     Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
                                     TextField("0.00", text: $amountText).font(.ppAmount).foregroundColor(.ppTextPrimary).keyboardType(.decimalPad)
@@ -73,7 +73,7 @@ struct EditTransactionSheet: View {
                                 .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
 
                                 Toggle(isOn: $isTransfer) {
-                                    Text("Transfer between accounts")
+                                    Text(String(localized: "transaction.transferBetween"))
                                         .font(.ppCallout)
                                         .foregroundColor(.ppTextPrimary)
                                 }
@@ -95,10 +95,10 @@ struct EditTransactionSheet: View {
 
                             // Details
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                                Text("Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "section.details")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
-                                        Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.description")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                     }
                                     TextField("e.g. Groceries", text: $description)
@@ -108,7 +108,7 @@ struct EditTransactionSheet: View {
                                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                                 }
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                    Text("Date").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.date")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     DatePicker("", selection: $occurredAt, displayedComponents: .date).datePickerStyle(.compact).labelsHidden().tint(.ppPrimary)
                                 }
                             }
@@ -117,11 +117,11 @@ struct EditTransactionSheet: View {
 
                             // Classification
                             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                                Text("Classification").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "section.classification")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                                 if !isTransfer {
                                     HStack {
-                                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.category")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Spacer()
                                         Picker("Category", selection: $selectedCategory) {
                                             Text("Select").tag(Optional<CategoryOption>.none)
@@ -135,7 +135,7 @@ struct EditTransactionSheet: View {
                                 }
 
                                 HStack {
-                                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.fromAccount")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Spacer()
                                     Picker("From Account", selection: $selectedFromAccount) {
                                         Text("Select").tag(Optional<AccountOption>.none)
@@ -149,7 +149,7 @@ struct EditTransactionSheet: View {
 
                                 if isTransfer {
                                     HStack {
-                                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.toAccount")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Spacer()
                                         Picker("To Account", selection: $selectedToAccount) {
                                             Text("Select").tag(Optional<AccountOption>.none)
@@ -162,7 +162,7 @@ struct EditTransactionSheet: View {
                                     }
                                 } else {
                                     HStack {
-                                        Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                        Text(String(localized: "field.vendor")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                         Spacer()
                                         Picker("Vendor", selection: $selectedVendor) {
                                             Text("None").tag(Optional<VendorOption>.none)
@@ -182,7 +182,7 @@ struct EditTransactionSheet: View {
                     }
                 }
             }
-            .navigationTitle("Edit Transaction").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.editTransaction")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

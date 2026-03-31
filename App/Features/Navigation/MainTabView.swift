@@ -8,10 +8,10 @@ struct MainTabView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             Tab(String(localized: "tab.dashboard"), systemImage: "house.fill", value: 0) {
-                DashboardView(apiClient: appState.apiClient)
+                DashboardView().environmentObject(appState)
             }
             Tab(String(localized: "tab.transactions"), systemImage: "arrow.left.arrow.right", value: 1) {
-                TransactionsView(apiClient: appState.apiClient)
+                TransactionsView().environmentObject(appState)
             }
             Tab(String(localized: "tab.accounts"), systemImage: "creditcard.fill", value: 2) {
                 AccountsView().environmentObject(appState)
@@ -37,20 +37,20 @@ struct MainTabView: View {
                     // Planning section
                     moreSection(String(localized: "more.planning")) {
                         moreLink("more.periods", icon: "calendar") {
-                            PeriodsView(apiClient: appState.apiClient).environmentObject(appState)
+                            PeriodsView().environmentObject(appState)
                         }
                         moreLink("more.categories", icon: "tag") {
                             CategoriesView().environmentObject(appState)
                         }
                         moreLink("more.targets", icon: "chart.pie") {
-                            BudgetPlanView(apiClient: appState.apiClient).environmentObject(appState)
+                            BudgetPlanView().environmentObject(appState)
                         }
                     }
 
                     // Tracking section
                     moreSection(String(localized: "more.tracking")) {
                         moreLink("more.subscriptions", icon: "repeat") {
-                            SubscriptionsView(apiClient: appState.apiClient).environmentObject(appState)
+                            SubscriptionsView().environmentObject(appState)
                         }
                         moreLink("more.vendors", icon: "storefront") {
                             VendorsView().environmentObject(appState)

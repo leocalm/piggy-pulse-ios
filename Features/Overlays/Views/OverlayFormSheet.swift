@@ -104,7 +104,7 @@ struct OverlayFormSheet: View {
                     }
                 }
             }
-            .navigationTitle(isEditMode ? "Edit Overlay" : "New Overlay")
+            .navigationTitle(isEditMode ? String(localized: "nav.editOverlay") : String(localized: "nav.newOverlay"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -192,14 +192,14 @@ struct OverlayFormSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.xl) {
             // Name & Emoji card
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                Text("Overlay Details")
+                Text(String(localized: "overlay.details"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
                 // Name field
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     TextField("e.g. Summer Vacation Budget", text: $name)
@@ -214,7 +214,7 @@ struct OverlayFormSheet: View {
 
                 // Emoji picker
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text("Icon (optional)")
+                    Text(String(localized: "field.iconOptional"))
                         .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     EmojiPickerGrid(selectedEmoji: $selectedEmoji)
                 }
@@ -226,14 +226,14 @@ struct OverlayFormSheet: View {
 
             // Date range card
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                Text("Date Range")
+                Text(String(localized: "section.dateRange"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
                 // Start Date
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Start Date").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.startDate")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     DatePicker(
@@ -249,7 +249,7 @@ struct OverlayFormSheet: View {
                 // End Date
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("End Date").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.endDate")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     DatePicker(
@@ -268,7 +268,7 @@ struct OverlayFormSheet: View {
                     Image(systemName: "info.circle")
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
-                    Text("Overlays are temporary and always require both start and end dates.")
+                    Text(String(localized: "overlay.dateDisclaimer"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -290,7 +290,7 @@ struct OverlayFormSheet: View {
         VStack(alignment: .leading, spacing: PPSpacing.xl) {
             // Mode selection card
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                Text("Inclusion Rules")
+                Text(String(localized: "overlay.inclusionRules"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
@@ -308,7 +308,7 @@ struct OverlayFormSheet: View {
             // Rules pickers (only when rules-based)
             if inclusionMode == .rulesBased {
                 VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                    Text("Rules")
+                    Text(String(localized: "overlay.rules"))
                         .font(.ppTitle3)
                         .foregroundColor(.ppTextPrimary)
 
@@ -357,7 +357,7 @@ struct OverlayFormSheet: View {
                             .font(.ppHeadline)
                             .foregroundColor(.ppTextPrimary)
                         if recommended {
-                            Text("Recommended")
+                            Text(String(localized: "overlay.recommended"))
                                 .font(.system(size: 10, weight: .bold))
                                 .foregroundColor(.ppPrimary)
                                 .padding(.horizontal, 6).padding(.vertical, 2)
@@ -444,10 +444,10 @@ struct OverlayFormSheet: View {
                 VStack(alignment: .leading, spacing: PPSpacing.xs) {
                     Toggle(isOn: $isTotalCapEnabled.animation(.easeInOut(duration: 0.2))) {
                         VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                            Text("Total Amount Cap")
+                            Text(String(localized: "overlay.totalCap"))
                                 .font(.ppTitle3)
                                 .foregroundColor(.ppTextPrimary)
-                            Text("Set a spending limit for the entire overlay.")
+                            Text(String(localized: "overlay.totalCapDesc"))
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextSecondary)
                         }
@@ -490,10 +490,10 @@ struct OverlayFormSheet: View {
                 VStack(alignment: .leading, spacing: PPSpacing.xs) {
                     Toggle(isOn: $isPerCategoryCapEnabled.animation(.easeInOut(duration: 0.2))) {
                         VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                            Text("Per-Category Cap")
+                            Text(String(localized: "overlay.perCategoryCap"))
                                 .font(.ppTitle3)
                                 .foregroundColor(.ppTextPrimary)
-                            Text("Limit spending per category within this overlay.")
+                            Text(String(localized: "overlay.perCategoryCapDesc"))
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextSecondary)
                         }
@@ -504,7 +504,7 @@ struct OverlayFormSheet: View {
                 // Category rows, shown when enabled
                 if isPerCategoryCapEnabled {
                     if categoryOptions.isEmpty {
-                        Text("No categories available.")
+                        Text(String(localized: "overlay.noCategoriesAvailable"))
                             .font(.ppCallout)
                             .foregroundColor(.ppTextTertiary)
                             .transition(.opacity)
@@ -600,7 +600,7 @@ struct OverlayFormSheet: View {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.ppAmber)
                         .font(.ppBody)
-                    Text("Changing date range or inclusion mode updates which transactions may belong to this overlay.")
+                    Text(String(localized: "overlay.dateChangeNote"))
                         .font(.ppCallout)
                         .foregroundColor(.ppTextPrimary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -613,7 +613,7 @@ struct OverlayFormSheet: View {
 
             // Summary card
             VStack(alignment: .leading, spacing: PPSpacing.md) {
-                Text("Summary")
+                Text(String(localized: "overlay.summary"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
@@ -677,7 +677,7 @@ struct OverlayFormSheet: View {
                             .font(.ppBody)
                             .foregroundColor(.ppTextPrimary)
                     } else {
-                        Text("None")
+                        Text(String(localized: "common.none"))
                             .font(.ppBody)
                             .foregroundColor(.ppTextTertiary)
                     }
@@ -688,7 +688,7 @@ struct OverlayFormSheet: View {
                     Divider().background(Color.ppBorder)
 
                     VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                        Text("Per-Category Caps")
+                        Text(String(localized: "overlay.perCategoryCaps"))
                             .font(.ppCallout)
                             .fontWeight(.semibold)
                             .foregroundColor(.ppTextSecondary)
@@ -776,7 +776,7 @@ struct OverlayFormSheet: View {
                 } label: {
                     HStack(spacing: PPSpacing.sm) {
                         Image(systemName: "chevron.left")
-                        Text("Back")
+                        Text(String(localized: "common.back"))
                     }
                     .font(.ppBody.weight(.semibold))
                     .foregroundColor(.ppTextSecondary)
@@ -794,7 +794,7 @@ struct OverlayFormSheet: View {
                     withAnimation(.easeInOut(duration: 0.25)) { currentStep += 1 }
                 } label: {
                     HStack(spacing: PPSpacing.sm) {
-                        Text("Next")
+                        Text(String(localized: "button.next"))
                         Image(systemName: "chevron.right")
                     }
                     .font(.ppBody.weight(.semibold))

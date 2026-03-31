@@ -25,10 +25,10 @@ struct EditVendorSheet: View {
                             Text(error).font(.ppCallout).foregroundColor(.ppDestructive).multilineTextAlignment(.center)
                         }
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Vendor Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                            Text(String(localized: "section.vendorDetails")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("Vendor name", text: $name)
@@ -38,7 +38,7 @@ struct EditVendorSheet: View {
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.description")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 TextField("Optional", text: $desc)
                                     .font(.ppBody).foregroundColor(.ppTextPrimary)
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
@@ -52,7 +52,7 @@ struct EditVendorSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Edit Vendor").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.editVendor")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

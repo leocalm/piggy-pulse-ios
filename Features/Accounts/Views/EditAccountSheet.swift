@@ -47,10 +47,10 @@ struct EditAccountSheet: View {
                         }
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Account Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                            Text(String(localized: "section.accountDetails")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("Account name", text: $name)
@@ -61,7 +61,7 @@ struct EditAccountSheet: View {
                             }
 
                             HStack {
-                                Text("Account Type").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.accountType")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 Spacer()
                                 Picker("Account Type", selection: $accountType) {
                                     ForEach(accountTypes, id: \.self) { type in
@@ -74,7 +74,7 @@ struct EditAccountSheet: View {
 
                             if showSpendLimit {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                    Text("Spend Limit").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.spendLimit")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     HStack {
                                         Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
                                         TextField("0.00", text: $spendLimitText).keyboardType(.decimalPad).font(.ppAmount).foregroundColor(.ppTextPrimary)
@@ -89,9 +89,9 @@ struct EditAccountSheet: View {
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Appearance").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                            Text(String(localized: "section.appearance")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Color").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.color")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
                                         Circle().fill(Color(hex: c) ?? .ppPrimary).frame(width: 32, height: 32)
@@ -107,7 +107,7 @@ struct EditAccountSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Edit Account").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.editAccount")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

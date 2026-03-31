@@ -23,10 +23,17 @@ final class TransactionsViewModel: ObservableObject {
     private var nextCursor: UUID?
     private var hasMore = true
     private var currentPeriodId: UUID?
-    private let repository: TransactionRepository
+    private var repository: TransactionRepository?
 
     init(apiClient: APIClient) {
         self.repository = TransactionRepository(apiClient: apiClient)
+    }
+
+    init() {}
+
+    func configure(apiClient: APIClient) {
+        guard repository == nil else { return }
+        repository = TransactionRepository(apiClient: apiClient)
     }
 
     var activeFilterCount: Int {
@@ -34,6 +41,7 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func load(periodId: UUID) async {
+        guard let repository else { return }
         currentPeriodId = periodId
         isLoading = true
         errorMessage = nil
@@ -60,7 +68,8 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func loadMore() async {
-        guard let periodId = currentPeriodId,
+        guard let repository,
+              let periodId = currentPeriodId,
               let cursor = nextCursor,
               hasMore,
               !isLoadingMore else { return }
@@ -96,7 +105,8 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func loadFilterOptions() async {
-        guard !isLoadingFilterOptions &&
+        guard let repository,
+              !isLoadingFilterOptions &&
               filterOptions.accounts.isEmpty &&
               filterOptions.categories.isEmpty &&
               filterOptions.vendors.isEmpty else { return }

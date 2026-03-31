@@ -3,7 +3,7 @@ import TipKit
 
 struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var viewModel: TransactionsViewModel
+    @StateObject private var viewModel = TransactionsViewModel()
     @State private var showAddSheet = false
     @State private var showFilterSheet = false
     @State private var editingTransaction: Transaction?
@@ -19,10 +19,6 @@ struct TransactionsView: View {
             ($0.vendor?.name.localizedCaseInsensitiveContains(searchText) ?? false) ||
             $0.category.name.localizedCaseInsensitiveContains(searchText)
         }
-    }
-
-    init(apiClient: APIClient) {
-        _viewModel = StateObject(wrappedValue: TransactionsViewModel(apiClient: apiClient))
     }
 
     var body: some View {
@@ -190,6 +186,7 @@ struct TransactionsView: View {
                 }
             }
             .task(id: appState.selectedPeriod?.id) {
+                viewModel.configure(apiClient: appState.apiClient)
                 if let periodId = appState.selectedPeriod?.id {
                     await viewModel.load(periodId: periodId)
                 }

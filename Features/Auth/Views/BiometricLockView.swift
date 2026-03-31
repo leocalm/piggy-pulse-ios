@@ -53,7 +53,7 @@ struct BiometricLockView: View {
                 .tint(.ppPrimary)
 
                 if appState.biometricAuthFailed {
-                    Text("Authentication failed. Try again.")
+                    Text(String(localized: "biometric.authFailed"))
                         .font(.ppCaption)
                         .foregroundColor(.ppAmber)
                         .transition(.opacity)

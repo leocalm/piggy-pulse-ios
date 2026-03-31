@@ -13,12 +13,12 @@ struct CategoriesStepView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
-                Text("Categories are how you organize your spendings.")
+                Text(String(localized: "onboarding.categoriesIntro"))
                     .font(.ppBody).foregroundColor(.ppTextPrimary)
 
                 // Template selector
                 VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    Text("Choose a starting point")
+                    Text(String(localized: "onboarding.chooseStartingPoint"))
                         .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                     ForEach(templates, id: \.title) { item in
@@ -52,11 +52,11 @@ struct CategoriesStepView: View {
                         let outgoing = vm.categories.filter { $0.categoryType == "Outgoing" }
 
                         if !incoming.isEmpty {
-                            Text("Incoming").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTeal)
+                            Text(String(localized: "category.incoming")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTeal)
                             ForEach(incoming) { cat in categoryRow(cat) }
                         }
                         if !outgoing.isEmpty {
-                            Text("Outgoing").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppDestructive)
+                            Text(String(localized: "category.outgoing")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppDestructive)
                                 .padding(.top, PPSpacing.sm)
                             ForEach(outgoing) { cat in categoryRow(cat) }
                         }

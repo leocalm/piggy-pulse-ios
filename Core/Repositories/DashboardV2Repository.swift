@@ -32,7 +32,18 @@ final class DashboardV2Repository {
     }
 
     func fetchVariableCategories(periodId: UUID) async throws -> DashboardVariableCategories {
-        try await apiClient.request(.dashboardVariableCategories, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
+        // Uses categories overview endpoint (same as web) — no dedicated variable-categories endpoint
+        let overview: CategoriesOverviewResponse = try await apiClient.request(.categoriesOverview, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
+        let variable = overview.categories.filter { $0.type == "expense" && $0.status == "active" && ($0.budgeted ?? 0) > 0 }
+        let totalBudgeted = variable.reduce(Int64(0)) { $0 + ($1.budgeted ?? 0) }
+        let totalSpent = variable.reduce(Int64(0)) { $0 + $1.actual }
+        return DashboardVariableCategories(
+            totalBudgeted: totalBudgeted,
+            totalSpent: totalSpent,
+            categories: variable.map {
+                VariableCategoryItem(id: $0.id, name: $0.name, icon: $0.icon, budgeted: $0.budgeted ?? 0, spent: $0.actual)
+            }
+        )
     }
 
     func fetchSubscriptions(periodId: UUID) async throws -> DashboardSubscriptions {

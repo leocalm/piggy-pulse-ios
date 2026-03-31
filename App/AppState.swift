@@ -24,7 +24,7 @@ final class AppState: ObservableObject {
             .first { $0.currency?.identifier == currencyCode }?
             .currencySymbol ?? currencyCode
     }
-    let themeManager = ThemeManager()
+    let themeManager = ThemeManager.shared
 
     /// Legacy proxy — reads from ThemeManager. Use themeManager.colorScheme directly in new code.
     var appColorScheme: ColorScheme? { themeManager.colorScheme }

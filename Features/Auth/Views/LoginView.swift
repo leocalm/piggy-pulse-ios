@@ -36,7 +36,7 @@ struct LoginView: View {
                                     )
                                 )
 
-                            Text("Clarity begins with structure.")
+                            Text(String(localized: "auth.tagline"))
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextSecondary)
                         }
@@ -73,7 +73,7 @@ struct LoginView: View {
 
     private var loginContent: some View {
         VStack(spacing: PPSpacing.xl) {
-            Text("Welcome back")
+            Text(String(localized: "auth.welcomeBack"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
@@ -88,7 +88,7 @@ struct LoginView: View {
             VStack(spacing: PPSpacing.lg) {
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.email")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     TextField("you@example.com", text: $viewModel.email)
@@ -104,7 +104,7 @@ struct LoginView: View {
 
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.password")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     SecureField("Your password", text: $viewModel.password)
@@ -124,7 +124,7 @@ struct LoginView: View {
                         ProgressView()
                             .tint(.white)
                     } else {
-                        Text("Log in")
+                        Text(String(localized: "button.logIn"))
                             .font(.ppHeadline)
                     }
                 }
@@ -145,7 +145,7 @@ struct LoginView: View {
                 .foregroundColor(.ppPrimary)
 
                 HStack(spacing: 4) {
-                    Text("Don't have an account?")
+                    Text(String(localized: "auth.noAccount"))
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
                     NavigationLink("Sign up") {
@@ -164,11 +164,11 @@ struct LoginView: View {
     private var twoFactorContent: some View {
         VStack(spacing: PPSpacing.xl) {
             VStack(spacing: PPSpacing.sm) {
-                Text("Two-Factor Authentication")
+                Text(String(localized: "auth.twoFactor"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                Text("Enter the code from your authenticator app.")
+                Text(String(localized: "auth.twoFactorDesc"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
@@ -184,7 +184,7 @@ struct LoginView: View {
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Code").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "field.code")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("123456", text: $viewModel.twoFactorCode)
@@ -204,7 +204,7 @@ struct LoginView: View {
                         ProgressView()
                             .tint(.white)
                     } else {
-                        Text("Verify")
+                        Text(String(localized: "button.verify"))
                             .font(.ppHeadline)
                     }
                 }
@@ -216,7 +216,7 @@ struct LoginView: View {
             .buttonBorderShape(.capsule)
             .disabled(viewModel.is2FADisabled)
 
-            Button("Back to login") {
+            Button(String(localized: "button.backToLogin")) {
                 viewModel.needs2FA = false
                 viewModel.twoFactorCode = ""
                 viewModel.errorMessage = nil

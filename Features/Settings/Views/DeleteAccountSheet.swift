@@ -25,11 +25,11 @@ struct DeleteAccountSheet: View {
                                 .font(.system(size: 48))
                                 .foregroundColor(.ppDestructive)
 
-                            Text("Delete Account")
+                            Text(String(localized: "nav.deleteAccount"))
                                 .font(.ppTitle3)
                                 .foregroundColor(.ppTextPrimary)
 
-                            Text("This will permanently delete your account and all associated data. This action cannot be undone.")
+                            Text(String(localized: "deleteAccount.warning"))
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextSecondary)
                                 .multilineTextAlignment(.center)
@@ -44,7 +44,7 @@ struct DeleteAccountSheet: View {
                         }
 
                         VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                            Text("Type **DELETE** to confirm")
+                            Text(String(localized: "deleteAccount.typeConfirm"))
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextPrimary)
 
@@ -66,7 +66,7 @@ struct DeleteAccountSheet: View {
                                     if isLoading {
                                         ProgressView().tint(.white)
                                     } else {
-                                        Text("Delete My Account")
+                                        Text(String(localized: "button.deleteMyAccount"))
                                             .font(.ppHeadline)
                                     }
                                 }
@@ -82,7 +82,7 @@ struct DeleteAccountSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Delete Account")
+            .navigationTitle(String(localized: "nav.deleteAccount"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -97,16 +97,16 @@ struct DeleteAccountSheet: View {
                 }
             }
             .confirmationDialog(
-                "Are you sure?",
+                String(localized: "message.areYouSure"),
                 isPresented: $showConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("Delete Account", role: .destructive) {
+                Button(String(localized: "button.deleteAccount"), role: .destructive) {
                     Task { await deleteAccount() }
                 }
-                Button("Cancel", role: .cancel) {}
+                Button(String(localized: "common.cancel"), role: .cancel) {}
             } message: {
-                Text("Your account and all data will be permanently deleted. This cannot be undone.")
+                Text(String(localized: "deleteAccount.confirmMessage"))
             }
         }
     }

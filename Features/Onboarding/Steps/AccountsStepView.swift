@@ -14,12 +14,12 @@ struct AccountsStepView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
-                Text("Accounts are where your money goes.")
+                Text(String(localized: "onboarding.accountsIntro"))
                     .font(.ppBody).foregroundColor(.ppTextPrimary)
 
                 // Currency picker
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text("Currency")
+                    Text(String(localized: "field.currency"))
                         .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                     if vm.currencies.isEmpty {
@@ -42,7 +42,7 @@ struct AccountsStepView: View {
 
                 // Account cards
                 VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    Text("Accounts")
+                    Text(String(localized: "onboarding.accounts"))
                         .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                     ForEach($vm.accounts) { $account in
@@ -61,7 +61,7 @@ struct AccountsStepView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "plus.circle.fill").foregroundColor(.ppPrimary)
-                                Text("Add Account").font(.ppCallout).foregroundColor(.ppPrimary)
+                                Text(String(localized: "button.addAccount")).font(.ppCallout).foregroundColor(.ppPrimary)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(PPSpacing.md)
@@ -111,7 +111,7 @@ private struct AccountCardView: View {
                 .overlay(RoundedRectangle(cornerRadius: PPRadius.sm).stroke(Color.ppBorder, lineWidth: 1))
 
             HStack {
-                Text("Type").font(.ppCallout).foregroundColor(.ppTextSecondary)
+                Text(String(localized: "field.type")).font(.ppCallout).foregroundColor(.ppTextSecondary)
                 Spacer()
                 Picker("Type", selection: $account.accountType) {
                     ForEach(accountTypes, id: \.self) { t in
@@ -122,7 +122,7 @@ private struct AccountCardView: View {
             }
 
             HStack {
-                Text("Starting Balance").font(.ppCallout).foregroundColor(.ppTextSecondary)
+                Text(String(localized: "field.startingBalance")).font(.ppCallout).foregroundColor(.ppTextSecondary)
                 Spacer()
                 TextField("0.00", text: $account.balanceText)
                     .keyboardType(.decimalPad)
@@ -133,7 +133,7 @@ private struct AccountCardView: View {
 
             if account.showSpendLimit {
                 HStack {
-                    Text("Spend Limit").font(.ppCallout).foregroundColor(.ppTextSecondary)
+                    Text(String(localized: "field.spendLimit")).font(.ppCallout).foregroundColor(.ppTextSecondary)
                     Text("(optional)").font(.ppCaption).foregroundColor(.ppTextTertiary)
                     Spacer()
                     TextField("0.00", text: $account.spendLimitText)
