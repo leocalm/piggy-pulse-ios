@@ -28,6 +28,16 @@ struct TransactionsView: View {
                         .listRowInsets(EdgeInsets(top: PPSpacing.sm, leading: PPSpacing.lg, bottom: PPSpacing.md, trailing: PPSpacing.lg))
                 }
                 
+                // Stats bar
+                if !viewModel.isLoading && !viewModel.transactions.isEmpty {
+                    Section {
+                        transactionStatsBar
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    }
+                }
+
                 // Content section
                 if viewModel.isLoading {
                     Section {
@@ -68,7 +78,7 @@ struct TransactionsView: View {
                             Image(systemName: "tray")
                                 .font(.system(size: 40))
                                 .foregroundColor(.ppTextTertiary)
-                            Text("No transactions found")
+                            Text(String(localized: "transactions.emptyTitle"))
                                 .font(.ppBody)
                                 .foregroundColor(.ppTextSecondary)
                             Text("Start tracking your spending by adding your first transaction.")
@@ -218,6 +228,41 @@ struct TransactionsView: View {
             }
             } // else
         }
+    }
+
+    // MARK: - Stats Bar
+
+    private var transactionStatsBar: some View {
+        let inflows = viewModel.transactions.filter { $0.category.categoryType == "incoming" }.reduce(Int64(0)) { $0 + $1.amount }
+        let outflows = viewModel.transactions.filter { $0.category.categoryType == "outgoing" }.reduce(Int64(0)) { $0 + $1.amount }
+        let net = inflows - outflows
+        let count = viewModel.transactions.count
+
+        return HStack(spacing: 0) {
+            statsItem(label: String(localized: "stats.inflows"), value: formatCurrency(inflows, code: appState.currencyCode))
+            statsItem(label: String(localized: "stats.outflows"), value: formatCurrency(outflows, code: appState.currencyCode))
+            statsItem(label: String(localized: "stats.net"), value: formatCurrency(net, code: appState.currencyCode))
+            statsItem(label: String(localized: "stats.transactions"), value: "\(count)")
+        }
+        .padding(PPSpacing.md)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private func statsItem(label: String, value: String) -> some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(.ppCallout)
+                .fontWeight(.semibold)
+                .foregroundColor(.ppTextPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(label)
+                .font(.ppCaption)
+                .foregroundColor(.ppTextSecondary)
+        }
+        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Direction Tabs

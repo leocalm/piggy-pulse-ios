@@ -12,6 +12,7 @@ struct EditCategorySheet: View {
     @State private var icon = ""
     @State private var color = ""
     @State private var categoryType = "Outgoing"
+    @State private var targetAmountText = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
 
@@ -76,6 +77,19 @@ struct EditCategorySheet: View {
                                     }
                                 }
                             }
+                            // Target amount (optional)
+                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                Text(String(localized: "category.target"))
+                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
+                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                    .keyboardType(.decimalPad)
+                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                Text(String(localized: "category.targetHint"))
+                                    .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                            }
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
@@ -109,16 +123,26 @@ struct EditCategorySheet: View {
                     .opacity(isDisabled ? 0.6 : 1)
                 }
             }
-            .onAppear { name = category.name; icon = category.icon; color = category.color; categoryType = category.categoryType }
+            .onAppear {
+                name = category.name; icon = category.icon; color = category.color; categoryType = category.categoryType
+                if let target = category.budgeted, target > 0 {
+                    targetAmountText = String(format: "%.2f", Double(target) / 100.0)
+                }
+            }
         }
     }
 
     private func save() async {
         isLoading = true; errorMessage = nil
         struct Req: Encodable {
-            let name: String; let color: String; let icon: String; let categoryType: String
+            let name: String; let color: String; let icon: String; let categoryType: String; let target: Int64?
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: icon, categoryType: categoryType)
+        let targetCents: Int64? = {
+            let cleaned = targetAmountText.replacingOccurrences(of: ",", with: ".")
+            guard let decimal = Decimal(string: cleaned), decimal > 0 else { return nil }
+            return NSDecimalNumber(decimal: decimal * 100).int64Value
+        }()
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: icon, categoryType: categoryType, target: targetCents)
         do {
             try await appState.apiClient.request(.updateCategory(category.id), body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

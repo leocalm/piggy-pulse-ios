@@ -168,21 +168,42 @@ struct AccountsView: View {
                 .font(.ppAmount)
                 .foregroundColor(.ppCyan)
 
+            // Breakdown bar
+            netPositionBar(s)
+
             HStack(spacing: PPSpacing.xl) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Assets")
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary)
-                    Text(formatCurrency(s.totalAssets, code: appState.currencyCode))
+                    HStack(spacing: 4) {
+                        Circle().fill(Color.ppCyan).frame(width: 8, height: 8)
+                        Text(String(localized: "accounts.liquid"))
+                            .font(.ppCaption)
+                            .foregroundColor(.ppTextTertiary)
+                    }
+                    Text(formatCurrency(liquidTotal, code: appState.currencyCode))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
                         .foregroundColor(.ppTextPrimary)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Liabilities")
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextTertiary)
-                    Text(formatCurrency(s.totalLiabilities))
+                    HStack(spacing: 4) {
+                        Circle().fill(Color.ppPrimary).frame(width: 8, height: 8)
+                        Text(String(localized: "accounts.protected"))
+                            .font(.ppCaption)
+                            .foregroundColor(.ppTextTertiary)
+                    }
+                    Text(formatCurrency(protectedTotal, code: appState.currencyCode))
+                        .font(.ppCallout)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.ppTextPrimary)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 4) {
+                        Circle().fill(Color.ppAmber).frame(width: 8, height: 8)
+                        Text(String(localized: "accounts.debt"))
+                            .font(.ppCaption)
+                            .foregroundColor(.ppTextTertiary)
+                    }
+                    Text(formatCurrency(debtTotal, code: appState.currencyCode))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
                         .foregroundColor(.ppTextPrimary)
@@ -194,6 +215,38 @@ struct AccountsView: View {
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private var liquidTotal: Int64 {
+        accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" || $0.accountType == "Allowance" }.reduce(0) { $0 + $1.balance }
+    }
+
+    private var protectedTotal: Int64 {
+        accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
+    }
+
+    private var debtTotal: Int64 {
+        accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" }.reduce(0) { $0 + $1.balance }
+    }
+
+    private func netPositionBar(_ s: AccountsSummary) -> some View {
+        let total = abs(liquidTotal) + abs(protectedTotal) + abs(debtTotal)
+        let liquidFrac = total > 0 ? CGFloat(abs(liquidTotal)) / CGFloat(total) : 0.33
+        let protectedFrac = total > 0 ? CGFloat(abs(protectedTotal)) / CGFloat(total) : 0.33
+
+        return GeometryReader { geo in
+            HStack(spacing: 2) {
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(Color.ppCyan)
+                    .frame(width: max(geo.size.width * liquidFrac, 4))
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(Color.ppPrimary)
+                    .frame(width: max(geo.size.width * protectedFrac, 4))
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(Color.ppAmber)
+            }
+        }
+        .frame(height: 8)
     }
 
     private func accountRow(_ account: AccountListItem) -> some View {

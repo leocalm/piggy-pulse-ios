@@ -10,6 +10,12 @@ struct VendorsView: View {
     @State private var editingVendor: VendorListItem?
     @State private var vendorToDelete: VendorListItem?
     @State private var vendorToArchive: VendorListItem?
+    @State private var searchText = ""
+
+    private var filteredVendors: [VendorListItem] {
+        if searchText.isEmpty { return vendors }
+        return vendors.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
 
     var body: some View {
         NavigationStack {
@@ -33,19 +39,53 @@ struct VendorsView: View {
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                         }
-                    } else if vendors.isEmpty {
+                    } else if !vendors.isEmpty {
+                        // Stats bar
+                        Section {
+                            vendorStatsBar
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+
+                        // Search
+                        Section {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.ppTextTertiary)
+                                TextField(String(localized: "vendors.search"), text: $searchText)
+                                    .font(.ppBody)
+                                    .foregroundColor(.ppTextPrimary)
+                                if !searchText.isEmpty {
+                                    Button { searchText = "" } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.ppTextTertiary)
+                                    }
+                                }
+                            }
+                            .padding(PPSpacing.md)
+                            .background(Color.ppCard)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+                    }
+
+                    if vendors.isEmpty {
                         Section {
                             VStack(spacing: PPSpacing.lg) {
                                 Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                                Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
+                                Text(String(localized: "vendors.emptyTitle")).font(.ppBody).foregroundColor(.ppTextSecondary)
                                 Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                             }
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                         }
-                    } else {
+                    } else if !filteredVendors.isEmpty {
                         Section {
-                            ForEach(vendors) { vendor in
+                            ForEach(filteredVendors) { vendor in
                                 vendorRow(vendor)
                                     .swipeActions(edge: .trailing) {
                                         if vendor.transactionCount > 0 {
@@ -120,6 +160,49 @@ struct VendorsView: View {
                 }
             } // else
         } // NavigationStack
+    }
+
+    private var vendorStatsBar: some View {
+        let activeCount = vendors.filter { !$0.archived }.count
+        let totalTx = vendors.reduce(Int64(0)) { $0 + $1.transactionCount }
+        let avgPerVendor = activeCount > 0 ? totalTx / Int64(activeCount) : 0
+
+        return HStack(spacing: 0) {
+            VStack(spacing: 4) {
+                Text("\(activeCount)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "vendors.stats.active"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            VStack(spacing: 4) {
+                Text("\(totalTx)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "vendors.stats.totalTx"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            VStack(spacing: 4) {
+                Text("\(avgPerVendor)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "vendors.stats.avgTx"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(PPSpacing.md)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     private func deleteVendor(_ vendor: VendorListItem) async {

@@ -54,6 +54,14 @@ struct BudgetPlanView: View {
                         let excluded = viewModel.targets.filter { $0.isExcluded }
                         let noTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) == 0 }
 
+                        // Stats bar
+                        Section {
+                            budgetStatsBar(withTarget: withTarget, noTarget: noTarget, excluded: excluded)
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+
                         // Budget Summary card (computed from non-excluded targets only)
                         if viewModel.burnIn != nil {
                             Section {
@@ -197,6 +205,67 @@ struct BudgetPlanView: View {
         } // NavigationStack
     }
 
+    // MARK: - Stats Bar
+
+    private func budgetStatsBar(withTarget: [CategoryTarget], noTarget: [CategoryTarget], excluded: [CategoryTarget]) -> some View {
+        let periodName = appState.selectedPeriod?.name ?? ""
+        let expenseTargets = withTarget.filter { $0.categoryType == "outgoing" }
+        let incomeTargets = withTarget.filter { $0.categoryType == "incoming" }
+        let expenseBudget = expenseTargets.reduce(Int64(0)) { $0 + Int64($1.currentTarget ?? 0) }
+        let incomeTarget = incomeTargets.reduce(Int64(0)) { $0 + Int64($1.currentTarget ?? 0) }
+        let totalCategories = withTarget.count + noTarget.count + excluded.count
+        let withTargetCount = withTarget.count
+
+        return VStack(alignment: .leading, spacing: PPSpacing.md) {
+            if !periodName.isEmpty {
+                Text(periodName)
+                    .font(.ppHeadline)
+                    .foregroundColor(.ppTextPrimary)
+            }
+
+            HStack(spacing: 0) {
+                VStack(spacing: 4) {
+                    Text(formatCurrency(expenseBudget, code: appState.currencyCode))
+                        .font(.ppCallout)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.ppTextPrimary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Text(String(localized: "budget.stats.expenseBudget"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
+                .frame(maxWidth: .infinity)
+                VStack(spacing: 4) {
+                    Text(formatCurrency(incomeTarget, code: appState.currencyCode))
+                        .font(.ppCallout)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.ppTextPrimary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Text(String(localized: "budget.stats.incomeTarget"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
+                .frame(maxWidth: .infinity)
+                VStack(spacing: 4) {
+                    Text("\(withTargetCount)/\(totalCategories)")
+                        .font(.ppCallout)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "budget.stats.withTargets"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(PPSpacing.md)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
     // MARK: - Summary Card
 
     private func summaryCard(withTarget: [CategoryTarget]) -> some View {
@@ -223,7 +292,7 @@ struct BudgetPlanView: View {
                         .fill(Color.ppBorder)
                         .frame(height: 8)
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(spentPercentage > 1.0 ? Color.ppDestructive : Color.ppPrimary)
+                        .fill(Color.ppPrimary)
                         .frame(width: geo.size.width * min(spentPercentage, 1.0), height: 8)
                 }
             }
