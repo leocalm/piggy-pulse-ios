@@ -9,8 +9,18 @@ struct TransactionsView: View {
     @State private var showFilterSheet = false
     @State private var editingTransaction: Transaction?
     @State private var transactionToDelete: Transaction?
+    @State private var searchText = ""
 
     private let transactionsTip = TransactionsTip()
+
+    private var filteredTransactions: [Transaction] {
+        if searchText.isEmpty { return viewModel.transactions }
+        return viewModel.transactions.filter {
+            $0.description.localizedCaseInsensitiveContains(searchText) ||
+            ($0.vendor?.name.localizedCaseInsensitiveContains(searchText) ?? false) ||
+            $0.category.name.localizedCaseInsensitiveContains(searchText)
+        }
+    }
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: TransactionsViewModel(apiClient: apiClient))
@@ -70,7 +80,7 @@ struct TransactionsView: View {
                             Text(error)
                                 .font(.ppBody)
                                 .foregroundColor(.ppTextSecondary)
-                            Button("Retry") {
+                            Button(String(localized: "common.retry")) {
                                 if let periodId = appState.selectedPeriod?.id {
                                     Task { await viewModel.load(periodId: periodId) }
                                 }
@@ -117,7 +127,7 @@ struct TransactionsView: View {
                     }
                 } else {
                     Section {
-                        ForEach(viewModel.transactions) { transaction in
+                        ForEach(filteredTransactions) { transaction in
                             transactionRow(transaction)
                                 .listRowBackground(Color.ppBackground)
                                 .listRowSeparator(.hidden)
@@ -140,8 +150,20 @@ struct TransactionsView: View {
                                         Label("Edit", systemImage: "pencil")
                                     }
                                 }
+                                .contextMenu {
+                                    Button {
+                                        editingTransaction = transaction
+                                    } label: {
+                                        Label(String(localized: "common.edit"), systemImage: "pencil")
+                                    }
+                                    Button(role: .destructive) {
+                                        transactionToDelete = transaction
+                                    } label: {
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
+                                    }
+                                }
                                 .onAppear {
-                                    if transaction.id == viewModel.transactions.last?.id {
+                                    if transaction.id == filteredTransactions.last?.id {
                                         Task { await viewModel.loadMore() }
                                     }
                                 }
@@ -162,6 +184,7 @@ struct TransactionsView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .background(Color.ppBackground)
+            .searchable(text: $searchText, prompt: String(localized: "transactions.search"))
             .refreshable {
                 if let periodId = appState.selectedPeriod?.id {
                     await viewModel.refresh(periodId: periodId)
@@ -190,13 +213,13 @@ struct TransactionsView: View {
                 }
                 .environmentObject(appState)
             }
-            .confirmationDialog("Delete transaction?", isPresented: Binding(get: { transactionToDelete != nil }, set: { if !$0 { transactionToDelete = nil } }), titleVisibility: .visible) {
-                Button("Delete", role: .destructive) {
+            .confirmationDialog(String(localized: "transactions.delete.title"), isPresented: Binding(get: { transactionToDelete != nil }, set: { if !$0 { transactionToDelete = nil } }), titleVisibility: .visible) {
+                Button(String(localized: "common.delete"), role: .destructive) {
                     if let tx = transactionToDelete { Task { await deleteTransaction(tx) } }
                 }
-                Button("Cancel", role: .cancel) { transactionToDelete = nil }
+                Button(String(localized: "common.cancel"), role: .cancel) { transactionToDelete = nil }
             } message: {
-                Text("This transaction will be permanently deleted.")
+                Text(String(localized: "transactions.delete.message"))
             }
             .navigationTitle(String(localized: "tab.transactions"))
             .toolbar {

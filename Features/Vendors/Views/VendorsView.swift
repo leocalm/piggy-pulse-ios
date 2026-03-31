@@ -45,7 +45,7 @@ struct VendorsView: View {
                             VStack(spacing: PPSpacing.md) {
                                 Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
                                 Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                                Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                                Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                             }
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -138,12 +138,32 @@ struct VendorsView: View {
                                     .swipeActions(edge: .leading) {
                                         Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
                                     }
+                                    .contextMenu {
+                                        Button {
+                                            editingVendor = vendor
+                                        } label: {
+                                            Label(String(localized: "common.edit"), systemImage: "pencil")
+                                        }
+                                        if vendor.transactionCount > 0 {
+                                            Button {
+                                                vendorToArchive = vendor
+                                            } label: {
+                                                Label(String(localized: "common.archive"), systemImage: "archivebox")
+                                            }
+                                        } else {
+                                            Button(role: .destructive) {
+                                                vendorToDelete = vendor
+                                            } label: {
+                                                Label(String(localized: "common.delete"), systemImage: "trash")
+                                            }
+                                        }
+                                    }
                                     .listRowBackground(Color.ppBackground)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                             }
                         } header: {
-                            Text("ALL VENDORS")
+                            Text(String(localized: "vendors.section.all"))
                                 .font(.ppOverline)
                                 .foregroundColor(.ppTextSecondary)
                                 .tracking(1)
@@ -163,20 +183,20 @@ struct VendorsView: View {
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
-                    Button("Archive", role: .destructive) {
+                    Button(String(localized: "common.archive"), role: .destructive) {
                         if let vendor = vendorToArchive { Task { await archiveVendor(vendor) } }
                     }
-                    Button("Cancel", role: .cancel) { vendorToArchive = nil }
+                    Button(String(localized: "common.cancel"), role: .cancel) { vendorToArchive = nil }
                 } message: {
-                    Text("This vendor will be hidden but its history will be preserved.")
+                    Text(String(localized: "vendors.archive.message"))
                 }
                 .confirmationDialog("Delete \"\(vendorToDelete?.name ?? "")\"?", isPresented: Binding(get: { vendorToDelete != nil }, set: { if !$0 { vendorToDelete = nil } }), titleVisibility: .visible) {
-                    Button("Delete", role: .destructive) {
+                    Button(String(localized: "common.delete"), role: .destructive) {
                         if let vendor = vendorToDelete { Task { await deleteVendor(vendor) } }
                     }
-                    Button("Cancel", role: .cancel) { vendorToDelete = nil }
+                    Button(String(localized: "common.cancel"), role: .cancel) { vendorToDelete = nil }
                 } message: {
-                    Text("This vendor will be permanently deleted.")
+                    Text(String(localized: "vendors.delete.message"))
                 }
                 .navigationTitle(String(localized: "more.vendors"))
                 .navigationBarTitleDisplayMode(.large)
@@ -275,7 +295,7 @@ struct VendorsView: View {
                     .foregroundColor(.ppTextSecondary)
 
                 if vendor.archived {
-                    Text("Archived")
+                    Text(String(localized: "common.archived"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
                         .padding(.horizontal, PPSpacing.sm)

@@ -31,6 +31,8 @@ struct SpendingTrendCard: View {
                                 .font(.system(size: 9))
                                 .foregroundColor(.ppTextTertiary)
                         }
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(String(localized: "accessibility.spendingTrend.bar \(item.periodName) \(formatCurrency(item.totalSpent, code: currencyCode))"))
                     }
                 }
                 .frame(maxWidth: .infinity)

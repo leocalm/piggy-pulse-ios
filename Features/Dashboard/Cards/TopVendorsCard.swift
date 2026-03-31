@@ -38,6 +38,8 @@ struct TopVendorsCard: View {
                                 .frame(width: geo.size.width * (maxSpend > 0 ? Double(vendor.totalSpent) / Double(maxSpend) : 0))
                         }
                         .frame(height: 4)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(String(localized: "accessibility.topVendors.bar \(vendor.vendorName) \(formatCurrency(vendor.totalSpent, code: currencyCode))"))
                     }
                 }
             }

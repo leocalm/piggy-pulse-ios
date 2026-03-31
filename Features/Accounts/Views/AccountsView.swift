@@ -104,20 +104,20 @@ struct AccountsView: View {
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(accountToArchive?.name ?? "")\"?", isPresented: Binding(get: { accountToArchive != nil }, set: { if !$0 { accountToArchive = nil } }), titleVisibility: .visible) {
-                    Button("Archive", role: .destructive) {
+                    Button(String(localized: "common.archive"), role: .destructive) {
                         if let account = accountToArchive { Task { await archiveAccount(account) } }
                     }
-                    Button("Cancel", role: .cancel) { accountToArchive = nil }
+                    Button(String(localized: "common.cancel"), role: .cancel) { accountToArchive = nil }
                 } message: {
-                    Text("This account will be hidden but its history will be preserved.")
+                    Text(String(localized: "accounts.archive.message"))
                 }
                 .confirmationDialog("Delete \"\(accountToDelete?.name ?? "")\"?", isPresented: Binding(get: { accountToDelete != nil }, set: { if !$0 { accountToDelete = nil } }), titleVisibility: .visible) {
-                    Button("Delete", role: .destructive) {
+                    Button(String(localized: "common.delete"), role: .destructive) {
                         if let account = accountToDelete { Task { await deleteAccount(account) } }
                     }
-                    Button("Cancel", role: .cancel) { accountToDelete = nil }
+                    Button(String(localized: "common.cancel"), role: .cancel) { accountToDelete = nil }
                 } message: {
-                    Text("This account will be permanently deleted.")
+                    Text(String(localized: "accounts.delete.message"))
                 }
                 .navigationTitle(String(localized: "tab.accounts"))
                 .navigationBarTitleDisplayMode(.large)
@@ -164,6 +164,26 @@ struct AccountsView: View {
                                     Label("Edit", systemImage: "pencil")
                                 }
                             }
+                            .contextMenu {
+                                Button {
+                                    editingAccount = account
+                                } label: {
+                                    Label(String(localized: "common.edit"), systemImage: "pencil")
+                                }
+                                if account.transactionCount > 0 {
+                                    Button {
+                                        accountToArchive = account
+                                    } label: {
+                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
+                                    }
+                                } else {
+                                    Button(role: .destructive) {
+                                        accountToDelete = account
+                                    } label: {
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
+                                    }
+                                }
+                            }
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
@@ -202,7 +222,7 @@ struct AccountsView: View {
 
     private func summaryCard(_ s: AccountsSummary) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("NET POSITION")
+            Text(String(localized: "accounts.netPosition"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
@@ -290,6 +310,8 @@ struct AccountsView: View {
             }
         }
         .frame(height: 8)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(localized: "accessibility.accounts.netPositionBar \(formatCurrency(liquidTotal, code: appState.currencyCode)) \(formatCurrency(protectedTotal, code: appState.currencyCode)) \(formatCurrency(debtTotal, code: appState.currencyCode))"))
     }
 
     private func accountRow(_ account: AccountListItem) -> some View {
@@ -331,7 +353,7 @@ struct AccountsView: View {
         VStack(spacing: PPSpacing.md) {
             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
             Text(message).font(.ppBody).foregroundColor(.ppTextSecondary)
-            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, PPSpacing.xxxl)
