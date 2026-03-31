@@ -30,16 +30,16 @@ final class DashboardV2ViewModel: ObservableObject {
 
         // Load all widget data concurrently using async let.
         // Each widget handles its own failure gracefully.
-        async let cpTask: DashboardCurrentPeriod? = tryFetch { try await self.repository.fetchCurrentPeriod(periodId: periodId) }
-        async let npTask: DashboardNetPosition? = tryFetch { try await self.repository.fetchNetPosition(periodId: periodId) }
-        async let cfTask: DashboardCashFlow? = tryFetch { try await self.repository.fetchCashFlow(periodId: periodId) }
-        async let stTask: DashboardSpendingTrend? = tryFetch { try await self.repository.fetchSpendingTrend(periodId: periodId) }
-        async let tvTask: [TopVendorItem]? = tryFetch { try await self.repository.fetchTopVendors(periodId: periodId) }
-        async let vcTask: DashboardVariableCategories? = tryFetch { try await self.repository.fetchVariableCategories(periodId: periodId) }
-        async let fcTask: DashboardFixedCategories? = tryFetch { try await self.repository.fetchFixedCategories(periodId: periodId) }
-        async let subTask: DashboardSubscriptions? = tryFetch { try await self.repository.fetchSubscriptions(periodId: periodId) }
-        async let bsTask: DashboardBudgetStabilityV2? = tryFetch { try await self.repository.fetchBudgetStability(periodId: periodId) }
-        async let rtTask: [RecentTransactionItem]? = tryFetch { try await self.repository.fetchRecentTransactions(periodId: periodId).data }
+        async let cpTask: DashboardCurrentPeriod? = Self.tryFetch { try await self.repository.fetchCurrentPeriod(periodId: periodId) }
+        async let npTask: DashboardNetPosition? = Self.tryFetch { try await self.repository.fetchNetPosition(periodId: periodId) }
+        async let cfTask: DashboardCashFlow? = Self.tryFetch { try await self.repository.fetchCashFlow(periodId: periodId) }
+        async let stTask: DashboardSpendingTrend? = Self.tryFetch { try await self.repository.fetchSpendingTrend(periodId: periodId) }
+        async let tvTask: [TopVendorItem]? = Self.tryFetch { try await self.repository.fetchTopVendors(periodId: periodId) }
+        async let vcTask: DashboardVariableCategories? = Self.tryFetch { try await self.repository.fetchVariableCategories(periodId: periodId) }
+        async let fcTask: DashboardFixedCategories? = Self.tryFetch { try await self.repository.fetchFixedCategories(periodId: periodId) }
+        async let subTask: DashboardSubscriptions? = Self.tryFetch { try await self.repository.fetchSubscriptions(periodId: periodId) }
+        async let bsTask: DashboardBudgetStabilityV2? = Self.tryFetch { try await self.repository.fetchBudgetStability(periodId: periodId) }
+        async let rtTask: [RecentTransactionItem]? = Self.tryFetch { try await self.repository.fetchRecentTransactions(periodId: periodId).data }
 
         currentPeriod = await cpTask
         netPosition = await npTask
@@ -59,9 +59,9 @@ final class DashboardV2ViewModel: ObservableObject {
 
         isLoading = false
     }
-}
 
-/// Try an async fetch, returning nil on failure instead of throwing.
-private func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {
-    try? await work()
+    /// Try an async fetch, returning nil on failure instead of throwing.
+    private static func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {
+        try? await work()
+    }
 }

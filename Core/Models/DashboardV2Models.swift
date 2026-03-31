@@ -77,13 +77,15 @@ struct SubscriptionDashboardItem: Codable {
     let name: String
     let billingAmount: Int64
     let billingCycle: String // "monthly", "quarterly", "yearly"
-    let nextChargeDate: String?
+    let nextChargeDate: String
     let displayStatus: String // "charged", "today", "upcoming"
 }
 
 struct DashboardSubscriptions: Codable {
-    let monthlyCost: Int64
-    let items: [SubscriptionDashboardItem]
+    let activeCount: Int
+    let monthlyTotal: Int64
+    let yearlyTotal: Int64
+    let subscriptions: [SubscriptionDashboardItem]
 }
 
 struct DashboardBudgetStabilityV2: Codable {

@@ -5,8 +5,8 @@ struct DashboardView: View {
     @Environment(\.themeManager) private var theme
     @StateObject private var viewModel: DashboardV2ViewModel
     @State private var showAddTransaction = false
-    @State private var isEditing = false
     @State private var showAddWidget = false
+    @State private var layoutVersion = 0 // Bump to force re-render after widget changes
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: DashboardV2ViewModel(apiClient: apiClient))
@@ -28,6 +28,7 @@ struct DashboardView: View {
                             ForEach(viewModel.layout.visibleWidgets, id: \.self) { widgetId in
                                 renderWidget(widgetId)
                             }
+                            .id(layoutVersion)
                         }
                     }
                     .padding(PPSpacing.lg)
@@ -71,7 +72,9 @@ struct DashboardView: View {
                     AddTransactionSheet(onCreated: {})
                         .environmentObject(appState)
                 }
-                .sheet(isPresented: $showAddWidget) {
+                .sheet(isPresented: $showAddWidget, onDismiss: {
+                    layoutVersion += 1 // Force re-render after widget customization
+                }) {
                     AddWidgetSheet(layout: viewModel.layout)
                 }
             }

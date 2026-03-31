@@ -13,18 +13,18 @@ struct SubscriptionsCard: View {
                     .foregroundColor(.ppTextSecondary)
                     .tracking(1)
                 Spacer()
-                Text(String(localized: "widget.subscriptions.monthly \(formatCurrency(data.monthlyCost, code: currencyCode))"))
+                Text(String(localized: "widget.subscriptions.monthly \(formatCurrency(data.monthlyTotal, code: currencyCode))"))
                     .font(.ppCaption)
                     .fontDesign(.monospaced)
                     .foregroundColor(.ppTextTertiary)
             }
 
-            if data.items.isEmpty {
+            if data.subscriptions.isEmpty {
                 Text(String(localized: "widget.subscriptions.empty"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextTertiary)
             } else {
-                ForEach(data.items, id: \.id) { sub in
+                ForEach(data.subscriptions, id: \.id) { sub in
                     HStack {
                         Circle()
                             .fill(statusColor(sub.displayStatus))
@@ -42,11 +42,9 @@ struct SubscriptionsCard: View {
                             .fontDesign(.monospaced)
                             .foregroundColor(.ppTextSecondary)
 
-                        if let date = sub.nextChargeDate {
-                            Text(date)
-                                .font(.ppCaption)
-                                .foregroundColor(.ppTextTertiary)
-                        }
+                        Text(sub.nextChargeDate)
+                            .font(.ppCaption)
+                            .foregroundColor(.ppTextTertiary)
                     }
                 }
             }
