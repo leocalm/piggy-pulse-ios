@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct CategoriesView: View {
     @EnvironmentObject var appState: AppState
@@ -15,6 +16,8 @@ struct CategoriesView: View {
     @State private var categoryToArchive: CategoryManagementItem?
     @State private var searchText = ""
 
+    private let categoriesTip = CategoriesTip()
+
     private var filteredIncoming: [CategoryManagementItem] {
         if searchText.isEmpty { return incoming }
         return incoming.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
@@ -30,10 +33,22 @@ struct CategoriesView: View {
         return archived.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
     }
 
+    private var allCategoriesEmpty: Bool {
+        incoming.isEmpty && outgoing.isEmpty && archived.isEmpty
+    }
+
     var body: some View {
         List {
+                // Tip
+                Section {
+                    TipView(categoriesTip)
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                }
+
                 // Stats bar
-                if !isLoading && errorMessage == nil {
+                if !isLoading && errorMessage == nil && !allCategoriesEmpty {
                     Section {
                         categoryStatsBar
                             .listRowBackground(Color.ppBackground)
@@ -75,6 +90,38 @@ struct CategoriesView: View {
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                    }
+                } else if allCategoriesEmpty {
+                    Section {
+                        EmptyStateView(
+                            icon: "tag",
+                            title: String(localized: "categories.empty.title"),
+                            message: String(localized: "categories.empty.message"),
+                            steps: [
+                                EmptyStateStep(
+                                    title: String(localized: "categories.empty.step1.title"),
+                                    description: String(localized: "categories.empty.step1.description")
+                                ),
+                                EmptyStateStep(
+                                    title: String(localized: "categories.empty.step2.title"),
+                                    description: String(localized: "categories.empty.step2.description")
+                                ),
+                                EmptyStateStep(
+                                    title: String(localized: "categories.empty.step3.title"),
+                                    description: String(localized: "categories.empty.step3.description")
+                                ),
+                            ],
+                            tips: [
+                                String(localized: "categories.empty.tip1"),
+                                String(localized: "categories.empty.tip2"),
+                                String(localized: "categories.empty.tip3"),
+                            ],
+                            actionLabel: String(localized: "categories.empty.action"),
+                            action: { showAddSheet = true }
+                        )
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 } else {
                     categorySection(String(localized: "INCOMING"), categories: filteredIncoming, color: .ppCyan)

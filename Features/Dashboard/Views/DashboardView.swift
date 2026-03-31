@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct DashboardView: View {
     @EnvironmentObject var appState: AppState
@@ -7,6 +8,8 @@ struct DashboardView: View {
     @State private var showAddTransaction = false
     @State private var showAddWidget = false
     @State private var layoutVersion = 0 // Bump to force re-render after widget changes
+
+    private let dashboardTip = DashboardTip()
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: DashboardV2ViewModel(apiClient: apiClient))
@@ -20,6 +23,8 @@ struct DashboardView: View {
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: PPSpacing.xl) {
+                        TipView(dashboardTip)
+
                         if viewModel.isLoading {
                             loadingState
                         } else if let error = viewModel.errorMessage {

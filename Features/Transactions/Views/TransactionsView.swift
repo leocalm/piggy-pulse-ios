@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
@@ -8,6 +9,8 @@ struct TransactionsView: View {
     @State private var showFilterSheet = false
     @State private var editingTransaction: Transaction?
     @State private var transactionToDelete: Transaction?
+
+    private let transactionsTip = TransactionsTip()
 
     init(apiClient: APIClient) {
         _viewModel = StateObject(wrappedValue: TransactionsViewModel(apiClient: apiClient))
@@ -19,6 +22,14 @@ struct TransactionsView: View {
                 NoPeriodStateView(pageTitle: String(localized: "tab.transactions"))
             } else {
             List {
+                // Tip
+                Section {
+                    TipView(transactionsTip)
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                }
+
                 // Header section
                 Section {
                     // Direction tabs
@@ -74,22 +85,35 @@ struct TransactionsView: View {
                     }
                 } else if viewModel.transactions.isEmpty {
                     Section {
-                        VStack(spacing: PPSpacing.lg) {
-                            Image(systemName: "tray")
-                                .font(.system(size: 40))
-                                .foregroundColor(.ppTextTertiary)
-                            Text(String(localized: "transactions.emptyTitle"))
-                                .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
-                            Text("Start tracking your spending by adding your first transaction.")
-                                .font(.ppCallout)
-                                .foregroundColor(.ppTextTertiary)
-                                .multilineTextAlignment(.center)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, PPSpacing.xxxl)
+                        EmptyStateView(
+                            icon: "arrow.left.arrow.right",
+                            title: String(localized: "transactions.empty.title"),
+                            message: String(localized: "transactions.empty.message"),
+                            steps: [
+                                EmptyStateStep(
+                                    title: String(localized: "transactions.empty.step1.title"),
+                                    description: String(localized: "transactions.empty.step1.description")
+                                ),
+                                EmptyStateStep(
+                                    title: String(localized: "transactions.empty.step2.title"),
+                                    description: String(localized: "transactions.empty.step2.description")
+                                ),
+                                EmptyStateStep(
+                                    title: String(localized: "transactions.empty.step3.title"),
+                                    description: String(localized: "transactions.empty.step3.description")
+                                ),
+                            ],
+                            tips: [
+                                String(localized: "transactions.empty.tip1"),
+                                String(localized: "transactions.empty.tip2"),
+                                String(localized: "transactions.empty.tip3"),
+                            ],
+                            actionLabel: String(localized: "transactions.empty.action"),
+                            action: { showAddSheet = true }
+                        )
                         .listRowBackground(Color.ppBackground)
                         .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 } else {
                     Section {
