@@ -165,6 +165,21 @@ extension APIEndpoint {
     static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
 }
 
+// MARK: - Dashboard V2
+
+extension APIEndpoint {
+    static let dashboardCurrentPeriod = APIEndpoint(path: "/dashboard/current-period", method: .get, requiresAuth: true)
+    static let dashboardNetPosition = APIEndpoint(path: "/dashboard/net-position", method: .get, requiresAuth: true)
+    static let dashboardCashFlow = APIEndpoint(path: "/dashboard/cash-flow", method: .get, requiresAuth: true)
+    static let dashboardSpendingTrend = APIEndpoint(path: "/dashboard/spending-trend", method: .get, requiresAuth: true)
+    static let dashboardTopVendors = APIEndpoint(path: "/dashboard/top-vendors", method: .get, requiresAuth: true)
+    static let dashboardFixedCategories = APIEndpoint(path: "/dashboard/fixed-categories", method: .get, requiresAuth: true)
+    static let dashboardVariableCategories = APIEndpoint(path: "/dashboard/variable-categories", method: .get, requiresAuth: true)
+    static let dashboardSubscriptions = APIEndpoint(path: "/dashboard/subscriptions", method: .get, requiresAuth: true)
+    static let dashboardBudgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
+    static let dashboardRecentTransactions = APIEndpoint(path: "/transactions", method: .get, requiresAuth: true)
+}
+
 // MARK: - Settings
 
 extension APIEndpoint {
