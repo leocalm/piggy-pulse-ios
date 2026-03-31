@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AccountsView: View {
     @EnvironmentObject var appState: AppState
-@Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     @State private var accounts: [AccountListItem] = []
     @State private var summary: AccountsSummary?
     @State private var isLoading = false
@@ -13,80 +13,82 @@ struct AccountsView: View {
     @State private var accountToArchive: AccountListItem?
 
     var body: some View {
-        if appState.selectedPeriod == nil {
-            NoPeriodStateView(pageTitle: String(localized: "tab.accounts"))
-        } else {
-        List {
-                if isLoading {
-                    Section {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                            .padding(.vertical, PPSpacing.xxxl)
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                    }
-                } else if let error = errorMessage {
-                    Section {
-                        errorView(error)
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                    }
-                } else {
-                    // Summary
-                    if let s = summary {
+        NavigationStack {
+            if appState.selectedPeriod == nil {
+                NoPeriodStateView(pageTitle: String(localized: "tab.accounts"), showTitle: false)
+            } else {
+                List {
+                    if isLoading {
                         Section {
-                            summaryCard(s)
+                            HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                                .padding(.vertical, PPSpacing.xxxl)
                                 .listRowBackground(Color.ppBackground)
                                 .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+                    } else if let error = errorMessage {
+                        Section {
+                            errorView(error)
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                        }
+                    } else {
+                        // Summary
+                        if let s = summary {
+                            Section {
+                                summaryCard(s)
+                                    .listRowBackground(Color.ppBackground)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                            }
+                        }
+
+                        // Grouped by type
+                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" || $0.accountType == "Allowance" })
+                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" })
+                        accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
+                    }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.ppBackground)
+                .refreshable { await load() }
+                .task(id: appState.selectedPeriod?.id) { await load() }
+                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                    AddAccountSheet { }.environmentObject(appState)
+                }
+                .sheet(item: $editingAccount) { account in
+                    EditAccountSheet(account: account) { Task { await load() } }
+                        .environmentObject(appState)
+                }
+                .confirmationDialog("Archive \"\(accountToArchive?.name ?? "")\"?", isPresented: Binding(get: { accountToArchive != nil }, set: { if !$0 { accountToArchive = nil } }), titleVisibility: .visible) {
+                    Button("Archive", role: .destructive) {
+                        if let account = accountToArchive { Task { await archiveAccount(account) } }
+                    }
+                    Button("Cancel", role: .cancel) { accountToArchive = nil }
+                } message: {
+                    Text("This account will be hidden but its history will be preserved.")
+                }
+                .confirmationDialog("Delete \"\(accountToDelete?.name ?? "")\"?", isPresented: Binding(get: { accountToDelete != nil }, set: { if !$0 { accountToDelete = nil } }), titleVisibility: .visible) {
+                    Button("Delete", role: .destructive) {
+                        if let account = accountToDelete { Task { await deleteAccount(account) } }
+                    }
+                    Button("Cancel", role: .cancel) { accountToDelete = nil }
+                } message: {
+                    Text("This account will be permanently deleted.")
+                }
+                .navigationTitle("Accounts")
+                .navigationBarTitleDisplayMode(.large)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showAddSheet = true
+                        } label: {
+                            Image(systemName: "plus")
                         }
                     }
-                    
-                    // Grouped by type
-                    accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" || $0.accountType == "Allowance" })
-                    accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" })
-                    accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
                 }
-            }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(Color.ppBackground)
-            .refreshable { await load() }
-            .task(id: appState.selectedPeriod?.id) { await load() }
-            .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
-                AddAccountSheet { }.environmentObject(appState)
-            }
-            .sheet(item: $editingAccount) { account in
-                EditAccountSheet(account: account) { Task { await load() } }
-                    .environmentObject(appState)
-            }
-            .confirmationDialog("Archive \"\(accountToArchive?.name ?? "")\"?", isPresented: Binding(get: { accountToArchive != nil }, set: { if !$0 { accountToArchive = nil } }), titleVisibility: .visible) {
-                Button("Archive", role: .destructive) {
-                    if let account = accountToArchive { Task { await archiveAccount(account) } }
-                }
-                Button("Cancel", role: .cancel) { accountToArchive = nil }
-            } message: {
-                Text("This account will be hidden but its history will be preserved.")
-            }
-            .confirmationDialog("Delete \"\(accountToDelete?.name ?? "")\"?", isPresented: Binding(get: { accountToDelete != nil }, set: { if !$0 { accountToDelete = nil } }), titleVisibility: .visible) {
-                Button("Delete", role: .destructive) {
-                    if let account = accountToDelete { Task { await deleteAccount(account) } }
-                }
-                Button("Cancel", role: .cancel) { accountToDelete = nil }
-            } message: {
-                Text("This account will be permanently deleted.")
-            }
-            .navigationTitle("Accounts")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showAddSheet = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-        } // else
+            } // else
+        } // NavigationStack
     }
 
     private func accountSection(_ title: String, accounts: [AccountListItem]) -> some View {

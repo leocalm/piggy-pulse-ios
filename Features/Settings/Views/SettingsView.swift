@@ -5,6 +5,7 @@ import UserNotifications
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var themeManager
     @State private var profile: ProfileResponse?
     @State private var preferences: PreferencesResponse?
     @State private var isLoading = false
@@ -189,7 +190,7 @@ struct SettingsView: View {
                     ForEach(ColorTheme.allCases) { theme in
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            appState.themeManager.colorTheme = theme
+                            themeManager.colorTheme = theme
                         } label: {
                             VStack(spacing: PPSpacing.xs) {
                                 HStack(spacing: 0) {
@@ -210,7 +211,7 @@ struct SettingsView: View {
                                 Text(theme.label)
                                     .font(.ppCaption)
                                     .foregroundColor(
-                                        appState.themeManager.colorTheme == theme
+                                        themeManager.colorTheme == theme
                                             ? .ppTextPrimary
                                             : .ppTextSecondary
                                     )
@@ -218,7 +219,7 @@ struct SettingsView: View {
                             .padding(.vertical, PPSpacing.sm)
                             .padding(.horizontal, PPSpacing.sm)
                             .background(
-                                appState.themeManager.colorTheme == theme
+                                themeManager.colorTheme == theme
                                     ? theme.accents.primary.opacity(0.15)
                                     : Color.ppElevated
                             )
@@ -226,7 +227,7 @@ struct SettingsView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: PPRadius.md)
                                     .stroke(
-                                        appState.themeManager.colorTheme == theme
+                                        themeManager.colorTheme == theme
                                             ? theme.accents.primary.opacity(0.5)
                                             : Color.ppBorder,
                                         lineWidth: 1
@@ -239,10 +240,23 @@ struct SettingsView: View {
 
             Divider().background(Color.ppBorder)
 
-            preferenceRow("Appearance", selection: $selectedTheme, options: [
-                ("system", "System"), ("light", "Light"), ("dark", "Dark")
-            ])
-            .onChange(of: selectedTheme) { _, _ in preferencesDirty = true }
+            // Appearance mode (instant, local-only — not synced to server)
+            HStack {
+                Text(String(localized: "settings.appearance"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { themeManager.appearanceMode.rawValue },
+                    set: { themeManager.appearanceMode = AppearanceMode(rawValue: $0) ?? .system }
+                )) {
+                    ForEach(AppearanceMode.allCases) { mode in
+                        Label(mode.label, systemImage: mode.iconName).tag(mode.rawValue)
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(.ppTextPrimary)
+            }
 
             preferenceRow("Date Format", selection: $selectedDateFormat, options: [
                 ("DD/MM/YYYY", "DD/MM/YYYY"),

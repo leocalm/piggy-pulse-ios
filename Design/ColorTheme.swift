@@ -195,11 +195,13 @@ private func buildDataPalette(_ hexValues: [UInt32]) -> [Color] {
 }
 
 /// Shift HSL lightness of a hex color by the given percentage points.
+/// Uses proper HSL→RGB conversion (not HSB) to match the web tokens.ts implementation.
 private func tintColor(_ hex: UInt32, lightnessOffset: Int) -> Color {
     let r = Double((hex >> 16) & 0xFF) / 255
     let g = Double((hex >> 8) & 0xFF) / 255
     let b = Double(hex & 0xFF) / 255
 
+    // RGB → HSL
     let maxC = max(r, g, b)
     let minC = min(r, g, b)
     var h = 0.0, s = 0.0
@@ -218,5 +220,13 @@ private func tintColor(_ hex: UInt32, lightnessOffset: Int) -> Color {
     }
 
     let newL = min(1.0, max(0.0, l + Double(lightnessOffset) / 100.0))
-    return Color(hue: h, saturation: s, brightness: newL)
+
+    // HSL → RGB (proper conversion, not HSB)
+    let sN = s
+    let a = sN * min(newL, 1 - newL)
+    func f(_ n: Double) -> Double {
+        let k = (n + h * 12).truncatingRemainder(dividingBy: 12)
+        return newL - a * max(min(k - 3, min(9 - k, 1)), -1)
+    }
+    return Color(red: f(0), green: f(8), blue: f(4))
 }

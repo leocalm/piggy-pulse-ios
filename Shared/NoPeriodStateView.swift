@@ -1,14 +1,15 @@
 import SwiftUI
 
 /// Displayed when no budget period is selected.
-/// Shows a clear visual indicator with a calendar icon and a button to navigate to Periods.
+/// Shows a clear visual indicator with a calendar icon and a button to open the period picker.
 struct NoPeriodStateView: View {
     let pageTitle: String
     var showTitle: Bool = true
-    /// Called when the user taps "Go to Periods". The parent is responsible for navigation.
-    var onGoToPeriods: (() -> Void)?
 
     @Environment(\.themeManager) private var theme
+    @EnvironmentObject private var appState: AppState
+    @State private var showPeriodPicker = false
+    @State private var periods: [BudgetPeriod] = []
 
     var body: some View {
         VStack(spacing: PPSpacing.xl) {
@@ -38,16 +39,14 @@ struct NoPeriodStateView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 300)
 
-                if let onGoToPeriods {
-                    Button {
-                        onGoToPeriods()
-                    } label: {
-                        Label(String(localized: "noPeriod.goToPeriods"), systemImage: "calendar")
-                            .font(.ppHeadline)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(theme.primary)
+                Button {
+                    showPeriodPicker = true
+                } label: {
+                    Label(String(localized: "noPeriod.selectPeriod"), systemImage: "calendar")
+                        .font(.ppHeadline)
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(theme.primary)
             }
             .padding(.vertical, PPSpacing.xxxl)
             .frame(maxWidth: .infinity)
@@ -63,5 +62,21 @@ struct NoPeriodStateView: View {
         .padding(PPSpacing.lg)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.ppBackground)
+        .task {
+            let repo = PeriodRepository(apiClient: appState.apiClient)
+            periods = (try? await repo.fetchPeriods()) ?? []
+        }
+        .sheet(isPresented: $showPeriodPicker) {
+            PeriodPickerSheet(
+                periods: periods,
+                selectedPeriod: nil,
+                onSelect: { period in
+                    appState.selectedPeriod = period
+                    showPeriodPicker = false
+                }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
     }
 }

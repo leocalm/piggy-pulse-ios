@@ -11,188 +11,190 @@ struct BudgetPlanView: View {
     }
 
     var body: some View {
-        if appState.selectedPeriod == nil {
-            NoPeriodStateView(pageTitle: String(localized: "more.targets"))
-        } else {
-        List {
-            if viewModel.isLoading {
-                Section {
-                    HStack {
-                        Spacer()
-                        ProgressView().tint(.ppTextSecondary)
-                        Spacer()
-                    }
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
-            } else if let error = viewModel.errorMessage {
-                Section {
-                    VStack(spacing: PPSpacing.md) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 32))
-                            .foregroundColor(.ppAmber)
-                        Text(error)
-                            .font(.ppBody)
-                            .foregroundColor(.ppTextSecondary)
-                        Button("Retry") {
-                            if let periodId = appState.selectedPeriod?.id {
-                                Task { await viewModel.load(periodId: periodId) }
-                            }
-                        }
-                        .font(.ppHeadline)
-                        .foregroundColor(.ppPrimary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, PPSpacing.xxxl)
-                    .listRowBackground(Color.ppBackground)
-                    .listRowSeparator(.hidden)
-                }
+        NavigationStack {
+            if appState.selectedPeriod == nil {
+                NoPeriodStateView(pageTitle: String(localized: "more.targets"), showTitle: false)
             } else {
-                let withTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) > 0 }
-                let excluded = viewModel.targets.filter { $0.isExcluded }
-                let noTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) == 0 }
-
-                // Budget Summary card (computed from non-excluded targets only)
-                if viewModel.burnIn != nil {
-                    Section {
-                        summaryCard(withTarget: withTarget)
+                List {
+                    if viewModel.isLoading {
+                        Section {
+                            HStack {
+                                Spacer()
+                                ProgressView().tint(.ppTextSecondary)
+                                Spacer()
+                            }
+                            .padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                    }
-                }
-
-                if !withTarget.isEmpty {
-                    Section {
-                        ForEach(withTarget) { target in
-                            targetRow(target)
-                                .listRowBackground(Color.ppBackground)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                                .swipeActions(edge: .trailing) {
-                                    Button {
-                                        if let periodId = appState.selectedPeriod?.id {
-                                            Task { await viewModel.excludeTarget(id: target.id, periodId: periodId) }
-                                        }
-                                    } label: {
-                                        Label("Exclude", systemImage: "eye.slash")
+                        }
+                    } else if let error = viewModel.errorMessage {
+                        Section {
+                            VStack(spacing: PPSpacing.md) {
+                                Image(systemName: "exclamationmark.triangle")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.ppAmber)
+                                Text(error)
+                                    .font(.ppBody)
+                                    .foregroundColor(.ppTextSecondary)
+                                Button("Retry") {
+                                    if let periodId = appState.selectedPeriod?.id {
+                                        Task { await viewModel.load(periodId: periodId) }
                                     }
-                                    .tint(.ppAmber)
                                 }
-                                .onTapGesture { selectedTarget = target }
+                                .font(.ppHeadline)
+                                .foregroundColor(.ppPrimary)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, PPSpacing.xxxl)
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
                         }
-                    } header: {
-                        Text("WITH TARGET")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
-                    }
-                }
+                    } else {
+                        let withTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) > 0 }
+                        let excluded = viewModel.targets.filter { $0.isExcluded }
+                        let noTarget = viewModel.targets.filter { !$0.isExcluded && ($0.currentTarget ?? 0) == 0 }
 
-                if !noTarget.isEmpty {
-                    Section {
-                        ForEach(noTarget) { target in
-                            noTargetRow(target)
-                                .listRowBackground(Color.ppBackground)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                                .onTapGesture { selectedTarget = target }
+                        // Budget Summary card (computed from non-excluded targets only)
+                        if viewModel.burnIn != nil {
+                            Section {
+                                summaryCard(withTarget: withTarget)
+                                    .listRowBackground(Color.ppBackground)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                            }
                         }
-                    } header: {
-                        Text("NO TARGET")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
-                    }
-                }
 
-                if !excluded.isEmpty {
-                    Section {
-                        ForEach(excluded) { target in
-                            excludedRow(target)
-                                .listRowBackground(Color.ppBackground)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                                .swipeActions(edge: .trailing) {
-                                    Button {
-                                        if let periodId = appState.selectedPeriod?.id {
-                                            Task { await viewModel.includeTarget(id: target.id, periodId: periodId) }
+                        if !withTarget.isEmpty {
+                            Section {
+                                ForEach(withTarget) { target in
+                                    targetRow(target)
+                                        .listRowBackground(Color.ppBackground)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                        .swipeActions(edge: .trailing) {
+                                            Button {
+                                                if let periodId = appState.selectedPeriod?.id {
+                                                    Task { await viewModel.excludeTarget(id: target.id, periodId: periodId) }
+                                                }
+                                            } label: {
+                                                Label("Exclude", systemImage: "eye.slash")
+                                            }
+                                            .tint(.ppAmber)
                                         }
-                                    } label: {
-                                        Label("Include", systemImage: "eye")
-                                    }
-                                    .tint(.ppCyan)
+                                        .onTapGesture { selectedTarget = target }
                                 }
-                                .onTapGesture { selectedTarget = target }
+                            } header: {
+                                Text("WITH TARGET")
+                                    .font(.ppOverline)
+                                    .foregroundColor(.ppTextSecondary)
+                                    .tracking(1)
+                            }
                         }
-                    } header: {
-                        Text("EXCLUDED")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
-                    }
-                }
 
-                if viewModel.targets.isEmpty {
-                    Section {
-                        VStack(spacing: PPSpacing.md) {
-                            Image(systemName: "chart.pie")
-                                .font(.system(size: 32))
-                                .foregroundColor(.ppTextTertiary)
-                            Text("No categories yet")
-                                .font(.ppBody)
-                                .foregroundColor(.ppTextSecondary)
-                            Text("Create categories to set budget targets.")
-                                .font(.ppCallout)
-                                .foregroundColor(.ppTextTertiary)
-                                .multilineTextAlignment(.center)
+                        if !noTarget.isEmpty {
+                            Section {
+                                ForEach(noTarget) { target in
+                                    noTargetRow(target)
+                                        .listRowBackground(Color.ppBackground)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                        .onTapGesture { selectedTarget = target }
+                                }
+                            } header: {
+                                Text("NO TARGET")
+                                    .font(.ppOverline)
+                                    .foregroundColor(.ppTextSecondary)
+                                    .tracking(1)
+                            }
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, PPSpacing.xl)
-                        .listRowBackground(Color.ppBackground)
-                        .listRowSeparator(.hidden)
+
+                        if !excluded.isEmpty {
+                            Section {
+                                ForEach(excluded) { target in
+                                    excludedRow(target)
+                                        .listRowBackground(Color.ppBackground)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                        .swipeActions(edge: .trailing) {
+                                            Button {
+                                                if let periodId = appState.selectedPeriod?.id {
+                                                    Task { await viewModel.includeTarget(id: target.id, periodId: periodId) }
+                                                }
+                                            } label: {
+                                                Label("Include", systemImage: "eye")
+                                            }
+                                            .tint(.ppCyan)
+                                        }
+                                        .onTapGesture { selectedTarget = target }
+                                }
+                            } header: {
+                                Text("EXCLUDED")
+                                    .font(.ppOverline)
+                                    .foregroundColor(.ppTextSecondary)
+                                    .tracking(1)
+                            }
+                        }
+
+                        if viewModel.targets.isEmpty {
+                            Section {
+                                VStack(spacing: PPSpacing.md) {
+                                    Image(systemName: "chart.pie")
+                                        .font(.system(size: 32))
+                                        .foregroundColor(.ppTextTertiary)
+                                    Text("No categories yet")
+                                        .font(.ppBody)
+                                        .foregroundColor(.ppTextSecondary)
+                                    Text("Create categories to set budget targets.")
+                                        .font(.ppCallout)
+                                        .foregroundColor(.ppTextTertiary)
+                                        .multilineTextAlignment(.center)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, PPSpacing.xl)
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                            }
+                        }
                     }
                 }
-            }
-        }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.ppBackground)
-        .refreshable {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.load(periodId: periodId)
-            }
-        }
-        .task(id: appState.selectedPeriod?.id) {
-            if let periodId = appState.selectedPeriod?.id {
-                await viewModel.load(periodId: periodId)
-            }
-        }
-        .navigationTitle("Category targets")
-        .navigationBarTitleDisplayMode(.large)
-        .sheet(item: $selectedTarget) { target in
-            EditCategoryTargetSheet(
-                target: target,
-                onSave: { cents in
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.ppBackground)
+                .refreshable {
                     if let periodId = appState.selectedPeriod?.id {
-                        await viewModel.setTarget(categoryId: target.categoryId, value: cents, periodId: periodId)
-                    }
-                },
-                onExclude: {
-                    if let periodId = appState.selectedPeriod?.id {
-                        await viewModel.excludeTarget(id: target.id, periodId: periodId)
-                    }
-                },
-                onInclude: {
-                    if let periodId = appState.selectedPeriod?.id {
-                        await viewModel.includeTarget(id: target.id, periodId: periodId)
+                        await viewModel.load(periodId: periodId)
                     }
                 }
-            )
-            .environmentObject(appState)
-        }
-        } // else
+                .task(id: appState.selectedPeriod?.id) {
+                    if let periodId = appState.selectedPeriod?.id {
+                        await viewModel.load(periodId: periodId)
+                    }
+                }
+                .navigationTitle("Category targets")
+                .navigationBarTitleDisplayMode(.large)
+                .sheet(item: $selectedTarget) { target in
+                    EditCategoryTargetSheet(
+                        target: target,
+                        onSave: { cents in
+                            if let periodId = appState.selectedPeriod?.id {
+                                await viewModel.setTarget(categoryId: target.categoryId, value: cents, periodId: periodId)
+                            }
+                        },
+                        onExclude: {
+                            if let periodId = appState.selectedPeriod?.id {
+                                await viewModel.excludeTarget(id: target.id, periodId: periodId)
+                            }
+                        },
+                        onInclude: {
+                            if let periodId = appState.selectedPeriod?.id {
+                                await viewModel.includeTarget(id: target.id, periodId: periodId)
+                            }
+                        }
+                    )
+                    .environmentObject(appState)
+                }
+            } // else
+        } // NavigationStack
     }
 
     // MARK: - Summary Card
