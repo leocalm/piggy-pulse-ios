@@ -170,7 +170,7 @@ struct BudgetPlanView: View {
                         await viewModel.load(periodId: periodId)
                     }
                 }
-                .navigationTitle("Category targets")
+                .navigationTitle(String(localized: "more.targets"))
                 .navigationBarTitleDisplayMode(.large)
                 .sheet(item: $selectedTarget) { target in
                     EditCategoryTargetSheet(

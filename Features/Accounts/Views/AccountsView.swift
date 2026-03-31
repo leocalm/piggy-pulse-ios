@@ -76,7 +76,7 @@ struct AccountsView: View {
                 } message: {
                     Text("This account will be permanently deleted.")
                 }
-                .navigationTitle("Accounts")
+                .navigationTitle(String(localized: "tab.accounts"))
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {

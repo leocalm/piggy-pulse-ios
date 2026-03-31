@@ -164,7 +164,7 @@ struct TransactionsView: View {
             } message: {
                 Text("This transaction will be permanently deleted.")
             }
-            .navigationTitle("Transactions")
+            .navigationTitle(String(localized: "tab.transactions"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

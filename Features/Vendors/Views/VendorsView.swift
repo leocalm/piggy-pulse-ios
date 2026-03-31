@@ -107,7 +107,7 @@ struct VendorsView: View {
                 } message: {
                     Text("This vendor will be permanently deleted.")
                 }
-                .navigationTitle("Vendors")
+                .navigationTitle(String(localized: "more.vendors"))
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {

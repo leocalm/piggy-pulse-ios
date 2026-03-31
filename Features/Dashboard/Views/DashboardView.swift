@@ -46,7 +46,7 @@ struct DashboardView: View {
                     await viewModel.load(periodId: periodId)
                 }
             }
-            .navigationTitle("Dashboard")
+            .navigationTitle(String(localized: "tab.dashboard"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
