@@ -11,6 +11,8 @@ struct EmptyStateView: View {
     var actionLabel: String?
     var action: (() -> Void)?
 
+    @Environment(\.themeManager) private var theme
+
     var body: some View {
         VStack(spacing: PPSpacing.xl) {
             // Icon
@@ -41,7 +43,7 @@ struct EmptyStateView: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .frame(width: 24, height: 24)
-                                .background(Color.ppTextSecondary.opacity(0.5))
+                                .background(theme.primary.opacity(0.8))
                                 .clipShape(Circle())
 
                             VStack(alignment: .leading, spacing: PPSpacing.xs) {
@@ -68,6 +70,7 @@ struct EmptyStateView: View {
                         .font(.ppHeadline)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(theme.primary)
             }
 
             // Tips

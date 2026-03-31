@@ -120,8 +120,8 @@ extension Color {
     })
     static let ppSurface = Color(UIColor { t in
         t.userInterfaceStyle == .dark
-            ? UIColor(rgb: 0x0D0C14)
-            : UIColor(rgb: 0xF5F4FA)
+            ? UIColor(rgb: 0x161520)
+            : UIColor(rgb: 0xEDEBF4)
     })
     static let ppCard = Color(UIColor { t in
         t.userInterfaceStyle == .dark
@@ -185,10 +185,38 @@ private func buildDataPalette(_ hexValues: [UInt32]) -> [Color] {
     var palette = base
     var idx = 0
     while palette.count < 8 {
-        // Generate lighter tints by blending with white
-        let factor = 0.3 + Double(idx) * 0.1
-        palette.append(base[idx % base.count].opacity(1 - factor))
+        // Generate lighter tints by increasing HSL lightness (matches web tokens.ts)
+        let sourceHex = hexValues[idx % hexValues.count]
+        let offset = 15 + idx * 5
+        palette.append(tintColor(sourceHex, lightnessOffset: offset))
         idx += 1
     }
     return palette
+}
+
+/// Shift HSL lightness of a hex color by the given percentage points.
+private func tintColor(_ hex: UInt32, lightnessOffset: Int) -> Color {
+    let r = Double((hex >> 16) & 0xFF) / 255
+    let g = Double((hex >> 8) & 0xFF) / 255
+    let b = Double(hex & 0xFF) / 255
+
+    let maxC = max(r, g, b)
+    let minC = min(r, g, b)
+    var h = 0.0, s = 0.0
+    let l = (maxC + minC) / 2
+
+    if maxC != minC {
+        let d = maxC - minC
+        s = l > 0.5 ? d / (2 - maxC - minC) : d / (maxC + minC)
+        if maxC == r {
+            h = ((g - b) / d + (g < b ? 6 : 0)) / 6
+        } else if maxC == g {
+            h = ((b - r) / d + 2) / 6
+        } else {
+            h = ((r - g) / d + 4) / 6
+        }
+    }
+
+    let newL = min(1.0, max(0.0, l + Double(lightnessOffset) / 100.0))
+    return Color(hue: h, saturation: s, brightness: newL)
 }

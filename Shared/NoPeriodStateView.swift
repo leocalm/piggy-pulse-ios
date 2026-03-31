@@ -5,9 +5,10 @@ import SwiftUI
 struct NoPeriodStateView: View {
     let pageTitle: String
     var showTitle: Bool = true
+    /// Called when the user taps "Go to Periods". The parent is responsible for navigation.
+    var onGoToPeriods: (() -> Void)?
 
-    @State private var navigateToPeriods = false
-    @EnvironmentObject private var appState: AppState
+    @Environment(\.themeManager) private var theme
 
     var body: some View {
         VStack(spacing: PPSpacing.xl) {
@@ -37,12 +38,16 @@ struct NoPeriodStateView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 300)
 
-                NavigationLink(value: "periods") {
-                    Label(String(localized: "noPeriod.goToPeriods"), systemImage: "calendar")
-                        .font(.ppHeadline)
+                if let onGoToPeriods {
+                    Button {
+                        onGoToPeriods()
+                    } label: {
+                        Label(String(localized: "noPeriod.goToPeriods"), systemImage: "calendar")
+                            .font(.ppHeadline)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(theme.primary)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(appState.themeManager.primary)
             }
             .padding(.vertical, PPSpacing.xxxl)
             .frame(maxWidth: .infinity)

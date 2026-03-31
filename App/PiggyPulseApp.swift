@@ -22,7 +22,8 @@ struct PiggyPulseApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
-                .preferredColorScheme(appState.appColorScheme)
+                .environment(\.themeManager, appState.themeManager)
+                .preferredColorScheme(appState.themeManager.colorScheme)
                 .task {
                     await appState.checkAuth()
                     scheduleNextBackgroundRefresh()
