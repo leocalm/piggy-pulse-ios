@@ -160,14 +160,6 @@ extension APIEndpoint {
 // MARK: - Dashboard
 
 extension APIEndpoint {
-    static let monthlyBurnIn = APIEndpoint(path: "/dashboard/monthly-burn-in", method: .get, requiresAuth: true)
-    static let monthProgress = APIEndpoint(path: "/dashboard/month-progress", method: .get, requiresAuth: true)
-    static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
-}
-
-// MARK: - Dashboard V2
-
-extension APIEndpoint {
     static let dashboardCurrentPeriod = APIEndpoint(path: "/dashboard/current-period", method: .get, requiresAuth: true)
     static let dashboardNetPosition = APIEndpoint(path: "/dashboard/net-position", method: .get, requiresAuth: true)
     static let dashboardCashFlow = APIEndpoint(path: "/dashboard/cash-flow", method: .get, requiresAuth: true)

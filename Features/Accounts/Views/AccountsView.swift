@@ -370,7 +370,7 @@ struct AccountsView: View {
         do {
             async let accountsTask: PaginatedResponse<AccountListItem> = appState.apiClient.request(
                 .accounts,
-                queryItems: [URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased())]
+                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
             )
             async let summaryTask: AccountsSummary = appState.apiClient.request(.accountsSummary)
 

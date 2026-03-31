@@ -17,7 +17,7 @@ final class TransactionRepository {
         vendorIds: [UUID] = []
     ) async throws -> CursorPaginatedTransactions {
         var queryItems = [
-            URLQueryItem(name: "period_id", value: periodId.uuidString.lowercased()),
+            URLQueryItem(name: "periodId", value: periodId.uuidString),
             URLQueryItem(name: "limit", value: String(limit))
         ]
 
@@ -26,19 +26,19 @@ final class TransactionRepository {
         }
 
         if let cursor = cursor {
-            queryItems.append(URLQueryItem(name: "cursor", value: cursor.uuidString.lowercased()))
+            queryItems.append(URLQueryItem(name: "cursor", value: cursor.uuidString))
         }
 
         for id in accountIds {
-            queryItems.append(URLQueryItem(name: "account_id", value: id.uuidString.lowercased()))
+            queryItems.append(URLQueryItem(name: "accountId", value: id.uuidString))
         }
 
         for id in categoryIds {
-            queryItems.append(URLQueryItem(name: "category_id", value: id.uuidString.lowercased()))
+            queryItems.append(URLQueryItem(name: "categoryId", value: id.uuidString))
         }
 
         for id in vendorIds {
-            queryItems.append(URLQueryItem(name: "vendor_id", value: id.uuidString.lowercased()))
+            queryItems.append(URLQueryItem(name: "vendorId", value: id.uuidString))
         }
 
         return try await apiClient.request(.transactions, queryItems: queryItems)
