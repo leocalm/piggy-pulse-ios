@@ -77,7 +77,7 @@ struct VendorsView: View {
                         Section {
                             VStack(spacing: PPSpacing.lg) {
                                 Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                                Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
+                                Text(String(localized: "vendors.emptyTitle")).font(.ppBody).foregroundColor(.ppTextSecondary)
                                 Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                             }
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)

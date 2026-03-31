@@ -292,7 +292,7 @@ struct BudgetPlanView: View {
                         .fill(Color.ppBorder)
                         .frame(height: 8)
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(spentPercentage > 1.0 ? Color.ppDestructive : Color.ppPrimary)
+                        .fill(Color.ppPrimary)
                         .frame(width: geo.size.width * min(spentPercentage, 1.0), height: 8)
                 }
             }

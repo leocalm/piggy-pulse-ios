@@ -8779,6 +8779,38 @@
           }
         }
       }
+    },
+    "transactions.emptyTitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No transactions found"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma transação encontrada"
+          }
+        }
+      }
+    },
+    "vendors.emptyTitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No vendors yet"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum fornecedor ainda"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

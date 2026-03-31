@@ -78,7 +78,7 @@ struct TransactionsView: View {
                             Image(systemName: "tray")
                                 .font(.system(size: 40))
                                 .foregroundColor(.ppTextTertiary)
-                            Text("No transactions found")
+                            Text(String(localized: "transactions.emptyTitle"))
                                 .font(.ppBody)
                                 .foregroundColor(.ppTextSecondary)
                             Text("Start tracking your spending by adding your first transaction.")
