@@ -145,14 +145,14 @@ struct AccountsView: View {
                                     Button {
                                         accountToArchive = account
                                     } label: {
-                                        Label("Archive", systemImage: "archivebox")
+                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
                                     }
                                     .tint(.ppAmber)
                                 } else {
                                     Button(role: .destructive) {
                                         accountToDelete = account
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
                                     }
                                     .tint(.ppDestructive)
                                 }
@@ -161,7 +161,7 @@ struct AccountsView: View {
                                 Button {
                                     editingAccount = account
                                 } label: {
-                                    Label("Edit", systemImage: "pencil")
+                                    Label(String(localized: "common.edit"), systemImage: "pencil")
                                 }
                             }
                             .contextMenu {

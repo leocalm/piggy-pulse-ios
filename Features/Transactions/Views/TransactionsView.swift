@@ -139,7 +139,7 @@ struct TransactionsView: View {
                                     Button(role: .destructive) {
                                         transactionToDelete = transaction
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
                                     }
                                     .tint(.ppDestructive)
                                 }
@@ -147,7 +147,7 @@ struct TransactionsView: View {
                                     Button {
                                         editingTransaction = transaction
                                     } label: {
-                                        Label("Edit", systemImage: "pencil")
+                                        Label(String(localized: "common.edit"), systemImage: "pencil")
                                     }
                                 }
                                 .contextMenu {

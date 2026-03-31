@@ -50,38 +50,6 @@ struct VendorsView: View {
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                         }
-                    } else if !vendors.isEmpty {
-                        // Stats bar
-                        Section {
-                            vendorStatsBar
-                                .listRowBackground(Color.ppBackground)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                        }
-
-                        // Search
-                        Section {
-                            HStack {
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundColor(.ppTextTertiary)
-                                TextField(String(localized: "vendors.search"), text: $searchText)
-                                    .font(.ppBody)
-                                    .foregroundColor(.ppTextPrimary)
-                                if !searchText.isEmpty {
-                                    Button { searchText = "" } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(.ppTextTertiary)
-                                    }
-                                }
-                            }
-                            .padding(PPSpacing.md)
-                            .background(Color.ppCard)
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                        }
                     } else if vendors.isEmpty {
                         Section {
                             EmptyStateView(
@@ -114,7 +82,40 @@ struct VendorsView: View {
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
-                    } else if !filteredVendors.isEmpty {
+                    } else if !vendors.isEmpty {
+                        // Stats bar
+                        Section {
+                            vendorStatsBar
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+
+                        // Search
+                        Section {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.ppTextTertiary)
+                                TextField(String(localized: "vendors.search"), text: $searchText)
+                                    .font(.ppBody)
+                                    .foregroundColor(.ppTextPrimary)
+                                if !searchText.isEmpty {
+                                    Button { searchText = "" } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.ppTextTertiary)
+                                    }
+                                }
+                            }
+                            .padding(PPSpacing.md)
+                            .background(Color.ppCard)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+
+                        // Vendor rows
                         Section {
                             ForEach(filteredVendors) { vendor in
                                 vendorRow(vendor)
@@ -123,20 +124,20 @@ struct VendorsView: View {
                                             Button {
                                                 vendorToArchive = vendor
                                             } label: {
-                                                Label("Archive", systemImage: "archivebox")
+                                                Label(String(localized: "common.archive"), systemImage: "archivebox")
                                             }
                                             .tint(.ppAmber)
                                         } else {
                                             Button(role: .destructive) {
                                                 vendorToDelete = vendor
                                             } label: {
-                                                Label("Delete", systemImage: "trash")
+                                                Label(String(localized: "common.delete"), systemImage: "trash")
                                             }
                                             .tint(.ppDestructive)
                                         }
                                     }
                                     .swipeActions(edge: .leading) {
-                                        Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                        Button { editingVendor = vendor } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(.ppPrimary)
                                     }
                                     .contextMenu {
                                         Button {

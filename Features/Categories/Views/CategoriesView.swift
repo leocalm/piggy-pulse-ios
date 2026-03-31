@@ -267,21 +267,21 @@ struct CategoriesView: View {
                                     Button {
                                         categoryToArchive = cat
                                     } label: {
-                                        Label("Archive", systemImage: "archivebox")
+                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
                                     }
                                     .tint(.ppAmber)
                                 } else {
                                     Button(role: .destructive) {
                                         categoryToDelete = cat
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
                                     }
                                     .tint(.ppDestructive)
                                 }
                             }
                             .swipeActions(edge: .leading) {
                                 if !cat.isSystem {
-                                    Button { editingCategory = cat } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                    Button { editingCategory = cat } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(.ppPrimary)
                                 }
                             }
                             .contextMenu {
