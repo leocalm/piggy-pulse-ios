@@ -12,6 +12,9 @@ struct VendorsView: View {
     @State private var vendorToArchive: VendorListItem?
 
     var body: some View {
+        if appState.selectedPeriod == nil {
+            NoPeriodStateView(pageTitle: String(localized: "more.vendors"))
+        } else {
         List {
                 if isLoading {
                     Section {
@@ -114,6 +117,7 @@ struct VendorsView: View {
                     }
                 }
             }
+        } // else
     }
 
     private func deleteVendor(_ vendor: VendorListItem) async {

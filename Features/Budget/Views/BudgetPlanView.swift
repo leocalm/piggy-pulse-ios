@@ -11,6 +11,9 @@ struct BudgetPlanView: View {
     }
 
     var body: some View {
+        if appState.selectedPeriod == nil {
+            NoPeriodStateView(pageTitle: String(localized: "more.targets"))
+        } else {
         List {
             if viewModel.isLoading {
                 Section {
@@ -189,6 +192,7 @@ struct BudgetPlanView: View {
             )
             .environmentObject(appState)
         }
+        } // else
     }
 
     // MARK: - Summary Card

@@ -15,6 +15,9 @@ struct TransactionsView: View {
 
     var body: some View {
         NavigationStack {
+            if appState.selectedPeriod == nil {
+                NoPeriodStateView(pageTitle: String(localized: "tab.transactions"))
+            } else {
             List {
                 // Header section
                 Section {
@@ -213,6 +216,7 @@ struct TransactionsView: View {
                     }
                 }
             }
+            } // else
         }
     }
 

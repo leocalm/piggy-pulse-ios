@@ -13,6 +13,9 @@ struct AccountsView: View {
     @State private var accountToArchive: AccountListItem?
 
     var body: some View {
+        if appState.selectedPeriod == nil {
+            NoPeriodStateView(pageTitle: String(localized: "tab.accounts"))
+        } else {
         List {
                 if isLoading {
                     Section {
@@ -83,6 +86,7 @@ struct AccountsView: View {
                     }
                 }
             }
+        } // else
     }
 
     private func accountSection(_ title: String, accounts: [AccountListItem]) -> some View {

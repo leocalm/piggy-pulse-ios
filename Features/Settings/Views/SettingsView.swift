@@ -179,7 +179,67 @@ struct SettingsView: View {
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            preferenceRow("Theme", selection: $selectedTheme, options: [
+            // Color theme picker
+            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                Text(String(localized: "settings.colorTheme"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: PPSpacing.sm)], spacing: PPSpacing.sm) {
+                    ForEach(ColorTheme.allCases) { theme in
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            appState.themeManager.colorTheme = theme
+                        } label: {
+                            VStack(spacing: PPSpacing.xs) {
+                                HStack(spacing: 0) {
+                                    Circle()
+                                        .fill(theme.accents.primary)
+                                        .frame(width: 20, height: 20)
+                                    Circle()
+                                        .fill(theme.accents.secondary)
+                                        .frame(width: 20, height: 20)
+                                        .offset(x: -6)
+                                    Circle()
+                                        .fill(theme.accents.tertiary)
+                                        .frame(width: 20, height: 20)
+                                        .offset(x: -12)
+                                }
+                                .frame(maxWidth: .infinity)
+
+                                Text(theme.label)
+                                    .font(.ppCaption)
+                                    .foregroundColor(
+                                        appState.themeManager.colorTheme == theme
+                                            ? .ppTextPrimary
+                                            : .ppTextSecondary
+                                    )
+                            }
+                            .padding(.vertical, PPSpacing.sm)
+                            .padding(.horizontal, PPSpacing.sm)
+                            .background(
+                                appState.themeManager.colorTheme == theme
+                                    ? theme.accents.primary.opacity(0.15)
+                                    : Color.ppElevated
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: PPRadius.md)
+                                    .stroke(
+                                        appState.themeManager.colorTheme == theme
+                                            ? theme.accents.primary.opacity(0.5)
+                                            : Color.ppBorder,
+                                        lineWidth: 1
+                                    )
+                            )
+                        }
+                    }
+                }
+            }
+
+            Divider().background(Color.ppBorder)
+
+            preferenceRow("Appearance", selection: $selectedTheme, options: [
                 ("system", "System"), ("light", "Light"), ("dark", "Dark")
             ])
             .onChange(of: selectedTheme) { _, _ in preferencesDirty = true }
