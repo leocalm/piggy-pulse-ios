@@ -726,9 +726,54 @@
         }
       }
     },
-    "appearance.dark": {},
-    "appearance.light": {},
-    "appearance.system": {},
+    "appearance.dark": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuro"
+          }
+        }
+      }
+    },
+    "appearance.light": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claro"
+          }
+        }
+      }
+    },
+    "appearance.system": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sistema"
+          }
+        }
+      }
+    },
     "Apply": {
       "localizations": {
         "pt-BR": {
@@ -2186,7 +2231,22 @@
         }
       }
     },
-    "emptyState.tips": {},
+    "emptyState.tips": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Tips"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dicas Rápidas"
+          }
+        }
+      }
+    },
     "Enable a schedule to generate future periods automatically.": {
       "comment": "Body text when auto-creation is disabled",
       "localizations": {
@@ -3525,16 +3585,166 @@
         }
       }
     },
-    "more.app": {},
-    "more.categories": {},
-    "more.logout": {},
-    "more.periods": {},
-    "more.planning": {},
-    "more.settings": {},
-    "more.subscriptions": {},
-    "more.targets": {},
-    "more.tracking": {},
-    "more.vendors": {},
+    "more.app": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        }
+      }
+    },
+    "more.categories": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categorias"
+          }
+        }
+      }
+    },
+    "more.logout": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log out"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sair"
+          }
+        }
+      }
+    },
+    "more.periods": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Periods"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Períodos"
+          }
+        }
+      }
+    },
+    "more.planning": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Planning"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Planejamento"
+          }
+        }
+      }
+    },
+    "more.settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configurações"
+          }
+        }
+      }
+    },
+    "more.subscriptions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscriptions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assinaturas"
+          }
+        }
+      }
+    },
+    "more.targets": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Targets"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objetivos"
+          }
+        }
+      }
+    },
+    "more.tracking": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acompanhamento"
+          }
+        }
+      }
+    },
+    "more.vendors": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vendors"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fornecedores"
+          }
+        }
+      }
+    },
     "Move to Friday": {
       "comment": "Weekend adjustment option",
       "localizations": {
@@ -3932,9 +4142,54 @@
         }
       }
     },
-    "noPeriod.description": {},
-    "noPeriod.goToPeriods": {},
-    "noPeriod.title": {},
+    "noPeriod.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select or create a budget period to view this page. Periods define the time window for your transactions and targets."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione ou crie um período para visualizar esta página. Períodos definem a janela de tempo para suas transações e metas."
+          }
+        }
+      }
+    },
+    "noPeriod.selectPeriod": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select Period"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecionar Período"
+          }
+        }
+      }
+    },
+    "noPeriod.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No period selected"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum período selecionado"
+          }
+        }
+      }
+    },
     "Not set up": {
       "localizations": {
         "pt-BR": {
@@ -4953,7 +5208,38 @@
         }
       }
     },
-    "settings.colorTheme": {},
+    "settings.appearance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aparência"
+          }
+        }
+      }
+    },
+    "settings.colorTheme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color Theme"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tema de Cores"
+          }
+        }
+      }
+    },
     "Shift to Friday": {
       "comment": "Weekend behavior option in onboarding",
       "localizations": {
@@ -5207,10 +5493,70 @@
         }
       }
     },
-    "tab.accounts": {},
-    "tab.dashboard": {},
-    "tab.more": {},
-    "tab.transactions": {},
+    "tab.accounts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accounts"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contas"
+          }
+        }
+      }
+    },
+    "tab.dashboard": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dashboard"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Painel"
+          }
+        }
+      }
+    },
+    "tab.more": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais"
+          }
+        }
+      }
+    },
+    "tab.transactions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transactions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transações"
+          }
+        }
+      }
+    },
     "Tap + to create your first overlay.": {
       "localizations": {
         "pt-BR": {
@@ -5249,18 +5595,198 @@
         }
       }
     },
-    "theme.deepOcean": {},
-    "theme.deepOcean.desc": {},
-    "theme.moonlit": {},
-    "theme.moonlit.desc": {},
-    "theme.nebula": {},
-    "theme.nebula.desc": {},
-    "theme.sageStone": {},
-    "theme.sageStone.desc": {},
-    "theme.sunrise": {},
-    "theme.sunrise.desc": {},
-    "theme.warmRose": {},
-    "theme.warmRose.desc": {},
+    "theme.deepOcean": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep Ocean"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oceano Profundo"
+          }
+        }
+      }
+    },
+    "theme.deepOcean.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teal + Sand"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verde-azulado + Areia"
+          }
+        }
+      }
+    },
+    "theme.moonlit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moonlit"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Luar"
+          }
+        }
+      }
+    },
+    "theme.moonlit.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lavender + Silver"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lavanda + Prata"
+          }
+        }
+      }
+    },
+    "theme.nebula": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nebula"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nebulosa"
+          }
+        }
+      }
+    },
+    "theme.nebula.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lavender + Rose"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lavanda + Rosa"
+          }
+        }
+      }
+    },
+    "theme.sageStone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sage & Stone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sálvia e Pedra"
+          }
+        }
+      }
+    },
+    "theme.sageStone.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Green + Sandstone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verde + Arenito"
+          }
+        }
+      }
+    },
+    "theme.sunrise": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sunrise"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amanhecer"
+          }
+        }
+      }
+    },
+    "theme.sunrise.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blue + Amber"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Azul + Âmbar"
+          }
+        }
+      }
+    },
+    "theme.warmRose": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warm Rose"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rosa Quente"
+          }
+        }
+      }
+    },
+    "theme.warmRose.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rose + Linen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rosa + Linho"
+          }
+        }
+      }
+    },
     "This account will be hidden but its history will be preserved.": {
       "localizations": {
         "pt-BR": {
@@ -6024,38 +6550,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sua senha"
-          }
-        }
-      }
-    },
-    "noPeriod.selectPeriod": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Select Period"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Selecionar Período"
-          }
-        }
-      }
-    },
-    "settings.appearance": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appearance"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aparência"
           }
         }
       }
