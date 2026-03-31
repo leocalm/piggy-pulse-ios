@@ -180,6 +180,26 @@ extension APIEndpoint {
     static let dashboardRecentTransactions = APIEndpoint(path: "/transactions", method: .get, requiresAuth: true)
 }
 
+// MARK: - Subscriptions
+
+extension APIEndpoint {
+    static let subscriptions = APIEndpoint(path: "/subscriptions", method: .get, requiresAuth: true)
+    static let createSubscription = APIEndpoint(path: "/subscriptions", method: .post, requiresAuth: true)
+    static func subscription(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/subscriptions/\(id)", method: .get, requiresAuth: true)
+    }
+    static func updateSubscription(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/subscriptions/\(id)", method: .put, requiresAuth: true)
+    }
+    static func deleteSubscription(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/subscriptions/\(id)", method: .delete, requiresAuth: true)
+    }
+    static func cancelSubscription(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/subscriptions/\(id)/cancel", method: .post, requiresAuth: true)
+    }
+    static let upcomingCharges = APIEndpoint(path: "/subscriptions/upcoming", method: .get, requiresAuth: true)
+}
+
 // MARK: - Settings
 
 extension APIEndpoint {

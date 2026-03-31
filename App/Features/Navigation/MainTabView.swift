@@ -50,8 +50,7 @@ struct MainTabView: View {
                     // Tracking section
                     moreSection(String(localized: "more.tracking")) {
                         moreLink("more.subscriptions", icon: "repeat") {
-                            // TODO: SubscriptionsView — Phase 2
-                            Text("Subscriptions — coming soon")
+                            SubscriptionsView(apiClient: appState.apiClient).environmentObject(appState)
                         }
                         moreLink("more.vendors", icon: "storefront") {
                             VendorsView().environmentObject(appState)
