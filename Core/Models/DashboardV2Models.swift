@@ -104,3 +104,22 @@ struct RecentTransactionItem: Codable {
     let vendorName: String?
     let transactionType: String // "income", "expense", "transfer"
 }
+
+// MARK: - Categories Overview (used by Variable Categories widget)
+
+struct CategoriesOverviewSummaryItem: Codable {
+    let id: UUID
+    let name: String
+    let icon: String
+    let color: String
+    let type: String // "income", "expense"
+    let status: String // "active", "inactive"
+    let actual: Int64
+    let projected: Int64
+    let budgeted: Int64?
+    let variance: Int64
+}
+
+struct CategoriesOverviewResponse: Codable {
+    let categories: [CategoriesOverviewSummaryItem]
+}

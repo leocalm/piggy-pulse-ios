@@ -113,6 +113,7 @@ extension APIEndpoint {
 static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
     static let transferCategory = APIEndpoint(path: "/categories/transfer", method: .get, requiresAuth: true)
     static let categoriesManagement = APIEndpoint(path: "/categories/management", method: .get, requiresAuth: true)
+    static let categoriesOverview = APIEndpoint(path: "/categories/overview", method: .get, requiresAuth: true)
 
 }
 
@@ -173,7 +174,6 @@ extension APIEndpoint {
     static let dashboardSpendingTrend = APIEndpoint(path: "/dashboard/spending-trend", method: .get, requiresAuth: true)
     static let dashboardTopVendors = APIEndpoint(path: "/dashboard/top-vendors", method: .get, requiresAuth: true)
     static let dashboardFixedCategories = APIEndpoint(path: "/dashboard/fixed-categories", method: .get, requiresAuth: true)
-    static let dashboardVariableCategories = APIEndpoint(path: "/dashboard/variable-categories", method: .get, requiresAuth: true)
     static let dashboardSubscriptions = APIEndpoint(path: "/dashboard/subscriptions", method: .get, requiresAuth: true)
     static let dashboardBudgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
     static let dashboardRecentTransactions = APIEndpoint(path: "/transactions", method: .get, requiresAuth: true)
