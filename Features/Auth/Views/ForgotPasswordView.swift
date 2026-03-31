@@ -69,11 +69,11 @@ struct ForgotPasswordView: View {
     private var formContent: some View {
         VStack(spacing: PPSpacing.xl) {
             VStack(spacing: PPSpacing.sm) {
-                Text("Password recovery")
+                Text(String(localized: "auth.passwordRecovery"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                Text("Enter your email address. If it is registered, you will receive a reset link.")
+                Text(String(localized: "auth.passwordRecoveryDesc"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
@@ -89,7 +89,7 @@ struct ForgotPasswordView: View {
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Email").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "field.email")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("name@example.com", text: $viewModel.forgotEmail)
@@ -111,7 +111,7 @@ struct ForgotPasswordView: View {
                         ProgressView()
                             .tint(.white)
                     } else {
-                        Text("Send link")
+                        Text(String(localized: "button.sendLink"))
                             .font(.ppHeadline)
                     }
                 }
@@ -123,7 +123,7 @@ struct ForgotPasswordView: View {
             .buttonBorderShape(.capsule)
             .disabled(viewModel.isForgotDisabled)
 
-            Button("Back to login") {
+            Button(String(localized: "button.backToLogin")) {
                 dismiss()
             }
             .font(.ppCallout)
@@ -140,17 +140,17 @@ struct ForgotPasswordView: View {
                 .foregroundColor(.ppPrimary)
 
             VStack(spacing: PPSpacing.sm) {
-                Text("Check your email")
+                Text(String(localized: "auth.checkEmail"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                Text("If an account exists for that email, we've sent a password reset link. Check your inbox and spam folder.")
+                Text(String(localized: "auth.checkEmailDesc"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
             }
 
-            Button("Back to login") {
+            Button(String(localized: "button.backToLogin")) {
                 dismiss()
             }
             .buttonStyle(.borderedProminent)

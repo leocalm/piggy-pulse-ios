@@ -32,12 +32,12 @@ struct AddCategorySheet: View {
                         }
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Category Details")
+                            Text(String(localized: "section.categoryDetails"))
                                 .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("e.g. Groceries", text: $name)
@@ -49,17 +49,17 @@ struct AddCategorySheet: View {
 
                             // Type
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Type").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.type")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 Picker("Type", selection: $categoryType) {
-                                    Text("Incoming").tag("Incoming")
-                                    Text("Outgoing").tag("Outgoing")
+                                    Text(String(localized: "category.incoming")).tag("Incoming")
+                                    Text(String(localized: "category.outgoing")).tag("Outgoing")
                                 }
                                 .pickerStyle(.segmented)
                             }
 
                             // Icon selector
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Icon").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.icon")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 let icons = ["🛒", "🏠", "🚗", "💡", "🎮", "👕", "🍽️", "☕", "✈️", "🏥", "📚", "🎵", "💼", "🎁", "🐾", "💰", "📱", "🏋️", "🎬", "🧾", "💳", "🚌", "🍕", "🛍️"]
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(icons, id: \.self) { i in
@@ -78,7 +78,7 @@ struct AddCategorySheet: View {
                             }
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Color").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.color")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
                                         Circle().fill(Color(hex: c) ?? .ppPrimary).frame(width: 32, height: 32)
@@ -108,7 +108,7 @@ struct AddCategorySheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Add Category").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.addCategory")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

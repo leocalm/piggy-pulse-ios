@@ -31,10 +31,10 @@ struct EditCategorySheet: View {
                         }
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Category Details").font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                            Text(String(localized: "section.categoryDetails")).font(.ppTitle3).foregroundColor(.ppTextPrimary)
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("Category name", text: $name)
@@ -46,17 +46,17 @@ struct EditCategorySheet: View {
 
                             if !category.isSystem {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                    Text("Type").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.type")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Picker("Type", selection: $categoryType) {
-                                        Text("Incoming").tag("Incoming")
-                                        Text("Outgoing").tag("Outgoing")
+                                        Text(String(localized: "category.incoming")).tag("Incoming")
+                                        Text(String(localized: "category.outgoing")).tag("Outgoing")
                                     }
                                     .pickerStyle(.segmented)
                                 }
                             }
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Icon").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.icon")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(icons, id: \.self) { i in
                                         Text(i).font(.system(size: 24)).frame(width: 36, height: 36)
@@ -68,7 +68,7 @@ struct EditCategorySheet: View {
                             }
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Color").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.color")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
                                         Circle().fill(Color(hex: c) ?? .ppPrimary).frame(width: 32, height: 32)
@@ -97,7 +97,7 @@ struct EditCategorySheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Edit Category").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.editCategory")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

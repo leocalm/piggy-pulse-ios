@@ -27,7 +27,7 @@ struct OverlaysView: View {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
                             Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -36,8 +36,8 @@ struct OverlaysView: View {
                     Section {
                         VStack(spacing: PPSpacing.lg) {
                             Image(systemName: "square.stack").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                            Text("No overlays yet").font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Text("Tap + to create your first overlay.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                            Text(String(localized: "overlays.empty")).font(.ppBody).foregroundColor(.ppTextSecondary)
+                            Text(String(localized: "overlays.emptyHint")).font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -65,7 +65,7 @@ struct OverlaysView: View {
                                 withAnimation { showPast.toggle() }
                             } label: {
                                 HStack {
-                                    Text("PAST OVERLAYS").font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
+                                    Text(String(localized: "overlays.past")).font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
                                     Spacer()
                                     Text("\(past.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
@@ -83,7 +83,7 @@ struct OverlaysView: View {
             .background(Color.ppBackground)
             .refreshable { await load() }
             .task { await load() }
-            .navigationTitle("Overlays")
+            .navigationTitle(String(localized: "nav.overlays"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -219,7 +219,7 @@ struct OverlaysView: View {
             Button {
                 overlayToEdit = overlay
             } label: {
-                Label("Edit Overlay", systemImage: "pencil")
+                Label(String(localized: "button.editOverlay"), systemImage: "pencil")
             }
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -227,7 +227,7 @@ struct OverlaysView: View {
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 overlayToEdit = overlay
             } label: {
-                Label("Edit", systemImage: "pencil")
+                Label(String(localized: "common.edit"), systemImage: "pencil")
             }
             .tint(.ppPrimary)
         }

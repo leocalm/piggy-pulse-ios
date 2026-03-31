@@ -8,7 +8,7 @@ struct SummaryStepView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
-                Text("You're all set — here's what will be configured when you enter PiggyPulse.")
+                Text(String(localized: "onboarding.summaryIntro"))
                     .font(.ppBody).foregroundColor(.ppTextPrimary)
                     .padding(.horizontal, PPSpacing.xl)
 
@@ -21,7 +21,7 @@ struct SummaryStepView: View {
                         labeledRow("If Saturday", vm.saturdayBehavior.label)
                         labeledRow("If Sunday", vm.sundayBehavior.label)
                     } else {
-                        Text("Monthly, starting on the 1st (default)")
+                        Text(String(localized: "onboarding.defaultPeriod"))
                             .font(.ppCallout).foregroundColor(.ppTextSecondary)
                     }
                 }
@@ -49,13 +49,13 @@ struct SummaryStepView: View {
                     let incoming = vm.categories.filter { $0.categoryType == "Incoming" }
                     let outgoing = vm.categories.filter { $0.categoryType == "Outgoing" }
                     if !incoming.isEmpty {
-                        Text("Incoming").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTeal)
+                        Text(String(localized: "category.incoming")).font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTeal)
                         ForEach(incoming) { cat in
                             HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
                         }
                     }
                     if !outgoing.isEmpty {
-                        Text("Outgoing").font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppDestructive)
+                        Text(String(localized: "category.outgoing")).font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppDestructive)
                             .padding(.top, 4)
                         ForEach(outgoing) { cat in
                             HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }

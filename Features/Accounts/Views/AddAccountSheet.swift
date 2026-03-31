@@ -65,12 +65,12 @@ struct AddAccountSheet: View {
 
                         // Details
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Account Details")
+                            Text(String(localized: "section.accountDetails"))
                                 .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("e.g. Main Checking", text: $name)
@@ -82,7 +82,7 @@ struct AddAccountSheet: View {
 
                             // Account Type
                             HStack {
-                                Text("Account Type")
+                                Text(String(localized: "field.accountType"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 Spacer()
                                 Picker("Account Type", selection: $accountType) {
@@ -96,7 +96,7 @@ struct AddAccountSheet: View {
 
                             // Starting Balance
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Starting Balance")
+                                Text(String(localized: "field.startingBalance"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 HStack {
                                     Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
@@ -111,7 +111,7 @@ struct AddAccountSheet: View {
                             // Spend Limit (for CreditCard and Allowance)
                             if showSpendLimit {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                    Text("Spend Limit")
+                                    Text(String(localized: "field.spendLimit"))
                                         .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     HStack {
                                         Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
@@ -129,11 +129,11 @@ struct AddAccountSheet: View {
 
                         // Appearance
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Appearance")
+                            Text(String(localized: "section.appearance"))
                                 .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Color").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.color")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
                                         Circle()
@@ -153,7 +153,7 @@ struct AddAccountSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Add Account").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.addAccount")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

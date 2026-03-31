@@ -36,9 +36,23 @@ final class DashboardLayout {
     func moveWidget(from source: IndexSet, to destination: Int) {
         var visible = visibleWidgets
         visible.move(fromOffsets: source, toOffset: destination)
-        // Rebuild full order: visible items in new order + hidden items at the end
-        let hidden = widgetOrder.filter { hiddenWidgets.contains($0) }
-        widgetOrder = visible + hidden
+        // Rebuild order preserving hidden widget positions
+        var newOrder: [String] = []
+        var visibleIndex = 0
+        for id in widgetOrder {
+            if hiddenWidgets.contains(id) {
+                newOrder.append(id)
+            } else if visibleIndex < visible.count {
+                newOrder.append(visible[visibleIndex])
+                visibleIndex += 1
+            }
+        }
+        // Append any remaining visible items (shouldn't happen but be safe)
+        while visibleIndex < visible.count {
+            newOrder.append(visible[visibleIndex])
+            visibleIndex += 1
+        }
+        widgetOrder = newOrder
         save()
     }
 

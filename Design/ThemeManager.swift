@@ -40,6 +40,10 @@ final class ThemeManager {
         }
     }
 
+    // MARK: - Shared
+
+    static let shared = ThemeManager()
+
     // MARK: - Init
 
     init() {
@@ -80,5 +84,5 @@ enum AppearanceMode: String, CaseIterable, Identifiable {
 // MARK: - Environment Key
 
 extension EnvironmentValues {
-    @Entry var themeManager: ThemeManager = ThemeManager()
+    @Entry var themeManager: ThemeManager = .shared
 }

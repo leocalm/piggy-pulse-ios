@@ -4,16 +4,12 @@ import TipKit
 struct DashboardView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.themeManager) private var theme
-    @StateObject private var viewModel: DashboardV2ViewModel
+    @StateObject private var viewModel = DashboardV2ViewModel()
     @State private var showAddTransaction = false
     @State private var showAddWidget = false
     @State private var layoutVersion = 0 // Bump to force re-render after widget changes
 
     private let dashboardTip = DashboardTip()
-
-    init(apiClient: APIClient) {
-        _viewModel = StateObject(wrappedValue: DashboardV2ViewModel(apiClient: apiClient))
-    }
 
     var body: some View {
         NavigationStack {
@@ -45,6 +41,7 @@ struct DashboardView: View {
                     }
                 }
                 .task(id: appState.selectedPeriod?.id) {
+                    viewModel.configure(apiClient: appState.apiClient)
                     if let periodId = appState.selectedPeriod?.id {
                         await viewModel.load(periodId: periodId)
                     }

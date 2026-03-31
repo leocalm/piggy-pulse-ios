@@ -80,7 +80,7 @@ struct TransactionFilterSheet: View {
 
                         if !draftAccountIds.isEmpty || !draftCategoryIds.isEmpty || !draftVendorIds.isEmpty {
                             Section {
-                                Button("Clear All") {
+                                Button(String(localized: "button.clearAll")) {
                                     impactFeedback.impactOccurred()
                                     draftAccountIds = []
                                     draftCategoryIds = []
@@ -97,16 +97,16 @@ struct TransactionFilterSheet: View {
                 selectionFeedback.prepare()
                 impactFeedback.prepare()
             }
-            .navigationTitle("Filter")
+            .navigationTitle(String(localized: "nav.filter"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(String(localized: "common.cancel")) {
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Apply") {
+                    Button(String(localized: "button.apply")) {
                         onApply(draftAccountIds, draftCategoryIds, draftVendorIds)
                         dismiss()
                     }

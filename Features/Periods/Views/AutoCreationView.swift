@@ -37,7 +37,7 @@ struct AutoCreationView: View {
             .padding(PPSpacing.lg)
         }
         .background(Color.ppBackground)
-        .navigationTitle("Auto-Creation")
+        .navigationTitle(String(localized: "nav.autoCreation"))
         .task {
             await loadSchedule()
         }
@@ -52,11 +52,11 @@ struct AutoCreationView: View {
                     .font(.system(size: 40))
                     .foregroundColor(.ppTextTertiary)
 
-                Text("Auto-Creation is disabled")
+                Text(String(localized: "autoCreation.disabled"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                Text("Enable a schedule to generate future periods automatically.")
+                Text(String(localized: "autoCreation.enableDesc"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextSecondary)
                     .multilineTextAlignment(.center)
@@ -65,7 +65,7 @@ struct AutoCreationView: View {
             Button {
                 isDisabled = false
             } label: {
-                Label("Set up Auto-Creation", systemImage: "arrow.triangle.2.circlepath")
+                Label(String(localized: "button.setupAutoCreation"), systemImage: "arrow.triangle.2.circlepath")
                     .font(.ppHeadline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, PPSpacing.md)
@@ -96,13 +96,13 @@ struct AutoCreationView: View {
 
             // Period Setup
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                Text("Period Setup")
+                Text(String(localized: "section.periodSetup"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
                 // Start Day
                 HStack {
-                    Text("Start Day of Month")
+                    Text(String(localized: "field.startDayOfMonth"))
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
                     Spacer()
@@ -116,7 +116,7 @@ struct AutoCreationView: View {
 
                 // Duration
                 HStack {
-                    Text("Duration")
+                    Text(String(localized: "field.duration"))
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
                     Spacer()
@@ -129,9 +129,9 @@ struct AutoCreationView: View {
                             .foregroundColor(.ppTextPrimary)
 
                         Picker("", selection: $durationUnit) {
-                            Text("Days").tag("days")
-                            Text("Weeks").tag("weeks")
-                            Text("Months").tag("months")
+                            Text(String(localized: "unit.days")).tag("days")
+                            Text(String(localized: "unit.weeks")).tag("weeks")
+                            Text(String(localized: "unit.months")).tag("months")
                         }
                         .tint(.ppPrimary)
                     }
@@ -139,7 +139,7 @@ struct AutoCreationView: View {
 
                 // Generate Ahead
                 HStack {
-                    Text("Generate Ahead")
+                    Text(String(localized: "field.generateAhead"))
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
                     Spacer()
@@ -158,12 +158,12 @@ struct AutoCreationView: View {
 
             // Weekend Adjustments
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                Text("Weekend Adjustments")
+                Text(String(localized: "section.weekendAdjustments"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                weekendRow("Saturday", selection: $saturdayAdj)
-                weekendRow("Sunday", selection: $sundayAdj)
+                weekendRow(String(localized: "field.saturday"), selection: $saturdayAdj)
+                weekendRow(String(localized: "field.sunday"), selection: $sundayAdj)
             }
             .padding(PPSpacing.lg)
             .background(Color.ppCard)
@@ -175,13 +175,13 @@ struct AutoCreationView: View {
 
             // Naming
             VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                Text("Naming")
+                Text(String(localized: "section.naming"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Name Pattern").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.namePattern")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     TextField("{month} {year}", text: $namePattern)
@@ -193,7 +193,7 @@ struct AutoCreationView: View {
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                 }
 
-                Text("Use {month} and {year} as placeholders.")
+                Text(String(localized: "autoCreation.placeholderHint"))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextTertiary)
             }
@@ -214,7 +214,7 @@ struct AutoCreationView: View {
                         if isSaving {
                             ProgressView().tint(.white)
                         } else {
-                            Text(schedule == nil ? "Enable Auto-Creation" : "Save Changes")
+                            Text(schedule == nil ? String(localized: "button.enableAutoCreation") : String(localized: "button.saveChanges"))
                                 .font(.ppHeadline)
                         }
                     }
@@ -230,7 +230,7 @@ struct AutoCreationView: View {
                     Button(role: .destructive) {
                         Task { await deleteSchedule() }
                     } label: {
-                        Text("Disable Auto-Creation")
+                        Text(String(localized: "button.disableAutoCreation"))
                             .font(.ppCallout)
                             .foregroundColor(.ppDestructive)
                     }
@@ -243,14 +243,14 @@ struct AutoCreationView: View {
 
     private func weekendRow(_ day: String, selection: Binding<String>) -> some View {
         HStack {
-            Text("If \(day)")
+            Text(String(localized: "autoCreation.ifDay \(day)"))
                 .font(.ppCallout)
                 .foregroundColor(.ppTextSecondary)
             Spacer()
             Picker("", selection: selection) {
-                Text("Keep").tag("keep")
-                Text("Move to Friday").tag("friday")
-                Text("Move to Monday").tag("monday")
+                Text(String(localized: "autoCreation.keep")).tag("keep")
+                Text(String(localized: "autoCreation.moveToFriday")).tag("friday")
+                Text(String(localized: "autoCreation.moveToMonday")).tag("monday")
             }
             .tint(.ppPrimary)
         }

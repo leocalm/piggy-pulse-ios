@@ -27,12 +27,12 @@ struct AddVendorSheet: View {
                         }
 
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            Text("Vendor Details")
+                            Text(String(localized: "section.vendorDetails"))
                                 .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("e.g. Albert Heijn", text: $name)
@@ -42,7 +42,7 @@ struct AddVendorSheet: View {
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                Text(String(localized: "field.description")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 TextField("Optional description", text: $description)
                                     .font(.ppBody).foregroundColor(.ppTextPrimary)
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
@@ -56,7 +56,7 @@ struct AddVendorSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Add Vendor").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.addVendor")).navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

@@ -37,7 +37,7 @@ struct SettingsView: View {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
                             Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                     } else {
@@ -78,7 +78,7 @@ struct SettingsView: View {
                     .environmentObject(appState)
             }
             .task { await load() }
-            .navigationTitle("Settings")
+            .navigationTitle(String(localized: "nav.settings"))
             .navigationBarTitleDisplayMode(.large)
     }
 
@@ -86,14 +86,14 @@ struct SettingsView: View {
 
     private func profileCard(_ p: ProfileResponse) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("PROFILE")
+            Text(String(localized: "section.profile"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            settingsRow("Name", value: p.name)
-            settingsRow("Email", value: p.email)
-            settingsRow("Currency", value: currencyDisplay)
+            settingsRow(String(localized: "field.name"), value: p.name)
+            settingsRow(String(localized: "field.email"), value: p.email)
+            settingsRow(String(localized: "field.currency"), value: currencyDisplay)
 
             Divider().background(Color.ppBorder)
 
@@ -102,7 +102,7 @@ struct SettingsView: View {
                 showEditProfile = true
             } label: {
                 HStack {
-                    Label("Edit Profile", systemImage: "pencil")
+                    Label(String(localized: "button.editProfile"), systemImage: "pencil")
                         .font(.ppBody)
                         .foregroundColor(.ppPrimary)
                     Spacer()
@@ -123,7 +123,7 @@ struct SettingsView: View {
 
     private var securityCard: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("SECURITY")
+            Text(String(localized: "section.security"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
@@ -133,7 +133,7 @@ struct SettingsView: View {
                 showChangePassword = true
             } label: {
                 HStack {
-                    Label("Change Password", systemImage: "key")
+                    Label(String(localized: "button.changePassword"), systemImage: "key")
                         .font(.ppBody)
                         .foregroundColor(.ppTextPrimary)
                     Spacer()
@@ -175,7 +175,7 @@ struct SettingsView: View {
 
     private var preferencesCard: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("PREFERENCES")
+            Text(String(localized: "section.preferences"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
@@ -258,14 +258,14 @@ struct SettingsView: View {
                 .tint(.ppTextPrimary)
             }
 
-            preferenceRow("Date Format", selection: $selectedDateFormat, options: [
+            preferenceRow(String(localized: "settings.dateFormat"), selection: $selectedDateFormat, options: [
                 ("DD/MM/YYYY", "DD/MM/YYYY"),
                 ("MM/DD/YYYY", "MM/DD/YYYY"),
                 ("YYYY-MM-DD", "YYYY-MM-DD")
             ])
             .onChange(of: selectedDateFormat) { _, _ in preferencesDirty = true }
 
-            preferenceRow("Number Format", selection: $selectedNumberFormat, options: [
+            preferenceRow(String(localized: "settings.numberFormat"), selection: $selectedNumberFormat, options: [
                 ("1.234,56", "1.234,56"),
                 ("1,234.56", "1,234.56"),
                 ("1 234.56", "1 234.56")
@@ -280,7 +280,7 @@ struct SettingsView: View {
                     Task { await savePreferences() }
                 } label: {
                     HStack {
-                        Label("Save Preferences", systemImage: "checkmark")
+                        Label(String(localized: "button.savePreferences"), systemImage: "checkmark")
                             .font(.ppBody)
                             .foregroundColor(.ppPrimary)
                         Spacer()
@@ -300,7 +300,7 @@ struct SettingsView: View {
         .animation(.easeInOut(duration: 0.2), value: preferencesDirty)
     }
 
-    private func preferenceRow(_ label: LocalizedStringKey, selection: Binding<String>, options: [(String, String)]) -> some View {
+    private func preferenceRow(_ label: String, selection: Binding<String>, options: [(String, String)]) -> some View {
         HStack {
             Text(label)
                 .font(.ppCallout)
@@ -320,13 +320,13 @@ struct SettingsView: View {
 
     private var notificationsCard: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("NOTIFICATIONS")
+            Text(String(localized: "section.notifications"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             Toggle(isOn: $notificationsEnabled) {
-                Text("Notifications")
+                Text(String(localized: "settings.notifications"))
                     .font(.ppBody)
                     .foregroundColor(.ppTextPrimary)
             }
@@ -339,10 +339,10 @@ struct SettingsView: View {
 
             Toggle(isOn: $notificationPeriodStarting) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Period starting")
+                    Text(String(localized: "settings.notification.periodStarting"))
                         .font(.ppBody)
                         .foregroundColor(.ppTextPrimary)
-                    Text("When a new period begins")
+                    Text(String(localized: "settings.notification.periodStartingDesc"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -357,10 +357,10 @@ struct SettingsView: View {
 
             Toggle(isOn: $notificationPeriodSummary) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Period summary")
+                    Text(String(localized: "settings.notification.periodSummary"))
                         .font(.ppBody)
                         .foregroundColor(.ppTextPrimary)
-                    Text("When a period ends")
+                    Text(String(localized: "settings.notification.periodSummaryDesc"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -375,10 +375,10 @@ struct SettingsView: View {
 
             Toggle(isOn: $notificationOverlayLifecycle) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Overlay lifecycle")
+                    Text(String(localized: "settings.notification.overlayLifecycle"))
                         .font(.ppBody)
                         .foregroundColor(.ppTextPrimary)
-                    Text("When an overlay starts or ends")
+                    Text(String(localized: "settings.notification.overlayLifecycleDesc"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -450,13 +450,13 @@ struct SettingsView: View {
 
     private var appInfoCard: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("APP")
+            Text(String(localized: "section.app"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            settingsRow("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
-            settingsRow("Build", value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
+            settingsRow(String(localized: "settings.version"), value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+            settingsRow(String(localized: "settings.build"), value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.xl)
@@ -479,7 +479,7 @@ struct SettingsView: View {
 
     private var dangerZoneCard: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("DANGER ZONE")
+            Text(String(localized: "section.dangerZone"))
                 .font(.ppOverline)
                 .foregroundColor(.ppDestructive)
                 .tracking(1)
@@ -489,7 +489,7 @@ struct SettingsView: View {
                 showDeleteAccount = true
             } label: {
                 HStack {
-                    Label("Delete Account", systemImage: "trash")
+                    Label(String(localized: "button.deleteAccount"), systemImage: "trash")
                         .font(.ppBody)
                         .foregroundColor(.ppDestructive)
                     Spacer()
@@ -499,7 +499,7 @@ struct SettingsView: View {
                 }
             }
 
-            Text("Permanently delete your account and all associated data.")
+            Text(String(localized: "settings.deleteAccountDesc"))
                 .font(.ppCaption)
                 .foregroundColor(.ppTextSecondary)
         }
@@ -512,7 +512,7 @@ struct SettingsView: View {
 
     // MARK: - Helpers
 
-    private func settingsRow(_ label: LocalizedStringKey, value: String) -> some View {
+    private func settingsRow(_ label: String, value: String) -> some View {
         HStack {
             Text(label)
                 .font(.ppCallout)

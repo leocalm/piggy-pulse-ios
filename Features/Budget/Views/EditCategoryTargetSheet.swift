@@ -37,7 +37,7 @@ struct EditCategoryTargetSheet: View {
                                 .font(.ppTitle)
                                 .foregroundColor(.ppTextPrimary)
                             if target.isExcluded {
-                                Text("Currently excluded")
+                                Text(String(localized: "budget.currentlyExcluded"))
                                     .font(.ppCaption)
                                     .foregroundColor(.ppAmber)
                             }
@@ -52,7 +52,7 @@ struct EditCategoryTargetSheet: View {
                     // Amount input
                     if !target.isExcluded {
                         VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                            Text("TARGET AMOUNT")
+                            Text(String(localized: "section.targetAmount"))
                                 .font(.ppOverline)
                                 .foregroundColor(.ppTextSecondary)
                                 .tracking(1)
@@ -89,7 +89,7 @@ struct EditCategoryTargetSheet: View {
                                 dismiss()
                             }
                         } label: {
-                            Text("Exclude from budget")
+                            Text(String(localized: "button.excludeFromBudget"))
                                 .font(.ppHeadline)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, PPSpacing.lg)
@@ -106,7 +106,7 @@ struct EditCategoryTargetSheet: View {
                                 dismiss()
                             }
                         } label: {
-                            Text("Re-include in budget")
+                            Text(String(localized: "button.reincludeInBudget"))
                                 .font(.ppHeadline)
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
@@ -119,7 +119,7 @@ struct EditCategoryTargetSheet: View {
                 }
                 .padding(PPSpacing.xl)
             }
-            .navigationTitle("Set Target")
+            .navigationTitle(String(localized: "nav.setTarget"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -146,7 +146,7 @@ struct EditCategoryTargetSheet: View {
                             if isLoading {
                                 ProgressView()
                             } else {
-                                Text("Save")
+                                Text(String(localized: "common.save"))
                                     .fontWeight(.semibold)
                             }
                         }

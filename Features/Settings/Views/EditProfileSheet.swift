@@ -31,7 +31,7 @@ struct EditProfileSheet: View {
                         VStack(alignment: .leading, spacing: PPSpacing.lg) {
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.name")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("Your name", text: $name)
@@ -44,7 +44,7 @@ struct EditProfileSheet: View {
 
                             // Email (read-only)
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Email")
+                                Text(String(localized: "field.email"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 Text(profile?.email ?? "")
                                     .font(.ppBody)
@@ -59,7 +59,7 @@ struct EditProfileSheet: View {
                             // Currency picker
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Timezone").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.timezone")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 TextField("e.g. Europe/Amsterdam", text: $timezone)
@@ -72,7 +72,7 @@ struct EditProfileSheet: View {
                             }
 
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text("Default Currency")
+                                Text(String(localized: "field.defaultCurrency"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 if currencies.isEmpty {
                                     HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
@@ -99,7 +99,7 @@ struct EditProfileSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Edit Profile").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(String(localized: "nav.editProfile")).navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button { dismiss() } label: { Image(systemName: "xmark") }

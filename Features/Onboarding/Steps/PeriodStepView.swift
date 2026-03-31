@@ -10,15 +10,15 @@ struct PeriodStepView: View {
 
                 // Description
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text("Periods are how PiggyPulse slices your timeline for tracking. The default — monthly, starting on the 1st — works for most people.")
+                    Text(String(localized: "onboarding.periodsIntro"))
                         .font(.ppBody).foregroundColor(.ppTextPrimary)
-                    Text("You can further customize periods later in the Periods screen, including renaming them or adjusting individual start dates.")
+                    Text(String(localized: "onboarding.periodsCustomizeHint"))
                         .font(.ppCallout).foregroundColor(.ppTextSecondary)
                 }
 
                 // Customize toggle
                 VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    Text("Configuration")
+                    Text(String(localized: "onboarding.configuration"))
                         .font(.ppTitle3).foregroundColor(.ppTextPrimary)
 
                     Picker("", selection: $vm.customize) {
@@ -49,13 +49,13 @@ struct PeriodStepView: View {
 
                         // Weekend adjustments
                         VStack(alignment: .leading, spacing: PPSpacing.md) {
-                            Text("Weekend Days")
+                            Text(String(localized: "onboarding.weekendDays"))
                                 .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                             Text("If the period start date falls on a weekend, PiggyPulse can shift it to the nearest weekday. This only affects when a period is recorded as starting — it does not change how long the period lasts.")
                                 .font(.ppCaption).foregroundColor(.ppTextSecondary)
 
                             HStack {
-                                Text("If it lands on Saturday")
+                                Text(String(localized: "onboarding.ifSaturday"))
                                     .font(.ppCallout).foregroundColor(.ppTextPrimary)
                                 Spacer()
                                 Picker("Saturday", selection: $vm.saturdayBehavior) {
@@ -68,7 +68,7 @@ struct PeriodStepView: View {
                             }
 
                             HStack {
-                                Text("If it lands on Sunday")
+                                Text(String(localized: "onboarding.ifSunday"))
                                     .font(.ppCallout).foregroundColor(.ppTextPrimary)
                                 Spacer()
                                 Picker("Sunday", selection: $vm.sundayBehavior) {

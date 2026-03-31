@@ -3,7 +3,7 @@ import TipKit
 
 struct SubscriptionsView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var viewModel: SubscriptionsViewModel
+    @StateObject private var viewModel = SubscriptionsViewModel()
     @State private var showAddSheet = false
     @State private var editingSubscription: Subscription?
     @State private var cancellingSubscription: Subscription?
@@ -12,13 +12,6 @@ struct SubscriptionsView: View {
     @State private var showCancelled = false
 
     private let subscriptionsTip = SubscriptionsTip()
-
-    let apiClient: APIClient
-
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-        _viewModel = StateObject(wrappedValue: SubscriptionsViewModel(apiClient: apiClient))
-    }
 
     var body: some View {
         NavigationStack {
@@ -198,21 +191,24 @@ struct SubscriptionsView: View {
                 .scrollContentBackground(.hidden)
                 .background(Color.ppBackground)
                 .refreshable { await viewModel.load() }
-                .task { await viewModel.load() }
+                .task {
+                    viewModel.configure(apiClient: appState.apiClient)
+                    await viewModel.load()
+                }
                 .sheet(isPresented: $showAddSheet, onDismiss: { Task { await viewModel.load() } }) {
-                    AddSubscriptionSheet(apiClient: apiClient) { }
+                    AddSubscriptionSheet(apiClient: appState.apiClient) { }
                         .environmentObject(appState)
                 }
                 .sheet(item: $editingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
-                    EditSubscriptionSheet(subscription: sub, apiClient: apiClient) { }
+                    EditSubscriptionSheet(subscription: sub, apiClient: appState.apiClient) { }
                         .environmentObject(appState)
                 }
                 .sheet(item: $cancellingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
-                    CancelSubscriptionSheet(subscription: sub, apiClient: apiClient) { }
+                    CancelSubscriptionSheet(subscription: sub, apiClient: appState.apiClient) { }
                         .environmentObject(appState)
                 }
                 .navigationDestination(item: $selectedSubscription) { sub in
-                    SubscriptionDetailView(subscriptionId: sub.id, apiClient: apiClient)
+                    SubscriptionDetailView(subscriptionId: sub.id, apiClient: appState.apiClient)
                         .environmentObject(appState)
                 }
                 .confirmationDialog(

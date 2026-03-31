@@ -2,12 +2,8 @@ import SwiftUI
 
 struct BudgetPlanView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var viewModel: BudgetViewModel
+    @StateObject private var viewModel = BudgetViewModel()
     @State private var selectedTarget: CategoryTarget?
-
-    init(apiClient: APIClient) {
-        _viewModel = StateObject(wrappedValue: BudgetViewModel(apiClient: apiClient))
-    }
 
     var body: some View {
         NavigationStack {
@@ -35,7 +31,7 @@ struct BudgetPlanView: View {
                                 Text(error)
                                     .font(.ppBody)
                                     .foregroundColor(.ppTextSecondary)
-                                Button("Retry") {
+                                Button(String(localized: "common.retry")) {
                                     if let periodId = appState.selectedPeriod?.id {
                                         Task { await viewModel.load(periodId: periodId) }
                                     }
@@ -84,14 +80,14 @@ struct BudgetPlanView: View {
                                                     Task { await viewModel.excludeTarget(id: target.id, periodId: periodId) }
                                                 }
                                             } label: {
-                                                Label("Exclude", systemImage: "eye.slash")
+                                                Label(String(localized: "button.exclude"), systemImage: "eye.slash")
                                             }
                                             .tint(.ppAmber)
                                         }
                                         .onTapGesture { selectedTarget = target }
                                 }
                             } header: {
-                                Text("WITH TARGET")
+                                Text(String(localized: "budget.withTarget"))
                                     .font(.ppOverline)
                                     .foregroundColor(.ppTextSecondary)
                                     .tracking(1)
@@ -108,7 +104,7 @@ struct BudgetPlanView: View {
                                         .onTapGesture { selectedTarget = target }
                                 }
                             } header: {
-                                Text("NO TARGET")
+                                Text(String(localized: "budget.noTarget"))
                                     .font(.ppOverline)
                                     .foregroundColor(.ppTextSecondary)
                                     .tracking(1)
@@ -128,14 +124,14 @@ struct BudgetPlanView: View {
                                                     Task { await viewModel.includeTarget(id: target.id, periodId: periodId) }
                                                 }
                                             } label: {
-                                                Label("Include", systemImage: "eye")
+                                                Label(String(localized: "button.include"), systemImage: "eye")
                                             }
                                             .tint(.ppCyan)
                                         }
                                         .onTapGesture { selectedTarget = target }
                                 }
                             } header: {
-                                Text("EXCLUDED")
+                                Text(String(localized: "budget.excluded"))
                                     .font(.ppOverline)
                                     .foregroundColor(.ppTextSecondary)
                                     .tracking(1)
@@ -148,10 +144,10 @@ struct BudgetPlanView: View {
                                     Image(systemName: "chart.pie")
                                         .font(.system(size: 32))
                                         .foregroundColor(.ppTextTertiary)
-                                    Text("No categories yet")
+                                    Text(String(localized: "budget.noCategories"))
                                         .font(.ppBody)
                                         .foregroundColor(.ppTextSecondary)
-                                    Text("Create categories to set budget targets.")
+                                    Text(String(localized: "budget.noCategoriesHint"))
                                         .font(.ppCallout)
                                         .foregroundColor(.ppTextTertiary)
                                         .multilineTextAlignment(.center)
@@ -173,6 +169,7 @@ struct BudgetPlanView: View {
                     }
                 }
                 .task(id: appState.selectedPeriod?.id) {
+                    viewModel.configure(apiClient: appState.apiClient)
                     if let periodId = appState.selectedPeriod?.id {
                         await viewModel.load(periodId: periodId)
                     }
@@ -274,15 +271,15 @@ struct BudgetPlanView: View {
         let spentPercentage = totalBudget > 0 ? Double(spentBudget) / Double(totalBudget) : 0.0
 
         return VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("BUDGET BREAKDOWN")
+            Text(String(localized: "budget.breakdown"))
                 .font(.ppOverline)
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
             VStack(spacing: PPSpacing.md) {
-                breakdownRow("Total Budget", value: totalBudget, color: .ppPrimary)
-                breakdownRow("Currently Spent", value: spentBudget, color: .ppTextSecondary)
-                breakdownRow("Remaining Budget", value: remainingBudget, color: .ppCyan)
+                breakdownRow(String(localized: "budget.totalBudget"), value: totalBudget, color: .ppPrimary)
+                breakdownRow(String(localized: "budget.currentlySpent"), value: spentBudget, color: .ppTextSecondary)
+                breakdownRow(String(localized: "budget.remainingBudget"), value: remainingBudget, color: .ppCyan)
             }
 
             GeometryReader { geo in
@@ -304,7 +301,7 @@ struct BudgetPlanView: View {
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
-    private func breakdownRow(_ label: LocalizedStringKey, value: Int64, color: Color) -> some View {
+    private func breakdownRow(_ label: String, value: Int64, color: Color) -> some View {
         HStack {
             Circle().fill(color).frame(width: 8, height: 8)
             Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary)
@@ -326,7 +323,7 @@ struct BudgetPlanView: View {
                     .foregroundColor(.ppTextPrimary)
                 Text(formatCurrency(target.spentAmount ?? 0, code: appState.currencyCode))
                     .foregroundColor(.ppTextPrimary)
-                Text("of \(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))")
+                Text(String(localized: "budget.ofTarget \(formatCurrency(Int64(target.currentTarget ?? 0), code: appState.currencyCode))"))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
             }
@@ -350,7 +347,7 @@ struct BudgetPlanView: View {
                 .font(.ppHeadline)
                 .foregroundColor(.ppTextTertiary)
             Spacer()
-            Text("No target")
+            Text(String(localized: "budget.noTargetLabel"))
                 .font(.ppCaption)
                 .foregroundColor(.ppTextTertiary)
             Image(systemName: "plus.circle")
@@ -374,7 +371,7 @@ struct BudgetPlanView: View {
                 .foregroundColor(.ppTextTertiary)
                 .strikethrough(true, color: .ppTextTertiary)
             Spacer()
-            Text("Excluded")
+            Text(String(localized: "budget.excludedLabel"))
                 .font(.ppCaption)
                 .foregroundColor(.ppAmber)
                 .padding(.horizontal, PPSpacing.sm)

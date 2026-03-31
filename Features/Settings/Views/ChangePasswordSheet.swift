@@ -35,7 +35,7 @@ struct ChangePasswordSheet: View {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.system(size: 48))
                                     .foregroundColor(.ppCyan)
-                                Text("Password changed successfully")
+                                Text(String(localized: "changePassword.success"))
                                     .font(.ppHeadline)
                                     .foregroundColor(.ppTextPrimary)
                             }
@@ -43,7 +43,7 @@ struct ChangePasswordSheet: View {
                         } else {
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Current Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.currentPassword")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 SecureField("Enter current password", text: $currentPassword)
@@ -55,7 +55,7 @@ struct ChangePasswordSheet: View {
                             }
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("New Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.newPassword")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 SecureField("Min 8 characters", text: $newPassword)
@@ -67,7 +67,7 @@ struct ChangePasswordSheet: View {
                             }
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 HStack(spacing: 2) {
-                                    Text("Confirm Password").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    Text(String(localized: "field.confirmPassword")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                                 }
                                 SecureField("Repeat new password", text: $confirmPassword)
@@ -79,7 +79,7 @@ struct ChangePasswordSheet: View {
                             }
 
                             if !confirmPassword.isEmpty && newPassword != confirmPassword {
-                                Text("Passwords don't match")
+                                Text(String(localized: "changePassword.mismatch"))
                                     .font(.ppCaption)
                                     .foregroundColor(.ppDestructive)
                             }
@@ -88,7 +88,7 @@ struct ChangePasswordSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Change Password")
+            .navigationTitle(String(localized: "nav.changePassword"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)

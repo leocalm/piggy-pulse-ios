@@ -9,15 +9,23 @@ final class BudgetViewModel: ObservableObject {
     @Published var isSaving = false
     @Published var errorMessage: String?
 
-    private let apiClient: APIClient
+    private var apiClient: APIClient?
 
     init(apiClient: APIClient) {
+        self.apiClient = apiClient
+    }
+
+    init() {}
+
+    func configure(apiClient: APIClient) {
+        guard self.apiClient == nil else { return }
         self.apiClient = apiClient
     }
 
     // MARK: - Load
 
     func load(periodId: UUID) async {
+        guard let apiClient else { return }
         isLoading = true
         errorMessage = nil
 
@@ -44,6 +52,7 @@ final class BudgetViewModel: ObservableObject {
     // MARK: - Mutations
 
     func setTarget(categoryId: UUID, value: Int32, periodId: UUID) async {
+        guard let apiClient else { return }
         isSaving = true
         let body = BatchUpsertTargetsRequest(
             periodId: periodId,
@@ -59,6 +68,7 @@ final class BudgetViewModel: ObservableObject {
     }
 
     func excludeTarget(id: UUID, periodId: UUID) async {
+        guard let apiClient else { return }
         isSaving = true
         do {
             try await apiClient.request(.excludeCategoryTarget(id))
@@ -70,6 +80,7 @@ final class BudgetViewModel: ObservableObject {
     }
 
     func includeTarget(id: UUID, periodId: UUID) async {
+        guard let apiClient else { return }
         isSaving = true
         do {
             try await apiClient.request(.includeCategoryTarget(id))

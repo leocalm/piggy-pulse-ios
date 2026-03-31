@@ -11,13 +11,21 @@ final class PeriodsViewModel: ObservableObject {
     @Published var showPastPeriods = false
     @Published var hasSchedule = false
 
-    private let repository: PeriodRepository
+    private var repository: PeriodRepository?
 
     init(apiClient: APIClient) {
         self.repository = PeriodRepository(apiClient: apiClient)
     }
 
+    init() {}
+
+    func configure(apiClient: APIClient) {
+        guard repository == nil else { return }
+        repository = PeriodRepository(apiClient: apiClient)
+    }
+
     func load() async {
+        guard let repository else { return }
         isLoading = true
         errorMessage = nil
 

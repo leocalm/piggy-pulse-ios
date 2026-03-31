@@ -77,7 +77,7 @@ struct CreatePeriodSheet: View {
                     .padding(PPSpacing.xl)
                 }
             }
-            .navigationTitle("Create Budget Period")
+            .navigationTitle(String(localized: "nav.createPeriod"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -97,7 +97,7 @@ struct CreatePeriodSheet: View {
                         if isLoading {
                             ProgressView()
                         } else {
-                            Text("Create")
+                            Text(String(localized: "button.create"))
                                 .fontWeight(.semibold)
                         }
                     }
@@ -112,10 +112,10 @@ struct CreatePeriodSheet: View {
     private var periodSetupSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                Text("Period Setup")
+                Text(String(localized: "section.periodSetup"))
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
-                Text("Period boundaries are structural and can reclassify transactions.")
+                Text(String(localized: "createPeriod.boundaryNote"))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
             }
@@ -123,7 +123,7 @@ struct CreatePeriodSheet: View {
             // Start Date
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Start Date")
+                    Text(String(localized: "field.startDate"))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
                         .foregroundColor(.ppTextPrimary)
@@ -144,7 +144,7 @@ struct CreatePeriodSheet: View {
                     // Duration value
                     VStack(alignment: .leading, spacing: PPSpacing.sm) {
                         HStack(spacing: 2) {
-                            Text("Duration")
+                            Text(String(localized: "field.duration"))
                                 .font(.ppCallout)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.ppTextPrimary)
@@ -175,7 +175,7 @@ struct CreatePeriodSheet: View {
 
                     // Duration unit
                     VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                        Text("Duration Unit")
+                        Text(String(localized: "field.durationUnit"))
                             .font(.ppCallout)
                             .fontWeight(.semibold)
                             .foregroundColor(.ppTextPrimary)
@@ -204,20 +204,20 @@ struct CreatePeriodSheet: View {
 
     private var endRuleSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("End Rule")
+            Text(String(localized: "section.endRule"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
             Picker("End Rule", selection: $endRuleMode) {
-                Text("By Duration").tag(EndRuleMode.byDuration)
-                Text("Set Manually").tag(EndRuleMode.manual)
+                Text(String(localized: "createPeriod.byDuration")).tag(EndRuleMode.byDuration)
+                Text(String(localized: "createPeriod.setManually")).tag(EndRuleMode.manual)
             }
             .pickerStyle(.segmented)
 
             if endRuleMode == .byDuration {
                 // Calculated end date display
                 VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text("Calculated End Date")
+                    Text(String(localized: "field.calculatedEndDate"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                     Text(formatDate(calculatedEndDate))
@@ -232,7 +232,7 @@ struct CreatePeriodSheet: View {
                 // Manual end date picker
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                     HStack(spacing: 2) {
-                        Text("Manual End Date")
+                        Text(String(localized: "field.manualEndDate"))
                             .font(.ppCallout)
                             .fontWeight(.semibold)
                             .foregroundColor(.ppTextPrimary)
@@ -261,13 +261,13 @@ struct CreatePeriodSheet: View {
 
     private var namingSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("Naming")
+            Text(String(localized: "section.naming"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Period Name").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "field.periodName")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("e.g. March 2026", text: $name)

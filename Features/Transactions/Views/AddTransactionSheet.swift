@@ -81,7 +81,7 @@ struct AddTransactionSheet: View {
                     }
                 }
             }
-            .navigationTitle("Add Transaction")
+            .navigationTitle(String(localized: "nav.addTransaction"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -119,7 +119,7 @@ struct AddTransactionSheet: View {
 
     private var amountSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("Amount")
+            Text(String(localized: "field.amount"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
@@ -142,7 +142,7 @@ struct AddTransactionSheet: View {
             )
 
             Toggle(isOn: $isTransfer) {
-                Text("Transfer between accounts")
+                Text(String(localized: "transaction.transferBetween"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextPrimary)
             }
@@ -172,13 +172,13 @@ struct AddTransactionSheet: View {
 
     private var detailsSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("Details")
+            Text(String(localized: "section.details"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 HStack(spacing: 2) {
-                    Text("Description").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "field.description")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 TextField("e.g. Groceries at Albert Heijn", text: $description)
@@ -189,7 +189,7 @@ struct AddTransactionSheet: View {
             }
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                Text("Date")
+                Text(String(localized: "field.date"))
                     .font(.ppCallout)
                     .fontWeight(.semibold)
                     .foregroundColor(.ppTextPrimary)
@@ -213,7 +213,7 @@ struct AddTransactionSheet: View {
 
     private var classificationSection: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            Text("Classification")
+            Text(String(localized: "section.classification"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextPrimary)
 
@@ -221,7 +221,7 @@ struct AddTransactionSheet: View {
             if !isTransfer {
                 HStack {
                     HStack(spacing: 2) {
-                        Text("Category").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.category")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     Spacer()
@@ -239,7 +239,7 @@ struct AddTransactionSheet: View {
             // From account picker
             HStack {
                 HStack(spacing: 2) {
-                    Text("From Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "field.fromAccount")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                 }
                 Spacer()
@@ -257,7 +257,7 @@ struct AddTransactionSheet: View {
             if isTransfer {
                 HStack {
                     HStack(spacing: 2) {
-                        Text("To Account").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "field.toAccount")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                         Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
                     }
                     Spacer()
@@ -272,7 +272,7 @@ struct AddTransactionSheet: View {
                 }
             } else {
                 HStack {
-                    Text("Vendor").font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "field.vendor")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                     Spacer()
                     Picker("Vendor", selection: $selectedVendor) {
                         Text("None").tag(Optional<VendorOption>.none)

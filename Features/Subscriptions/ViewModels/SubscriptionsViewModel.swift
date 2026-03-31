@@ -8,10 +8,17 @@ final class SubscriptionsViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    private let repository: SubscriptionRepository
+    private var repository: SubscriptionRepository?
 
     init(apiClient: APIClient) {
         self.repository = SubscriptionRepository(apiClient: apiClient)
+    }
+
+    init() {}
+
+    func configure(apiClient: APIClient) {
+        guard repository == nil else { return }
+        repository = SubscriptionRepository(apiClient: apiClient)
     }
 
     // MARK: - Computed
@@ -53,11 +60,12 @@ final class SubscriptionsViewModel: ObservableObject {
     // MARK: - Actions
 
     func load() async {
+        guard let repository else { return }
         isLoading = true
         errorMessage = nil
 
         async let subsTask = repository.fetchSubscriptions()
-        async let upcomingTask: [UpcomingCharge]? = Self.tryFetch { try await self.repository.fetchUpcomingCharges(limit: 5) }
+        async let upcomingTask: [UpcomingCharge]? = Self.tryFetch { try await repository.fetchUpcomingCharges(limit: 5) }
 
         do {
             subscriptions = try await subsTask
@@ -70,6 +78,7 @@ final class SubscriptionsViewModel: ObservableObject {
     }
 
     func deleteSubscription(id: UUID) async {
+        guard let repository else { return }
         do {
             try await repository.deleteSubscription(id: id)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
@@ -80,6 +89,7 @@ final class SubscriptionsViewModel: ObservableObject {
     }
 
     func cancelSubscription(id: UUID, date: String) async {
+        guard let repository else { return }
         do {
             let _ = try await repository.cancelSubscription(id: id, body: CancelSubscriptionRequest(cancellationDate: date))
             UINotificationFeedbackGenerator().notificationOccurred(.success)

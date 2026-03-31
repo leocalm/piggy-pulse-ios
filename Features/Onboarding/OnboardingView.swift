@@ -19,7 +19,7 @@ struct OnboardingView: View {
                 VStack(spacing: 0) {
                     // Header
                     VStack(spacing: PPSpacing.md) {
-                        Text("Welcome to PiggyPulse")
+                        Text(String(localized: "onboarding.welcome"))
                             .font(.ppTitle).fontWeight(.bold).foregroundColor(.ppTextPrimary)
                         OnboardingStepIndicator(currentStep: vm.currentStep)
                     }
@@ -48,7 +48,7 @@ struct OnboardingView: View {
                     // Navigation buttons
                     HStack(spacing: PPSpacing.md) {
                         if vm.currentStep != .period {
-                            Button("Back") { vm.goBack() }
+                            Button(String(localized: "common.back")) { vm.goBack() }
                                 .font(.ppCallout).foregroundColor(.ppTextSecondary)
                                 .frame(minWidth: 80)
                         }
@@ -59,7 +59,7 @@ struct OnboardingView: View {
                             if vm.isSaving {
                                 ProgressView().tint(.white)
                             } else {
-                                Text(vm.currentStep == .summary ? "Finish" : "Continue")
+                                Text(vm.currentStep == .summary ? String(localized: "button.finish") : String(localized: "button.continue"))
                                     .font(.ppCallout).fontWeight(.semibold)
                             }
                         }
