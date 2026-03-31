@@ -124,7 +124,9 @@ struct EditCategorySheet: View {
                 }
             }
             .onAppear {
-                name = category.name; icon = category.icon; color = category.color; categoryType = category.categoryType
+                name = category.name; icon = category.icon; color = category.color
+                // Normalize casing to match Picker tags ("Incoming"/"Outgoing")
+                categoryType = category.categoryType.lowercased() == "incoming" ? "Incoming" : "Outgoing"
                 if let target = category.budgeted, target > 0 {
                     targetAmountText = String(format: "%.2f", Double(target) / 100.0)
                 }

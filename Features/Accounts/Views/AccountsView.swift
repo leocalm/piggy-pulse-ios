@@ -3,7 +3,6 @@ import TipKit
 
 struct AccountsView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
     @State private var accounts: [AccountListItem] = []
     @State private var summary: AccountsSummary?
     @State private var isLoading = false
@@ -209,7 +208,9 @@ struct AccountsView: View {
         do {
             try await appState.apiClient.requestVoid(.deleteAccount(account.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "accounts.delete.failed")
+        }
     }
 
     private func archiveAccount(_ account: AccountListItem) async {
@@ -217,7 +218,9 @@ struct AccountsView: View {
         do {
             try await appState.apiClient.requestVoid(.archiveAccount(account.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "accounts.archive.failed")
+        }
     }
 
     private func summaryCard(_ s: AccountsSummary) -> some View {

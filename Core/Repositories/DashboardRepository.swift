@@ -20,7 +20,7 @@ final class DashboardRepository {
     }
 
     func fetchNetPosition(periodId: UUID) async throws -> NetPosition {
-        try await apiClient.request(.netPosition, queryItems: periodQuery(periodId))
+        try await apiClient.request(.dashboardNetPosition, queryItems: periodQuery(periodId))
     }
 
     func fetchStability() async throws -> BudgetStability {

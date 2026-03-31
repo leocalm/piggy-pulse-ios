@@ -326,7 +326,9 @@ struct CategoriesView: View {
         do {
             try await appState.apiClient.requestVoid(.deleteCategory(cat.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "categories.delete.failed")
+        }
     }
 
     private func archiveCategory(_ cat: CategoryManagementItem) async {
@@ -334,7 +336,9 @@ struct CategoriesView: View {
         do {
             try await appState.apiClient.requestVoid(.archiveCategory(cat.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "categories.archive.failed")
+        }
     }
 
     private func categoryRow(_ cat: CategoryManagementItem, dimmed: Bool) -> some View {

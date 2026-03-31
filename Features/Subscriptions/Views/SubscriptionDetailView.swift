@@ -57,15 +57,15 @@ struct SubscriptionDetailView: View {
                             infoRow(label: String(localized: "subscription.detail.billingDay"),
                                     value: "\(detail.billingDay)")
                             infoRow(label: String(localized: "subscription.detail.nextCharge"),
-                                    value: detail.nextChargeDate)
+                                    value: formatDateString(detail.nextChargeDate))
 
                             if let cancelledAt = detail.cancelledAt {
                                 infoRow(label: String(localized: "subscription.detail.cancelledAt"),
-                                        value: cancelledAt)
+                                        value: formatDateString(cancelledAt))
                             }
 
                             infoRow(label: String(localized: "subscription.detail.created"),
-                                    value: detail.createdAt)
+                                    value: formatDateString(detail.createdAt))
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
@@ -230,7 +230,7 @@ struct SubscriptionDetailView: View {
     private func billingEventRow(_ event: BillingEvent) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(event.date)
+                Text(formatDateString(event.date))
                     .font(.ppBody).foregroundColor(.ppTextPrimary)
                 HStack(spacing: PPSpacing.xs) {
                     if event.detected {

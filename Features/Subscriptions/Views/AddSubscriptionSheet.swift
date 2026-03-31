@@ -202,7 +202,7 @@ struct AddSubscriptionSheet: View {
     private func loadOptions() async {
         isLoadingOptions = true
         async let catsTask: [CategoryOption] = apiClient.request(.categoryOptions)
-        async let vendorsTask: PaginatedResponse<VendorOption> = apiClient.request(.vendors)
+        async let vendorsTask: PaginatedResponse<VendorOption> = apiClient.request(.vendors, queryItems: [URLQueryItem(name: "limit", value: "250")])
 
         do {
             categories = try await catsTask

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct BudgetPlanView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: BudgetViewModel
     @State private var selectedTarget: CategoryTarget?
 

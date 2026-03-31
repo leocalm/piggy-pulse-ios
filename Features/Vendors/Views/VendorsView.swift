@@ -3,7 +3,6 @@ import TipKit
 
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
     @State private var vendors: [VendorListItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -215,8 +214,9 @@ struct VendorsView: View {
     }
 
     private var vendorStatsBar: some View {
-        let activeCount = vendors.filter { !$0.archived }.count
-        let totalTx = vendors.reduce(Int64(0)) { $0 + $1.transactionCount }
+        let activeVendors = vendors.filter { !$0.archived }
+        let activeCount = activeVendors.count
+        let totalTx = activeVendors.reduce(Int64(0)) { $0 + $1.transactionCount }
         let avgPerVendor = activeCount > 0 ? totalTx / Int64(activeCount) : 0
 
         return HStack(spacing: 0) {
@@ -262,7 +262,9 @@ struct VendorsView: View {
         do {
             try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "vendors.delete.failed")
+        }
     }
 
     private func archiveVendor(_ vendor: VendorListItem) async {
@@ -270,7 +272,9 @@ struct VendorsView: View {
         do {
             try await appState.apiClient.requestVoid(.archiveVendor(vendor.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "vendors.archive.failed")
+        }
     }
 
     private func vendorRow(_ vendor: VendorListItem) -> some View {

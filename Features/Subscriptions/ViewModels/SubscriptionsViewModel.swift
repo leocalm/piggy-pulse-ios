@@ -33,8 +33,8 @@ final class SubscriptionsViewModel: ObservableObject {
         activeSubs.reduce(Int64(0)) { total, sub in
             switch sub.billingCycle {
             case .monthly: return total + sub.billingAmount
-            case .quarterly: return total + sub.billingAmount / 3
-            case .yearly: return total + sub.billingAmount / 12
+            case .quarterly: return total + Int64((Double(sub.billingAmount) / 3.0).rounded())
+            case .yearly: return total + Int64((Double(sub.billingAmount) / 12.0).rounded())
             }
         }
     }
