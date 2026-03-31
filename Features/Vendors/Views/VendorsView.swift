@@ -82,9 +82,7 @@ struct VendorsView: View {
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
-                    }
-
-                    if vendors.isEmpty {
+                    } else if vendors.isEmpty {
                         Section {
                             EmptyStateView(
                                 icon: "storefront",

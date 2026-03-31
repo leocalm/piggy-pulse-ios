@@ -81,7 +81,13 @@ struct CategoriesView: View {
                     }
                 }
 
-                if let error = errorMessage {
+                if isLoading {
+                    Section {
+                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                            .padding(.vertical, PPSpacing.xxxl)
+                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                    }
+                } else if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
@@ -183,7 +189,7 @@ struct CategoriesView: View {
             } message: {
                 Text("This category will be permanently deleted.")
             }
-            .navigationTitle("Categories")
+            .navigationTitle(String(localized: "more.categories"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
