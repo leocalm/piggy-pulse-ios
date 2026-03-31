@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecentTransactionsCard: View {
-    let transactions: [RecentTransactionItem]
+    let transactions: [Transaction]
     let currencyCode: String
     @Environment(\.themeManager) private var theme
 
@@ -17,29 +17,24 @@ struct RecentTransactionsCard: View {
                     .font(.ppCallout)
                     .foregroundColor(.ppTextTertiary)
             } else {
-                ForEach(transactions, id: \.id) { txn in
+                ForEach(Array(transactions.enumerated()), id: \.element.id) { index, txn in
                     HStack {
-                        if let icon = txn.categoryIcon {
-                            Text(icon).font(.system(size: 20))
-                        } else {
-                            Image(systemName: "arrow.left.arrow.right")
-                                .font(.system(size: 14))
-                                .foregroundColor(.ppTextTertiary)
-                        }
+                        Text(txn.category.icon)
+                            .font(.system(size: 20))
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(txn.description ?? txn.vendorName ?? txn.categoryName ?? "—")
+                            Text(txn.description ?? txn.vendor?.name ?? txn.category.name)
                                 .font(.ppCallout)
                                 .foregroundColor(.ppTextPrimary)
                                 .lineLimit(1)
-                            Text(txn.date)
+                            Text(formatDateString(txn.occurredAt))
                                 .font(.ppCaption)
                                 .foregroundColor(.ppTextTertiary)
                         }
 
                         Spacer()
 
-                        let prefix = txn.transactionType == "income" ? "+" : ""
+                        let prefix = txn.category.categoryType == "incoming" ? "+" : ""
                         Text("\(prefix)\(formatCurrency(txn.amount, code: currencyCode))")
                             .font(.ppCallout)
                             .fontWeight(.medium)
@@ -47,7 +42,7 @@ struct RecentTransactionsCard: View {
                             .foregroundColor(.ppTextPrimary)
                     }
 
-                    if txn.id != transactions.last?.id {
+                    if index < transactions.count - 1 {
                         Divider().background(Color.ppBorder)
                     }
                 }

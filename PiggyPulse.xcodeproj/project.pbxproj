@@ -64,7 +64,6 @@
 		02F038C52F598C04008DD1E7 /* PeriodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038C42F598C03008DD1E7 /* PeriodRepository.swift */; };
 		02F038C92F598D78008DD1E7 /* PeriodSelectorBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038C82F598D3B008DD1E7 /* PeriodSelectorBar.swift */; };
 		02F038CB2F598F4F008DD1E7 /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CA2F598F4E008DD1E7 /* PaginatedResponse.swift */; };
-		02F038CD2F5999B2008DD1E7 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038CC2F5999B0008DD1E7 /* Dashboard.swift */; };
 		02F038D62F599A90008DD1E7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D52F599A8F008DD1E7 /* DashboardView.swift */; };
 		02F038D82F59A129008DD1E7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D72F59A127008DD1E7 /* Transaction.swift */; };
 		02F038DA2F59A15D008DD1E7 /* TransactionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D92F59A159008DD1E7 /* TransactionRepository.swift */; };
@@ -986,7 +985,6 @@
 				02F038A82F589EC5008DD1E7 /* RootView.swift in Sources */,
 				027B34A32F5B533700E96DF6 /* AddCategorySheet.swift in Sources */,
 				027B34AD2F5B69A700E96DF6 /* EditCategorySheet.swift in Sources */,
-				02F038CD2F5999B2008DD1E7 /* Dashboard.swift in Sources */,
 				02F038AE2F58DFA3008DD1E7 /* APIError.swift in Sources */,
 				6997DB49D5EC16DA70365FAF /* OnboardingView.swift in Sources */,
 				6F27D7755ABDFAC055F0A784 /* OnboardingViewModel.swift in Sources */,

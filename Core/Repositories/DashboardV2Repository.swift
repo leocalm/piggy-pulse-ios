@@ -54,10 +54,11 @@ final class DashboardV2Repository {
         try await apiClient.request(.dashboardBudgetStability, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
     }
 
-    func fetchRecentTransactions(periodId: UUID, limit: Int = 5) async throws -> PaginatedResponse<RecentTransactionItem> {
-        try await apiClient.request(.dashboardRecentTransactions, queryItems: [
+    func fetchRecentTransactions(periodId: UUID, limit: Int = 5) async throws -> [Transaction] {
+        let result: CursorPaginatedTransactions = try await apiClient.request(.dashboardRecentTransactions, queryItems: [
             URLQueryItem(name: "periodId", value: periodId.uuidString),
             URLQueryItem(name: "limit", value: String(limit))
         ])
+        return result.data
     }
 }
