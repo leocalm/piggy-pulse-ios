@@ -3,7 +3,6 @@ import TipKit
 
 struct SubscriptionsView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel: SubscriptionsViewModel
     @State private var showAddSheet = false
     @State private var editingSubscription: Subscription?
@@ -114,7 +113,7 @@ struct SubscriptionsView: View {
                                         .contentShape(Rectangle())
                                         .onTapGesture { selectedSubscription = sub }
                                         .swipeActions(edge: .trailing) {
-                                            Button(role: .destructive) { cancellingSubscription = sub } label: {
+                                            Button { cancellingSubscription = sub } label: {
                                                 Label(String(localized: "subscription.cancel"), systemImage: "xmark.circle")
                                             }
                                             .tint(.ppAmber)
@@ -305,7 +304,7 @@ struct SubscriptionsView: View {
                 Text(formatCurrency(charge.billingAmount, code: appState.currencyCode))
                     .font(.ppHeadline)
                     .foregroundColor(.ppTextPrimary)
-                Text(charge.nextChargeDate)
+                Text(formatDateString(charge.nextChargeDate))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
             }
@@ -350,7 +349,7 @@ struct SubscriptionsView: View {
                         .background(Color.ppSurface)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 } else {
-                    Text(sub.nextChargeDate)
+                    Text(formatDateString(sub.nextChargeDate))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }

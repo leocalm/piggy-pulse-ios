@@ -26,16 +26,18 @@ struct CurrentPeriodCard: View {
 
             // Progress bar
             GeometryReader { geo in
+                let pct = data.target > 0 ? min(Double(data.spent) / Double(data.target), 1.0) : 0
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 4)
                         .fill(Color.ppBorder)
                         .frame(height: 6)
 
-                    let pct = data.target > 0 ? min(Double(data.spent) / Double(data.target), 1.0) : 0
                     RoundedRectangle(cornerRadius: 4)
                         .fill(theme.primary)
                         .frame(width: geo.size.width * pct, height: 6)
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "accessibility.currentPeriod.progress \(Int(pct * 100))"))
             }
             .frame(height: 6)
 

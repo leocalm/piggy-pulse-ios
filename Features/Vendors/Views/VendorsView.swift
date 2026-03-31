@@ -3,7 +3,6 @@ import TipKit
 
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
     @State private var vendors: [VendorListItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -45,42 +44,10 @@ struct VendorsView: View {
                             VStack(spacing: PPSpacing.md) {
                                 Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
                                 Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                                Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                                Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                             }
                             .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                        }
-                    } else if !vendors.isEmpty {
-                        // Stats bar
-                        Section {
-                            vendorStatsBar
-                                .listRowBackground(Color.ppBackground)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
-                        }
-
-                        // Search
-                        Section {
-                            HStack {
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundColor(.ppTextTertiary)
-                                TextField(String(localized: "vendors.search"), text: $searchText)
-                                    .font(.ppBody)
-                                    .foregroundColor(.ppTextPrimary)
-                                if !searchText.isEmpty {
-                                    Button { searchText = "" } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(.ppTextTertiary)
-                                    }
-                                }
-                            }
-                            .padding(PPSpacing.md)
-                            .background(Color.ppCard)
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
                     } else if vendors.isEmpty {
                         Section {
@@ -114,7 +81,40 @@ struct VendorsView: View {
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                         }
-                    } else if !filteredVendors.isEmpty {
+                    } else if !vendors.isEmpty {
+                        // Stats bar
+                        Section {
+                            vendorStatsBar
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+
+                        // Search
+                        Section {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.ppTextTertiary)
+                                TextField(String(localized: "vendors.search"), text: $searchText)
+                                    .font(.ppBody)
+                                    .foregroundColor(.ppTextPrimary)
+                                if !searchText.isEmpty {
+                                    Button { searchText = "" } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.ppTextTertiary)
+                                    }
+                                }
+                            }
+                            .padding(PPSpacing.md)
+                            .background(Color.ppCard)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+
+                        // Vendor rows
                         Section {
                             ForEach(filteredVendors) { vendor in
                                 vendorRow(vendor)
@@ -123,27 +123,47 @@ struct VendorsView: View {
                                             Button {
                                                 vendorToArchive = vendor
                                             } label: {
-                                                Label("Archive", systemImage: "archivebox")
+                                                Label(String(localized: "common.archive"), systemImage: "archivebox")
                                             }
                                             .tint(.ppAmber)
                                         } else {
                                             Button(role: .destructive) {
                                                 vendorToDelete = vendor
                                             } label: {
-                                                Label("Delete", systemImage: "trash")
+                                                Label(String(localized: "common.delete"), systemImage: "trash")
                                             }
                                             .tint(.ppDestructive)
                                         }
                                     }
                                     .swipeActions(edge: .leading) {
-                                        Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                        Button { editingVendor = vendor } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(.ppPrimary)
+                                    }
+                                    .contextMenu {
+                                        Button {
+                                            editingVendor = vendor
+                                        } label: {
+                                            Label(String(localized: "common.edit"), systemImage: "pencil")
+                                        }
+                                        if vendor.transactionCount > 0 {
+                                            Button {
+                                                vendorToArchive = vendor
+                                            } label: {
+                                                Label(String(localized: "common.archive"), systemImage: "archivebox")
+                                            }
+                                        } else {
+                                            Button(role: .destructive) {
+                                                vendorToDelete = vendor
+                                            } label: {
+                                                Label(String(localized: "common.delete"), systemImage: "trash")
+                                            }
+                                        }
                                     }
                                     .listRowBackground(Color.ppBackground)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                             }
                         } header: {
-                            Text("ALL VENDORS")
+                            Text(String(localized: "vendors.section.all"))
                                 .font(.ppOverline)
                                 .foregroundColor(.ppTextSecondary)
                                 .tracking(1)
@@ -163,20 +183,20 @@ struct VendorsView: View {
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
-                    Button("Archive", role: .destructive) {
+                    Button(String(localized: "common.archive"), role: .destructive) {
                         if let vendor = vendorToArchive { Task { await archiveVendor(vendor) } }
                     }
-                    Button("Cancel", role: .cancel) { vendorToArchive = nil }
+                    Button(String(localized: "common.cancel"), role: .cancel) { vendorToArchive = nil }
                 } message: {
-                    Text("This vendor will be hidden but its history will be preserved.")
+                    Text(String(localized: "vendors.archive.message"))
                 }
                 .confirmationDialog("Delete \"\(vendorToDelete?.name ?? "")\"?", isPresented: Binding(get: { vendorToDelete != nil }, set: { if !$0 { vendorToDelete = nil } }), titleVisibility: .visible) {
-                    Button("Delete", role: .destructive) {
+                    Button(String(localized: "common.delete"), role: .destructive) {
                         if let vendor = vendorToDelete { Task { await deleteVendor(vendor) } }
                     }
-                    Button("Cancel", role: .cancel) { vendorToDelete = nil }
+                    Button(String(localized: "common.cancel"), role: .cancel) { vendorToDelete = nil }
                 } message: {
-                    Text("This vendor will be permanently deleted.")
+                    Text(String(localized: "vendors.delete.message"))
                 }
                 .navigationTitle(String(localized: "more.vendors"))
                 .navigationBarTitleDisplayMode(.large)
@@ -194,8 +214,9 @@ struct VendorsView: View {
     }
 
     private var vendorStatsBar: some View {
-        let activeCount = vendors.filter { !$0.archived }.count
-        let totalTx = vendors.reduce(Int64(0)) { $0 + $1.transactionCount }
+        let activeVendors = vendors.filter { !$0.archived }
+        let activeCount = activeVendors.count
+        let totalTx = activeVendors.reduce(Int64(0)) { $0 + $1.transactionCount }
         let avgPerVendor = activeCount > 0 ? totalTx / Int64(activeCount) : 0
 
         return HStack(spacing: 0) {
@@ -241,7 +262,9 @@ struct VendorsView: View {
         do {
             try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "vendors.delete.failed")
+        }
     }
 
     private func archiveVendor(_ vendor: VendorListItem) async {
@@ -249,7 +272,9 @@ struct VendorsView: View {
         do {
             try await appState.apiClient.requestVoid(.archiveVendor(vendor.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "vendors.archive.failed")
+        }
     }
 
     private func vendorRow(_ vendor: VendorListItem) -> some View {
@@ -275,7 +300,7 @@ struct VendorsView: View {
                     .foregroundColor(.ppTextSecondary)
 
                 if vendor.archived {
-                    Text("Archived")
+                    Text(String(localized: "common.archived"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextTertiary)
                         .padding(.horizontal, PPSpacing.sm)

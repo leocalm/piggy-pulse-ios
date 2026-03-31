@@ -92,7 +92,7 @@ struct CategoriesView: View {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
                             Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -148,7 +148,7 @@ struct CategoriesView: View {
                                 withAnimation { showArchived.toggle() }
                             } label: {
                                 HStack {
-                                    Text("ARCHIVED").font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
+                                    Text(String(localized: "common.archived").uppercased()).font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
                                     Spacer()
                                     Text("\(archived.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
                                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
@@ -174,20 +174,20 @@ struct CategoriesView: View {
                     .environmentObject(appState)
             }
             .confirmationDialog("Archive \"\(categoryToArchive?.name ?? "")\"?", isPresented: Binding(get: { categoryToArchive != nil }, set: { if !$0 { categoryToArchive = nil } }), titleVisibility: .visible) {
-                Button("Archive", role: .destructive) {
+                Button(String(localized: "common.archive"), role: .destructive) {
                     if let cat = categoryToArchive { Task { await archiveCategory(cat) } }
                 }
-                Button("Cancel", role: .cancel) { categoryToArchive = nil }
+                Button(String(localized: "common.cancel"), role: .cancel) { categoryToArchive = nil }
             } message: {
-                Text("This category will be hidden but its history will be preserved.")
+                Text(String(localized: "categories.archive.message"))
             }
             .confirmationDialog("Delete \"\(categoryToDelete?.name ?? "")\"?", isPresented: Binding(get: { categoryToDelete != nil }, set: { if !$0 { categoryToDelete = nil } }), titleVisibility: .visible) {
-                Button("Delete", role: .destructive) {
+                Button(String(localized: "common.delete"), role: .destructive) {
                     if let cat = categoryToDelete { Task { await deleteCategory(cat) } }
                 }
-                Button("Cancel", role: .cancel) { categoryToDelete = nil }
+                Button(String(localized: "common.cancel"), role: .cancel) { categoryToDelete = nil }
             } message: {
-                Text("This category will be permanently deleted.")
+                Text(String(localized: "categories.delete.message"))
             }
             .navigationTitle(String(localized: "more.categories"))
             .toolbar {
@@ -267,21 +267,43 @@ struct CategoriesView: View {
                                     Button {
                                         categoryToArchive = cat
                                     } label: {
-                                        Label("Archive", systemImage: "archivebox")
+                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
                                     }
                                     .tint(.ppAmber)
                                 } else {
                                     Button(role: .destructive) {
                                         categoryToDelete = cat
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
                                     }
                                     .tint(.ppDestructive)
                                 }
                             }
                             .swipeActions(edge: .leading) {
                                 if !cat.isSystem {
-                                    Button { editingCategory = cat } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                    Button { editingCategory = cat } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(.ppPrimary)
+                                }
+                            }
+                            .contextMenu {
+                                if !cat.isSystem {
+                                    Button {
+                                        editingCategory = cat
+                                    } label: {
+                                        Label(String(localized: "common.edit"), systemImage: "pencil")
+                                    }
+                                }
+                                if cat.globalTransactionCount > 0 {
+                                    Button {
+                                        categoryToArchive = cat
+                                    } label: {
+                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
+                                    }
+                                } else {
+                                    Button(role: .destructive) {
+                                        categoryToDelete = cat
+                                    } label: {
+                                        Label(String(localized: "common.delete"), systemImage: "trash")
+                                    }
                                 }
                             }
                             .listRowBackground(Color.ppBackground)
@@ -304,7 +326,9 @@ struct CategoriesView: View {
         do {
             try await appState.apiClient.requestVoid(.deleteCategory(cat.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "categories.delete.failed")
+        }
     }
 
     private func archiveCategory(_ cat: CategoryManagementItem) async {
@@ -312,7 +336,9 @@ struct CategoriesView: View {
         do {
             try await appState.apiClient.requestVoid(.archiveCategory(cat.id))
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "categories.archive.failed")
+        }
     }
 
     private func categoryRow(_ cat: CategoryManagementItem, dimmed: Bool) -> some View {
@@ -328,7 +354,7 @@ struct CategoriesView: View {
                     .font(.ppHeadline)
                     .foregroundColor(dimmed ? .ppTextTertiary : .ppTextPrimary)
 
-                Text("\(cat.globalTransactionCount) transactions")
+                Text(String(localized: "categories.transactionCount \(cat.globalTransactionCount)"))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextSecondary)
             }
@@ -336,7 +362,7 @@ struct CategoriesView: View {
             Spacer()
 
             if cat.isSystem {
-                Text("System")
+                Text(String(localized: "common.system"))
                     .font(.ppCaption)
                     .foregroundColor(.ppTextTertiary)
                     .padding(.horizontal, PPSpacing.sm)

@@ -8,12 +8,12 @@ struct GettingStartedCard: View {
     @State private var hasCategories = false
     @State private var hasTransactions = false
 
-    private var steps: [(key: String, complete: Bool, route: String)] {
+    private var steps: [(key: String, complete: Bool)] {
         [
-            ("createAccount", hasAccounts, "/v2/accounts"),
-            ("createPeriod", hasPeriods, "/v2/periods"),
-            ("setCategories", hasCategories, "/v2/categories"),
-            ("addTransaction", hasTransactions, "/v2/transactions"),
+            ("createAccount", hasAccounts),
+            ("createPeriod", hasPeriods),
+            ("setCategories", hasCategories),
+            ("addTransaction", hasTransactions),
         ]
     }
 
@@ -65,25 +65,26 @@ struct GettingStartedCard: View {
 
     private func checkProgress() async {
         let api = appState.apiClient
-        // Check accounts
-        if let accounts: PaginatedResponse<AccountListItem> = try? await api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")]) {
-            hasAccounts = !accounts.data.isEmpty
-        }
-        // Check periods
-        let periods = try? await PeriodRepository(apiClient: api).fetchPeriods()
-        hasPeriods = !(periods ?? []).isEmpty
-        // Check categories
-        if let cats: PaginatedResponse<CategoryListItem> = try? await api.request(.categories, queryItems: [URLQueryItem(name: "limit", value: "1")]) {
-            hasCategories = !cats.data.isEmpty
-        }
-        // Transactions require a period
-        if let periodId = appState.selectedPeriod?.id {
-            if let txns: CursorPaginatedTransactions = try? await api.request(.transactions, queryItems: [
+
+        async let accountsTask: PaginatedResponse<AccountListItem>? = try? api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")])
+        async let periodsTask = try? PeriodRepository(apiClient: api).fetchPeriods()
+        async let catsTask: PaginatedResponse<CategoryListItem>? = try? api.request(.categories, queryItems: [URLQueryItem(name: "limit", value: "1")])
+
+        let txnsTask: CursorPaginatedTransactions? = await {
+            guard let periodId = appState.selectedPeriod?.id else { return nil }
+            return try? await api.request(.transactions, queryItems: [
                 URLQueryItem(name: "periodId", value: periodId.uuidString),
                 URLQueryItem(name: "limit", value: "1")
-            ]) {
-                hasTransactions = !txns.data.isEmpty
-            }
-        }
+            ])
+        }()
+
+        let accounts = await accountsTask
+        let periods = await periodsTask
+        let cats = await catsTask
+
+        hasAccounts = !(accounts?.data.isEmpty ?? true)
+        hasPeriods = !(periods ?? []).isEmpty
+        hasCategories = !(cats?.data.isEmpty ?? true)
+        hasTransactions = !(txnsTask?.data.isEmpty ?? true)
     }
 }

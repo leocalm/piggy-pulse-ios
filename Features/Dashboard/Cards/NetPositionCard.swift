@@ -53,6 +53,8 @@ struct NetPositionCard: View {
                         }
                     }
                     .frame(height: 6)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(String(localized: "accessibility.netPosition.breakdown \(formatCurrency(data.liquidAmount, code: currencyCode)) \(formatCurrency(data.protectedAmount, code: currencyCode)) \(formatCurrency(data.debtAmount, code: currencyCode))"))
                 }
             }
 

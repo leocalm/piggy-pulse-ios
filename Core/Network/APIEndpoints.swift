@@ -161,7 +161,6 @@ extension APIEndpoint {
 extension APIEndpoint {
     static let monthlyBurnIn = APIEndpoint(path: "/dashboard/monthly-burn-in", method: .get, requiresAuth: true)
     static let monthProgress = APIEndpoint(path: "/dashboard/month-progress", method: .get, requiresAuth: true)
-    static let netPosition = APIEndpoint(path: "/dashboard/net-position", method: .get, requiresAuth: true)
     static let budgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
 }
 

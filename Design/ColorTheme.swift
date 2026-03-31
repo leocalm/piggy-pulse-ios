@@ -219,7 +219,7 @@ private func tintColor(_ hex: UInt32, lightnessOffset: Int) -> Color {
         }
     }
 
-    let newL = min(1.0, max(0.0, l + Double(lightnessOffset) / 100.0))
+    let newL = min(0.9, max(0.0, l + Double(lightnessOffset) / 100.0))
 
     // HSL → RGB (proper conversion, not HSB)
     let sN = s
