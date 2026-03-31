@@ -38,10 +38,15 @@ struct PeriodsView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
                     } else {
+                        // Schedule status pill
+                        scheduleStatusPill
+
                         scheduleSection
-                        currentPeriodSection
-                        upcomingSection
-                        pastSection
+
+                        // Group by year
+                        ForEach(periodsByYear, id: \.year) { group in
+                            yearSection(group)
+                        }
                     }
                 }
                 .padding(PPSpacing.lg)
@@ -122,55 +127,68 @@ struct PeriodsView: View {
         }
     }
 
-    // MARK: - Current Period
+    // MARK: - Schedule Status Pill
 
-    private var currentPeriodSection: some View {
+    private var scheduleStatusPill: some View {
+        HStack(spacing: PPSpacing.sm) {
+            Circle()
+                .fill(viewModel.hasSchedule ? Color.ppCyan : Color.ppAmber)
+                .frame(width: 8, height: 8)
+            Text(viewModel.hasSchedule ? String(localized: "periods.autoGeneration.active") : String(localized: "periods.autoGeneration.inactive"))
+                .font(.ppCaption)
+                .fontWeight(.medium)
+                .foregroundColor(viewModel.hasSchedule ? .ppCyan : .ppAmber)
+        }
+        .padding(.horizontal, PPSpacing.md)
+        .padding(.vertical, PPSpacing.sm)
+        .background((viewModel.hasSchedule ? Color.ppCyan : Color.ppAmber).opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
+    }
+
+    // MARK: - Year-grouped periods
+
+    private struct YearGroup: Hashable {
+        let year: Int
+        let periods: [BudgetPeriod]
+
+        func hash(into hasher: inout Hasher) { hasher.combine(year) }
+        static func == (lhs: YearGroup, rhs: YearGroup) -> Bool { lhs.year == rhs.year }
+    }
+
+    private var periodsByYear: [YearGroup] {
+        var allPeriods: [BudgetPeriod] = []
+        if let current = viewModel.currentPeriod { allPeriods.append(current) }
+        allPeriods.append(contentsOf: viewModel.upcomingPeriods)
+        allPeriods.append(contentsOf: viewModel.pastPeriods)
+
+        let grouped = Dictionary(grouping: allPeriods) { period -> Int in
+            guard let date = period.startDateFormatted else { return 0 }
+            return Calendar.current.component(.year, from: date)
+        }
+
+        return grouped.keys.sorted(by: >).map { year in
+            YearGroup(year: year, periods: grouped[year]!.sorted { ($0.startDate) > ($1.startDate) })
+        }
+    }
+
+    private func yearSection(_ group: YearGroup) -> some View {
         VStack(alignment: .leading, spacing: PPSpacing.sm) {
-            sectionHeader("CURRENT PERIOD")
-            if let period = viewModel.currentPeriod {
+            HStack {
+                sectionHeader(LocalizedStringKey(stringLiteral: "\(group.year)"))
+                Spacer()
+                countBadge(group.periods.count)
+            }
+
+            ForEach(group.periods) { period in
                 NavigationLink {
                     PeriodDetailView(period: period)
                         .environmentObject(appState)
                 } label: {
-                    periodCard(period, highlight: true)
+                    periodCard(period, highlight: period.status == .active)
                 }
                 .buttonStyle(.plain)
-            } else {
-                Text("No active period.")
-                    .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(PPSpacing.lg)
-                    .background(Color.ppCard)
-                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
-            }
-        }
-    }
-
-    // MARK: - Upcoming
-
-    private var upcomingSection: some View {
-        VStack(alignment: .leading, spacing: PPSpacing.sm) {
-            HStack {
-                sectionHeader("UPCOMING PERIODS")
-                Spacer()
-                countBadge(viewModel.upcomingPeriods.count)
-            }
-            if viewModel.upcomingPeriods.isEmpty {
-                Text("No upcoming periods.")
-                    .font(.ppCallout)
-                    .foregroundColor(.ppTextTertiary)
-            } else {
-                ForEach(viewModel.upcomingPeriods) { period in
-                    NavigationLink {
-                        PeriodDetailView(period: period)
-                            .environmentObject(appState)
-                    } label: {
-                        periodCard(period, highlight: false)
-                    }
-                    .buttonStyle(.plain)
-                    .contextMenu {
+                .contextMenu {
+                    if period.status != .active {
                         Button(role: .destructive) {
                             periodToDelete = period
                         } label: {
@@ -179,38 +197,6 @@ struct PeriodsView: View {
                     }
                 }
             }
-        }
-    }
-
-    // MARK: - Past
-
-    private var pastSection: some View {
-        VStack(alignment: .leading, spacing: PPSpacing.sm) {
-            DisclosureGroup(
-                isExpanded: $viewModel.showPastPeriods,
-                content: {
-                    VStack(spacing: PPSpacing.sm) {
-                        ForEach(viewModel.pastPeriods) { period in
-                            NavigationLink {
-                                PeriodDetailView(period: period)
-                                    .environmentObject(appState)
-                            } label: {
-                                periodCard(period, highlight: false)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding(.top, PPSpacing.sm)
-                },
-                label: {
-                    HStack {
-                        sectionHeader("PAST PERIODS")
-                        Spacer()
-                        countBadge(viewModel.pastPeriods.count)
-                    }
-                }
-            )
-            .tint(.ppTextSecondary)
         }
     }
 

@@ -13,9 +13,59 @@ struct CategoriesView: View {
     @State private var editingCategory: CategoryManagementItem?
     @State private var categoryToDelete: CategoryManagementItem?
     @State private var categoryToArchive: CategoryManagementItem?
+    @State private var searchText = ""
+
+    private var filteredIncoming: [CategoryManagementItem] {
+        if searchText.isEmpty { return incoming }
+        return incoming.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
+
+    private var filteredOutgoing: [CategoryManagementItem] {
+        if searchText.isEmpty { return outgoing }
+        return outgoing.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
+
+    private var filteredArchived: [CategoryManagementItem] {
+        if searchText.isEmpty { return archived }
+        return archived.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
 
     var body: some View {
         List {
+                // Stats bar
+                if !isLoading && errorMessage == nil {
+                    Section {
+                        categoryStatsBar
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    }
+
+                    // Search field
+                    Section {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.ppTextTertiary)
+                            TextField(String(localized: "categories.search"), text: $searchText)
+                                .font(.ppBody)
+                                .foregroundColor(.ppTextPrimary)
+                            if !searchText.isEmpty {
+                                Button { searchText = "" } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.ppTextTertiary)
+                                }
+                            }
+                        }
+                        .padding(PPSpacing.md)
+                        .background(Color.ppCard)
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    }
+                }
+
                 if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
@@ -27,13 +77,13 @@ struct CategoriesView: View {
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                     }
                 } else {
-                    categorySection(String(localized: "INCOMING"), categories: incoming, color: .ppCyan)
-                    categorySection(String(localized: "OUTGOING"), categories: outgoing, color: .ppPrimary)
-                    
-                    if !archived.isEmpty {
+                    categorySection(String(localized: "INCOMING"), categories: filteredIncoming, color: .ppCyan)
+                    categorySection(String(localized: "OUTGOING"), categories: filteredOutgoing, color: .ppPrimary)
+
+                    if !filteredArchived.isEmpty {
                         Section {
                             if showArchived {
-                                ForEach(archived) { cat in
+                                ForEach(filteredArchived) { cat in
                                     categoryRow(cat, dimmed: true)
                                         .listRowBackground(Color.ppBackground)
                                         .listRowSeparator(.hidden)
@@ -96,6 +146,61 @@ struct CategoriesView: View {
                     }
                 }
             }
+    }
+
+    private var categoryStatsBar: some View {
+        let allActive = incoming + outgoing
+        let totalCount = allActive.count
+        let incomeCount = incoming.count
+        let expenseCount = outgoing.count
+        let archivedCount = archived.count
+
+        return HStack(spacing: 0) {
+            VStack(spacing: 4) {
+                Text("\(totalCount)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "categories.stats.total"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            VStack(spacing: 4) {
+                Text("\(incomeCount)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "categories.stats.income"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            VStack(spacing: 4) {
+                Text("\(expenseCount)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "categories.stats.expense"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            VStack(spacing: 4) {
+                Text("\(archivedCount)")
+                    .font(.ppCallout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.ppTextPrimary)
+                Text(String(localized: "categories.stats.archived"))
+                    .font(.ppCaption)
+                    .foregroundColor(.ppTextSecondary)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(PPSpacing.md)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     private func categorySection(_ title: String, categories: [CategoryManagementItem], color: Color) -> some View {
@@ -224,4 +329,5 @@ struct CategoryManagementItem: Codable, Identifiable {
     let isArchived: Bool
     let isSystem: Bool
     let globalTransactionCount: Int64
+    let budgeted: Int64?
 }
