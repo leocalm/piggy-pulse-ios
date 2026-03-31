@@ -1,71 +1,75 @@
 import SwiftUI
 
+// MARK: - Option A: Improved Tab Bar Sidecar
+
+/// Period selector in the tab bar bottom accessory.
+/// Improved with a "PERIOD" label and chevron to signal interactivity.
 struct PeriodSelectorBar: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     @State private var periods: [BudgetPeriod] = []
     @State private var showPicker = false
     @State private var isLoading = true
     @Environment(\.tabViewBottomAccessoryPlacement) var placement
 
     var body: some View {
-        HStack(spacing: 0) {
-            Button {
-                showPicker = true
-            } label: {
-                HStack(spacing: PPSpacing.md) {
-                    Image(systemName: "calendar")
-                        .font(.system(size: 14))
-                        .foregroundColor(.white)
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            showPicker = true
+        } label: {
+            HStack(spacing: PPSpacing.sm) {
+                // Leading label to clarify what this is
+                Text(String(localized: "periodSelector.label"))
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundColor(.ppTextTertiary)
+                    .textCase(.uppercase)
+                    .tracking(0.5)
 
-                    if isLoading {
-                        ProgressView()
-                            .tint(.ppTextSecondary)
-                            .scaleEffect(0.8)
-                    } else if let period = appState.selectedPeriod {
-                        Text(period.name)
-                            .font(.ppCallout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.ppTextPrimary)
+                Divider()
+                    .frame(height: 16)
 
-                        Spacer()
-                        
-                        switch placement {
-                        case .inline:
-                            Text(period.statusText)
-                                .font(.ppCaption)
-                                .foregroundColor(statusColor(period.status))
-                        case .expanded:
-                            HStack(spacing: 4) {
-                                Text(period.dateRangeText)
-                                    .font(.ppCaption)
-                                    .foregroundColor(.ppTextSecondary)
+                Image(systemName: "calendar")
+                    .font(.system(size: 13))
+                    .foregroundColor(theme.primary)
 
-                                if !period.statusText.isEmpty {
-                                    Text("·")
-                                        .font(.ppCaption)
-                                        .foregroundColor(.ppTextTertiary)
-                                    Text(period.statusText)
-                                        .font(.ppCaption)
-                                        .foregroundColor(statusColor(period.status))
-                                }
-                            }
-                        default:
-                            Text("No period selected")
-                                .font(.ppCallout)
-                                .foregroundColor(.ppTextSecondary)
-                        }
-                    } else {
-                        Text("No period selected")
-                            .font(.ppCallout)
+                if isLoading {
+                    ProgressView()
+                        .tint(.ppTextSecondary)
+                        .scaleEffect(0.7)
+                } else if let period = appState.selectedPeriod {
+                    Text(period.name)
+                        .font(.ppCaption)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.ppTextPrimary)
+                        .lineLimit(1)
+
+                    Spacer()
+
+                    if placement == .expanded {
+                        Text(period.dateRangeText)
+                            .font(.system(size: 10))
                             .foregroundColor(.ppTextSecondary)
                     }
-                }
-                .padding(.horizontal, PPSpacing.lg)
-                .padding(.vertical, PPSpacing.md)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
 
+                    statusDot(period.status)
+
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.ppTextTertiary)
+                } else {
+                    Text(String(localized: "periodSelector.noneSelected"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextSecondary)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.ppTextTertiary)
+                }
+            }
+            .padding(.horizontal, PPSpacing.lg)
+            .padding(.vertical, PPSpacing.sm)
         }
         .sheet(isPresented: $showPicker) {
             PeriodPickerSheet(
@@ -92,31 +96,125 @@ struct PeriodSelectorBar: View {
         do {
             let fetched = try await repo.fetchPeriods()
             periods = fetched
-
             if appState.selectedPeriod == nil {
                 appState.selectedPeriod = fetched.first(where: { $0.status == .active })
                     ?? fetched.first
             }
-        } catch {
-            
-        }
+        } catch {}
         isLoading = false
+    }
+
+    private func statusDot(_ status: PeriodStatus) -> some View {
+        Circle()
+            .fill(statusColor(status))
+            .frame(width: 6, height: 6)
     }
 
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
-        case .active: return .ppCyan
+        case .active: return theme.primary
         case .ended: return .ppTextTertiary
-        case .upcoming: return .ppAmber
+        case .upcoming: return theme.secondary
         case .unknown: return .ppTextTertiary
         }
     }
 }
 
-// MARK: - Period Picker Sheet
+// MARK: - Option B: Navigation Bar Title Picker
+
+/// Period selector that renders as a toolbar principal item.
+/// Use via `.toolbar { PeriodSelectorToolbar() }` on each screen's NavigationStack.
+struct PeriodSelectorToolbar: ToolbarContent {
+    @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) var theme
+
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            PeriodSelectorTitleButton()
+        }
+    }
+}
+
+/// Compact button designed to sit in the navigation bar title area.
+/// Shows period name + status dot + chevron. Taps open the period picker.
+struct PeriodSelectorTitleButton: View {
+    @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
+    @State private var showPicker = false
+    @State private var periods: [BudgetPeriod] = []
+
+    var body: some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            showPicker = true
+        } label: {
+            HStack(spacing: PPSpacing.xs) {
+                if let period = appState.selectedPeriod {
+                    statusDot(period.status)
+
+                    Text(period.name)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.ppTextPrimary)
+                        .lineLimit(1)
+                } else {
+                    Image(systemName: "calendar.badge.exclamationmark")
+                        .font(.system(size: 13))
+                        .foregroundColor(.ppTextSecondary)
+
+                    Text(String(localized: "periodSelector.noneSelected"))
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.ppTextSecondary)
+                }
+
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(.ppTextTertiary)
+            }
+        }
+        .sheet(isPresented: $showPicker) {
+            PeriodPickerSheet(
+                periods: periods,
+                selectedPeriod: appState.selectedPeriod,
+                onSelect: { period in
+                    appState.selectedPeriod = period
+                    showPicker = false
+                }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
+        .task(id: appState.isAuthenticated) {
+            if appState.isAuthenticated {
+                await loadPeriods()
+            }
+        }
+    }
+
+    private func loadPeriods() async {
+        let repo = PeriodRepository(apiClient: appState.apiClient)
+        periods = (try? await repo.fetchPeriods()) ?? []
+    }
+
+    private func statusDot(_ status: PeriodStatus) -> some View {
+        Circle()
+            .fill(statusColor(status))
+            .frame(width: 7, height: 7)
+    }
+
+    private func statusColor(_ status: PeriodStatus) -> Color {
+        switch status {
+        case .active: return theme.primary
+        case .ended: return .ppTextTertiary
+        case .upcoming: return theme.secondary
+        case .unknown: return .ppTextTertiary
+        }
+    }
+}
+
+// MARK: - Shared Period Picker Sheet
 
 struct PeriodPickerSheet: View {
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     let periods: [BudgetPeriod]
     let selectedPeriod: BudgetPeriod?
     let onSelect: (BudgetPeriod) -> Void
@@ -152,13 +250,13 @@ struct PeriodPickerSheet: View {
 
                                 if period.id == selectedPeriod?.id {
                                     Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.ppPrimary)
+                                        .foregroundColor(theme.primary)
                                 }
                             }
                             .padding(PPSpacing.lg)
                             .background(
                                 period.id == selectedPeriod?.id
-                                    ? Color.ppPrimary.opacity(0.1)
+                                    ? theme.primary.opacity(0.1)
                                     : Color.ppCard
                             )
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
@@ -166,7 +264,7 @@ struct PeriodPickerSheet: View {
                                 RoundedRectangle(cornerRadius: PPRadius.md)
                                     .stroke(
                                         period.id == selectedPeriod?.id
-                                            ? Color.ppPrimary.opacity(0.3)
+                                            ? theme.primary.opacity(0.3)
                                             : Color.ppBorder,
                                         lineWidth: 1
                                     )
@@ -177,7 +275,7 @@ struct PeriodPickerSheet: View {
                 .padding(PPSpacing.lg)
             }
             .background(Color.ppBackground)
-            .navigationTitle("Select Period")
+            .navigationTitle(String(localized: "periodSelector.selectPeriod"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.ppBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -186,9 +284,9 @@ struct PeriodPickerSheet: View {
 
     private func statusColor(_ status: PeriodStatus) -> Color {
         switch status {
-        case .active: return .ppCyan
+        case .active: return theme.primary
         case .ended: return .ppTextTertiary
-        case .upcoming: return .ppAmber
+        case .upcoming: return theme.secondary
         case .unknown: return .ppTextTertiary
         }
     }
