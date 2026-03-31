@@ -178,7 +178,9 @@ struct SubscriptionDetailView: View {
                     do {
                         try await repository.deleteSubscription(id: subscriptionId)
                         dismiss()
-                    } catch {}
+                    } catch {
+                        errorMessage = String(localized: "subscription.deleteFailed")
+                    }
                 }
             }
             Button(String(localized: "subscription.cancelAction"), role: .cancel) {}

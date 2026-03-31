@@ -172,11 +172,11 @@ struct SubscriptionsView: View {
                         .environmentObject(appState)
                 }
                 .sheet(item: $editingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
-                    EditSubscriptionSheet(subscription: sub, apiClient: apiClient) { Task { await viewModel.load() } }
+                    EditSubscriptionSheet(subscription: sub, apiClient: apiClient) { }
                         .environmentObject(appState)
                 }
                 .sheet(item: $cancellingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
-                    CancelSubscriptionSheet(subscription: sub, apiClient: apiClient) { Task { await viewModel.load() } }
+                    CancelSubscriptionSheet(subscription: sub, apiClient: apiClient) { }
                         .environmentObject(appState)
                 }
                 .navigationDestination(item: $selectedSubscription) { sub in

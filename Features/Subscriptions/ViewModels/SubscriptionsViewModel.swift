@@ -72,15 +72,21 @@ final class SubscriptionsViewModel: ObservableObject {
     func deleteSubscription(id: UUID) async {
         do {
             try await repository.deleteSubscription(id: id)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "subscription.deleteFailed")
+        }
     }
 
     func cancelSubscription(id: UUID, date: String) async {
         do {
             let _ = try await repository.cancelSubscription(id: id, body: CancelSubscriptionRequest(cancellationDate: date))
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             await load()
-        } catch {}
+        } catch {
+            errorMessage = String(localized: "subscription.cancelFailed")
+        }
     }
 
     private static func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {

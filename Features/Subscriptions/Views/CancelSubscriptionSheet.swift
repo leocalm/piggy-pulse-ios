@@ -13,11 +13,11 @@ struct CancelSubscriptionSheet: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
 
-    private var dateFormatter: DateFormatter {
+    private static let dateFormatter: DateFormatter = {
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd"
         return fmt
-    }
+    }()
 
     var body: some View {
         NavigationStack {
@@ -130,7 +130,7 @@ struct CancelSubscriptionSheet: View {
     private func confirmCancel() async {
         isLoading = true; errorMessage = nil
 
-        let req = CancelSubscriptionRequest(cancellationDate: dateFormatter.string(from: cancellationDate))
+        let req = CancelSubscriptionRequest(cancellationDate: Self.dateFormatter.string(from: cancellationDate))
 
         do {
             let _: Subscription = try await apiClient.request(.cancelSubscription(subscription.id), body: req)

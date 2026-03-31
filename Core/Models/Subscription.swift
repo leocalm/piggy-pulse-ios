@@ -92,14 +92,13 @@ struct CreateSubscriptionRequest: Encodable {
 }
 
 struct UpdateSubscriptionRequest: Encodable {
-    let name: String?
-    let categoryId: UUID?
+    let name: String
+    let categoryId: UUID
     let vendorId: UUID?
-    let billingAmount: Int64?
-    let billingCycle: BillingCycle?
-    let billingDay: Int?
-    let nextChargeDate: String?
-    let status: SubscriptionStatus?
+    let billingAmount: Int64
+    let billingCycle: BillingCycle
+    let billingDay: Int
+    let nextChargeDate: String
 }
 
 struct CancelSubscriptionRequest: Encodable {

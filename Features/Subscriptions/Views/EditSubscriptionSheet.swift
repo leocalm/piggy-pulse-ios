@@ -31,15 +31,15 @@ struct EditSubscriptionSheet: View {
 
     private var billingAmountCents: Int64 {
         let cleaned = billingAmountText.replacingOccurrences(of: ",", with: ".")
-        guard let value = Double(cleaned) else { return 0 }
-        return Int64(value * 100)
+        guard let decimal = Decimal(string: cleaned) else { return 0 }
+        return NSDecimalNumber(decimal: decimal * 100).int64Value
     }
 
-    private var dateFormatter: DateFormatter {
+    private static let dateFormatter: DateFormatter = {
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd"
         return fmt
-    }
+    }()
 
     var body: some View {
         NavigationStack {
@@ -225,13 +225,12 @@ struct EditSubscriptionSheet: View {
 
         let req = UpdateSubscriptionRequest(
             name: name.trimmingCharacters(in: .whitespaces),
-            categoryId: selectedCategoryId,
+            categoryId: selectedCategoryId ?? subscription.categoryId,
             vendorId: selectedVendorId,
             billingAmount: billingAmountCents,
             billingCycle: billingCycle,
             billingDay: billingDay,
-            nextChargeDate: dateFormatter.string(from: nextChargeDate),
-            status: nil
+            nextChargeDate: Self.dateFormatter.string(from: nextChargeDate)
         )
 
         do {

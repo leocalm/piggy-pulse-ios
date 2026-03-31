@@ -8363,6 +8363,38 @@
           }
         }
       }
+    },
+    "subscription.deleteFailed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to delete subscription."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falha ao excluir assinatura."
+          }
+        }
+      }
+    },
+    "subscription.cancelFailed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to cancel subscription."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falha ao cancelar assinatura."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
