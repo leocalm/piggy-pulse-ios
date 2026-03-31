@@ -12,108 +12,114 @@ struct VendorsView: View {
     @State private var vendorToArchive: VendorListItem?
 
     var body: some View {
-        List {
-                if isLoading {
-                    Section {
-                        HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
-                            .padding(.vertical, PPSpacing.xxxl)
+        NavigationStack {
+            if appState.selectedPeriod == nil {
+                NoPeriodStateView(pageTitle: String(localized: "more.vendors"), showTitle: false)
+            } else {
+                List {
+                    if isLoading {
+                        Section {
+                            HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
+                                .padding(.vertical, PPSpacing.xxxl)
+                                .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
+                        }
+                    } else if let error = errorMessage {
+                        Section {
+                            VStack(spacing: PPSpacing.md) {
+                                Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                                Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
+                                Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            }
+                            .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                             .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                    }
-                } else if let error = errorMessage {
-                    Section {
-                        VStack(spacing: PPSpacing.md) {
-                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
-                            Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button("Retry") { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
                         }
-                        .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                    }
-                } else if vendors.isEmpty {
-                    Section {
-                        VStack(spacing: PPSpacing.lg) {
-                            Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
-                            Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                    } else if vendors.isEmpty {
+                        Section {
+                            VStack(spacing: PPSpacing.lg) {
+                                Image(systemName: "storefront").font(.system(size: 40)).foregroundColor(.ppTextTertiary)
+                                Text("No vendors yet").font(.ppBody).foregroundColor(.ppTextSecondary)
+                                Text("Vendors are assigned when creating transactions.").font(.ppCallout).foregroundColor(.ppTextTertiary).multilineTextAlignment(.center)
+                            }
+                            .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
+                            .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
                         }
-                        .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
-                        .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
-                    }
-                } else {
-                    Section {
-                        ForEach(vendors) { vendor in
-                            vendorRow(vendor)
-                                .swipeActions(edge: .trailing) {
-                                    if vendor.transactionCount > 0 {
-                                        Button {
-                                            vendorToArchive = vendor
-                                        } label: {
-                                            Label("Archive", systemImage: "archivebox")
+                    } else {
+                        Section {
+                            ForEach(vendors) { vendor in
+                                vendorRow(vendor)
+                                    .swipeActions(edge: .trailing) {
+                                        if vendor.transactionCount > 0 {
+                                            Button {
+                                                vendorToArchive = vendor
+                                            } label: {
+                                                Label("Archive", systemImage: "archivebox")
+                                            }
+                                            .tint(.ppAmber)
+                                        } else {
+                                            Button(role: .destructive) {
+                                                vendorToDelete = vendor
+                                            } label: {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                            .tint(.ppDestructive)
                                         }
-                                        .tint(.ppAmber)
-                                    } else {
-                                        Button(role: .destructive) {
-                                            vendorToDelete = vendor
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                        .tint(.ppDestructive)
                                     }
-                                }
-                                .swipeActions(edge: .leading) {
-                                    Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
-                                }
-                                .listRowBackground(Color.ppBackground)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                    .swipeActions(edge: .leading) {
+                                        Button { editingVendor = vendor } label: { Label("Edit", systemImage: "pencil") }.tint(.ppPrimary)
+                                    }
+                                    .listRowBackground(Color.ppBackground)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                            }
+                        } header: {
+                            Text("ALL VENDORS")
+                                .font(.ppOverline)
+                                .foregroundColor(.ppTextSecondary)
+                                .tracking(1)
                         }
-                    } header: {
-                        Text("ALL VENDORS")
-                            .font(.ppOverline)
-                            .foregroundColor(.ppTextSecondary)
-                            .tracking(1)
                     }
                 }
-            }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(Color.ppBackground)
-            .refreshable { await load() }
-            .task(id: appState.selectedPeriod?.id) { await load() }
-            .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
-                AddVendorSheet { }.environmentObject(appState)
-            }
-            .sheet(item: $editingVendor) { vendor in
-                EditVendorSheet(vendor: vendor) { Task { await load() } }
-                    .environmentObject(appState)
-            }
-            .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
-                Button("Archive", role: .destructive) {
-                    if let vendor = vendorToArchive { Task { await archiveVendor(vendor) } }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.ppBackground)
+                .refreshable { await load() }
+                .task(id: appState.selectedPeriod?.id) { await load() }
+                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                    AddVendorSheet { }.environmentObject(appState)
                 }
-                Button("Cancel", role: .cancel) { vendorToArchive = nil }
-            } message: {
-                Text("This vendor will be hidden but its history will be preserved.")
-            }
-            .confirmationDialog("Delete \"\(vendorToDelete?.name ?? "")\"?", isPresented: Binding(get: { vendorToDelete != nil }, set: { if !$0 { vendorToDelete = nil } }), titleVisibility: .visible) {
-                Button("Delete", role: .destructive) {
-                    if let vendor = vendorToDelete { Task { await deleteVendor(vendor) } }
+                .sheet(item: $editingVendor) { vendor in
+                    EditVendorSheet(vendor: vendor) { Task { await load() } }
+                        .environmentObject(appState)
                 }
-                Button("Cancel", role: .cancel) { vendorToDelete = nil }
-            } message: {
-                Text("This vendor will be permanently deleted.")
-            }
-            .navigationTitle("Vendors")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showAddSheet = true
-                    } label: {
-                        Image(systemName: "plus")
+                .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
+                    Button("Archive", role: .destructive) {
+                        if let vendor = vendorToArchive { Task { await archiveVendor(vendor) } }
+                    }
+                    Button("Cancel", role: .cancel) { vendorToArchive = nil }
+                } message: {
+                    Text("This vendor will be hidden but its history will be preserved.")
+                }
+                .confirmationDialog("Delete \"\(vendorToDelete?.name ?? "")\"?", isPresented: Binding(get: { vendorToDelete != nil }, set: { if !$0 { vendorToDelete = nil } }), titleVisibility: .visible) {
+                    Button("Delete", role: .destructive) {
+                        if let vendor = vendorToDelete { Task { await deleteVendor(vendor) } }
+                    }
+                    Button("Cancel", role: .cancel) { vendorToDelete = nil }
+                } message: {
+                    Text("This vendor will be permanently deleted.")
+                }
+                .navigationTitle(String(localized: "more.vendors"))
+                .navigationBarTitleDisplayMode(.large)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showAddSheet = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
                 }
-            }
+            } // else
+        } // NavigationStack
     }
 
     private func deleteVendor(_ vendor: VendorListItem) async {

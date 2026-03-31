@@ -5,6 +5,7 @@ import UserNotifications
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var themeManager
     @State private var profile: ProfileResponse?
     @State private var preferences: PreferencesResponse?
     @State private var isLoading = false
@@ -179,10 +180,83 @@ struct SettingsView: View {
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            preferenceRow("Theme", selection: $selectedTheme, options: [
-                ("system", "System"), ("light", "Light"), ("dark", "Dark")
-            ])
-            .onChange(of: selectedTheme) { _, _ in preferencesDirty = true }
+            // Color theme picker
+            VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                Text(String(localized: "settings.colorTheme"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: PPSpacing.sm)], spacing: PPSpacing.sm) {
+                    ForEach(ColorTheme.allCases) { theme in
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            themeManager.colorTheme = theme
+                        } label: {
+                            VStack(spacing: PPSpacing.xs) {
+                                HStack(spacing: 0) {
+                                    Circle()
+                                        .fill(theme.accents.primary)
+                                        .frame(width: 20, height: 20)
+                                    Circle()
+                                        .fill(theme.accents.secondary)
+                                        .frame(width: 20, height: 20)
+                                        .offset(x: -6)
+                                    Circle()
+                                        .fill(theme.accents.tertiary)
+                                        .frame(width: 20, height: 20)
+                                        .offset(x: -12)
+                                }
+                                .frame(maxWidth: .infinity)
+
+                                Text(theme.label)
+                                    .font(.ppCaption)
+                                    .foregroundColor(
+                                        themeManager.colorTheme == theme
+                                            ? .ppTextPrimary
+                                            : .ppTextSecondary
+                                    )
+                            }
+                            .padding(.vertical, PPSpacing.sm)
+                            .padding(.horizontal, PPSpacing.sm)
+                            .background(
+                                themeManager.colorTheme == theme
+                                    ? theme.accents.primary.opacity(0.15)
+                                    : Color.ppElevated
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: PPRadius.md)
+                                    .stroke(
+                                        themeManager.colorTheme == theme
+                                            ? theme.accents.primary.opacity(0.5)
+                                            : Color.ppBorder,
+                                        lineWidth: 1
+                                    )
+                            )
+                        }
+                    }
+                }
+            }
+
+            Divider().background(Color.ppBorder)
+
+            // Appearance mode (instant, local-only — not synced to server)
+            HStack {
+                Text(String(localized: "settings.appearance"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { themeManager.appearanceMode.rawValue },
+                    set: { themeManager.appearanceMode = AppearanceMode(rawValue: $0) ?? .system }
+                )) {
+                    ForEach(AppearanceMode.allCases) { mode in
+                        Label(mode.label, systemImage: mode.iconName).tag(mode.rawValue)
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(.ppTextPrimary)
+            }
 
             preferenceRow("Date Format", selection: $selectedDateFormat, options: [
                 ("DD/MM/YYYY", "DD/MM/YYYY"),

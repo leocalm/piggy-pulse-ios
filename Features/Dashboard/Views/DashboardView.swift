@@ -12,6 +12,9 @@ struct DashboardView: View {
 
     var body: some View {
         NavigationStack {
+            if appState.selectedPeriod == nil {
+                NoPeriodStateView(pageTitle: String(localized: "tab.dashboard"))
+            } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: PPSpacing.xl) {
                     if viewModel.isLoading {
@@ -43,7 +46,7 @@ struct DashboardView: View {
                     await viewModel.load(periodId: periodId)
                 }
             }
-            .navigationTitle("Dashboard")
+            .navigationTitle(String(localized: "tab.dashboard"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -59,6 +62,7 @@ struct DashboardView: View {
                 AddTransactionSheet(onCreated: {})
                     .environmentObject(appState)
             }
+            } // else (has period)
         }
     }
 

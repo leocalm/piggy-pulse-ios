@@ -24,7 +24,10 @@ final class AppState: ObservableObject {
             .first { $0.currency?.identifier == currencyCode }?
             .currencySymbol ?? currencyCode
     }
-    @Published var appColorScheme: ColorScheme? = nil
+    let themeManager = ThemeManager()
+
+    /// Legacy proxy — reads from ThemeManager. Use themeManager.colorScheme directly in new code.
+    var appColorScheme: ColorScheme? { themeManager.colorScheme }
     @Published var isBiometricLocked = false
     @Published var biometricAuthFailed = false
     var lastBackgroundedAt: Date?
@@ -61,20 +64,14 @@ final class AppState: ObservableObject {
     }
 
     func loadTheme() {
-        let stored = UserDefaults.standard.string(forKey: "appTheme") ?? "system"
-        appColorScheme = colorScheme(from: stored)
+        // Now handled by ThemeManager — this method is kept for backward compat
     }
 
     func applyTheme(_ value: String) {
-        UserDefaults.standard.set(value, forKey: "appTheme")
-        appColorScheme = colorScheme(from: value)
-    }
-
-    private func colorScheme(from value: String) -> ColorScheme? {
         switch value {
-        case "light": return .light
-        case "dark":  return .dark
-        default:      return nil   // "system" / "auto"
+        case "light": themeManager.appearanceMode = .light
+        case "dark":  themeManager.appearanceMode = .dark
+        default:      themeManager.appearanceMode = .system
         }
     }
 
