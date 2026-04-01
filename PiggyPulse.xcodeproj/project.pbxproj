@@ -112,6 +112,7 @@
 		D2A6D9629A6935A89D85D271 /* DashboardV2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */; };
 		D5F42F028E63A5901C39662D /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */; };
 		DD2D49A2851C67CF68991EF2 /* CashFlowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2273D6A650B1C2CE0C6C2D0E /* CashFlowCard.swift */; };
+		E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */; };
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
 		F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
@@ -212,6 +213,7 @@
 		218D425998B41C87A5820AA6 /* OnboardingStepIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingStepIndicator.swift; sourceTree = "<group>"; };
 		2273D6A650B1C2CE0C6C2D0E /* CashFlowCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CashFlowCard.swift; sourceTree = "<group>"; };
 		24113472B37FCBFA9F8BBB3B /* SubscriptionsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionsViewModel.swift; path = Features/Subscriptions/ViewModels/SubscriptionsViewModel.swift; sourceTree = "<group>"; };
+		28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CategorySubscriptionSection.swift; sourceTree = "<group>"; };
 		2AC1266FA5F9008EC31D0E72 /* DashboardCardStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardCardStyle.swift; sourceTree = "<group>"; };
 		2ED90CBA90BF7606037E96B2 /* ColorTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentTransactionsCard.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */,
 				027B34A22F5B533400E96DF6 /* AddCategorySheet.swift */,
 				027B348C2F5B4AC100E96DF6 /* CategoriesView.swift */,
+				28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1027,6 +1030,7 @@
 				48B7E956527EE37B6016880E /* CancelSubscriptionSheet.swift in Sources */,
 				F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */,
 				585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */,
+				E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

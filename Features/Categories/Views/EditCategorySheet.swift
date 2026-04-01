@@ -77,44 +77,11 @@ struct EditCategorySheet: View {
 
                             // Color is determined by type+behavior on the server
                             // Behavior
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                HStack(spacing: PPSpacing.sm) {
-                                    Text(String(localized: "category.behavior"))
-                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                    if hasActiveSubscriptions {
-                                        Image(systemName: "lock.fill")
-                                            .font(.ppCaption).foregroundColor(.ppTextTertiary)
-                                    }
-                                }
-                                Picker("", selection: $behavior) {
-                                    Text(String(localized: "category.behavior.fixed")).tag("fixed")
-                                    Text(String(localized: "category.behavior.variable")).tag("variable")
-                                    Text(String(localized: "category.behavior.subscription")).tag("subscription")
-                                }
-                                .pickerStyle(.segmented)
-                                .disabled(hasActiveSubscriptions)
-                                .opacity(hasActiveSubscriptions ? 0.6 : 1)
-
-                                if hasActiveSubscriptions {
-                                    Text(String(localized: "category.subscription.behaviorLocked"))
-                                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
-                                }
-                            }
+                            behaviorSection
 
                             // Target amount (hidden for subscription behavior)
                             if behavior != "subscription" {
-                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                    Text(String(localized: "category.target"))
-                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                    TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
-                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
-                                        .keyboardType(.decimalPad)
-                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                                    Text(String(localized: "category.targetHint"))
-                                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
-                                }
+                                targetSection
                             }
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
@@ -184,6 +151,49 @@ struct EditCategorySheet: View {
                 )
                 hasActiveSubscriptions = subs?.contains(where: { $0.status == .active }) ?? false
             }
+        }
+    }
+
+    // MARK: - Extracted Sections
+
+    private var behaviorSection: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            HStack(spacing: PPSpacing.sm) {
+                Text(String(localized: "category.behavior"))
+                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                if hasActiveSubscriptions {
+                    Image(systemName: "lock.fill")
+                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                }
+            }
+            Picker("", selection: $behavior) {
+                Text(String(localized: "category.behavior.fixed")).tag("fixed")
+                Text(String(localized: "category.behavior.variable")).tag("variable")
+                Text(String(localized: "category.behavior.subscription")).tag("subscription")
+            }
+            .pickerStyle(.segmented)
+            .disabled(hasActiveSubscriptions)
+            .opacity(hasActiveSubscriptions ? 0.6 : 1)
+
+            if hasActiveSubscriptions {
+                Text(String(localized: "category.subscription.behaviorLocked"))
+                    .font(.ppCaption).foregroundColor(.ppTextTertiary)
+            }
+        }
+    }
+
+    private var targetSection: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            Text(String(localized: "category.target"))
+                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+            TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
+                .font(.ppBody).foregroundColor(.ppTextPrimary)
+                .keyboardType(.decimalPad)
+                .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+            Text(String(localized: "category.targetHint"))
+                .font(.ppCaption).foregroundColor(.ppTextTertiary)
         }
     }
 
