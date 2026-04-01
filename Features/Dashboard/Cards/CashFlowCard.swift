@@ -12,36 +12,41 @@ struct CashFlowCard: View {
                 .foregroundColor(.ppTextSecondary)
                 .tracking(1)
 
-            HStack(spacing: PPSpacing.xl) {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text(String(localized: "widget.cashFlow.inflows"))
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
-                    Text(formatCurrency(data.inflows, code: currencyCode))
-                        .font(.ppAmountSmall)
-                        .foregroundColor(.ppTextPrimary)
-                }
+            HStack(spacing: PPSpacing.sm) {
+                cashFlowColumn(
+                    label: String(localized: "widget.cashFlow.inflows"),
+                    value: formatCurrency(data.inflows, code: currencyCode),
+                    color: .ppTextPrimary
+                )
 
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text(String(localized: "widget.cashFlow.outflows"))
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
-                    Text(formatCurrency(data.outflows, code: currencyCode))
-                        .font(.ppAmountSmall)
-                        .foregroundColor(.ppTextPrimary)
-                }
+                cashFlowColumn(
+                    label: String(localized: "widget.cashFlow.outflows"),
+                    value: formatCurrency(data.outflows, code: currencyCode),
+                    color: .ppTextPrimary
+                )
 
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text(String(localized: "widget.cashFlow.net"))
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
-                    let prefix = data.net >= 0 ? "+" : ""
-                    Text("\(prefix)\(formatCurrency(data.net, code: currencyCode))")
-                        .font(.ppAmountSmall)
-                        .foregroundColor(theme.primary)
-                }
+                cashFlowColumn(
+                    label: String(localized: "widget.cashFlow.net"),
+                    value: "\(data.net >= 0 ? "+" : "")\(formatCurrency(data.net, code: currencyCode))",
+                    color: theme.primary
+                )
             }
         }
         .dashboardCard()
+    }
+
+    private func cashFlowColumn(label: String, value: String, color: Color) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.xs) {
+            Text(label)
+                .font(.ppCaption)
+                .foregroundColor(.ppTextSecondary)
+            Text(value)
+                .font(.ppHeadline)
+                .fontDesign(.monospaced)
+                .foregroundColor(color)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

@@ -4,6 +4,7 @@ struct OverlayFormSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
     // MARK: - Init
 
@@ -152,13 +153,13 @@ struct OverlayFormSheet: View {
                         .frame(width: 12, height: 12)
                     Text(labels[index])
                         .font(.ppCaption)
-                        .foregroundColor(index == currentStep ? .ppPrimary : .ppTextTertiary)
+                        .foregroundColor(index == currentStep ? theme.primary : .ppTextTertiary)
                 }
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel("\(labels[index]), step \(index + 1) of \(labels.count)\(index == currentStep ? ", current" : index < currentStep ? ", completed" : "")")
                 if index < 3 {
                     Rectangle()
-                        .fill(index < currentStep ? Color.ppPrimary.opacity(0.5) : Color.ppBorder)
+                        .fill(index < currentStep ? theme.primary.opacity(0.5) : Color.ppBorder)
                         .frame(height: 1.5)
                         .frame(maxWidth: .infinity)
                         .padding(.bottom, 18)
@@ -168,8 +169,8 @@ struct OverlayFormSheet: View {
     }
 
     private func dotColor(for index: Int) -> Color {
-        if index < currentStep { return Color.ppPrimary.opacity(0.5) }
-        if index == currentStep { return Color.ppPrimary }
+        if index < currentStep { return theme.primary.opacity(0.5) }
+        if index == currentStep { return theme.primary }
         return Color.clear
     }
 
@@ -243,7 +244,7 @@ struct OverlayFormSheet: View {
                     )
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
                 }
 
                 // End Date
@@ -260,7 +261,7 @@ struct OverlayFormSheet: View {
                     )
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .tint(.ppPrimary)
+                    .tint(theme.primary)
                 }
 
                 // Disclaimer
@@ -317,7 +318,7 @@ struct OverlayFormSheet: View {
                     } else {
                         multiSelectSection(
                             title: "Accounts",
-                            items: accountOptions.map { ($0.id, "\($0.icon) \($0.name)") },
+                            items: accountOptions.map { ($0.id, $0.name) },
                             selected: $selectedAccountIds
                         )
                         multiSelectSection(
@@ -348,7 +349,7 @@ struct OverlayFormSheet: View {
             HStack(alignment: .top, spacing: PPSpacing.md) {
                 Image(systemName: inclusionMode == mode ? "checkmark.circle.fill" : "circle")
                     .font(.system(size: 20))
-                    .foregroundColor(inclusionMode == mode ? .ppPrimary : .ppTextTertiary)
+                    .foregroundColor(inclusionMode == mode ? theme.primary : .ppTextTertiary)
                     .padding(.top, 2)
 
                 VStack(alignment: .leading, spacing: PPSpacing.xs) {
@@ -359,9 +360,9 @@ struct OverlayFormSheet: View {
                         if recommended {
                             Text(String(localized: "overlay.recommended"))
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.ppPrimary)
+                                .foregroundColor(theme.primary)
                                 .padding(.horizontal, 6).padding(.vertical, 2)
-                                .background(Color.ppPrimary.opacity(0.12))
+                                .background(theme.primary.opacity(0.12))
                                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                         }
                     }
@@ -374,11 +375,11 @@ struct OverlayFormSheet: View {
                 Spacer()
             }
             .padding(PPSpacing.md)
-            .background(inclusionMode == mode ? Color.ppPrimary.opacity(0.06) : Color.ppSurface)
+            .background(inclusionMode == mode ? theme.primary.opacity(0.06) : Color.ppSurface)
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
             .overlay(
                 RoundedRectangle(cornerRadius: PPRadius.md)
-                    .stroke(inclusionMode == mode ? Color.ppPrimary.opacity(0.4) : Color.ppBorder, lineWidth: 1)
+                    .stroke(inclusionMode == mode ? theme.primary.opacity(0.4) : Color.ppBorder, lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
@@ -394,7 +395,7 @@ struct OverlayFormSheet: View {
                     Text("\(selected.wrappedValue.count)")
                         .font(.ppCaption).foregroundColor(.white)
                         .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                        .background(Color.ppPrimary)
+                        .background(theme.primary)
                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                 }
             }
@@ -419,11 +420,11 @@ struct OverlayFormSheet: View {
                                 if selected.wrappedValue.contains(id) {
                                     Image(systemName: "checkmark")
                                         .font(.system(size: 14, weight: .semibold))
-                                        .foregroundColor(.ppPrimary)
+                                        .foregroundColor(theme.primary)
                                 }
                             }
                             .padding(.horizontal, PPSpacing.md).padding(.vertical, PPSpacing.sm)
-                            .background(selected.wrappedValue.contains(id) ? Color.ppPrimary.opacity(0.06) : Color.clear)
+                            .background(selected.wrappedValue.contains(id) ? theme.primary.opacity(0.06) : Color.clear)
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
                         }
                         .buttonStyle(.plain)
@@ -452,7 +453,7 @@ struct OverlayFormSheet: View {
                                 .foregroundColor(.ppTextSecondary)
                         }
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .ppPrimary))
+                    .toggleStyle(SwitchToggleStyle(tint: theme.primary))
                 }
 
                 // Currency text field, shown when enabled
@@ -498,7 +499,7 @@ struct OverlayFormSheet: View {
                                 .foregroundColor(.ppTextSecondary)
                         }
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .ppPrimary))
+                    .toggleStyle(SwitchToggleStyle(tint: theme.primary))
                 }
 
                 // Category rows, shown when enabled
@@ -527,7 +528,7 @@ struct OverlayFormSheet: View {
                                         HStack(spacing: PPSpacing.md) {
                                             Image(systemName: categoryCapSelections.contains(category.id) ? "checkmark.circle.fill" : "circle")
                                                 .font(.system(size: 20))
-                                                .foregroundColor(categoryCapSelections.contains(category.id) ? .ppPrimary : .ppTextTertiary)
+                                                .foregroundColor(categoryCapSelections.contains(category.id) ? theme.primary : .ppTextTertiary)
 
                                             Text("\(category.icon) \(category.name)")
                                                 .font(.ppBody)
@@ -537,11 +538,11 @@ struct OverlayFormSheet: View {
                                         }
                                         .padding(.horizontal, PPSpacing.md)
                                         .padding(.vertical, PPSpacing.sm)
-                                        .background(categoryCapSelections.contains(category.id) ? Color.ppPrimary.opacity(0.06) : Color.ppSurface)
+                                        .background(categoryCapSelections.contains(category.id) ? theme.primary.opacity(0.06) : Color.ppSurface)
                                         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                         .overlay(
                                             RoundedRectangle(cornerRadius: PPRadius.md)
-                                                .stroke(categoryCapSelections.contains(category.id) ? Color.ppPrimary.opacity(0.4) : Color.ppBorder, lineWidth: 1)
+                                                .stroke(categoryCapSelections.contains(category.id) ? theme.primary.opacity(0.4) : Color.ppBorder, lineWidth: 1)
                                         )
                                     }
                                     .buttonStyle(.plain)
@@ -598,7 +599,7 @@ struct OverlayFormSheet: View {
             if isEditMode {
                 HStack(alignment: .top, spacing: PPSpacing.sm) {
                     Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(.ppAmber)
+                        .foregroundColor(theme.secondary)
                         .font(.ppBody)
                     Text(String(localized: "overlay.dateChangeNote"))
                         .font(.ppCallout)
@@ -606,9 +607,9 @@ struct OverlayFormSheet: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(PPSpacing.md)
-                .background(Color.ppAmber.opacity(0.1))
+                .background(theme.secondary.opacity(0.1))
                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppAmber.opacity(0.3), lineWidth: 1))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(theme.secondary.opacity(0.3), lineWidth: 1))
             }
 
             // Summary card
@@ -801,7 +802,7 @@ struct OverlayFormSheet: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, PPSpacing.md)
-                    .background(nextButtonDisabled ? Color.ppPrimary.opacity(0.4) : Color.ppPrimary)
+                    .background(nextButtonDisabled ? theme.primary.opacity(0.4) : theme.primary)
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                 }
                 .disabled(nextButtonDisabled)
@@ -823,7 +824,7 @@ struct OverlayFormSheet: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, PPSpacing.md)
-                    .background(isLoading ? Color.ppPrimary.opacity(0.4) : Color.ppPrimary)
+                    .background(isLoading ? theme.primary.opacity(0.4) : theme.primary)
                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                 }
                 .disabled(isLoading)
@@ -903,7 +904,7 @@ struct OverlayFormSheet: View {
 
         async let accountsFetch: [AccountOption] = (try? appState.apiClient.request(.accountOptions)) ?? []
         async let categoriesFetch: [CategoryOption] = (try? appState.apiClient.request(.categoryOptions)) ?? []
-        async let vendorsFetch: PaginatedResponse<VendorOption> = (try? appState.apiClient.request(.vendors)) ?? PaginatedResponse(data: [], nextCursor: nil)
+        async let vendorsFetch: PaginatedResponse<VendorOption> = (try? appState.apiClient.request(.vendors)) ?? PaginatedResponse(data: [], totalCount: nil, hasMore: nil, nextCursor: nil)
 
         let (accounts, categories, vendorsPage) = await (accountsFetch, categoriesFetch, vendorsFetch)
         accountOptions = accounts

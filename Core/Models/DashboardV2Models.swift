@@ -44,18 +44,31 @@ struct TopVendorItem: Codable {
     let transactionCount: Int
 }
 
+// API returns a flat array of these items (not wrapped in an object)
 struct FixedCategoryItem: Codable {
-    let id: UUID
-    let name: String
+    let categoryId: UUID
+    let categoryName: String
+    let categoryIcon: String
     let budgeted: Int64
-    let paid: Int64
+    let spent: Int64
     let status: String // "paid", "partial", "pending"
+
+    // Backward compat
+    var id: UUID { categoryId }
+    var name: String { categoryName }
+    var paid: Int64 { spent }
 }
 
-struct DashboardFixedCategories: Codable {
+struct DashboardFixedCategories {
     let totalBudgeted: Int64
     let totalPaid: Int64
     let categories: [FixedCategoryItem]
+
+    static func from(_ items: [FixedCategoryItem]) -> DashboardFixedCategories {
+        let totalBudgeted = items.reduce(Int64(0)) { $0 + $1.budgeted }
+        let totalPaid = items.reduce(Int64(0)) { $0 + $1.spent }
+        return DashboardFixedCategories(totalBudgeted: totalBudgeted, totalPaid: totalPaid, categories: items)
+    }
 }
 
 struct VariableCategoryItem: Codable {

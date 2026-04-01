@@ -3,6 +3,7 @@ import SwiftUI
 struct CategoriesStepView: View {
     @ObservedObject var vm: OnboardingViewModel
 @Environment(\.colorScheme) private var colorScheme
+@Environment(\.themeManager) private var theme
 
     private var templates: [(title: String, subtitle: String, template: CategoryTemplate)] {[
         (String(localized: "Essential 5"),  String(localized: "5 basic categories to get started"),        .essential),
@@ -27,19 +28,19 @@ struct CategoriesStepView: View {
                             HStack(spacing: PPSpacing.md) {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(item.title).font(.ppCallout).fontWeight(.semibold)
-                                        .foregroundColor(isSelected ? .ppPrimary : .ppTextPrimary)
+                                        .foregroundColor(isSelected ? theme.primary : .ppTextPrimary)
                                     Text(item.subtitle).font(.ppCaption).foregroundColor(.ppTextSecondary)
                                 }
                                 Spacer()
                                 if isSelected {
-                                    Image(systemName: "checkmark.circle.fill").foregroundColor(.ppPrimary)
+                                    Image(systemName: "checkmark.circle.fill").foregroundColor(theme.primary)
                                 }
                             }
                             .padding(PPSpacing.lg)
-                            .background(isSelected ? Color.ppPrimary.opacity(0.08) : Color.ppCard)
+                            .background(isSelected ? theme.primary.opacity(0.08) : Color.ppCard)
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.md)
-                                .stroke(isSelected ? Color.ppPrimary : Color.ppBorder, lineWidth: isSelected ? 2 : 1))
+                                .stroke(isSelected ? theme.primary : Color.ppBorder, lineWidth: isSelected ? 2 : 1))
                         }
                         .buttonStyle(.plain)
                     }

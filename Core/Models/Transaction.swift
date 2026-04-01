@@ -4,25 +4,30 @@ struct Transaction: Codable, Identifiable {
     let id: UUID
     let amount: Int64
     let description: String
-    let occurredAt: String
+    let date: String               // "2024-01-15"
+    let transactionType: String    // "regular" | "transfer"
     let category: TransactionCategory
     let fromAccount: TransactionAccount
     let toAccount: TransactionAccount?
     let vendor: TransactionVendor?
+
+    // MARK: - Backward compatibility
+
+    var occurredAt: String { date }
 
     var isTransfer: Bool {
         toAccount != nil
     }
 
     var isIncoming: Bool {
-        category.categoryType == "incoming"
+        category.type == "income"
     }
 
     var formattedDate: String {
-        guard let date = DateFormatter.apiDate.date(from: occurredAt) else { return occurredAt }
+        guard let d = DateFormatter.apiDate.date(from: date) else { return date }
         let fmt = DateFormatter()
         fmt.dateFormat = "MMM d, yyyy"
-        return fmt.string(from: date)
+        return fmt.string(from: d)
     }
 }
 
@@ -43,15 +48,16 @@ struct TransactionCategory: Codable {
     let name: String
     let color: String
     let icon: String
-    let categoryType: String
+    let type: String       // "income" | "expense" | "transfer"
+
+    // MARK: - Backward compatibility
+    var categoryType: String { type }
 }
 
 struct TransactionAccount: Codable, Identifiable {
     let id: UUID
     let name: String
     let color: String
-    let icon: String
-    let accountType: String
 }
 
 struct TransactionVendor: Codable, Identifiable {
@@ -90,9 +96,9 @@ enum TransactionDirection: String, CaseIterable {
     var queryValue: String? {
         switch self {
         case .all: return nil
-        case .incoming: return "Incoming"
-        case .outgoing: return "Outgoing"
-        case .transfers: return "Transfer"
+        case .incoming: return "income"
+        case .outgoing: return "expense"
+        case .transfers: return "transfer"
         }
     }
 }

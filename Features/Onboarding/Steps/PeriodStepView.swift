@@ -3,6 +3,7 @@ import SwiftUI
 struct PeriodStepView: View {
     @ObservedObject var vm: OnboardingViewModel
 @Environment(\.colorScheme) private var colorScheme
+@Environment(\.themeManager) private var theme
 
     var body: some View {
         ScrollView {
@@ -64,7 +65,7 @@ struct PeriodStepView: View {
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                .tint(.ppPrimary)
+                                .tint(theme.primary)
                             }
 
                             HStack {
@@ -77,7 +78,7 @@ struct PeriodStepView: View {
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                .tint(.ppPrimary)
+                                .tint(theme.primary)
                             }
                         }
                         .padding(PPSpacing.lg)

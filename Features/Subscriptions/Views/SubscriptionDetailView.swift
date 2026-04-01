@@ -4,6 +4,7 @@ struct SubscriptionDetailView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     let subscriptionId: UUID
     let apiClient: APIClient
@@ -31,10 +32,10 @@ struct SubscriptionDetailView: View {
                 ProgressView().tint(.ppTextSecondary)
             } else if let error = errorMessage {
                 VStack(spacing: PPSpacing.md) {
-                    Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                    Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
                     Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
                     Button(String(localized: "subscription.retry")) { Task { await load() } }
-                        .font(.ppHeadline).foregroundColor(.ppPrimary)
+                        .font(.ppHeadline).foregroundColor(theme.primary)
                 }
             } else if let detail = detail {
                 ScrollView {
@@ -97,7 +98,7 @@ struct SubscriptionDetailView: View {
                                         Spacer()
                                     }
                                     .padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppPrimary)
+                                    .background(theme.primary)
                                     .foregroundColor(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                 }
@@ -112,7 +113,7 @@ struct SubscriptionDetailView: View {
                                         Spacer()
                                     }
                                     .padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppAmber)
+                                    .background(theme.secondary)
                                     .foregroundColor(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                 }
@@ -142,7 +143,7 @@ struct SubscriptionDetailView: View {
         .navigationTitle(detail?.name ?? String(localized: "subscription.detail.navTitle"))
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
-        .refreshable { await load() }
+        .refreshable { await Task { @MainActor in await self.load() }.value }
         .sheet(isPresented: $showEditSheet, onDismiss: { Task { await load() } }) {
             if let d = detail {
                 let sub = Subscription(
@@ -211,8 +212,8 @@ struct SubscriptionDetailView: View {
 
     private func statusColor(_ status: SubscriptionStatus) -> Color {
         switch status {
-        case .active: return .ppPrimary
-        case .paused: return .ppAmber
+        case .active: return theme.primary
+        case .paused: return theme.secondary
         case .cancelled: return .ppTextTertiary
         }
     }
@@ -239,7 +240,7 @@ struct SubscriptionDetailView: View {
                     }
                     if event.postCancellation {
                         Text(String(localized: "subscription.detail.postCancel"))
-                            .font(.ppCaption).foregroundColor(.ppAmber)
+                            .font(.ppCaption).foregroundColor(theme.secondary)
                     }
                 }
             }

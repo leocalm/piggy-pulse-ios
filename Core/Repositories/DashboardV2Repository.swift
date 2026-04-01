@@ -28,7 +28,8 @@ final class DashboardV2Repository {
     }
 
     func fetchFixedCategories(periodId: UUID) async throws -> DashboardFixedCategories {
-        try await apiClient.request(.dashboardFixedCategories, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
+        let items: [FixedCategoryItem] = try await apiClient.request(.dashboardFixedCategories, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
+        return DashboardFixedCategories.from(items)
     }
 
     func fetchVariableCategories(periodId: UUID) async throws -> DashboardVariableCategories {

@@ -4,6 +4,7 @@ struct EditTransactionSheet: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     let transaction: Transaction
     var onUpdated: () -> Void
@@ -77,14 +78,14 @@ struct EditTransactionSheet: View {
                                         .font(.ppCallout)
                                         .foregroundColor(.ppTextPrimary)
                                 }
-                                .tint(.ppPrimary)
+                                .tint(theme.primary)
                                 .onChange(of: isTransfer) { _, transfer in
                                     if transfer {
                                         selectedCategory = transferCategory
                                         selectedVendor = nil
                                     } else {
                                         selectedToAccount = nil
-                                        if selectedCategory?.categoryType == "Transfer" {
+                                        if selectedCategory?.id == transferCategory?.id {
                                             selectedCategory = nil
                                         }
                                     }
@@ -109,7 +110,7 @@ struct EditTransactionSheet: View {
                                 }
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     Text(String(localized: "field.date")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                    DatePicker("", selection: $occurredAt, displayedComponents: .date).datePickerStyle(.compact).labelsHidden().tint(.ppPrimary)
+                                    DatePicker("", selection: $occurredAt, displayedComponents: .date).datePickerStyle(.compact).labelsHidden().tint(theme.primary)
                                 }
                             }
                             .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
@@ -130,7 +131,7 @@ struct EditTransactionSheet: View {
                                             }
                                         }
                                         .pickerStyle(.menu)
-                                        .tint(.ppPrimary)
+                                        .tint(theme.primary)
                                     }
                                 }
 
@@ -144,7 +145,7 @@ struct EditTransactionSheet: View {
                                         }
                                     }
                                     .pickerStyle(.menu)
-                                    .tint(.ppPrimary)
+                                    .tint(theme.primary)
                                 }
 
                                 if isTransfer {
@@ -158,7 +159,7 @@ struct EditTransactionSheet: View {
                                             }
                                         }
                                         .pickerStyle(.menu)
-                                        .tint(.ppPrimary)
+                                        .tint(theme.primary)
                                     }
                                 } else {
                                     HStack {
@@ -171,7 +172,7 @@ struct EditTransactionSheet: View {
                                             }
                                         }
                                         .pickerStyle(.menu)
-                                        .tint(.ppPrimary)
+                                        .tint(theme.primary)
                                     }
                                 }
                             }
@@ -218,7 +219,7 @@ struct EditTransactionSheet: View {
         // Pre-populate from transaction
         amountText = String(format: "%.2f", Double(transaction.amount) / 100.0)
         description = transaction.description
-        occurredAt = DateFormatter.apiDate.date(from: transaction.occurredAt) ?? Date()
+        occurredAt = DateFormatter.apiDate.date(from: transaction.date) ?? Date()
         isTransfer = transaction.toAccount != nil
 
         do {
@@ -231,8 +232,9 @@ struct EditTransactionSheet: View {
                 queryItems: [URLQueryItem(name: "periodId", value: periodId?.uuidString ?? "")]
             )
 
-            transferCategory = try? await appState.apiClient.request(.transferCategory)
-            categories = try await catsTask
+            let allOptions = try await catsTask
+            transferCategory = allOptions.first(where: { $0.name == "Transfer" })
+            categories = allOptions.filter { $0.name != "Transfer" }
 
             accounts = try await accsTask
             vendors = (try? await vendorsTask)?.data ?? []
@@ -268,18 +270,20 @@ struct EditTransactionSheet: View {
         fmt.dateFormat = "yyyy-MM-dd"
 
         struct Req: Encodable {
-            let amount: Int64; let description: String; let occurredAt: String
+            let amount: Int64; let description: String; let date: String
             let categoryId: UUID; let fromAccountId: UUID; let toAccountId: UUID?; let vendorId: UUID?
+            let transactionType: String
         }
 
         let req = Req(
             amount: amountInCents,
             description: description.trimmingCharacters(in: .whitespaces),
-            occurredAt: fmt.string(from: occurredAt),
+            date: fmt.string(from: occurredAt),
             categoryId: categoryId,
             fromAccountId: fromAccountId,
             toAccountId: isTransfer ? selectedToAccount?.id : nil,
-            vendorId: isTransfer ? nil : selectedVendor?.id
+            vendorId: isTransfer ? nil : selectedVendor?.id,
+            transactionType: isTransfer ? "Transfer" : "Regular"
         )
 
         do {

@@ -3,6 +3,7 @@ import TipKit
 
 struct AccountsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
     @State private var accounts: [AccountListItem] = []
     @State private var summary: AccountsSummary?
     @State private var isLoading = false
@@ -93,7 +94,7 @@ struct AccountsView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .background(Color.ppBackground)
-                .refreshable { await load() }
+                .refreshable { await Task { @MainActor in await self.load() }.value }
                 .task(id: appState.selectedPeriod?.id) { await load() }
                 .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
                     AddAccountSheet { }.environmentObject(appState)
@@ -146,7 +147,7 @@ struct AccountsView: View {
                                     } label: {
                                         Label(String(localized: "common.archive"), systemImage: "archivebox")
                                     }
-                                    .tint(.ppAmber)
+                                    .tint(theme.secondary)
                                 } else {
                                     Button(role: .destructive) {
                                         accountToDelete = account
@@ -232,7 +233,7 @@ struct AccountsView: View {
 
             Text(formatCurrency(s.totalNetWorth, code: appState.currencyCode))
                 .font(.ppAmount)
-                .foregroundColor(.ppCyan)
+                .foregroundColor(theme.tertiary)
 
             // Breakdown bar
             netPositionBar(s)
@@ -240,7 +241,7 @@ struct AccountsView: View {
             HStack(spacing: PPSpacing.xl) {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
-                        Circle().fill(Color.ppCyan).frame(width: 8, height: 8)
+                        Circle().fill(theme.tertiary).frame(width: 8, height: 8)
                         Text(String(localized: "accounts.liquid"))
                             .font(.ppCaption)
                             .foregroundColor(.ppTextTertiary)
@@ -252,7 +253,7 @@ struct AccountsView: View {
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
-                        Circle().fill(Color.ppPrimary).frame(width: 8, height: 8)
+                        Circle().fill(theme.primary).frame(width: 8, height: 8)
                         Text(String(localized: "accounts.protected"))
                             .font(.ppCaption)
                             .foregroundColor(.ppTextTertiary)
@@ -264,7 +265,7 @@ struct AccountsView: View {
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
-                        Circle().fill(Color.ppAmber).frame(width: 8, height: 8)
+                        Circle().fill(theme.secondary).frame(width: 8, height: 8)
                         Text(String(localized: "accounts.debt"))
                             .font(.ppCaption)
                             .foregroundColor(.ppTextTertiary)
@@ -303,13 +304,13 @@ struct AccountsView: View {
         return GeometryReader { geo in
             HStack(spacing: 2) {
                 RoundedRectangle(cornerRadius: 3)
-                    .fill(Color.ppCyan)
+                    .fill(theme.tertiary)
                     .frame(width: max(geo.size.width * liquidFrac, 4))
                 RoundedRectangle(cornerRadius: 3)
-                    .fill(Color.ppPrimary)
+                    .fill(theme.primary)
                     .frame(width: max(geo.size.width * protectedFrac, 4))
                 RoundedRectangle(cornerRadius: 3)
-                    .fill(Color.ppAmber)
+                    .fill(theme.secondary)
             }
         }
         .frame(height: 8)
@@ -320,7 +321,7 @@ struct AccountsView: View {
     private func accountRow(_ account: AccountListItem) -> some View {
         HStack {
             Circle()
-                .fill(Color(hex: account.color) ?? .ppPrimary)
+                .fill(Color(hex: account.color) ?? theme.primary)
                 .frame(width: 36, height: 36)
 
             VStack(alignment: .leading, spacing: 2) {
@@ -354,9 +355,9 @@ struct AccountsView: View {
 
     private func errorView(_ message: String) -> some View {
         VStack(spacing: PPSpacing.md) {
-            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
             Text(message).font(.ppBody).foregroundColor(.ppTextSecondary)
-            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(theme.primary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, PPSpacing.xxxl)
@@ -368,15 +369,15 @@ struct AccountsView: View {
         errorMessage = nil
 
         do {
-            async let accountsTask: PaginatedResponse<AccountListItem> = appState.apiClient.request(
-                .accounts,
+            let response: PaginatedResponse<AccountListItem> = try await appState.apiClient.request(
+                .accountsSummary,
                 queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
             )
-            async let summaryTask: AccountsSummary = appState.apiClient.request(.accountsSummary)
-
-            let (a, s) = try await (accountsTask, summaryTask)
-            accounts = a.data
-            summary = s
+            accounts = response.data
+            // Compute summary from accounts
+            let assets = accounts.filter { $0.type != "CreditCard" && $0.status == "active" }.reduce(Int64(0)) { $0 + $1.currentBalance }
+            let liabilities = accounts.filter { $0.type == "CreditCard" && $0.status == "active" }.reduce(Int64(0)) { $0 + $1.currentBalance }
+            summary = AccountsSummary(totalNetWorth: assets - liabilities, totalAssets: assets, totalLiabilities: liabilities)
         } catch {
             errorMessage = String(localized: "Failed to load accounts.")
         }

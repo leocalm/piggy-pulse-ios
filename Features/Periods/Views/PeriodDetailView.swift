@@ -3,6 +3,7 @@ import SwiftUI
 struct PeriodDetailView: View {
     let period: BudgetPeriod
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
     var body: some View {
         ScrollView {
@@ -70,7 +71,7 @@ struct PeriodDetailView: View {
                                     .frame(height: 6)
 
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(period.budgetUsedPercentage > 100 ? Color.ppDestructive : Color.ppPrimary)
+                                    .fill(period.budgetUsedPercentage > 100 ? Color.ppDestructive : theme.primary)
                                     .frame(width: geo.size.width * min(period.budgetUsedPercentage / 100, 1.0), height: 6)
                             }
                         }
@@ -106,10 +107,10 @@ struct PeriodDetailView: View {
     }
 
     private var statusColor: Color {
-        switch period.status {
-        case .active: return .ppCyan
+        switch period.periodStatus {
+        case .active: return theme.tertiary
         case .ended: return .ppTextTertiary
-        case .upcoming: return .ppAmber
+        case .upcoming: return theme.secondary
         case .unknown: return .ppTextTertiary
         }
     }

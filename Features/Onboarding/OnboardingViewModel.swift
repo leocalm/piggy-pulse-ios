@@ -106,19 +106,22 @@ final class OnboardingViewModel: ObservableObject {
                 selectedCurrencyId = currencies.first?.id
             }
 
-            // /accounts/management returns a plain array with no period_id required
+            // /accounts returns paginated response in v2
             struct AccountMgmt: Decodable {
-                let name: String; let accountType: String
-                let balance: Int64; let spendLimit: Int32?; let isArchived: Bool
+                let name: String; let type: String
+                let currentBalance: Int64; let spendLimit: Int32?; let status: String
             }
-            let list: [AccountMgmt] = try await apiClient.request(.accountsManagement)
-            let active = list.filter { !$0.isArchived }
+            struct AccountMgmtResponse: Decodable {
+                let data: [AccountMgmt]
+            }
+            let response: AccountMgmtResponse = try await apiClient.request(.accounts)
+            let active = response.data.filter { $0.status == "active" }
             if !active.isEmpty {
                 accounts = active.map { item in
                     var draft = DraftAccount()
                     draft.name = item.name
-                    draft.accountType = item.accountType
-                    draft.balanceText = String(format: "%.2f", Double(item.balance) / 100)
+                    draft.accountType = item.type
+                    draft.balanceText = String(format: "%.2f", Double(item.currentBalance) / 100)
                     if let limit = item.spendLimit {
                         draft.spendLimitText = String(format: "%.2f", Double(limit) / 100)
                     }
@@ -135,10 +138,17 @@ final class OnboardingViewModel: ObservableObject {
         do {
             // /categories/management returns grouped arrays with no period_id required
             let response: CategoriesManagementResponse = try await apiClient.request(.categoriesManagement)
-            let active = (response.incoming + response.outgoing).filter { !$0.isArchived && !$0.isSystem }
+            let active = (response.incoming + response.outgoing).filter { !$0.isArchived }
             if !active.isEmpty {
                 categories = active.map { item in
-                    DraftCategory(name: item.name, icon: item.icon, categoryType: item.categoryType)
+                    // Map v2 types back to onboarding types
+                    let onboardingType: String
+                    switch item.type.lowercased() {
+                    case "income": onboardingType = "Incoming"
+                    case "expense": onboardingType = "Outgoing"
+                    default: onboardingType = item.type
+                    }
+                    return DraftCategory(name: item.name, icon: item.icon, categoryType: onboardingType)
                 }
                 selectedTemplate = .custom
                 savedSteps.insert(.categories)
@@ -209,28 +219,28 @@ final class OnboardingViewModel: ObservableObject {
 
     private func savePeriod() async throws {
         struct ScheduleConfig: Encodable {
-            let startDay: Int
-            let durationValue: Int
+            let scheduleType: String
+            let recurrenceMethod: String
+            let startDayOfTheMonth: Int
+            let periodDuration: Int
             let durationUnit: String
-            let saturdayAdjustment: String
-            let sundayAdjustment: String
+            let saturdayPolicy: String
+            let sundayPolicy: String
             let namePattern: String
             let generateAhead: Int
         }
-        struct PeriodModelRequest: Encodable {
-            let mode: String
-            let schedule: ScheduleConfig
-        }
         let schedule = ScheduleConfig(
-            startDay: customize ? startDay : 1,
-            durationValue: customize ? periodLength : 1,
+            scheduleType: "automatic",
+            recurrenceMethod: "dayOfMonth",
+            startDayOfTheMonth: customize ? startDay : 1,
+            periodDuration: customize ? periodLength : 1,
             durationUnit: "months",
-            saturdayAdjustment: customize ? saturdayBehavior.rawValue : WeekendBehavior.keep.rawValue,
-            sundayAdjustment: customize ? sundayBehavior.rawValue : WeekendBehavior.keep.rawValue,
+            saturdayPolicy: customize ? saturdayBehavior.rawValue : WeekendBehavior.keep.rawValue,
+            sundayPolicy: customize ? sundayBehavior.rawValue : WeekendBehavior.keep.rawValue,
             namePattern: "{MONTH} {YEAR}",
             generateAhead: customize ? periodsToPrepare : 3
         )
-        try await apiClient.request(.updatePeriodModel, body: PeriodModelRequest(mode: "automatic", schedule: schedule))
+        try await apiClient.request(.createSchedule, body: schedule)
     }
 
     private func saveAccounts() async throws {
@@ -250,17 +260,18 @@ final class OnboardingViewModel: ObservableObject {
         }
 
         struct AccountRequest: Encodable {
-            let name: String; let color: String; let icon: String
-            let accountType: String; let balance: Int64; let spendLimit: Int32?
+            let name: String; let color: String
+            let type: String; let initialBalance: Int64; let spendLimit: Int32?
+            let currencyId: UUID
         }
         for account in accounts {
             let req = AccountRequest(
                 name: account.name.trimmingCharacters(in: .whitespaces),
                 color: "#007AFF",
-                icon: account.defaultIcon,
-                accountType: account.accountType,
-                balance: account.balanceInCents,
-                spendLimit: account.spendLimitInCents
+                type: account.accountType,
+                initialBalance: account.balanceInCents,
+                spendLimit: account.spendLimitInCents,
+                currencyId: selectedCurrencyId ?? UUID()
             )
             try await apiClient.request(.createAccount, body: req)
         }
@@ -269,14 +280,21 @@ final class OnboardingViewModel: ObservableObject {
     private func saveCategories() async throws {
         struct CategoryRequest: Encodable {
             let name: String; let icon: String
-            let color: String; let categoryType: String
+            let color: String; let type: String
         }
         for category in categories {
+            // Map onboarding types to v2 types
+            let v2Type: String
+            switch category.categoryType.lowercased() {
+            case "incoming": v2Type = "income"
+            case "outgoing": v2Type = "expense"
+            default: v2Type = category.categoryType.lowercased()
+            }
             let req = CategoryRequest(
                 name: category.name,
                 icon: category.icon,
                 color: "#228be6",
-                categoryType: category.categoryType
+                type: v2Type
             )
             try await apiClient.request(.createCategory, body: req)
         }

@@ -3,6 +3,7 @@ import SwiftUI
 struct RegisterView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = AuthViewModel(appState: AppState())
     @State private var viewModelReady = false
     @Environment(\.dismiss) private var dismiss
@@ -29,7 +30,7 @@ struct RegisterView: View {
                                 .font(.ppTitle)
                                 .foregroundStyle(
                                     LinearGradient(
-                                        colors: [.ppCyan, .ppPrimary],
+                                        colors: [theme.tertiary, theme.primary],
                                         startPoint: .leading,
                                         endPoint: .trailing
                                     )
@@ -122,7 +123,7 @@ struct RegisterView: View {
                                 .padding(.vertical, PPSpacing.md)
                             }
                             .buttonStyle(.borderedProminent)
-                            .tint(.ppPrimary)
+                            .tint(theme.primary)
                             .buttonBorderShape(.capsule)
                             .disabled(viewModel.isRegisterDisabled)
 
@@ -134,7 +135,7 @@ struct RegisterView: View {
                                     dismiss()
                                 }
                                 .font(.ppCallout)
-                                .foregroundColor(.ppPrimary)
+                                .foregroundColor(theme.primary)
                             }
                         }
                     }

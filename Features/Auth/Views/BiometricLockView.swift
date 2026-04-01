@@ -4,6 +4,7 @@ import LocalAuthentication
 
 struct BiometricLockView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
 
     private let biometryType: LABiometryType = BiometricHelper.availableBiometryType()
 
@@ -50,12 +51,12 @@ struct BiometricLockView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
-                .tint(.ppPrimary)
+                .tint(theme.primary)
 
                 if appState.biometricAuthFailed {
                     Text(String(localized: "biometric.authFailed"))
                         .font(.ppCaption)
-                        .foregroundColor(.ppAmber)
+                        .foregroundColor(theme.secondary)
                         .transition(.opacity)
                 }
             }

@@ -3,6 +3,7 @@ import SwiftUI
 struct EditCategoryTargetSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     let target: CategoryTarget
     var onSave: (Int32) async -> Void
@@ -39,7 +40,7 @@ struct EditCategoryTargetSheet: View {
                             if target.isExcluded {
                                 Text(String(localized: "budget.currentlyExcluded"))
                                     .font(.ppCaption)
-                                    .foregroundColor(.ppAmber)
+                                    .foregroundColor(theme.secondary)
                             }
                         }
                         Spacer()
@@ -111,7 +112,7 @@ struct EditCategoryTargetSheet: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, PPSpacing.lg)
-                                .background(Color.ppCyan)
+                                .background(theme.tertiary)
                                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                         }
                         .disabled(isLoading)

@@ -3,6 +3,7 @@ import SwiftUI
 struct OverlaysView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
     @State private var overlays: [OverlayItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -25,9 +26,9 @@ struct OverlaysView: View {
                 } else if let error = errorMessage {
                     Section {
                         VStack(spacing: PPSpacing.md) {
-                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
                             Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(theme.primary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                         .listRowBackground(Color.ppBackground).listRowSeparator(.hidden)
@@ -81,7 +82,7 @@ struct OverlaysView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .background(Color.ppBackground)
-            .refreshable { await load() }
+            .refreshable { await Task { @MainActor in await self.load() }.value }
             .task { await load() }
             .navigationTitle(String(localized: "nav.overlays"))
             .navigationBarTitleDisplayMode(.large)
@@ -127,7 +128,7 @@ struct OverlaysView: View {
                         Spacer()
                         Text("\(items.count)").font(.ppCaption).foregroundColor(.white)
                             .padding(.horizontal, PPSpacing.sm).padding(.vertical, 2)
-                            .background(badge ? Color.ppPrimary : Color.ppCard)
+                            .background(badge ? theme.primary : Color.ppCard)
                             .clipShape(RoundedRectangle(cornerRadius: PPRadius.full))
                     }
                 }
@@ -171,7 +172,7 @@ struct OverlaysView: View {
                     Text("·").foregroundColor(.ppTextTertiary)
                     Text("\(overlay.daysRemaining) days left")
                         .font(.ppCaption)
-                        .foregroundColor(.ppAmber)
+                        .foregroundColor(theme.secondary)
                 }
             }
 
@@ -190,7 +191,7 @@ struct OverlaysView: View {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 3).fill(Color.ppBorder).frame(height: 4)
                         RoundedRectangle(cornerRadius: 3)
-                            .fill(overlay.spentPercentage > 1.0 ? Color.ppDestructive : Color.ppCyan)
+                            .fill(overlay.spentPercentage > 1.0 ? Color.ppDestructive : theme.tertiary)
                             .frame(width: geo.size.width * min(overlay.spentPercentage, 1.0), height: 4)
                     }
                 }
@@ -229,7 +230,7 @@ struct OverlaysView: View {
             } label: {
                 Label(String(localized: "common.edit"), systemImage: "pencil")
             }
-            .tint(.ppPrimary)
+            .tint(theme.primary)
         }
     }
 
@@ -254,8 +255,8 @@ struct OverlaysView: View {
 
     private func statusColor(_ status: OverlayStatus) -> Color {
         switch status {
-        case .active: return .ppCyan
-        case .upcoming: return .ppAmber
+        case .active: return theme.tertiary
+        case .upcoming: return theme.secondary
         case .ended: return .ppTextTertiary
         case .unknown: return .ppTextTertiary
         }

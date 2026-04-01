@@ -3,6 +3,7 @@ import TipKit
 
 struct TransactionsView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = TransactionsViewModel()
     @State private var showAddSheet = false
     @State private var showFilterSheet = false
@@ -71,7 +72,7 @@ struct TransactionsView: View {
                         VStack(spacing: PPSpacing.md) {
                             Image(systemName: "exclamationmark.triangle")
                                 .font(.system(size: 32))
-                                .foregroundColor(.ppAmber)
+                                .foregroundColor(theme.secondary)
                             Text(error)
                                 .font(.ppBody)
                                 .foregroundColor(.ppTextSecondary)
@@ -81,7 +82,7 @@ struct TransactionsView: View {
                                 }
                             }
                             .font(.ppHeadline)
-                            .foregroundColor(.ppPrimary)
+                            .foregroundColor(theme.primary)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, PPSpacing.xxxl)
@@ -240,7 +241,7 @@ struct TransactionsView: View {
                                     .font(.system(size: 10, weight: .bold))
                                     .foregroundStyle(.white)
                                     .padding(3)
-                                    .background(Color.ppPrimary)
+                                    .background(theme.primary)
                                     .clipShape(Circle())
                                     .offset(x: 8, y: -8)
                             }
@@ -276,8 +277,8 @@ struct TransactionsView: View {
     // MARK: - Stats Bar
 
     private var transactionStatsBar: some View {
-        let inflows = viewModel.transactions.filter { $0.category.categoryType == "incoming" }.reduce(Int64(0)) { $0 + $1.amount }
-        let outflows = viewModel.transactions.filter { $0.category.categoryType == "outgoing" }.reduce(Int64(0)) { $0 + $1.amount }
+        let inflows = viewModel.transactions.filter { $0.category.type == "income" }.reduce(Int64(0)) { $0 + $1.amount }
+        let outflows = viewModel.transactions.filter { $0.category.type == "expense" }.reduce(Int64(0)) { $0 + $1.amount }
         let net = inflows - outflows
         let count = viewModel.transactions.count
 
@@ -356,7 +357,7 @@ struct TransactionsView: View {
         HStack(spacing: PPSpacing.md) {
             // Category icon circle
             Circle()
-                .fill(Color(hex: tx.category.color) ?? .ppPrimary)
+                .fill(Color(hex: tx.category.color) ?? theme.primary)
                 .frame(width: 40, height: 40)
                 .overlay(
                     Text(tx.category.icon.prefix(2))

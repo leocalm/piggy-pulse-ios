@@ -3,6 +3,7 @@ import SwiftUI
 struct OnboardingView: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
+@Environment(\.themeManager) private var theme
     @StateObject private var vm: OnboardingViewModel
 
     init(apiClient: APIClient) {
@@ -66,7 +67,7 @@ struct OnboardingView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, PPSpacing.xl)
                         .padding(.vertical, PPSpacing.md)
-                        .background(vm.canAdvance ? Color.ppPrimary : Color.ppPrimary.opacity(0.4))
+                        .background(vm.canAdvance ? theme.primary : theme.primary.opacity(0.4))
                         .clipShape(Capsule())
                         .disabled(!vm.canAdvance || vm.isSaving)
                     }

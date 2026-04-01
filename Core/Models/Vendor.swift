@@ -4,8 +4,14 @@ struct VendorListItem: Codable, Identifiable {
     let id: UUID
     let name: String
     let description: String?
-    let archived: Bool
-    let transactionCount: Int64
+    let status: String               // "active" | "inactive"
+    let numberOfTransactions: Int64
+    let totalSpend: Int64
+
+    // MARK: - Backward compatibility
+
+    var archived: Bool { status == "inactive" }
+    var transactionCount: Int64 { numberOfTransactions }
 }
 
 extension VendorListItem: Hashable {

@@ -35,9 +35,9 @@ struct SettingsView: View {
                             .padding(.vertical, PPSpacing.xxxl)
                     } else if let error = errorMessage {
                         VStack(spacing: PPSpacing.md) {
-                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(.ppAmber)
+                            Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(themeManager.secondary)
                             Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(.ppPrimary)
+                            Button(String(localized: "common.retry")) { Task { await load() } }.font(.ppHeadline).foregroundColor(themeManager.primary)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, PPSpacing.xxxl)
                     } else {
@@ -92,7 +92,7 @@ struct SettingsView: View {
                 .tracking(1)
 
             settingsRow(String(localized: "field.name"), value: p.name)
-            settingsRow(String(localized: "field.email"), value: p.email)
+            settingsRow(String(localized: "field.email"), value: p.email ?? appState.currentUser?.email ?? "—")
             settingsRow(String(localized: "field.currency"), value: currencyDisplay)
 
             Divider().background(Color.ppBorder)
@@ -104,7 +104,7 @@ struct SettingsView: View {
                 HStack {
                     Label(String(localized: "button.editProfile"), systemImage: "pencil")
                         .font(.ppBody)
-                        .foregroundColor(.ppPrimary)
+                        .foregroundColor(themeManager.primary)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
@@ -151,7 +151,7 @@ struct SettingsView: View {
                         .font(.ppBody)
                         .foregroundColor(biometricAvailable ? .ppTextPrimary : .ppTextTertiary)
                 }
-                .tint(.ppPrimary)
+                .tint(themeManager.primary)
                 .disabled(!biometricAvailable)
                 .onChange(of: biometricEnabled) { _, enabled in
                     handleBiometricToggle(enabled)
@@ -282,7 +282,7 @@ struct SettingsView: View {
                     HStack {
                         Label(String(localized: "button.savePreferences"), systemImage: "checkmark")
                             .font(.ppBody)
-                            .foregroundColor(.ppPrimary)
+                            .foregroundColor(themeManager.primary)
                         Spacer()
                         if isSavingPreferences {
                             ProgressView().tint(.ppTextSecondary)
@@ -330,7 +330,7 @@ struct SettingsView: View {
                     .font(.ppBody)
                     .foregroundColor(.ppTextPrimary)
             }
-            .tint(.ppPrimary)
+            .tint(themeManager.primary)
             .onChange(of: notificationsEnabled) { _, enabled in
                 handleNotificationMasterToggle(enabled)
             }
@@ -347,7 +347,7 @@ struct SettingsView: View {
                         .foregroundColor(.ppTextSecondary)
                 }
             }
-            .tint(.ppPrimary)
+            .tint(themeManager.primary)
             .disabled(!notificationsEnabled)
             .onChange(of: notificationPeriodStarting) { _, v in
                 var prefs = NotificationPreferences()
@@ -365,7 +365,7 @@ struct SettingsView: View {
                         .foregroundColor(.ppTextSecondary)
                 }
             }
-            .tint(.ppPrimary)
+            .tint(themeManager.primary)
             .disabled(!notificationsEnabled)
             .onChange(of: notificationPeriodSummary) { _, v in
                 var prefs = NotificationPreferences()
@@ -383,7 +383,7 @@ struct SettingsView: View {
                         .foregroundColor(.ppTextSecondary)
                 }
             }
-            .tint(.ppPrimary)
+            .tint(themeManager.primary)
             .disabled(!notificationsEnabled)
             .onChange(of: notificationOverlayLifecycle) { _, v in
                 var prefs = NotificationPreferences()

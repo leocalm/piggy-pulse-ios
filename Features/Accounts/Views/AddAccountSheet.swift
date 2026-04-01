@@ -4,6 +4,7 @@ struct AddAccountSheet: View {
     @EnvironmentObject var appState: AppState
 @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeManager) private var theme
 
     @State private var name = ""
     @State private var spendLimitText = ""
@@ -91,7 +92,7 @@ struct AddAccountSheet: View {
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                .tint(.ppPrimary)
+                                .tint(theme.primary)
                             }
 
                             // Starting Balance
@@ -137,7 +138,7 @@ struct AddAccountSheet: View {
                                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
                                     ForEach(colorOptions, id: \.self) { c in
                                         Circle()
-                                            .fill(Color(hex: c) ?? .ppPrimary)
+                                            .fill(Color(hex: c) ?? theme.primary)
                                             .frame(width: 32, height: 32)
                                             .overlay(
                                                 Circle().stroke(Color.white, lineWidth: color == c ? 2 : 0)
@@ -193,10 +194,11 @@ struct AddAccountSheet: View {
         }()
         
         struct Req: Encodable {
-            let name: String; let color: String; let icon: String
-            let accountType: String; let balance: Int64; let spendLimit: Int32?
+            let name: String; let color: String
+            let type: String; let initialBalance: Int64; let spendLimit: Int32?
+            let currencyId: String?
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, icon: defaultIcon, accountType: accountType, balance: balanceInCents, spendLimit: spendLimit)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, type: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: nil)
         do {
             try await appState.apiClient.request(.createAccount, body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

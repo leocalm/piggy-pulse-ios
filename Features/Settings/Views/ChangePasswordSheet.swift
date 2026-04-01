@@ -4,6 +4,7 @@ struct ChangePasswordSheet: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
     @State private var currentPassword = ""
     @State private var newPassword = ""
@@ -34,7 +35,7 @@ struct ChangePasswordSheet: View {
                             VStack(spacing: PPSpacing.md) {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.system(size: 48))
-                                    .foregroundColor(.ppCyan)
+                                    .foregroundColor(theme.tertiary)
                                 Text(String(localized: "changePassword.success"))
                                     .font(.ppHeadline)
                                     .foregroundColor(.ppTextPrimary)

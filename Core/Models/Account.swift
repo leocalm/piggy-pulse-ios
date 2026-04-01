@@ -4,13 +4,22 @@ struct AccountListItem: Codable, Identifiable {
     let id: UUID
     let name: String
     let color: String
-    let icon: String
-    let accountType: String
-    let balance: Int64
+    let type: String              // "Checking" | "Savings" | "CreditCard" | "Allowance" | "Wallet"
+    let status: String            // "active" | "inactive"
+    let currentBalance: Int64
+    let netChangeThisPeriod: Int64
+    let numberOfTransactions: Int64
+    let nextTransfer: String?
+    let balanceAfterNextTransfer: Int64?
     let spendLimit: Int32?
-    let isArchived: Bool
-    let balanceChangeThisPeriod: Int64
-    let transactionCount: Int64
+
+    // MARK: - Backward compatibility
+
+    var accountType: String { type }
+    var balance: Int64 { currentBalance }
+    var isArchived: Bool { status == "inactive" }
+    var balanceChangeThisPeriod: Int64 { netChangeThisPeriod }
+    var transactionCount: Int64 { numberOfTransactions }
 }
 
 struct AccountsSummary: Codable {
