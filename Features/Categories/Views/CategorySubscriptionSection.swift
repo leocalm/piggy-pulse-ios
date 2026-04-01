@@ -8,6 +8,7 @@ struct CategorySubscriptionSection: View {
 
     @StateObject private var viewModel = SubscriptionsViewModel()
     @State private var showAddSheet = false
+    @State private var editingSubscription: Subscription?
     @State private var cancellingSubscription: Subscription?
     @State private var subscriptionToDelete: Subscription?
 
@@ -46,6 +47,11 @@ struct CategorySubscriptionSection: View {
                     ForEach(viewModel.categorySubscriptions) { sub in
                         subscriptionRow(sub)
                             .contextMenu {
+                                Button {
+                                    editingSubscription = sub
+                                } label: {
+                                    Label(String(localized: "common.edit"), systemImage: "pencil")
+                                }
                                 if sub.status == .active || sub.status == .paused {
                                     Button {
                                         cancellingSubscription = sub
@@ -94,6 +100,12 @@ struct CategorySubscriptionSection: View {
                 fixedCategoryId: categoryId,
                 onCreated: {}
             )
+        }
+        .sheet(item: $editingSubscription, onDismiss: {
+            Task { await viewModel.loadForCategory(categoryId: categoryId) }
+            onSubscriptionChanged?()
+        }) { sub in
+            EditSubscriptionSheet(subscription: sub, apiClient: apiClient) { }
         }
         .sheet(item: $cancellingSubscription, onDismiss: {
             Task { await viewModel.loadForCategory(categoryId: categoryId) }
