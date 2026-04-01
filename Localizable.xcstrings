@@ -3059,6 +3059,118 @@
         }
       }
     },
+    "category.subscription.add": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Subscription"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Assinatura"
+          }
+        }
+      }
+    },
+    "category.subscription.addInfo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The budget target will be automatically computed from active subscriptions after you save."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A meta de orçamento será calculada automaticamente a partir das assinaturas ativas após salvar."
+          }
+        }
+      }
+    },
+    "category.subscription.autoComputed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto-computed from active subscriptions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calculado automaticamente das assinaturas ativas"
+          }
+        }
+      }
+    },
+    "category.subscription.behaviorLocked": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannot change behavior while active subscriptions exist."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não é possível alterar o comportamento enquanto houver assinaturas ativas."
+          }
+        }
+      }
+    },
+    "category.subscription.empty": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No subscriptions yet. Add one below."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma assinatura ainda. Adicione uma abaixo."
+          }
+        }
+      }
+    },
+    "category.subscription.monthlyTarget": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monthly Target"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta Mensal"
+          }
+        }
+      }
+    },
+    "category.subscription.section.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscriptions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assinaturas"
+          }
+        }
+      }
+    },
     "category.target": {
       "localizations": {
         "en": {
@@ -11232,6 +11344,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Falha ao carregar assinaturas."
+          }
+        }
+      }
+    },
+    "subscription.manage.category": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage Category"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerenciar Categoria"
           }
         }
       }

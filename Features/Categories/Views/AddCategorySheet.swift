@@ -81,8 +81,6 @@ struct AddCategorySheet: View {
 
                             // Color is determined by type+behavior on the server
 
-                            // Target amount (optional)
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
                             // Behavior
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 Text(String(localized: "category.behavior"))
@@ -95,16 +93,30 @@ struct AddCategorySheet: View {
                                 .pickerStyle(.segmented)
                             }
 
-                                Text(String(localized: "category.target"))
-                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
-                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
-                                    .keyboardType(.decimalPad)
-                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                                Text(String(localized: "category.targetHint"))
-                                    .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                            // Target amount (hidden for subscription behavior)
+                            if behavior != "subscription" {
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    Text(String(localized: "category.target"))
+                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .keyboardType(.decimalPad)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    Text(String(localized: "category.targetHint"))
+                                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                                }
+                            } else {
+                                HStack(spacing: PPSpacing.sm) {
+                                    Image(systemName: "info.circle")
+                                        .font(.ppBody).foregroundColor(.ppTextSecondary)
+                                    Text(String(localized: "category.subscription.addInfo"))
+                                        .font(.ppCaption).foregroundColor(.ppTextSecondary)
+                                }
+                                .padding(PPSpacing.md)
+                                .background(Color.ppSurface)
+                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             }
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))

@@ -5,6 +5,7 @@ internal import Combine
 final class SubscriptionsViewModel: ObservableObject {
     @Published var subscriptions: [Subscription] = []
     @Published var upcomingCharges: [UpcomingCharge] = []
+    @Published var categorySubscriptions: [Subscription] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
@@ -38,6 +39,17 @@ final class SubscriptionsViewModel: ObservableObject {
     /// Monthly cost in cents for all active subscriptions.
     var monthlyCost: Int64 {
         activeSubs.reduce(Int64(0)) { total, sub in
+            switch sub.billingCycle {
+            case .monthly: return total + sub.billingAmount
+            case .quarterly: return total + Int64((Double(sub.billingAmount) / 3.0).rounded())
+            case .yearly: return total + Int64((Double(sub.billingAmount) / 12.0).rounded())
+            }
+        }
+    }
+
+    /// Monthly cost in cents for active category subscriptions.
+    var categoryMonthlyCost: Int64 {
+        categorySubscriptions.filter { $0.status == .active }.reduce(Int64(0)) { total, sub in
             switch sub.billingCycle {
             case .monthly: return total + sub.billingAmount
             case .quarterly: return total + Int64((Double(sub.billingAmount) / 3.0).rounded())
@@ -97,6 +109,18 @@ final class SubscriptionsViewModel: ObservableObject {
         } catch {
             errorMessage = String(localized: "subscription.cancelFailed")
         }
+    }
+
+    func loadForCategory(categoryId: UUID) async {
+        guard let repository else { return }
+        isLoading = true
+        errorMessage = nil
+        do {
+            categorySubscriptions = try await repository.fetchSubscriptions(categoryId: categoryId)
+        } catch {
+            errorMessage = String(localized: "subscription.loadError")
+        }
+        isLoading = false
     }
 
     private static func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {

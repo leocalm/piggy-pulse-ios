@@ -172,7 +172,7 @@ struct CategoriesView: View {
                 AddCategorySheet { }.environmentObject(appState)
             }
             .sheet(item: $editingCategory) { cat in
-                EditCategorySheet(category: cat, currentTarget: overviewMap[cat.id]?.budgeted) { Task { await load() } }
+                EditCategorySheet(category: cat, apiClient: appState.apiClient, currentTarget: overviewMap[cat.id]?.budgeted) { Task { await load() } }
                     .environmentObject(appState)
             }
             .confirmationDialog("Archive \"\(categoryToArchive?.name ?? "")\"?", isPresented: Binding(get: { categoryToArchive != nil }, set: { if !$0 { categoryToArchive = nil } }), titleVisibility: .visible) {

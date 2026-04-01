@@ -7,8 +7,11 @@ struct EditCategorySheet: View {
     @Environment(\.themeManager) private var theme
 
     let category: CategoryManagementItem
+    let apiClient: APIClient
     var currentTarget: Int64?
     var onUpdated: () -> Void
+
+    @State private var hasActiveSubscriptions = false
 
     @State private var name = ""
     @State private var icon = ""
@@ -72,34 +75,65 @@ struct EditCategorySheet: View {
                             }
 
                             // Color is determined by type+behavior on the server
-                            // Target amount (optional)
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
                             // Behavior
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text(String(localized: "category.behavior"))
-                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                HStack(spacing: PPSpacing.sm) {
+                                    Text(String(localized: "category.behavior"))
+                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    if hasActiveSubscriptions {
+                                        Image(systemName: "lock.fill")
+                                            .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                                    }
+                                }
                                 Picker("", selection: $behavior) {
                                     Text(String(localized: "category.behavior.fixed")).tag("fixed")
                                     Text(String(localized: "category.behavior.variable")).tag("variable")
                                     Text(String(localized: "category.behavior.subscription")).tag("subscription")
                                 }
                                 .pickerStyle(.segmented)
+                                .disabled(hasActiveSubscriptions)
+                                .opacity(hasActiveSubscriptions ? 0.6 : 1)
+
+                                if hasActiveSubscriptions {
+                                    Text(String(localized: "category.subscription.behaviorLocked"))
+                                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                                }
                             }
 
-                                Text(String(localized: "category.target"))
-                                    .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
-                                    .font(.ppBody).foregroundColor(.ppTextPrimary)
-                                    .keyboardType(.decimalPad)
-                                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                                Text(String(localized: "category.targetHint"))
-                                    .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                            // Target amount (hidden for subscription behavior)
+                            if behavior != "subscription" {
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    Text(String(localized: "category.target"))
+                                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                                    TextField(String(localized: "category.targetPlaceholder"), text: $targetAmountText)
+                                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                                        .keyboardType(.decimalPad)
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    Text(String(localized: "category.targetHint"))
+                                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                                }
                             }
                         }
                         .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+
+                        // Inline subscription management for subscription-behavior categories
+                        if behavior == "subscription" {
+                            VStack(alignment: .leading, spacing: PPSpacing.lg) {
+                                Text(String(localized: "category.subscription.section.title"))
+                                    .font(.ppTitle3).foregroundColor(.ppTextPrimary)
+
+                                CategorySubscriptionSection(
+                                    categoryId: category.id,
+                                    apiClient: apiClient,
+                                    currencyCode: appState.currencyCode
+                                )
+                            }
+                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+                        }
                     }
                     .padding(PPSpacing.xl)
                 }
@@ -138,6 +172,15 @@ struct EditCategorySheet: View {
                 if let target = currentTarget, target > 0 {
                     targetAmountText = String(format: "%.2f", Double(target) / 100.0)
                 }
+            }
+            .task {
+                // Check if there are active subscriptions to lock the behavior picker
+                guard category.behavior == "subscription" else { return }
+                let subs: [Subscription]? = try? await apiClient.request(
+                    .subscriptions,
+                    queryItems: [URLQueryItem(name: "categoryId", value: category.id.uuidString)]
+                )
+                hasActiveSubscriptions = subs?.contains(where: { $0.status == .active }) ?? false
             }
         }
     }
