@@ -6,6 +6,7 @@ struct AddSubscriptionSheet: View {
     @Environment(\.colorScheme) private var colorScheme
 
     let apiClient: APIClient
+    var fixedCategoryId: UUID? = nil
     var onCreated: () -> Void
 
     @State private var name = ""
@@ -69,6 +70,7 @@ struct AddSubscriptionSheet: View {
                                 }
 
                                 // Category
+                                if fixedCategoryId == nil {
                                 formField(label: String(localized: "subscription.form.category"), required: true) {
                                     Picker(String(localized: "subscription.form.category"), selection: $selectedCategoryId) {
                                         Text(String(localized: "subscription.form.selectCategory")).tag(Optional<UUID>.none)
@@ -82,6 +84,20 @@ struct AddSubscriptionSheet: View {
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                     .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                }
+                                } else if let fixedId = fixedCategoryId, let fixedCat = categories.first(where: { $0.id == fixedId }) {
+                                    formField(label: String(localized: "subscription.form.category"), required: true) {
+                                        HStack {
+                                            Text("\(fixedCat.icon) \(fixedCat.name)")
+                                                .font(.ppBody).foregroundColor(.ppTextSecondary)
+                                            Spacer()
+                                            Image(systemName: "lock.fill")
+                                                .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                                        }
+                                        .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                                        .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    }
                                 }
 
                                 // Vendor (optional)
@@ -211,6 +227,11 @@ struct AddSubscriptionSheet: View {
         do {
             vendors = try await vendorsTask.data
         } catch { vendors = [] }
+
+        // Pre-select fixed category if provided
+        if let fixedId = fixedCategoryId {
+            selectedCategoryId = fixedId
+        }
 
         isLoadingOptions = false
     }

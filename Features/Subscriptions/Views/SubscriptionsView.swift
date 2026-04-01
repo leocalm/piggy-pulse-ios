@@ -5,12 +5,12 @@ struct SubscriptionsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = SubscriptionsViewModel()
-    @State private var showAddSheet = false
-    @State private var editingSubscription: Subscription?
     @State private var cancellingSubscription: Subscription?
     @State private var subscriptionToDelete: Subscription?
     @State private var selectedSubscription: Subscription?
     @State private var showCancelled = false
+    @State private var allCategories: [CategoryManagementItem] = []
+    @State private var managingCategory: CategoryManagementItem?
 
     private let subscriptionsTip = SubscriptionsTip()
 
@@ -70,8 +70,8 @@ struct SubscriptionsView: View {
                                     String(localized: "subscriptions.empty.tip2"),
                                     String(localized: "subscriptions.empty.tip3"),
                                 ],
-                                actionLabel: String(localized: "subscriptions.empty.action"),
-                                action: { showAddSheet = true }
+                                actionLabel: nil,
+                                action: nil
                             )
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
@@ -112,15 +112,9 @@ struct SubscriptionsView: View {
                                             }
                                             .tint(theme.secondary)
                                         }
-                                        .swipeActions(edge: .leading) {
-                                            Button { editingSubscription = sub } label: {
-                                                Label(String(localized: "subscription.edit"), systemImage: "pencil")
-                                            }
-                                            .tint(theme.primary)
-                                        }
                                         .contextMenu {
-                                            Button { editingSubscription = sub } label: {
-                                                Label(String(localized: "common.edit"), systemImage: "pencil")
+                                            Button { Task { await loadCategoryAndManage(sub) } } label: {
+                                                Label(String(localized: "subscription.manage.category"), systemImage: "folder")
                                             }
                                             Button { cancellingSubscription = sub } label: {
                                                 Label(String(localized: "subscription.cancel"), systemImage: "xmark.circle")
@@ -145,15 +139,9 @@ struct SubscriptionsView: View {
                                     subscriptionRow(sub)
                                         .contentShape(Rectangle())
                                         .onTapGesture { selectedSubscription = sub }
-                                        .swipeActions(edge: .leading) {
-                                            Button { editingSubscription = sub } label: {
-                                                Label(String(localized: "subscription.edit"), systemImage: "pencil")
-                                            }
-                                            .tint(theme.primary)
-                                        }
                                         .contextMenu {
-                                            Button { editingSubscription = sub } label: {
-                                                Label(String(localized: "common.edit"), systemImage: "pencil")
+                                            Button { Task { await loadCategoryAndManage(sub) } } label: {
+                                                Label(String(localized: "subscription.manage.category"), systemImage: "folder")
                                             }
                                             Button(role: .destructive) { subscriptionToDelete = sub } label: {
                                                 Label(String(localized: "common.delete"), systemImage: "trash")
@@ -219,18 +207,24 @@ struct SubscriptionsView: View {
                 .task {
                     viewModel.configure(apiClient: appState.apiClient)
                     await viewModel.load()
-                }
-                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await viewModel.load() } }) {
-                    AddSubscriptionSheet(apiClient: appState.apiClient) { }
-                        .environmentObject(appState)
-                }
-                .sheet(item: $editingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
-                    EditSubscriptionSheet(subscription: sub, apiClient: appState.apiClient) { }
-                        .environmentObject(appState)
+                    // Load categories for "Manage Category" lookup
+                    let catResponse: PaginatedResponse<CategoryManagementItem>? = try? await appState.apiClient.request(
+                        .categoriesManagement,
+                        queryItems: [URLQueryItem(name: "limit", value: "200")]
+                    )
+                    allCategories = catResponse?.data ?? []
                 }
                 .sheet(item: $cancellingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
                     CancelSubscriptionSheet(subscription: sub, apiClient: appState.apiClient) { }
                         .environmentObject(appState)
+                }
+                .sheet(item: $managingCategory, onDismiss: { Task { await viewModel.load() } }) { cat in
+                    EditCategorySheet(
+                        category: cat,
+                        apiClient: appState.apiClient,
+                        onUpdated: { Task { await viewModel.load() } }
+                    )
+                    .environmentObject(appState)
                 }
                 .navigationDestination(item: $selectedSubscription) { sub in
                     SubscriptionDetailView(subscriptionId: sub.id, apiClient: appState.apiClient)
@@ -255,13 +249,6 @@ struct SubscriptionsView: View {
                 }
                 .navigationTitle(String(localized: "more.subscriptions"))
                 .navigationBarTitleDisplayMode(.large)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button { showAddSheet = true } label: {
-                            Image(systemName: "plus")
-                        }
-                    }
-                }
             }
         }
     }
@@ -381,5 +368,15 @@ struct SubscriptionsView: View {
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    // MARK: - Manage
+
+    @MainActor
+    private func loadCategoryAndManage(_ sub: Subscription) async {
+        // Look up category from pre-loaded list
+        if let cat = allCategories.first(where: { $0.id == sub.categoryId }) {
+            managingCategory = cat
+        }
     }
 }

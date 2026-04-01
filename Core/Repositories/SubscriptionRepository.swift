@@ -11,6 +11,12 @@ final class SubscriptionRepository {
         try await apiClient.request(.subscriptions)
     }
 
+    func fetchSubscriptions(categoryId: UUID) async throws -> [Subscription] {
+        try await apiClient.request(.subscriptions, queryItems: [
+            URLQueryItem(name: "categoryId", value: categoryId.uuidString)
+        ])
+    }
+
     func fetchSubscription(id: UUID) async throws -> SubscriptionDetail {
         try await apiClient.request(.subscription(id))
     }

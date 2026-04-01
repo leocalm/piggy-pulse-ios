@@ -5,7 +5,9 @@ internal import Combine
 final class SubscriptionsViewModel: ObservableObject {
     @Published var subscriptions: [Subscription] = []
     @Published var upcomingCharges: [UpcomingCharge] = []
+    @Published var categorySubscriptions: [Subscription] = []
     @Published var isLoading = false
+    @Published var isCategoryLoading = false
     @Published var errorMessage: String?
 
     private var repository: SubscriptionRepository?
@@ -46,6 +48,17 @@ final class SubscriptionsViewModel: ObservableObject {
         }
     }
 
+    /// Monthly cost in cents for active category subscriptions.
+    var categoryMonthlyCost: Int64 {
+        categorySubscriptions.filter { $0.status == .active }.reduce(Int64(0)) { total, sub in
+            switch sub.billingCycle {
+            case .monthly: return total + sub.billingAmount
+            case .quarterly: return total + Int64((Double(sub.billingAmount) / 3.0).rounded())
+            case .yearly: return total + Int64((Double(sub.billingAmount) / 12.0).rounded())
+            }
+        }
+    }
+
     /// Yearly cost in cents for all active subscriptions.
     var yearlyCost: Int64 {
         activeSubs.reduce(Int64(0)) { total, sub in
@@ -77,12 +90,12 @@ final class SubscriptionsViewModel: ObservableObject {
         isLoading = false
     }
 
-    func deleteSubscription(id: UUID) async {
+    func deleteSubscription(id: UUID, reloadAfter: Bool = true) async {
         guard let repository else { return }
         do {
             try await repository.deleteSubscription(id: id)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
-            await load()
+            if reloadAfter { await load() }
         } catch {
             errorMessage = String(localized: "subscription.deleteFailed")
         }
@@ -97,6 +110,18 @@ final class SubscriptionsViewModel: ObservableObject {
         } catch {
             errorMessage = String(localized: "subscription.cancelFailed")
         }
+    }
+
+    func loadForCategory(categoryId: UUID) async {
+        guard let repository else { return }
+        isCategoryLoading = true
+        errorMessage = nil
+        do {
+            categorySubscriptions = try await repository.fetchSubscriptions(categoryId: categoryId)
+        } catch {
+            errorMessage = String(localized: "subscription.loadError")
+        }
+        isCategoryLoading = false
     }
 
     private static func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {
