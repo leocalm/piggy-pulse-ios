@@ -101,10 +101,7 @@ extension APIEndpoint {
 extension APIEndpoint {
     static let categories = APIEndpoint(path: "/categories", method: .get, requiresAuth: true)
     static let createCategory = APIEndpoint(path: "/categories", method: .post, requiresAuth: true)
-    static func getCategory(_ id: UUID) -> APIEndpoint {
-        APIEndpoint(path: "/categories/\(id)", method: .get, requiresAuth: true)
-    }
-    static func updateCategory(_ id: UUID) -> APIEndpoint {
+static func updateCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)", method: .put, requiresAuth: true)
     }
     static func deleteCategory(_ id: UUID) -> APIEndpoint {

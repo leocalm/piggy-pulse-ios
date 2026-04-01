@@ -9,8 +9,8 @@ struct SubscriptionsView: View {
     @State private var subscriptionToDelete: Subscription?
     @State private var selectedSubscription: Subscription?
     @State private var showCancelled = false
+    @State private var allCategories: [CategoryManagementItem] = []
     @State private var managingCategory: CategoryManagementItem?
-    @State private var isLoadingCategory = false
 
     private let subscriptionsTip = SubscriptionsTip()
 
@@ -207,6 +207,12 @@ struct SubscriptionsView: View {
                 .task {
                     viewModel.configure(apiClient: appState.apiClient)
                     await viewModel.load()
+                    // Load categories for "Manage Category" lookup
+                    let catResponse: PaginatedResponse<CategoryManagementItem>? = try? await appState.apiClient.request(
+                        .categoriesManagement,
+                        queryItems: [URLQueryItem(name: "limit", value: "200")]
+                    )
+                    allCategories = catResponse?.data ?? []
                 }
                 .sheet(item: $cancellingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
                     CancelSubscriptionSheet(subscription: sub, apiClient: appState.apiClient) { }
@@ -243,12 +249,6 @@ struct SubscriptionsView: View {
                 }
                 .navigationTitle(String(localized: "more.subscriptions"))
                 .navigationBarTitleDisplayMode(.large)
-                .overlay {
-                    if isLoadingCategory {
-                        Color.ppTextPrimary.opacity(0.2).ignoresSafeArea()
-                            .overlay(ProgressView().tint(.white))
-                    }
-                }
             }
         }
     }
@@ -374,13 +374,9 @@ struct SubscriptionsView: View {
 
     @MainActor
     private func loadCategoryAndManage(_ sub: Subscription) async {
-        isLoadingCategory = true
-        do {
-            let cat: CategoryManagementItem = try await appState.apiClient.request(.getCategory(sub.categoryId))
+        // Look up category from pre-loaded list
+        if let cat = allCategories.first(where: { $0.id == sub.categoryId }) {
             managingCategory = cat
-        } catch {
-            // silently fail — category may not have single GET, fall through
         }
-        isLoadingCategory = false
     }
 }
