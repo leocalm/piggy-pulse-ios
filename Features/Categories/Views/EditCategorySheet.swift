@@ -12,6 +12,7 @@ struct EditCategorySheet: View {
     var onUpdated: () -> Void
 
     @State private var hasActiveSubscriptions = false
+    @State private var refreshToken = 0
 
     @State private var name = ""
     @State private var icon = ""
@@ -128,7 +129,8 @@ struct EditCategorySheet: View {
                                 CategorySubscriptionSection(
                                     categoryId: category.id,
                                     apiClient: apiClient,
-                                    currencyCode: appState.currencyCode
+                                    currencyCode: appState.currencyCode,
+                                    onSubscriptionChanged: { refreshToken += 1 }
                                 )
                             }
                             .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
@@ -173,7 +175,7 @@ struct EditCategorySheet: View {
                     targetAmountText = String(format: "%.2f", Double(target) / 100.0)
                 }
             }
-            .task {
+            .task(id: refreshToken) {
                 // Check if there are active subscriptions to lock the behavior picker
                 guard category.behavior == "subscription" else { return }
                 let subs: [Subscription]? = try? await apiClient.request(

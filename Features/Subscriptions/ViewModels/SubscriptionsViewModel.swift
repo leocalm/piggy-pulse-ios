@@ -7,6 +7,7 @@ final class SubscriptionsViewModel: ObservableObject {
     @Published var upcomingCharges: [UpcomingCharge] = []
     @Published var categorySubscriptions: [Subscription] = []
     @Published var isLoading = false
+    @Published var isCategoryLoading = false
     @Published var errorMessage: String?
 
     private var repository: SubscriptionRepository?
@@ -89,12 +90,12 @@ final class SubscriptionsViewModel: ObservableObject {
         isLoading = false
     }
 
-    func deleteSubscription(id: UUID) async {
+    func deleteSubscription(id: UUID, reloadAfter: Bool = true) async {
         guard let repository else { return }
         do {
             try await repository.deleteSubscription(id: id)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
-            await load()
+            if reloadAfter { await load() }
         } catch {
             errorMessage = String(localized: "subscription.deleteFailed")
         }
@@ -113,14 +114,14 @@ final class SubscriptionsViewModel: ObservableObject {
 
     func loadForCategory(categoryId: UUID) async {
         guard let repository else { return }
-        isLoading = true
+        isCategoryLoading = true
         errorMessage = nil
         do {
             categorySubscriptions = try await repository.fetchSubscriptions(categoryId: categoryId)
         } catch {
             errorMessage = String(localized: "subscription.loadError")
         }
-        isLoading = false
+        isCategoryLoading = false
     }
 
     private static func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {

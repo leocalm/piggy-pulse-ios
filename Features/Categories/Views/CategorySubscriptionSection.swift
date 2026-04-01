@@ -4,6 +4,7 @@ struct CategorySubscriptionSection: View {
     let categoryId: UUID
     let apiClient: APIClient
     let currencyCode: String
+    var onSubscriptionChanged: (() -> Void)? = nil
 
     @StateObject private var viewModel = SubscriptionsViewModel()
     @State private var showAddSheet = false
@@ -12,25 +13,27 @@ struct CategorySubscriptionSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
-            // Monthly target summary
-            HStack {
-                VStack(alignment: .leading, spacing: PPSpacing.xs) {
-                    Text(String(localized: "category.subscription.monthlyTarget"))
-                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                    Text(String(localized: "category.subscription.autoComputed"))
-                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+            // Monthly target summary (hidden while loading)
+            if !viewModel.isCategoryLoading {
+                HStack {
+                    VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                        Text(String(localized: "category.subscription.monthlyTarget"))
+                            .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(String(localized: "category.subscription.autoComputed"))
+                            .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                    }
+                    Spacer()
+                    Text(formatCurrency(viewModel.categoryMonthlyCost, code: currencyCode))
+                        .font(.ppHeadline).foregroundColor(.ppTextPrimary)
                 }
-                Spacer()
-                Text(formatCurrency(viewModel.categoryMonthlyCost, code: currencyCode))
-                    .font(.ppHeadline).foregroundColor(.ppTextPrimary)
+                .padding(PPSpacing.lg)
+                .background(Color.ppSurface)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
             }
-            .padding(PPSpacing.lg)
-            .background(Color.ppSurface)
-            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
 
             // Subscription rows
-            if viewModel.isLoading {
+            if viewModel.isCategoryLoading {
                 HStack { Spacer(); ProgressView().tint(.ppTextSecondary); Spacer() }
                     .padding(.vertical, PPSpacing.lg)
             } else if viewModel.categorySubscriptions.isEmpty {
@@ -84,6 +87,7 @@ struct CategorySubscriptionSection: View {
         }
         .sheet(isPresented: $showAddSheet, onDismiss: {
             Task { await viewModel.loadForCategory(categoryId: categoryId) }
+            onSubscriptionChanged?()
         }) {
             AddSubscriptionSheet(
                 apiClient: apiClient,
@@ -93,6 +97,7 @@ struct CategorySubscriptionSection: View {
         }
         .sheet(item: $cancellingSubscription, onDismiss: {
             Task { await viewModel.loadForCategory(categoryId: categoryId) }
+            onSubscriptionChanged?()
         }) { sub in
             CancelSubscriptionSheet(subscription: sub, apiClient: apiClient) { }
         }
@@ -108,8 +113,9 @@ struct CategorySubscriptionSection: View {
                 if let sub = subscriptionToDelete {
                     Task {
                         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                        await viewModel.deleteSubscription(id: sub.id)
+                        await viewModel.deleteSubscription(id: sub.id, reloadAfter: false)
                         await viewModel.loadForCategory(categoryId: categoryId)
+                        onSubscriptionChanged?()
                     }
                 }
             }

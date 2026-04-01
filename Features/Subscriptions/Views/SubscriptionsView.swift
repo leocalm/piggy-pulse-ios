@@ -70,8 +70,8 @@ struct SubscriptionsView: View {
                                     String(localized: "subscriptions.empty.tip2"),
                                     String(localized: "subscriptions.empty.tip3"),
                                 ],
-                                actionLabel: String(localized: "subscriptions.empty.action"),
-                                action: { /* read-only: direct to Categories */ }
+                                actionLabel: nil,
+                                action: nil
                             )
                             .listRowBackground(Color.ppBackground)
                             .listRowSeparator(.hidden)
@@ -245,7 +245,7 @@ struct SubscriptionsView: View {
                 .navigationBarTitleDisplayMode(.large)
                 .overlay {
                     if isLoadingCategory {
-                        Color.black.opacity(0.2).ignoresSafeArea()
+                        Color.ppTextPrimary.opacity(0.2).ignoresSafeArea()
                             .overlay(ProgressView().tint(.white))
                     }
                 }

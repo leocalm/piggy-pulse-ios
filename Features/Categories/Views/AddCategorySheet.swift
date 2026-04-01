@@ -91,6 +91,11 @@ struct AddCategorySheet: View {
                                     Text(String(localized: "category.behavior.subscription")).tag("subscription")
                                 }
                                 .pickerStyle(.segmented)
+                                .onChange(of: behavior) { _, newValue in
+                                    if newValue == "subscription" {
+                                        targetAmountText = ""
+                                    }
+                                }
                             }
 
                             // Target amount (hidden for subscription behavior)
