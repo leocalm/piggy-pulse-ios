@@ -130,14 +130,6 @@ struct SummaryStepView: View {
                     .clipShape(Capsule())
                     .disabled(vm.isSaving)
 
-                    Button {
-                        Task { await vm.advance() }
-                    } label: {
-                        Text(String(localized: "complete.addFirstTransaction"))
-                            .font(.ppCallout)
-                            .foregroundColor(.ppTextSecondary)
-                    }
-                    .disabled(vm.isSaving)
                 }
 
                 Spacer(minLength: PPSpacing.xl)

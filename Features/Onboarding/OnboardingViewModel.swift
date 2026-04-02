@@ -174,9 +174,7 @@ final class OnboardingViewModel: ObservableObject {
                 }
                 savedSteps.insert(.accounts)
             }
-        } catch {
-            errorMessage = "Could not load existing accounts: \(error)"
-        }
+        } catch { /* non-fatal — user can re-enter accounts */ }
     }
 
     private func loadExistingCategories() async {
@@ -215,8 +213,10 @@ final class OnboardingViewModel: ObservableObject {
             case .welcome:
                 break  // No save needed
             case .currency:
-                try await saveCurrency()
-                savedSteps.insert(.currency)
+                if !savedSteps.contains(.currency) {
+                    try await saveCurrency()
+                    savedSteps.insert(.currency)
+                }
             case .period:
                 if !savedSteps.contains(.period) {
                     try await savePeriod()

@@ -163,7 +163,7 @@ struct OnboardingTemplate: Codable, Identifiable {
 }
 
 struct OnboardingTemplateCategory: Codable, Identifiable {
-    var id: String { name }
+    var id: String { "\(name)_\(type)" }
     let name: String
     let icon: String
     let type: String       // "income" | "expense"

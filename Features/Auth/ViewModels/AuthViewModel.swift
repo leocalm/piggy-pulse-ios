@@ -182,11 +182,13 @@ final class AuthViewModel: ObservableObject {
 
         do {
             let response: RegisterResponse = try await appState.apiClient.request(.register, body: request)
-            if let token = response.token {
-                appState.tokenManager.setTokens(access: token, refresh: token)
-                // Use checkAuth which also checks onboarding status
-                await appState.checkAuth()
+            guard let token = response.token else {
+                errorMessage = String(localized: "auth.register.errorGeneric")
+                isLoading = false
+                return
             }
+            appState.tokenManager.setTokens(access: token, refresh: token)
+            await appState.checkAuth()
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {

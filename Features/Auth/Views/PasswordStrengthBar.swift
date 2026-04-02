@@ -69,8 +69,7 @@ struct PasswordStrengthBar: View {
         case 1:    return 1
         case 2:    return 2
         case 3:    return 3
-        case 4:    return 3
-        default:   return 4
+        default:   return 4  // score 4+ fills all segments
         }
     }
 }

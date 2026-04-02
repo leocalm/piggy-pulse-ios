@@ -7,7 +7,6 @@ struct LoginView: View {
     @StateObject private var viewModel = AuthViewModel(appState: AppState())
 
     @State private var viewModelReady = false
-    @State private var rememberMe = false
 
     var body: some View {
         ZStack {
@@ -103,14 +102,6 @@ struct LoginView: View {
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                 }
             }
-
-            // Remember me toggle
-            Toggle(isOn: $rememberMe) {
-                Text(String(localized: "auth.login.rememberMe"))
-                    .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary)
-            }
-            .tint(theme.primary)
 
             Button {
                 Task { await viewModel.login() }
