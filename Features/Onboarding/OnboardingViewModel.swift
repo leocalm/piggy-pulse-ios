@@ -139,10 +139,10 @@ final class OnboardingViewModel: ObservableObject {
 
     private func loadExistingAccounts() async {
         do {
-            struct ProfileResponse: Decodable { let defaultCurrencyId: UUID? }
+            struct ProfileResponse: Decodable { let currency: String }
             if let profile = try? await apiClient.request(.profile) as ProfileResponse,
-               let currencyId = profile.defaultCurrencyId {
-                selectedCurrencyId = currencyId
+               let match = currencies.first(where: { $0.code == profile.currency }) {
+                selectedCurrencyId = match.id
             } else {
                 selectedCurrencyId = currencies.first?.id
             }
@@ -256,16 +256,17 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Step saves
 
     private func saveCurrency() async throws {
-        guard let currencyId = selectedCurrencyId else { return }
-        struct ProfileResponse: Decodable { let name: String; let timezone: String }
+        guard let currencyId = selectedCurrencyId,
+              let currency = currencies.first(where: { $0.id == currencyId }) else { return }
+        struct ProfileResponse: Decodable { let name: String; let currency: String; let avatar: String }
         struct ProfileRequest: Encodable {
-            let name: String; let timezone: String; let defaultCurrencyId: UUID
+            let name: String; let currency: String; let avatar: String
         }
         let current: ProfileResponse = try await apiClient.request(.profile)
         try await apiClient.request(.updateProfile, body: ProfileRequest(
             name: current.name,
-            timezone: current.timezone,
-            defaultCurrencyId: currencyId
+            currency: currency.code,
+            avatar: current.avatar
         ))
     }
 
