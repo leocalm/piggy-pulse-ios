@@ -156,14 +156,14 @@ struct Currency: Codable, Identifiable, Hashable {
 // MARK: - Onboarding templates API
 
 struct OnboardingTemplate: Codable, Identifiable {
-    let id: UUID
+    let id: String
     let name: String
     let description: String
     let categories: [OnboardingTemplateCategory]
 }
 
 struct OnboardingTemplateCategory: Codable, Identifiable {
-    let id: UUID?
+    var id: String { name }
     let name: String
     let icon: String
     let type: String       // "income" | "expense"

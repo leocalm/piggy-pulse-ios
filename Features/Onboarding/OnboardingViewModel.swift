@@ -41,7 +41,7 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Step 4: Categories (API templates)
 
     @Published var templates: [OnboardingTemplate] = []
-    @Published var selectedTemplateId: UUID?
+    @Published var selectedTemplateId: String?
     @Published var appliedCategories: [OnboardingTemplateCategory] = []
     @Published var isLoadingTemplates = false
 
@@ -181,7 +181,6 @@ final class OnboardingViewModel: ObservableObject {
             if !active.isEmpty {
                 appliedCategories = active.map { item in
                     OnboardingTemplateCategory(
-                        id: item.id,
                         name: item.name,
                         icon: item.icon,
                         type: item.type,
@@ -315,14 +314,16 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
 
-    private func applyTemplate(_ templateId: UUID) async throws {
-        struct Empty: Encodable {}
-        struct ApplyResponse: Decodable { let categories: [OnboardingTemplateCategory]? }
-        let response: ApplyResponse = try await apiClient.request(.applyOnboardingTemplate(templateId), body: Empty())
-        if let cats = response.categories {
-            appliedCategories = cats
+    private func applyTemplate(_ templateId: String) async throws {
+        struct ApplyRequest: Encodable { let templateId: String }
+        let cats: [AppliedCategory] = try await apiClient.request(.applyOnboardingTemplate, body: ApplyRequest(templateId: templateId))
+        // Store the template categories for the summary
+        if let template = selectedTemplate {
+            appliedCategories = template.categories
         }
     }
+
+    private struct AppliedCategory: Decodable { let id: UUID; let name: String }
 
     private func finish() async throws {
         struct Empty: Encodable {}
