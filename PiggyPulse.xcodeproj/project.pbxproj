@@ -105,6 +105,8 @@
 		AA000016000000000000AA16 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015000000000000AA15 /* BiometricHelper.swift */; };
 		AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017000000000000AA17 /* BiometricPreferenceTests.swift */; };
 		AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
+		AA00001C000000000000AA1C /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D000000000000AA1D /* AuthHeaderView.swift */; };
+		AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F000000000000AA1F /* PasswordStrengthBar.swift */; };
 		AD3A592A0E854B3603816430 /* WidgetDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		C78A19A1430B7B62516243CC /* AddSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */; };
@@ -116,6 +118,8 @@
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
 		F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
+		AA100001000000000000BB01 /* WelcomeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002000000000000BB02 /* WelcomeStepView.swift */; };
+		AA100003000000000000BB03 /* CurrencyStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004000000000000BB04 /* CurrencyStepView.swift */; };
 		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
 		FEA03AD1124CC45545E6885C /* RecentTransactionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */; };
 		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
@@ -206,6 +210,8 @@
 		11CE78C71FBEC1E705C286DD /* SummaryStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SummaryStepView.swift; sourceTree = "<group>"; };
 		11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		125697D5718FA1710F492888 /* CategoriesStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CategoriesStepView.swift; sourceTree = "<group>"; };
+		AA100002000000000000BB02 /* WelcomeStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeStepView.swift; sourceTree = "<group>"; };
+		AA100004000000000000BB04 /* CurrencyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyStepView.swift; sourceTree = "<group>"; };
 		17E53F608D1028A3D810AE21 /* CurrentPeriodCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrentPeriodCard.swift; sourceTree = "<group>"; };
 		18EA6862EBC54B090D8654EB /* PeriodStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PeriodStepView.swift; sourceTree = "<group>"; };
 		1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddSubscriptionSheet.swift; path = Features/Subscriptions/Views/AddSubscriptionSheet.swift; sourceTree = "<group>"; };
@@ -240,6 +246,8 @@
 		AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
 		AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
 		AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
+		AA00001D000000000000AA1D /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
+		AA00001F000000000000AA1F /* PasswordStrengthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrengthBar.swift; sourceTree = "<group>"; };
 		C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Repository.swift; sourceTree = "<group>"; };
 		C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionCard.swift; sourceTree = "<group>"; };
 		CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionRepository.swift; path = Core/Repositories/SubscriptionRepository.swift; sourceTree = "<group>"; };
@@ -339,6 +347,8 @@
 		02218DF92F589B1E00E8DCEF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AA00001D000000000000AA1D /* AuthHeaderView.swift */,
+				AA00001F000000000000AA1F /* PasswordStrengthBar.swift */,
 				02F038C12F5984EF008DD1E7 /* ForgotPasswordView.swift */,
 				02F038BF2F5984DC008DD1E7 /* RegisterView.swift */,
 				02218DFA2F589B2700E8DCEF /* LoginView.swift */,
@@ -752,6 +762,8 @@
 		5679AC035784E8E0C31C04C8 /* Steps */ = {
 			isa = PBXGroup;
 			children = (
+				AA100002000000000000BB02 /* WelcomeStepView.swift */,
+				AA100004000000000000BB04 /* CurrencyStepView.swift */,
 				18EA6862EBC54B090D8654EB /* PeriodStepView.swift */,
 				009EF4876FF657BCAD295807 /* AccountsStepView.swift */,
 				125697D5718FA1710F492888 /* CategoriesStepView.swift */,
@@ -966,6 +978,8 @@
 				02F038A52F589EC5008DD1E7 /* PiggyPulseApp.swift in Sources */,
 				02F038A62F589EC5008DD1E7 /* LoginView.swift in Sources */,
 				AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */,
+				AA00001C000000000000AA1C /* AuthHeaderView.swift in Sources */,
+				AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */,
 				02F038DA2F59A15D008DD1E7 /* TransactionRepository.swift in Sources */,
 				02F038D82F59A129008DD1E7 /* Transaction.swift in Sources */,
 				02F038A72F589EC5008DD1E7 /* MainTabView.swift in Sources */,
@@ -993,6 +1007,8 @@
 				6F27D7755ABDFAC055F0A784 /* OnboardingViewModel.swift in Sources */,
 				D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */,
 				6AF95D57CBA8DB704BDCC35B /* OnboardingStepIndicator.swift in Sources */,
+				AA100001000000000000BB01 /* WelcomeStepView.swift in Sources */,
+				AA100003000000000000BB03 /* CurrencyStepView.swift in Sources */,
 				AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */,
 				7352FA8DE4D850AB38450768 /* AccountsStepView.swift in Sources */,
 				FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */,
@@ -1179,8 +1195,10 @@
 		020853B32F5898F9004E2FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-sunrise AppIcon-sage_stone AppIcon-deep_ocean AppIcon-warm_rose AppIcon-moonlit";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1220,8 +1238,10 @@
 		020853B42F5898F9004E2FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-sunrise AppIcon-sage_stone AppIcon-deep_ocean AppIcon-warm_rose AppIcon-moonlit";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

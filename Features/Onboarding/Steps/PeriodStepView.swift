@@ -2,92 +2,62 @@ import SwiftUI
 
 struct PeriodStepView: View {
     @ObservedObject var vm: OnboardingViewModel
-@Environment(\.colorScheme) private var colorScheme
-@Environment(\.themeManager) private var theme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
-                // Description
+                // Title
+                Text(String(localized: "periods.title"))
+                    .font(.ppTitle3).fontWeight(.bold).foregroundColor(.ppTextPrimary)
+
+                // Descriptions
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text(String(localized: "onboarding.periodsIntro"))
+                    Text(String(localized: "periods.description1"))
                         .font(.ppBody).foregroundColor(.ppTextPrimary)
-                    Text(String(localized: "onboarding.periodsCustomizeHint"))
-                        .font(.ppCallout).foregroundColor(.ppTextSecondary)
+                    Text(String(localized: "periods.description2"))
+                        .font(.ppBody).foregroundColor(.ppTextSecondary)
                 }
 
-                // Customize toggle
+                // Default config box
                 VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    Text(String(localized: "onboarding.configuration"))
-                        .font(.ppTitle3).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "periods.defaultLabel"))
+                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextSecondary)
 
-                    Picker("", selection: $vm.customize) {
-                        Text("Use default").tag(false)
-                        Text("Customize").tag(true)
-                    }
-                    .pickerStyle(.segmented)
-                }
-
-                // Custom fields
-                if vm.customize {
-                    VStack(spacing: PPSpacing.md) {
-                        NumberStepperView(
-                            label: "Start Day",
-                            description: "The day of the month your period begins. Capped at 28 so it exists every month.",
-                            value: $vm.startDay
-                        )
-                        NumberStepperView(
-                            label: "Period Length",
-                            description: "How many months each period spans. Most people use 1.",
-                            value: $vm.periodLength
-                        )
-                        NumberStepperView(
-                            label: "Periods to Prepare",
-                            description: "How many future periods to create in advance.",
-                            value: $vm.periodsToPrepare
-                        )
-
-                        // Weekend adjustments
-                        VStack(alignment: .leading, spacing: PPSpacing.md) {
-                            Text(String(localized: "onboarding.weekendDays"))
-                                .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                            Text("If the period start date falls on a weekend, PiggyPulse can shift it to the nearest weekday. This only affects when a period is recorded as starting — it does not change how long the period lasts.")
-                                .font(.ppCaption).foregroundColor(.ppTextSecondary)
-
-                            HStack {
-                                Text(String(localized: "onboarding.ifSaturday"))
-                                    .font(.ppCallout).foregroundColor(.ppTextPrimary)
-                                Spacer()
-                                Picker("Saturday", selection: $vm.saturdayBehavior) {
-                                    ForEach(WeekendBehavior.allCases, id: \.self) { opt in
-                                        Text(opt.label).tag(opt)
-                                    }
-                                }
-                                .pickerStyle(.menu)
-                                .tint(theme.primary)
-                            }
-
-                            HStack {
-                                Text(String(localized: "onboarding.ifSunday"))
-                                    .font(.ppCallout).foregroundColor(.ppTextPrimary)
-                                Spacer()
-                                Picker("Sunday", selection: $vm.sundayBehavior) {
-                                    ForEach(WeekendBehavior.allCases, id: \.self) { opt in
-                                        Text(opt.label).tag(opt)
-                                    }
-                                }
-                                .pickerStyle(.menu)
-                                .tint(theme.primary)
-                            }
+                    VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                        HStack(spacing: PPSpacing.sm) {
+                            Image(systemName: "calendar")
+                                .foregroundColor(theme.primary)
+                                .font(.ppCallout)
+                            Text(String(localized: "periods.defaultMonthly"))
+                                .font(.ppCallout).foregroundColor(.ppTextPrimary)
                         }
-                        .padding(PPSpacing.lg)
-                        .background(Color.ppCard)
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        HStack(spacing: PPSpacing.sm) {
+                            Image(systemName: "clock")
+                                .foregroundColor(theme.primary)
+                                .font(.ppCallout)
+                            Text(String(localized: "periods.defaultAhead"))
+                                .font(.ppCallout).foregroundColor(.ppTextPrimary)
+                        }
                     }
-                    .animation(.easeInOut(duration: 0.2), value: vm.customize)
+                    .padding(PPSpacing.lg)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(theme.primary.opacity(0.06))
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(theme.primary.opacity(0.2), lineWidth: 1))
                 }
+
+                // Hint
+                HStack(alignment: .top, spacing: PPSpacing.sm) {
+                    Image(systemName: "info.circle").foregroundColor(.ppTextTertiary).font(.ppCaption)
+                    Text(String(localized: "periods.changeHint"))
+                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                }
+                .padding(PPSpacing.md)
+                .background(Color.ppSurface)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
             }
             .padding(PPSpacing.xl)
         }

@@ -6,7 +6,17 @@ struct RegisterView: View {
     @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = AuthViewModel(appState: AppState())
     @State private var viewModelReady = false
+    @State private var agreedToTerms = false
     @Environment(\.dismiss) private var dismiss
+
+    private var passwordScore: Int {
+        PasswordStrength.score(for: viewModel.registerPassword)
+    }
+
+    private var passwordsDoNotMatch: Bool {
+        !viewModel.registerConfirmPassword.isEmpty &&
+        viewModel.registerPassword != viewModel.registerConfirmPassword
+    }
 
     var body: some View {
         ZStack {
@@ -15,32 +25,20 @@ struct RegisterView: View {
 
             ScrollView {
                 VStack(spacing: 0) {
-                    Spacer()
-                        .frame(height: 60)
+                    AuthHeaderView(tagline: String(localized: "auth.tagline.register"))
 
                     VStack(spacing: PPSpacing.xxl) {
-                        // Logo + tagline
-                        VStack(spacing: PPSpacing.sm) {
-                            Image("piggy-logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 44)
-
-                            Text("PiggyPulse")
-                                .font(.ppTitle)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [theme.tertiary, theme.primary],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                        }
-
                         VStack(spacing: PPSpacing.xl) {
-                            Text(String(localized: "auth.createAccount"))
-                                .font(.ppTitle3)
-                                .foregroundColor(.ppTextPrimary)
+                            VStack(spacing: PPSpacing.xs) {
+                                Text(String(localized: "auth.register.title"))
+                                    .font(.ppTitle3)
+                                    .foregroundColor(.ppTextPrimary)
+
+                                Text(String(localized: "auth.register.subtitle"))
+                                    .font(.ppCallout)
+                                    .foregroundColor(.ppTextSecondary)
+                                    .multilineTextAlignment(.center)
+                            }
 
                             if let error = viewModel.errorMessage {
                                 Text(error)
@@ -51,6 +49,7 @@ struct RegisterView: View {
                             }
 
                             VStack(spacing: PPSpacing.lg) {
+                                // Full name
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
                                         Text(String(localized: "field.fullName")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
@@ -64,6 +63,7 @@ struct RegisterView: View {
                                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                                 }
 
+                                // Email
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
                                         Text(String(localized: "field.email")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
@@ -80,6 +80,7 @@ struct RegisterView: View {
                                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                                 }
 
+                                // Password + strength bar
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
                                         Text(String(localized: "field.password")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
@@ -91,8 +92,13 @@ struct RegisterView: View {
                                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                         .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+
+                                    if !viewModel.registerPassword.isEmpty {
+                                        PasswordStrengthBar(password: viewModel.registerPassword)
+                                    }
                                 }
 
+                                // Confirm password
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     HStack(spacing: 2) {
                                         Text(String(localized: "field.confirmPassword")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
@@ -103,9 +109,35 @@ struct RegisterView: View {
                                         .font(.ppBody).foregroundColor(.ppTextPrimary)
                                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                         .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(
+                                            passwordsDoNotMatch ? Color.ppDestructive : Color.ppBorder,
+                                            lineWidth: 1
+                                        ))
+
+                                    if passwordsDoNotMatch {
+                                        Text(String(localized: "auth.register.passwordsDoNotMatch"))
+                                            .font(.ppCaption)
+                                            .foregroundColor(.ppDestructive)
+                                    }
                                 }
                             }
+
+                            // Terms checkbox
+                            Button {
+                                agreedToTerms.toggle()
+                            } label: {
+                                HStack(alignment: .top, spacing: PPSpacing.sm) {
+                                    Image(systemName: agreedToTerms ? "checkmark.square.fill" : "square")
+                                        .foregroundColor(agreedToTerms ? theme.primary : .ppTextSecondary)
+                                        .font(.system(size: 20))
+
+                                    Text(String(localized: "auth.register.agreeToTerms"))
+                                        .font(.ppCallout)
+                                        .foregroundColor(.ppTextSecondary)
+                                        .multilineTextAlignment(.leading)
+                                }
+                            }
+                            .buttonStyle(.plain)
 
                             Button {
                                 Task { await viewModel.register() }
@@ -125,7 +157,7 @@ struct RegisterView: View {
                             .buttonStyle(.borderedProminent)
                             .tint(theme.primary)
                             .buttonBorderShape(.capsule)
-                            .disabled(viewModel.isRegisterDisabled)
+                            .disabled(viewModel.isRegisterDisabled || !agreedToTerms || passwordsDoNotMatch)
 
                             HStack(spacing: 4) {
                                 Text(String(localized: "auth.alreadyHaveAccount"))
@@ -147,8 +179,10 @@ struct RegisterView: View {
                             .stroke(Color.ppBorder, lineWidth: 1)
                     )
                     .padding(.horizontal, PPSpacing.lg)
+                    .padding(.top, PPSpacing.xl)
 
                     Spacer()
+                        .frame(height: PPSpacing.xxl)
                 }
             }
         }

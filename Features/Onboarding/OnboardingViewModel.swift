@@ -1,49 +1,70 @@
 import SwiftUI
+import TipKit
 internal import Combine
 
 final class OnboardingViewModel: ObservableObject {
 
     // MARK: - Navigation
 
-    @Published var currentStep: OnboardingStep = .period
+    @Published var currentStep: OnboardingStep = .welcome
     @Published var isLoading = true
     @Published var isSaving = false
     @Published var isComplete = false
     @Published var errorMessage: String?
 
-    // MARK: - Step 1: Period
-
-    @Published var customize = false
-    @Published var startDay = 1
-    @Published var periodLength = 1
-    @Published var periodsToPrepare = 3
-    @Published var saturdayBehavior: WeekendBehavior = .keep
-    @Published var sundayBehavior: WeekendBehavior = .keep
-
-    // MARK: - Step 2: Accounts
+    // MARK: - Step 1: Currency
 
     @Published var currencies: [Currency] = []
     @Published var selectedCurrencyId: UUID?
+    @Published var currencySearch: String = ""
+
+    var filteredCurrencies: [Currency] {
+        let q = currencySearch.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !q.isEmpty else { return currencies }
+        return currencies.filter {
+            $0.name.lowercased().contains(q) ||
+            $0.code.lowercased().contains(q) ||
+            $0.symbol.lowercased().contains(q)
+        }
+    }
+
+    var selectedCurrency: Currency? {
+        currencies.first { $0.id == selectedCurrencyId }
+    }
+
+    // MARK: - Step 2: Periods (informational only — defaults used)
+    // No editable state; defaults are always used on save.
+
+    // MARK: - Step 3: Accounts
+
     @Published var accounts: [DraftAccount] = [DraftAccount()]
 
-    // MARK: - Step 3: Categories
+    // MARK: - Step 4: Categories (API templates)
 
-    @Published var selectedTemplate: CategoryTemplate = .none
-    @Published var categories: [DraftCategory] = []
+    @Published var templates: [OnboardingTemplate] = []
+    @Published var selectedTemplateId: String?
+    @Published var appliedCategories: [OnboardingTemplateCategory] = []
+    @Published var isLoadingTemplates = false
+
+    var selectedTemplate: OnboardingTemplate? {
+        templates.first { $0.id == selectedTemplateId }
+    }
 
     // MARK: - Validation
 
     var canAdvance: Bool {
         switch currentStep {
+        case .welcome:
+            return true
+        case .currency:
+            return selectedCurrencyId != nil
         case .period:
             return true
         case .accounts:
-            return selectedCurrencyId != nil
-                && !accounts.isEmpty
-                && accounts.allSatisfy(\.isValid)
+            // Skippable: valid if empty OR all entries are valid
+            return accounts.isEmpty || accounts.allSatisfy(\.isValid)
         case .categories:
-            return categories.contains(where: { $0.categoryType == "Incoming" })
-                && categories.contains(where: { $0.categoryType == "Outgoing" })
+            return true
         case .summary:
             return true
         }
@@ -59,23 +80,23 @@ final class OnboardingViewModel: ObservableObject {
         self.apiClient = apiClient
     }
 
-    // MARK: - Load status on appear
+    // MARK: - Load on appear
 
     func loadStatus() async {
         isLoading = true
         defer { isLoading = false }
+
+        // Always load currencies on init
+        await loadCurrencies()
+
         do {
             let response: OnboardingStatusResponse = try await apiClient.request(.onboardingStatus)
             if let stepStr = response.currentStep,
                let step = OnboardingStep(rawValue: stepStr) {
                 currentStep = step
-                // Mark all steps before the current one as already saved so we
-                // don't re-POST data that the server already has.
                 for s in OnboardingStep.allCases where s.index < step.index {
                     savedSteps.insert(s)
                 }
-                // Load existing data for steps already completed so the UI
-                // reflects what's on the server and Back/Continue works cleanly.
                 if step.index >= OnboardingStep.accounts.index {
                     await loadExistingAccounts()
                 }
@@ -83,92 +104,95 @@ final class OnboardingViewModel: ObservableObject {
                     await loadExistingCategories()
                 }
             } else {
-                currentStep = .period
+                currentStep = .welcome
             }
         } catch {
-            currentStep = .period
+            currentStep = .welcome
+        }
+    }
+
+    func loadCurrencies() async {
+        guard currencies.isEmpty else { return }
+        do {
+            let list: [Currency] = try await apiClient.request(.currencies)
+            await MainActor.run {
+                currencies = list
+                if selectedCurrencyId == nil {
+                    selectedCurrencyId = currencies.first?.id
+                }
+            }
+        } catch {
+            // Non-fatal
+        }
+    }
+
+    func loadTemplates() async {
+        guard templates.isEmpty else { return }
+        isLoadingTemplates = true
+        defer { isLoadingTemplates = false }
+        do {
+            let list: [OnboardingTemplate] = try await apiClient.request(.onboardingTemplates)
+            templates = list
+        } catch {
+            // Non-fatal — user can still skip
         }
     }
 
     private func loadExistingAccounts() async {
         do {
-            // Load currencies first so selectedCurrencyId can be restored
-            if currencies.isEmpty {
-                let currencyList: [Currency] = try await apiClient.request(.currencies)
-                currencies = currencyList
-            }
-            // Restore selected currency from profile
-            struct ProfileResponse: Decodable { let defaultCurrencyId: UUID? }
+            struct ProfileResponse: Decodable { let currency: String }
             if let profile = try? await apiClient.request(.profile) as ProfileResponse,
-               let currencyId = profile.defaultCurrencyId {
-                selectedCurrencyId = currencyId
+               let match = currencies.first(where: { $0.code == profile.currency }) {
+                selectedCurrencyId = match.id
             } else {
                 selectedCurrencyId = currencies.first?.id
             }
 
-            // /accounts returns paginated response in v2
-            struct AccountMgmt: Decodable {
+            // AccountResponse uses Serde tagged enum: {"type": "Checking", "name": ..., "status": ...}
+            // The "type" field acts as both the discriminator and the account type.
+            struct AccountItem: Decodable {
                 let name: String; let type: String
-                let currentBalance: Int64; let spendLimit: Int32?; let status: String
+                let initialBalance: Int64; let spendLimit: Int64?
+                let status: String
+                enum CodingKeys: String, CodingKey { case name, type, initialBalance, spendLimit, status }
             }
-            struct AccountMgmtResponse: Decodable {
-                let data: [AccountMgmt]
+            struct AccountListResponse: Decodable {
+                let data: [AccountItem]
             }
-            let response: AccountMgmtResponse = try await apiClient.request(.accounts)
-            let active = response.data.filter { $0.status == "active" }
+            let response: AccountListResponse = try await apiClient.request(.accounts)
+            let active = response.data.filter { $0.status.lowercased() == "active" }
             if !active.isEmpty {
                 accounts = active.map { item in
                     var draft = DraftAccount()
                     draft.name = item.name
                     draft.accountType = item.type
-                    draft.balanceText = String(format: "%.2f", Double(item.currentBalance) / 100)
-                    if let limit = item.spendLimit {
+                    draft.balanceText = String(format: "%.2f", Double(item.initialBalance) / 100)
+                    if let limit = item.spendLimit, limit > 0 {
                         draft.spendLimitText = String(format: "%.2f", Double(limit) / 100)
                     }
                     return draft
                 }
                 savedSteps.insert(.accounts)
             }
-        } catch {
-            errorMessage = "Could not load existing accounts: \(error)"
-        }
+        } catch { /* non-fatal — user can re-enter accounts */ }
     }
 
     private func loadExistingCategories() async {
         do {
-            // /categories/management returns grouped arrays with no period_id required
             let response: CategoriesManagementResponse = try await apiClient.request(.categoriesManagement)
             let active = (response.incoming + response.outgoing).filter { !$0.isArchived }
             if !active.isEmpty {
-                categories = active.map { item in
-                    // Map v2 types back to onboarding types
-                    let onboardingType: String
-                    switch item.type.lowercased() {
-                    case "income": onboardingType = "Incoming"
-                    case "expense": onboardingType = "Outgoing"
-                    default: onboardingType = item.type
-                    }
-                    return DraftCategory(name: item.name, icon: item.icon, categoryType: onboardingType)
+                appliedCategories = active.map { item in
+                    OnboardingTemplateCategory(
+                        name: item.name,
+                        icon: item.icon,
+                        type: item.type,
+                        behavior: item.behavior
+                    )
                 }
-                selectedTemplate = .custom
                 savedSteps.insert(.categories)
             }
         } catch { /* non-fatal */ }
-    }
-
-    // MARK: - Load currencies (called by AccountsStep on appear)
-
-    func loadCurrencies() async {
-        guard currencies.isEmpty else { return }
-        do {
-            let list: [Currency] = try await apiClient.request(.currencies)
-            currencies = list
-            if selectedCurrencyId == nil {
-                selectedCurrencyId = currencies.first?.id
-            }
-        } catch {
-            // Non-fatal: user can retry by going back/forward
-        }
     }
 
     // MARK: - Navigation
@@ -186,16 +210,26 @@ final class OnboardingViewModel: ObservableObject {
 
         do {
             switch currentStep {
+            case .welcome:
+                break  // No save needed
+            case .currency:
+                if !savedSteps.contains(.currency) {
+                    try await saveCurrency()
+                    savedSteps.insert(.currency)
+                }
             case .period:
-                try await savePeriod()     // PUT — always safe to re-send
+                if !savedSteps.contains(.period) {
+                    try await savePeriod()
+                    savedSteps.insert(.period)
+                }
             case .accounts:
-                if !savedSteps.contains(.accounts) {
+                if !savedSteps.contains(.accounts) && !accounts.isEmpty {
                     try await saveAccounts()
                     savedSteps.insert(.accounts)
                 }
             case .categories:
-                if !savedSteps.contains(.categories) {
-                    try await saveCategories()
+                if !savedSteps.contains(.categories), let templateId = selectedTemplateId {
+                    try await applyTemplate(templateId)
                     savedSteps.insert(.categories)
                 }
             case .summary:
@@ -215,7 +249,30 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
 
+    func skip() {
+        errorMessage = nil
+        let all = OnboardingStep.allCases
+        if let idx = all.firstIndex(of: currentStep), idx + 1 < all.count {
+            currentStep = all[idx + 1]
+        }
+    }
+
     // MARK: - Step saves
+
+    private func saveCurrency() async throws {
+        guard let currencyId = selectedCurrencyId,
+              let currency = currencies.first(where: { $0.id == currencyId }) else { return }
+        struct ProfileResponse: Decodable { let name: String; let currency: String; let avatar: String }
+        struct ProfileRequest: Encodable {
+            let name: String; let currency: String; let avatar: String
+        }
+        let current: ProfileResponse = try await apiClient.request(.profile)
+        try await apiClient.request(.updateProfile, body: ProfileRequest(
+            name: current.name,
+            currency: currency.code,
+            avatar: current.avatar
+        ))
+    }
 
     private func savePeriod() async throws {
         struct ScheduleConfig: Encodable {
@@ -232,33 +289,18 @@ final class OnboardingViewModel: ObservableObject {
         let schedule = ScheduleConfig(
             scheduleType: "automatic",
             recurrenceMethod: "dayOfMonth",
-            startDayOfTheMonth: customize ? startDay : 1,
-            periodDuration: customize ? periodLength : 1,
+            startDayOfTheMonth: 1,
+            periodDuration: 1,
             durationUnit: "months",
-            saturdayPolicy: customize ? saturdayBehavior.rawValue : WeekendBehavior.keep.rawValue,
-            sundayPolicy: customize ? sundayBehavior.rawValue : WeekendBehavior.keep.rawValue,
+            saturdayPolicy: WeekendBehavior.keep.rawValue,
+            sundayPolicy: WeekendBehavior.keep.rawValue,
             namePattern: "{MONTH} {YEAR}",
-            generateAhead: customize ? periodsToPrepare : 3
+            generateAhead: 3
         )
         try await apiClient.request(.createSchedule, body: schedule)
     }
 
     private func saveAccounts() async throws {
-        // Set default currency before creating accounts (required by backend).
-        // Must include name + timezone since PUT /settings/profile requires them.
-        if let currencyId = selectedCurrencyId {
-            struct ProfileResponse: Decodable { let name: String; let timezone: String }
-            struct ProfileRequest: Encodable {
-                let name: String; let timezone: String; let defaultCurrencyId: UUID
-            }
-            let current: ProfileResponse = try await apiClient.request(.profile)
-            try await apiClient.request(.updateProfile, body: ProfileRequest(
-                name: current.name,
-                timezone: current.timezone,
-                defaultCurrencyId: currencyId
-            ))
-        }
-
         struct AccountRequest: Encodable {
             let name: String; let color: String
             let type: String; let initialBalance: Int64; let spendLimit: Int32?
@@ -277,48 +319,24 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
 
-    private func saveCategories() async throws {
-        struct CategoryRequest: Encodable {
-            let name: String; let icon: String
-            let color: String; let type: String
-        }
-        for category in categories {
-            // Map onboarding types to v2 types
-            let v2Type: String
-            switch category.categoryType.lowercased() {
-            case "incoming": v2Type = "income"
-            case "outgoing": v2Type = "expense"
-            default: v2Type = category.categoryType.lowercased()
-            }
-            let req = CategoryRequest(
-                name: category.name,
-                icon: category.icon,
-                color: "#228be6",
-                type: v2Type
-            )
-            try await apiClient.request(.createCategory, body: req)
+    private func applyTemplate(_ templateId: String) async throws {
+        struct ApplyRequest: Encodable { let templateId: String }
+        let cats: [AppliedCategory] = try await apiClient.request(.applyOnboardingTemplate, body: ApplyRequest(templateId: templateId))
+        // Store the template categories for the summary
+        if let template = selectedTemplate {
+            appliedCategories = template.categories
         }
     }
+
+    private struct AppliedCategory: Decodable { let id: UUID; let name: String }
 
     private func finish() async throws {
         struct Empty: Encodable {}
         try await apiClient.request(.completeOnboarding, body: Empty())
+        // Reset TipKit so new users see all tips fresh
+        try? Tips.resetDatastore()
+        try? Tips.configure([.displayFrequency(.immediate)])
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         isComplete = true
-    }
-
-    // MARK: - Category helpers
-
-    func applyTemplate(_ template: CategoryTemplate) {
-        selectedTemplate = template
-        categories = template.categories
-    }
-
-    func addCategory(_ category: DraftCategory) {
-        categories.append(category)
-    }
-
-    func removeCategory(at offsets: IndexSet) {
-        categories.remove(atOffsets: offsets)
     }
 }

@@ -201,6 +201,8 @@ extension APIEndpoint {
 extension APIEndpoint {
     static let onboardingStatus = APIEndpoint(path: "/onboarding/status", method: .get, requiresAuth: true)
     static let completeOnboarding = APIEndpoint(path: "/onboarding/complete", method: .post, requiresAuth: true)
+    static let onboardingTemplates = APIEndpoint(path: "/onboarding/category-templates", method: .get, requiresAuth: true)
+    static let applyOnboardingTemplate = APIEndpoint(path: "/onboarding/apply-template", method: .post, requiresAuth: true)
 }
 
 // MARK: - Category Targets

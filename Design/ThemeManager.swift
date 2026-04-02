@@ -13,6 +13,7 @@ final class ThemeManager {
     var colorTheme: ColorTheme {
         didSet {
             UserDefaults.standard.set(colorTheme.rawValue, forKey: Self.themeKey)
+            updateAppIcon()
         }
     }
 
@@ -52,6 +53,13 @@ final class ThemeManager {
 
         let storedMode = UserDefaults.standard.string(forKey: Self.modeKey) ?? AppearanceMode.system.rawValue
         self.appearanceMode = AppearanceMode(rawValue: storedMode) ?? .system
+    }
+    // MARK: - App Icon
+
+    func updateAppIcon() {
+        let iconName = colorTheme.alternateAppIconName
+        guard UIApplication.shared.alternateIconName != iconName else { return }
+        UIApplication.shared.setAlternateIconName(iconName)
     }
 }
 

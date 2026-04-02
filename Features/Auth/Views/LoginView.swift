@@ -15,33 +15,10 @@ struct LoginView: View {
 
             ScrollView {
                 VStack(spacing: 0) {
-                    Spacer()
-                        .frame(height: 60)
+                    AuthHeaderView(tagline: String(localized: "auth.tagline.login"))
 
                     // Card
                     VStack(spacing: PPSpacing.xxl) {
-                        // Logo + tagline
-                        VStack(spacing: PPSpacing.sm) {
-                            Image("piggy-logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 44)
-
-                            Text("PiggyPulse")
-                                .font(.ppTitle)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [theme.tertiary, theme.primary],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-
-                            Text(String(localized: "auth.tagline"))
-                                .font(.ppCallout)
-                                .foregroundColor(.ppTextSecondary)
-                        }
-
                         if viewModel.needs2FA {
                             twoFactorContent
                         } else {
@@ -56,8 +33,10 @@ struct LoginView: View {
                             .stroke(Color.ppBorder, lineWidth: 1)
                     )
                     .padding(.horizontal, PPSpacing.lg)
+                    .padding(.top, PPSpacing.xl)
 
                     Spacer()
+                        .frame(height: PPSpacing.xxl)
                 }
             }
         }
@@ -74,9 +53,16 @@ struct LoginView: View {
 
     private var loginContent: some View {
         VStack(spacing: PPSpacing.xl) {
-            Text(String(localized: "auth.welcomeBack"))
-                .font(.ppTitle3)
-                .foregroundColor(.ppTextPrimary)
+            VStack(spacing: PPSpacing.xs) {
+                Text(String(localized: "auth.login.title"))
+                    .font(.ppTitle3)
+                    .foregroundColor(.ppTextPrimary)
+
+                Text(String(localized: "auth.login.subtitle"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                    .multilineTextAlignment(.center)
+            }
 
             if let error = viewModel.errorMessage {
                 Text(error)
@@ -138,7 +124,7 @@ struct LoginView: View {
             .disabled(viewModel.isLoginDisabled)
 
             VStack(spacing: PPSpacing.md) {
-                NavigationLink("Forgot password?") {
+                NavigationLink(String(localized: "auth.forgotPassword")) {
                     ForgotPasswordView()
                         .environmentObject(appState)
                 }
@@ -149,7 +135,7 @@ struct LoginView: View {
                     Text(String(localized: "auth.noAccount"))
                         .font(.ppCallout)
                         .foregroundColor(.ppTextSecondary)
-                    NavigationLink("Sign up") {
+                    NavigationLink(String(localized: "button.signUp")) {
                         RegisterView()
                             .environmentObject(appState)
                     }
@@ -164,16 +150,7 @@ struct LoginView: View {
 
     private var twoFactorContent: some View {
         VStack(spacing: PPSpacing.xl) {
-            VStack(spacing: PPSpacing.sm) {
-                Text(String(localized: "auth.twoFactor"))
-                    .font(.ppTitle3)
-                    .foregroundColor(.ppTextPrimary)
-
-                Text(String(localized: "auth.twoFactorDesc"))
-                    .font(.ppCallout)
-                    .foregroundColor(.ppTextSecondary)
-                    .multilineTextAlignment(.center)
-            }
+            twoFactorHeader
 
             if let error = viewModel.errorMessage {
                 Text(error)
@@ -183,18 +160,10 @@ struct LoginView: View {
                     .padding(.horizontal)
             }
 
-            VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                HStack(spacing: 2) {
-                    Text(String(localized: "field.code")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                    Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
-                }
-                TextField("123456", text: $viewModel.twoFactorCode)
-                    .keyboardType(.numberPad)
-                    .textContentType(.oneTimeCode)
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
-                    .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
-                    .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                    .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+            if viewModel.twoFactorUseRecovery {
+                recoveryCodeField
+            } else {
+                authenticatorCodeField
             }
 
             Button {
@@ -217,13 +186,83 @@ struct LoginView: View {
             .buttonBorderShape(.capsule)
             .disabled(viewModel.is2FADisabled)
 
+            Button {
+                viewModel.twoFactorUseRecovery.toggle()
+                viewModel.twoFactorCode = ""
+                viewModel.errorMessage = nil
+            } label: {
+                Text(viewModel.twoFactorUseRecovery
+                     ? String(localized: "auth.twoFactor.useAuthenticator")
+                     : String(localized: "auth.twoFactor.useRecoveryCode"))
+                    .font(.ppCallout)
+                    .foregroundColor(theme.primary)
+            }
+
             Button(String(localized: "button.backToLogin")) {
                 viewModel.needs2FA = false
                 viewModel.twoFactorCode = ""
+                viewModel.twoFactorUseRecovery = false
                 viewModel.errorMessage = nil
             }
             .font(.ppCallout)
-            .foregroundColor(theme.primary)
+            .foregroundColor(.ppTextSecondary)
+        }
+    }
+
+    private var twoFactorHeader: some View {
+        VStack(spacing: PPSpacing.sm) {
+            if viewModel.twoFactorUseRecovery {
+                Text(String(localized: "auth.twoFactor.recoveryTitle"))
+                    .font(.ppTitle3)
+                    .foregroundColor(.ppTextPrimary)
+
+                Text(String(localized: "auth.twoFactor.recoveryDesc"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                    .multilineTextAlignment(.center)
+            } else {
+                Text(String(localized: "auth.twoFactor"))
+                    .font(.ppTitle3)
+                    .foregroundColor(.ppTextPrimary)
+
+                Text(String(localized: "auth.twoFactorDesc"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+    }
+
+    private var authenticatorCodeField: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            HStack(spacing: 2) {
+                Text(String(localized: "field.code")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+            }
+            TextField("123456", text: $viewModel.twoFactorCode)
+                .keyboardType(.numberPad)
+                .textContentType(.oneTimeCode)
+                .font(.ppBody).foregroundColor(.ppTextPrimary)
+                .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+        }
+    }
+
+    private var recoveryCodeField: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            HStack(spacing: 2) {
+                Text(String(localized: "field.recoveryCode")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                Text("*").font(.ppCallout).foregroundColor(.ppDestructive)
+            }
+            TextField("xxxxxxxx-xxxx-xxxx", text: $viewModel.twoFactorCode)
+                .keyboardType(.asciiCapable)
+                .autocapitalization(.none)
+                .autocorrectionDisabled()
+                .font(.ppBody).foregroundColor(.ppTextPrimary)
+                .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
+                .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
         }
     }
 }

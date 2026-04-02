@@ -21,6 +21,7 @@ final class AuthViewModel: ObservableObject {
     @Published var needs2FA = false
     @Published var twoFactorToken = ""
     @Published var twoFactorCode = ""
+    @Published var twoFactorUseRecovery = false
 
     // Shared
     @Published var isLoading = false
@@ -48,9 +49,17 @@ final class AuthViewModel: ObservableObject {
     var isRegisterDisabled: Bool {
         registerName.trimmingCharacters(in: .whitespaces).isEmpty ||
         registerEmail.trimmingCharacters(in: .whitespaces).isEmpty ||
+        !isValidEmail(registerEmail) ||
         registerPassword.isEmpty ||
+        PasswordStrength.score(for: registerPassword) < 3 ||
         registerConfirmPassword.isEmpty ||
+        registerPassword != registerConfirmPassword ||
         isLoading
+    }
+
+    private func isValidEmail(_ email: String) -> Bool {
+        let trimmed = email.trimmingCharacters(in: .whitespaces)
+        return trimmed.contains("@") && trimmed.contains(".")
     }
 
     var isForgotDisabled: Bool {
@@ -158,6 +167,13 @@ final class AuthViewModel: ObservableObject {
             let password: String
         }
 
+        // Reuse the same response shape as login — v2 register auto-authenticates
+        struct RegisterResponse: Decodable {
+            let requiresTwoFactor: Bool
+            let user: User?
+            let token: String?
+        }
+
         let request = RegisterRequest(
             name: registerName.trimmingCharacters(in: .whitespaces),
             email: registerEmail.trimmingCharacters(in: .whitespaces).lowercased(),
@@ -165,13 +181,14 @@ final class AuthViewModel: ObservableObject {
         )
 
         do {
-            // Register creates the account — we need to login afterward for Bearer tokens
-            let _: User = try await appState.apiClient.request(.register, body: request)
-            
-            // Auto-login after successful registration
-            email = request.email
-            password = registerPassword
-            await login()
+            let response: RegisterResponse = try await appState.apiClient.request(.register, body: request)
+            guard let token = response.token else {
+                errorMessage = String(localized: "auth.register.errorGeneric")
+                isLoading = false
+                return
+            }
+            appState.tokenManager.setTokens(access: token, refresh: token)
+            await appState.checkAuth()
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
@@ -224,6 +241,7 @@ final class AuthViewModel: ObservableObject {
         needs2FA = false
         twoFactorToken = ""
         twoFactorCode = ""
+        twoFactorUseRecovery = false
         isLoading = false
     }
 }

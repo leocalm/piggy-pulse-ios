@@ -2,79 +2,71 @@ import SwiftUI
 
 struct AccountsStepView: View {
     @ObservedObject var vm: OnboardingViewModel
-@Environment(\.colorScheme) private var colorScheme
-@Environment(\.themeManager) private var theme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
-    private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
+    private let accountTypes = ["Checking", "Savings", "Wallet"]
     private let typeLabels: [String: String] = [
-        "Checking": "Checking", "Savings": "Savings",
-        "CreditCard": "Credit Card", "Wallet": "Wallet", "Allowance": "Allowance"
+        "Checking": "Checking",
+        "Savings": "Savings",
+        "Wallet": "Wallet"
     ]
+
+    private var currencySymbol: String {
+        vm.selectedCurrency?.symbol ?? "$"
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: PPSpacing.xl) {
 
-                Text(String(localized: "onboarding.accountsIntro"))
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
+                // Title
+                Text(String(localized: "accounts.title"))
+                    .font(.ppTitle3).fontWeight(.bold).foregroundColor(.ppTextPrimary)
 
-                // Currency picker
+                // Descriptions
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text(String(localized: "field.currency"))
-                        .font(.ppTitle3).foregroundColor(.ppTextPrimary)
-
-                    if vm.currencies.isEmpty {
-                        ProgressView().frame(maxWidth: .infinity)
-                    } else {
-                        Picker("Currency", selection: $vm.selectedCurrencyId) {
-                            ForEach(vm.currencies) { currency in
-                                Text("\(currency.symbol) \(currency.currency) — \(currency.name)")
-                                    .tag(Optional(currency.id))
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .tint(theme.primary)
-                        .padding(PPSpacing.md)
-                        .background(Color.ppCard)
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
-                    }
+                    Text(String(localized: "accounts.description1"))
+                        .font(.ppBody).foregroundColor(.ppTextPrimary)
+                    Text(String(localized: "accounts.description2"))
+                        .font(.ppBody).foregroundColor(.ppTextSecondary)
                 }
 
                 // Account cards
-                VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    Text(String(localized: "onboarding.accounts"))
-                        .font(.ppTitle3).foregroundColor(.ppTextPrimary)
-
-                    ForEach($vm.accounts) { $account in
-                        AccountCardView(
-                            account: $account,
-                            typeLabels: typeLabels,
-                            accountTypes: accountTypes,
-                            onRemove: { vm.accounts.removeAll { $0.id == account.id } }
-                        )
-                    }
-
-                    if vm.accounts.count < 10 {
-                        Button {
-                            vm.accounts.append(DraftAccount())
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus.circle.fill").foregroundColor(theme.primary)
-                                Text(String(localized: "button.addAccount")).font(.ppCallout).foregroundColor(theme.primary)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(PPSpacing.md)
-                            .background(theme.primary.opacity(0.08))
-                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                if !vm.accounts.isEmpty {
+                    VStack(alignment: .leading, spacing: PPSpacing.md) {
+                        ForEach($vm.accounts) { $account in
+                            AccountCardView(
+                                account: $account,
+                                typeLabels: typeLabels,
+                                accountTypes: accountTypes,
+                                currencySymbol: currencySymbol,
+                                onRemove: { vm.accounts.removeAll { $0.id == account.id } }
+                            )
                         }
+                    }
+                }
+
+                // Add account button
+                if vm.accounts.count < 10 {
+                    Button {
+                        vm.accounts.append(DraftAccount())
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus.circle.fill").foregroundColor(theme.primary)
+                            Text(String(localized: "button.addAccount"))
+                                .font(.ppCallout).foregroundColor(theme.primary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(PPSpacing.md)
+                        .background(theme.primary.opacity(0.08))
+                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                     }
                 }
             }
             .padding(PPSpacing.xl)
         }
-        .task { await vm.loadCurrencies() }
     }
 }
 
@@ -86,6 +78,7 @@ private struct AccountCardView: View {
     @Binding var account: DraftAccount
     let typeLabels: [String: String]
     let accountTypes: [String]
+    let currencySymbol: String
     let onRemove: () -> Void
 
     var body: some View {
@@ -106,7 +99,7 @@ private struct AccountCardView: View {
 
             Divider()
 
-            TextField("Account name", text: $account.name)
+            TextField(String(localized: "field.accountName"), text: $account.name)
                 .font(.ppBody).foregroundColor(.ppTextPrimary)
                 .padding(.horizontal, PPSpacing.md).padding(.vertical, PPSpacing.sm)
                 .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
@@ -126,25 +119,13 @@ private struct AccountCardView: View {
             HStack {
                 Text(String(localized: "field.startingBalance")).font(.ppCallout).foregroundColor(.ppTextSecondary)
                 Spacer()
+                Text(currencySymbol)
+                    .font(.ppCallout).foregroundColor(.ppTextTertiary)
                 TextField("0.00", text: $account.balanceText)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                     .font(.ppBody).foregroundColor(.ppTextPrimary)
-                    .frame(width: 120)
-            }
-
-            if account.showSpendLimit {
-                HStack {
-                    Text(String(localized: "field.spendLimit")).font(.ppCallout).foregroundColor(.ppTextSecondary)
-                    Text("(optional)").font(.ppCaption).foregroundColor(.ppTextTertiary)
-                    Spacer()
-                    TextField("0.00", text: $account.spendLimitText)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                        .font(.ppBody).foregroundColor(.ppTextPrimary)
-                        .frame(width: 120)
-                }
-                .animation(.easeInOut(duration: 0.15), value: account.showSpendLimit)
+                    .frame(width: 110)
             }
         }
         .padding(PPSpacing.lg)

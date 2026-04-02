@@ -29,7 +29,7 @@ struct BiometricLockView: View {
             Color.ppBackground.ignoresSafeArea()
 
             VStack(spacing: PPSpacing.xl) {
-                Image("piggy-coin-logo")
+                Image(theme.colorTheme.coinLogoName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 80)
