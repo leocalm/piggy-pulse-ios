@@ -26,22 +26,23 @@ struct EmojiPicker: View {
                 ForEach(quickPicks, id: \.self) { emoji in
                     emojiCell(emoji)
                 }
+            }
 
-                // "More" button
-                Button {
-                    showEmojiKeyboard = true
-                } label: {
-                    Text("…")
-                        .font(.system(size: 20, weight: .medium))
-                        .foregroundColor(.ppTextSecondary)
-                        .frame(width: 36, height: 36)
-                        .background(Color.ppSurface)
-                        .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: PPRadius.sm)
-                                .stroke(Color.ppBorder, lineWidth: 1)
-                        )
-                }
+            // "More" button — full width below the grid
+            Button {
+                showEmojiKeyboard = true
+            } label: {
+                Text(String(localized: "emoji.more"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, PPSpacing.sm)
+                    .background(Color.ppSurface)
+                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: PPRadius.sm)
+                            .stroke(Color.ppBorder, lineWidth: 1)
+                    )
             }
 
             // Show selected emoji if it's not in the quick picks

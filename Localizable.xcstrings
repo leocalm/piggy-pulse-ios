@@ -15701,6 +15701,22 @@
           }
         }
       }
+    },
+    "emoji.more": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais…"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
