@@ -8467,218 +8467,578 @@
     },
     "welcome.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Welcome to PiggyPulse" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Bem-vindo ao PiggyPulse" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to PiggyPulse"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo ao PiggyPulse"
+          }
+        }
       }
     },
     "welcome.subtitle": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Your financial pulse — calm, clear, and entirely yours." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "O seu pulso financeiro — calmo, claro e inteiramente seu." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your financial pulse — calm, clear, and entirely yours."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O seu pulso financeiro — calmo, claro e inteiramente seu."
+          }
+        }
       }
     },
     "welcome.noJudgment": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No judgment" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Sem julgamentos" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No judgment"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem julgamentos"
+          }
+        }
       }
     },
     "welcome.noJudgmentDesc": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "we don't label spending as good or bad" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "não rotulamos gastos como bons ou maus" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "we don't label spending as good or bad"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "não rotulamos gastos como bons ou maus"
+          }
+        }
       }
     },
     "welcome.justClarity": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Just clarity" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Apenas clareza" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Just clarity"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apenas clareza"
+          }
+        }
       }
     },
     "welcome.justClarityDesc": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "see your data, understand your patterns" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "veja os seus dados, compreenda os seus padrões" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "see your data, understand your patterns"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "veja os seus dados, compreenda os seus padrões"
+          }
+        }
       }
     },
     "welcome.yourRules": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Your rules" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "As suas regras" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your rules"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As suas regras"
+          }
+        }
       }
     },
     "welcome.yourRulesDesc": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "you decide what your numbers mean" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "você decide o que os seus números significam" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "you decide what your numbers mean"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "você decide o que os seus números significam"
+          }
+        }
       }
     },
     "welcome.quote": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "PiggyPulse shows you reality through data. We don't celebrate or criticize — you decide what your numbers mean." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "O PiggyPulse mostra-lhe a realidade através dos dados. Não celebramos nem criticamos — você decide o que os seus números significam." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PiggyPulse shows you reality through data. We don't celebrate or criticize — you decide what your numbers mean."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O PiggyPulse mostra-lhe a realidade através dos dados. Não celebramos nem criticamos — você decide o que os seus números significam."
+          }
+        }
       }
     },
     "welcome.getStarted": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Let's get started" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Vamos começar" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's get started"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos começar"
+          }
+        }
       }
     },
     "currency.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Choose your currency" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Escolha a sua moeda" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose your currency"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha a sua moeda"
+          }
+        }
       }
     },
     "currency.requiredStep": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "This is the only required step." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Este é o único passo obrigatório." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the only required step."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este é o único passo obrigatório."
+          }
+        }
       }
     },
     "currency.description": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "All your accounts and transactions will use this currency." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Todas as suas contas e transações usarão esta moeda." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All your accounts and transactions will use this currency."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todas as suas contas e transações usarão esta moeda."
+          }
+        }
       }
     },
     "currency.searchPlaceholder": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Search currencies..." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pesquisar moedas..." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search currencies..."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pesquisar moedas..."
+          }
+        }
       }
     },
     "currency.multiCurrencyNote": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Currently, PiggyPulse don't support multiple currencies. This feature is coming soon." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Atualmente, o PiggyPulse não suporta múltiplas moedas. Esta funcionalidade estará disponível em breve." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Currently, PiggyPulse don't support multiple currencies. This feature is coming soon."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atualmente, o PiggyPulse não suporta múltiplas moedas. Esta funcionalidade estará disponível em breve."
+          }
+        }
       }
     },
     "periods.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "How PiggyPulse tracks time" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Como o PiggyPulse organiza o tempo" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How PiggyPulse tracks time"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como o PiggyPulse organiza o tempo"
+          }
+        }
       }
     },
     "periods.description1": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Periods are time windows that organize your transactions." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Os períodos organizam as suas transações." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Periods are time windows that organize your transactions."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os períodos organizam as suas transações."
+          }
+        }
       }
     },
     "periods.description2": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Transactions fall into periods based on their date — no manual assignment needed." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "As transações são atribuídas automaticamente." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transactions fall into periods based on their date — no manual assignment needed."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As transações são atribuídas automaticamente."
+          }
+        }
       }
     },
     "periods.defaultLabel": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "We'll set you up with the default:" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Vamos configurar com o padrão:" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll set you up with the default:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos configurar com o padrão:"
+          }
+        }
       }
     },
     "periods.defaultMonthly": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Monthly periods, starting on the 1st" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Períodos mensais, começando no dia 1" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monthly periods, starting on the 1st"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Períodos mensais, começando no dia 1"
+          }
+        }
       }
     },
     "periods.defaultAhead": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "3 periods prepared in advance" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "3 períodos preparados com antecedência" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 periods prepared in advance"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 períodos preparados com antecedência"
+          }
+        }
       }
     },
     "periods.changeHint": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "You can change these settings later in Periods → Schedule." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pode alterar mais tarde em Períodos → Calendário." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can change these settings later in Periods → Schedule."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pode alterar mais tarde em Períodos → Calendário."
+          }
+        }
       }
     },
     "accounts.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Add your accounts" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Adicione as suas contas" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your accounts"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione as suas contas"
+          }
+        }
       }
     },
     "accounts.description1": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Where does your money live? Accounts represent your real accounts, and are not connected to your bank." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Onde está o seu dinheiro? As contas representam as suas contas reais." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where does your money live? Accounts represent your real accounts, and are not connected to your bank."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onde está o seu dinheiro? As contas representam as suas contas reais."
+          }
+        }
       }
     },
     "accounts.description2": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Add as many as you'd like — or skip and add them later." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Adicione quantas quiser — ou avance e adicione mais tarde." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add as many as you'd like — or skip and add them later."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione quantas quiser — ou avance e adicione mais tarde."
+          }
+        }
       }
     },
     "categories.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Set up categories" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Configure categorias" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configure categorias"
+          }
+        }
       }
     },
     "categories.description1": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Categories help you organize your transactions, and set-up targets." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "As categorias ajudam a organizar as suas transações." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories help you organize your transactions, and set-up targets."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As categorias ajudam a organizar as suas transações."
+          }
+        }
       }
     },
     "categories.description2": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Pick a starting template — you can add, remove, or change categories anytime." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Escolha um modelo inicial." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a starting template — you can add, remove, or change categories anytime."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha um modelo inicial."
+          }
+        }
       }
     },
     "categories.colorHint": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Colors auto-assigned by direction + behavior. You can customize categories anytime." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Cores atribuídas automaticamente." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colors auto-assigned by direction + behavior. You can customize categories anytime."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cores atribuídas automaticamente."
+          }
+        }
       }
     },
     "complete.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "You're all set!" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Está tudo pronto!" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're all set!"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Está tudo pronto!"
+          }
+        }
       }
     },
     "complete.subtitle": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Your dashboard is ready. Here's what we configured:" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "O seu painel está pronto." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your dashboard is ready. Here's what we configured:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O seu painel está pronto."
+          }
+        }
       }
     },
     "complete.goToDashboard": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Go to Dashboard" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Ir para o Painel" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go to Dashboard"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ir para o Painel"
+          }
+        }
       }
     },
     "complete.addFirstTransaction": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Add your first transaction" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Adicionar a primeira transação" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first transaction"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar a primeira transação"
+          }
+        }
       }
     },
     "button.skipForNow": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Skip for now" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Ignorar por agora" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip for now"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorar por agora"
+          }
+        }
       }
     },
     "field.accountName": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Account name" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Nome da conta" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account name"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome da conta"
+          }
+        }
       }
     },
     "summary.noCurrency": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No currency selected" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Nenhuma moeda selecionada" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No currency selected"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma moeda selecionada"
+          }
+        }
       }
     },
     "Optional": {
@@ -12450,38 +12810,6 @@
         }
       }
     },
-    "theme.deepOcean": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deep Ocean"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oceano Profundo"
-          }
-        }
-      }
-    },
-    "theme.deepOcean.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Teal + Sand"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verde-azulado + Areia"
-          }
-        }
-      }
-    },
     "theme.moonlit": {
       "localizations": {
         "en": {
@@ -12546,38 +12874,6 @@
         }
       }
     },
-    "theme.sageStone": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sage & Stone"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sálvia e Pedra"
-          }
-        }
-      }
-    },
-    "theme.sageStone.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Green + Sandstone"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verde + Arenito"
-          }
-        }
-      }
-    },
     "theme.sunrise": {
       "localizations": {
         "en": {
@@ -12606,38 +12902,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Azul + Âmbar"
-          }
-        }
-      }
-    },
-    "theme.warmRose": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Warm Rose"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rosa Quente"
-          }
-        }
-      }
-    },
-    "theme.warmRose.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rose + Linen"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rosa + Linho"
           }
         }
       }
@@ -15290,6 +15554,102 @@
           "stringUnit": {
             "state": "translated",
             "value": "Assinatura"
+          }
+        }
+      }
+    },
+    "theme.neon": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Electric Neon"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neon Elétrico"
+          }
+        }
+      }
+    },
+    "theme.neon.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bold and electric — cyan, pink, and lime"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ousado e elétrico — ciano, rosa e lima"
+          }
+        }
+      }
+    },
+    "theme.tropical": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tropical"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tropical"
+          }
+        }
+      }
+    },
+    "theme.tropical.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vibrant and warm — coral, teal, and gold"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vibrante e quente — coral, turquesa e dourado"
+          }
+        }
+      }
+    },
+    "theme.candyPop": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Candy Pop"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Candy Pop"
+          }
+        }
+      }
+    },
+    "theme.candyPop.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playful and bright — pink, blue, and yellow"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Divertido e brilhante — rosa, azul e amarelo"
           }
         }
       }

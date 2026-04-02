@@ -5,9 +5,9 @@ import SwiftUI
 enum ColorTheme: String, CaseIterable, Codable, Identifiable {
     case nebula
     case sunrise
-    case sageStone = "sage_stone"
-    case deepOcean = "deep_ocean"
-    case warmRose = "warm_rose"
+    case neon
+    case tropical
+    case candyPop = "candy_pop"
     case moonlit
 
     var id: String { rawValue }
@@ -16,9 +16,9 @@ enum ColorTheme: String, CaseIterable, Codable, Identifiable {
         switch self {
         case .nebula:     return String(localized: "theme.nebula")
         case .sunrise:    return String(localized: "theme.sunrise")
-        case .sageStone:  return String(localized: "theme.sageStone")
-        case .deepOcean:  return String(localized: "theme.deepOcean")
-        case .warmRose:   return String(localized: "theme.warmRose")
+        case .neon:       return String(localized: "theme.neon")
+        case .tropical:   return String(localized: "theme.tropical")
+        case .candyPop:   return String(localized: "theme.candyPop")
         case .moonlit:    return String(localized: "theme.moonlit")
         }
     }
@@ -35,9 +35,9 @@ enum ColorTheme: String, CaseIterable, Codable, Identifiable {
         switch self {
         case .nebula:     return String(localized: "theme.nebula.desc")
         case .sunrise:    return String(localized: "theme.sunrise.desc")
-        case .sageStone:  return String(localized: "theme.sageStone.desc")
-        case .deepOcean:  return String(localized: "theme.deepOcean.desc")
-        case .warmRose:   return String(localized: "theme.warmRose.desc")
+        case .neon:       return String(localized: "theme.neon.desc")
+        case .tropical:   return String(localized: "theme.tropical.desc")
+        case .candyPop:   return String(localized: "theme.candyPop.desc")
         case .moonlit:    return String(localized: "theme.moonlit.desc")
         }
     }
@@ -77,32 +77,32 @@ extension ColorTheme {
                 gradient: [Color(rgb: 0x4A7CFF), Color(rgb: 0xF0A25C)],
                 data: buildDataPalette([0x4A7CFF, 0xF0A25C, 0x9B8AE0])
             )
-        case .sageStone:
+        case .neon:
             return ThemeAccents(
-                primary: Color(rgb: 0x6B8F71),
-                secondary: Color(rgb: 0xB89F7E),
-                tertiary: Color(rgb: 0x7A9EBA),
+                primary: Color(rgb: 0x00F0FF),
+                secondary: Color(rgb: 0xFF00E5),
+                tertiary: Color(rgb: 0xB8FF00),
                 destructive: .sharedDestructive,
-                gradient: [Color(rgb: 0x6B8F71), Color(rgb: 0xB89F7E)],
-                data: buildDataPalette([0x6B8F71, 0xB89F7E, 0x7A9EBA])
+                gradient: [Color(rgb: 0x00F0FF), Color(rgb: 0xFF00E5)],
+                data: buildDataPalette([0x00F0FF, 0xFF00E5, 0xB8FF00])
             )
-        case .deepOcean:
+        case .tropical:
             return ThemeAccents(
-                primary: Color(rgb: 0x3D8B9E),
-                secondary: Color(rgb: 0xD4A574),
-                tertiary: Color(rgb: 0x8E7EBD),
+                primary: Color(rgb: 0xFF6B6B),
+                secondary: Color(rgb: 0x00CCB3),
+                tertiary: Color(rgb: 0xFFC800),
                 destructive: .sharedDestructive,
-                gradient: [Color(rgb: 0x3D8B9E), Color(rgb: 0xD4A574)],
-                data: buildDataPalette([0x3D8B9E, 0xD4A574, 0x8E7EBD])
+                gradient: [Color(rgb: 0xFF6B6B), Color(rgb: 0x00CCB3)],
+                data: buildDataPalette([0xFF6B6B, 0x00CCB3, 0xFFC800])
             )
-        case .warmRose:
+        case .candyPop:
             return ThemeAccents(
-                primary: Color(rgb: 0xB07592),
-                secondary: Color(rgb: 0xC4A882),
-                tertiary: Color(rgb: 0x7C9EB8),
+                primary: Color(rgb: 0xFF479C),
+                secondary: Color(rgb: 0x00C2FF),
+                tertiary: Color(rgb: 0xFFE100),
                 destructive: .sharedDestructive,
-                gradient: [Color(rgb: 0xB07592), Color(rgb: 0xC4A882)],
-                data: buildDataPalette([0xB07592, 0xC4A882, 0x7C9EB8])
+                gradient: [Color(rgb: 0xFF479C), Color(rgb: 0x00C2FF)],
+                data: buildDataPalette([0xFF479C, 0x00C2FF, 0xFFE100])
             )
         case .moonlit:
             return ThemeAccents(
