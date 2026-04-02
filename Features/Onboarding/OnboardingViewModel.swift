@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 internal import Combine
 
 final class OnboardingViewModel: ObservableObject {
@@ -332,6 +333,9 @@ final class OnboardingViewModel: ObservableObject {
     private func finish() async throws {
         struct Empty: Encodable {}
         try await apiClient.request(.completeOnboarding, body: Empty())
+        // Reset TipKit so new users see all tips fresh
+        try? Tips.resetDatastore()
+        try? Tips.configure([.displayFrequency(.immediate)])
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         isComplete = true
     }
