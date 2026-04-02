@@ -4,23 +4,31 @@ import Foundation
 
 struct OnboardingStatusResponse: Codable {
     let status: String           // "not_started" | "in_progress" | "completed"
-    let currentStep: String?     // "period" | "accounts" | "categories" | "summary" | nil
+    let currentStep: String?     // "currency" | "period" | "accounts" | "categories" | "summary" | nil
 }
 
 // MARK: - Wizard step enum
 
 enum OnboardingStep: String, CaseIterable {
+    case welcome
+    case currency
     case period
     case accounts
     case categories
     case summary
 
-    var title: String {
+    /// Steps shown in the step indicator (exclude welcome and summary)
+    static var indicatorSteps: [OnboardingStep] {
+        [.currency, .period, .accounts, .categories]
+    }
+
+    var indicatorTitle: String {
         switch self {
+        case .currency:   return String(localized: "Currency")
         case .period:     return String(localized: "Periods")
         case .accounts:   return String(localized: "Accounts")
         case .categories: return String(localized: "Categories")
-        case .summary:    return String(localized: "Review")
+        default:          return ""
         }
     }
 
@@ -92,9 +100,10 @@ struct DraftCategory: Identifiable {
     var name: String
     var icon: String
     var categoryType: String   // "Incoming" | "Outgoing"
+    var behavior: String?
 }
 
-// MARK: - Category template
+// MARK: - Category template (legacy, kept for backward compat)
 
 enum CategoryTemplate: Equatable {
     case none, essential, detailed, custom
@@ -130,7 +139,7 @@ enum CategoryTemplate: Equatable {
     }
 }
 
-// MARK: - Currency (for accounts step)
+// MARK: - Currency (for currency step)
 
 struct Currency: Codable, Identifiable, Hashable {
     let id: UUID
@@ -142,4 +151,29 @@ struct Currency: Codable, Identifiable, Hashable {
 
     // MARK: - Backward compatibility
     var currency: String { code }
+}
+
+// MARK: - Onboarding templates API
+
+struct OnboardingTemplate: Codable, Identifiable {
+    let id: UUID
+    let name: String
+    let description: String
+    let categories: [OnboardingTemplateCategory]
+}
+
+struct OnboardingTemplateCategory: Codable, Identifiable {
+    let id: UUID?
+    let name: String
+    let icon: String
+    let type: String       // "income" | "expense"
+    let behavior: String?  // "fixed" | "variable" | "subscription" | nil
+
+    var displayType: String {
+        switch type.lowercased() {
+        case "income": return "Incoming"
+        case "expense": return "Outgoing"
+        default: return type
+        }
+    }
 }

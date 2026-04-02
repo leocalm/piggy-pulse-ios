@@ -2,96 +2,170 @@ import SwiftUI
 
 struct SummaryStepView: View {
     @ObservedObject var vm: OnboardingViewModel
-@Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: PPSpacing.xl) {
+            VStack(spacing: PPSpacing.xl) {
 
-                Text(String(localized: "onboarding.summaryIntro"))
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
-                    .padding(.horizontal, PPSpacing.xl)
+                // Hero image
+                Image("piggy-cloud")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 180)
+                    .padding(.top, PPSpacing.xl)
 
-                // Period summary
-                summarySection(title: "Period") {
-                    if vm.customize {
-                        labeledRow("Start Day", "\(vm.startDay)")
-                        labeledRow("Period Length", vm.periodLength == 1 ? String(localized: "1 month") : String(localized: "\(vm.periodLength) months"))
-                        labeledRow("Periods to Prepare", "\(vm.periodsToPrepare)")
-                        labeledRow("If Saturday", vm.saturdayBehavior.label)
-                        labeledRow("If Sunday", vm.sundayBehavior.label)
-                    } else {
-                        Text(String(localized: "onboarding.defaultPeriod"))
-                            .font(.ppCallout).foregroundColor(.ppTextSecondary)
-                    }
+                // Title + subtitle
+                VStack(spacing: PPSpacing.sm) {
+                    Text(String(localized: "complete.title"))
+                        .font(.ppTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.ppTextPrimary)
+
+                    Text(String(localized: "complete.subtitle"))
+                        .font(.ppBody)
+                        .foregroundColor(.ppTextSecondary)
+                        .multilineTextAlignment(.center)
                 }
 
-                // Accounts summary
-                summarySection(title: "Accounts") {
-                    if let currencyId = vm.selectedCurrencyId,
-                       let currency = vm.currencies.first(where: { $0.id == currencyId }) {
-                        labeledRow("Currency", "\(currency.symbol) \(currency.currency)")
+                // Summary sections
+                VStack(spacing: PPSpacing.md) {
+
+                    // Currency
+                    summarySection(title: String(localized: "currency.title")) {
+                        if let currency = vm.selectedCurrency {
+                            HStack {
+                                Text(currency.symbol).font(.title3)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(currency.name).font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                    Text(currency.code).font(.ppCaption).foregroundColor(.ppTextSecondary)
+                                }
+                            }
+                        } else {
+                            Text(String(localized: "summary.noCurrency"))
+                                .font(.ppCallout).foregroundColor(.ppTextTertiary)
+                        }
                     }
-                    ForEach(vm.accounts) { account in
-                        HStack {
-                            Text(account.defaultIcon)
-                            Text(account.name.isEmpty ? "Unnamed" : account.name)
+
+                    // Periods
+                    summarySection(title: String(localized: "periods.title")) {
+                        HStack(spacing: PPSpacing.sm) {
+                            Image(systemName: "calendar").foregroundColor(theme.primary)
+                            Text(String(localized: "periods.defaultMonthly"))
                                 .font(.ppCallout).foregroundColor(.ppTextPrimary)
-                            Spacer()
-                            Text(account.balanceText.isEmpty ? "0.00" : account.balanceText)
-                                .font(.ppCallout).foregroundColor(.ppTextSecondary)
+                        }
+                        HStack(spacing: PPSpacing.sm) {
+                            Image(systemName: "clock").foregroundColor(theme.primary)
+                            Text(String(localized: "periods.defaultAhead"))
+                                .font(.ppCallout).foregroundColor(.ppTextPrimary)
+                        }
+                    }
+
+                    // Accounts (if any)
+                    if !vm.accounts.isEmpty {
+                        summarySection(title: String(localized: "accounts.title")) {
+                            ForEach(vm.accounts) { account in
+                                HStack {
+                                    Text(account.defaultIcon)
+                                    Text(account.name.isEmpty ? "Unnamed" : account.name)
+                                        .font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                    Spacer()
+                                    Text(vm.selectedCurrency?.symbol ?? "")
+                                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                                    Text(account.balanceText.isEmpty ? "0.00" : account.balanceText)
+                                        .font(.ppCallout).foregroundColor(.ppTextSecondary)
+                                }
+                            }
+                        }
+                    }
+
+                    // Categories (if any)
+                    if !vm.appliedCategories.isEmpty {
+                        let incoming = vm.appliedCategories.filter { $0.type.lowercased() == "income" }
+                        let outgoing = vm.appliedCategories.filter { $0.type.lowercased() == "expense" }
+
+                        summarySection(title: String(localized: "categories.title")) {
+                            if !incoming.isEmpty {
+                                Text(String(localized: "category.incoming"))
+                                    .font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTextTertiary)
+                                ForEach(incoming) { cat in
+                                    HStack(spacing: PPSpacing.sm) {
+                                        Text(cat.icon)
+                                        Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                    }
+                                }
+                            }
+                            if !outgoing.isEmpty {
+                                Text(String(localized: "category.outgoing"))
+                                    .font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTextTertiary)
+                                    .padding(.top, PPSpacing.xs)
+                                ForEach(outgoing) { cat in
+                                    HStack(spacing: PPSpacing.sm) {
+                                        Text(cat.icon)
+                                        Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
 
-                // Categories summary
-                summarySection(title: "Categories") {
-                    let incoming = vm.categories.filter { $0.categoryType == "Incoming" }
-                    let outgoing = vm.categories.filter { $0.categoryType == "Outgoing" }
-                    if !incoming.isEmpty {
-                        Text(String(localized: "category.incoming")).font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTeal)
-                        ForEach(incoming) { cat in
-                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
+                // CTA buttons
+                VStack(spacing: PPSpacing.md) {
+                    Button {
+                        Task { await vm.advance() }
+                    } label: {
+                        if vm.isSaving {
+                            ProgressView().tint(.white)
+                        } else {
+                            Text(String(localized: "complete.goToDashboard"))
+                                .font(.ppCallout).fontWeight(.semibold)
                         }
                     }
-                    if !outgoing.isEmpty {
-                        Text(String(localized: "category.outgoing")).font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppDestructive)
-                            .padding(.top, 4)
-                        ForEach(outgoing) { cat in
-                            HStack { Text(cat.icon); Text(cat.name).font(.ppCallout).foregroundColor(.ppTextPrimary) }
-                        }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, PPSpacing.md)
+                    .background(theme.primary)
+                    .clipShape(Capsule())
+                    .disabled(vm.isSaving)
+
+                    Button {
+                        Task { await vm.advance() }
+                    } label: {
+                        Text(String(localized: "complete.addFirstTransaction"))
+                            .font(.ppCallout)
+                            .foregroundColor(.ppTextSecondary)
                     }
+                    .disabled(vm.isSaving)
                 }
+
+                Spacer(minLength: PPSpacing.xl)
             }
-            .padding(.vertical, PPSpacing.xl)
+            .padding(.horizontal, PPSpacing.xl)
         }
     }
 
     @ViewBuilder
-    private func summarySection<Content: View>(title: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: PPSpacing.md) {
-            Text(title).font(.ppTitle3).foregroundColor(.ppTextPrimary)
+    private func summarySection<Content: View>(
+        title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.sm) {
+            Text(title)
+                .font(.ppCaption).fontWeight(.semibold).foregroundColor(.ppTextTertiary)
+                .textCase(.uppercase)
+                .tracking(0.5)
+
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                 content()
             }
+            .padding(PPSpacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.ppCard)
+            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
         }
-        .padding(PPSpacing.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.ppCard)
-        .overlay(
-            VStack {
-                Divider().background(Color.ppBorder)
-                Spacer()
-                Divider().background(Color.ppBorder)
-            }
-        )
-    }
-
-    private func labeledRow(_ label: LocalizedStringKey, _ value: String) -> some View {
-        HStack {
-            Text(label).font(.ppCallout).foregroundColor(.ppTextSecondary)
-            Spacer()
-            Text(value).font(.ppCallout).foregroundColor(.ppTextPrimary)
-        }
     }
 }
