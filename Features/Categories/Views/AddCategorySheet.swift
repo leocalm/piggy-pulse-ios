@@ -60,24 +60,7 @@ struct AddCategorySheet: View {
                             }
 
                             // Icon selector
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text(String(localized: "field.icon")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                let icons = ["🛒", "🏠", "🚗", "💡", "🎮", "👕", "🍽️", "☕", "✈️", "🏥", "📚", "🎵", "💼", "🎁", "🐾", "💰", "📱", "🏋️", "🎬", "🧾", "💳", "🚌", "🍕", "🛍️"]
-                                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
-                                    ForEach(icons, id: \.self) { i in
-                                        Text(i)
-                                            .font(.system(size: 24))
-                                            .frame(width: 36, height: 36)
-                                            .background(icon == i ? theme.primary.opacity(0.3) : Color.clear)
-                                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: PPRadius.sm)
-                                                    .stroke(icon == i ? theme.primary : Color.clear, lineWidth: 1)
-                                            )
-                                            .onTapGesture { icon = i }
-                                    }
-                                }
-                            }
+                            EmojiPicker(selection: $icon)
 
                             // Color is determined by type+behavior on the server
 

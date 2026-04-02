@@ -15653,6 +15653,54 @@
           }
         }
       }
+    },
+    "emoji.selected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecionado:"
+          }
+        }
+      }
+    },
+    "emoji.pickTitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick an emoji"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha um emoji"
+          }
+        }
+      }
+    },
+    "emoji.pickSubtitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap the emoji keyboard to choose any emoji."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toque no teclado de emojis para escolher qualquer emoji."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
