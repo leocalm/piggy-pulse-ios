@@ -23,6 +23,14 @@ enum ColorTheme: String, CaseIterable, Codable, Identifiable {
         }
     }
 
+    /// Asset name for the per-theme coin logo
+    var coinLogoName: String { "piggy-coin-\(rawValue)" }
+
+    /// Alternate app icon name (nil = default/nebula)
+    var alternateAppIconName: String? {
+        self == .nebula ? nil : "AppIcon-\(rawValue)"
+    }
+
     var description: String {
         switch self {
         case .nebula:     return String(localized: "theme.nebula.desc")
