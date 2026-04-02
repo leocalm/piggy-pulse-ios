@@ -167,6 +167,13 @@ final class AuthViewModel: ObservableObject {
             let password: String
         }
 
+        // Reuse the same response shape as login — v2 register auto-authenticates
+        struct RegisterResponse: Decodable {
+            let requiresTwoFactor: Bool
+            let user: User?
+            let token: String?
+        }
+
         let request = RegisterRequest(
             name: registerName.trimmingCharacters(in: .whitespaces),
             email: registerEmail.trimmingCharacters(in: .whitespaces).lowercased(),
@@ -174,13 +181,12 @@ final class AuthViewModel: ObservableObject {
         )
 
         do {
-            // Register creates the account — we need to login afterward for Bearer tokens
-            let _: User = try await appState.apiClient.request(.register, body: request)
-            
-            // Auto-login after successful registration
-            email = request.email
-            password = registerPassword
-            await login()
+            let response: RegisterResponse = try await appState.apiClient.request(.register, body: request)
+            if let user = response.user, let token = response.token {
+                appState.tokenManager.setTokens(access: token, refresh: token)
+                appState.currentUser = user
+                appState.isAuthenticated = true
+            }
         } catch let error as APIError {
             errorMessage = error.errorDescription
         } catch {
