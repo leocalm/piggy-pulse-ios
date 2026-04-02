@@ -15797,6 +15797,134 @@
           }
         }
       }
+    },
+    "onboarding.categories.createTitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create your first categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie as suas primeiras categorias"
+          }
+        }
+      }
+    },
+    "onboarding.categories.createDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories organize your transactions. Start with at least one — you can always add more later."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As categorias organizam as suas transações. Comece com pelo menos uma — pode adicionar mais depois."
+          }
+        }
+      }
+    },
+    "onboarding.categories.namePlaceholder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. Groceries, Salary, Rent..."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ex. Supermercado, Salário, Renda..."
+          }
+        }
+      }
+    },
+    "onboarding.categories.addButton": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Category"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Categoria"
+          }
+        }
+      }
+    },
+    "onboarding.categories.created": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR CATEGORIES"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AS SUAS CATEGORIAS"
+          }
+        }
+      }
+    },
+    "onboarding.categories.hint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can add, edit, or remove categories anytime from the Categories screen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pode adicionar, editar ou remover categorias a qualquer momento no ecrã de Categorias."
+          }
+        }
+      }
+    },
+    "onboarding.categories.targetHint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional — set a monthly target for this category."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcional — defina uma meta mensal para esta categoria."
+          }
+        }
+      }
+    },
+    "onboarding.categories.createFailed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to create category. Please try again."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falha ao criar categoria. Tente novamente."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

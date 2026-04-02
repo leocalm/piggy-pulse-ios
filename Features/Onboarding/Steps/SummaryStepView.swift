@@ -81,9 +81,9 @@ struct SummaryStepView: View {
                     }
 
                     // Categories (if any)
-                    if !vm.appliedCategories.isEmpty {
-                        let incoming = vm.appliedCategories.filter { $0.type.lowercased() == "income" }
-                        let outgoing = vm.appliedCategories.filter { $0.type.lowercased() == "expense" }
+                    if !vm.createdCategories.isEmpty {
+                        let incoming = vm.createdCategories.filter { $0.type == "income" }
+                        let outgoing = vm.createdCategories.filter { $0.type == "expense" }
 
                         summarySection(title: String(localized: "categories.title")) {
                             if !incoming.isEmpty {
