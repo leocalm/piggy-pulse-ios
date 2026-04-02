@@ -147,22 +147,26 @@ final class OnboardingViewModel: ObservableObject {
                 selectedCurrencyId = currencies.first?.id
             }
 
-            struct AccountMgmt: Decodable {
+            // AccountResponse uses Serde tagged enum: {"type": "Checking", "name": ..., "status": ...}
+            // The "type" field acts as both the discriminator and the account type.
+            struct AccountItem: Decodable {
                 let name: String; let type: String
-                let currentBalance: Int64; let spendLimit: Int32?; let status: String
+                let initialBalance: Int64; let spendLimit: Int64?
+                let status: String
+                enum CodingKeys: String, CodingKey { case name, type, initialBalance, spendLimit, status }
             }
-            struct AccountMgmtResponse: Decodable {
-                let data: [AccountMgmt]
+            struct AccountListResponse: Decodable {
+                let data: [AccountItem]
             }
-            let response: AccountMgmtResponse = try await apiClient.request(.accounts)
-            let active = response.data.filter { $0.status == "active" }
+            let response: AccountListResponse = try await apiClient.request(.accounts)
+            let active = response.data.filter { $0.status.lowercased() == "active" }
             if !active.isEmpty {
                 accounts = active.map { item in
                     var draft = DraftAccount()
                     draft.name = item.name
                     draft.accountType = item.type
-                    draft.balanceText = String(format: "%.2f", Double(item.currentBalance) / 100)
-                    if let limit = item.spendLimit {
+                    draft.balanceText = String(format: "%.2f", Double(item.initialBalance) / 100)
+                    if let limit = item.spendLimit, limit > 0 {
                         draft.spendLimitText = String(format: "%.2f", Double(limit) / 100)
                     }
                     return draft
