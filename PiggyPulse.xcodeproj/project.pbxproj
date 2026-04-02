@@ -105,6 +105,8 @@
 		AA000016000000000000AA16 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015000000000000AA15 /* BiometricHelper.swift */; };
 		AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017000000000000AA17 /* BiometricPreferenceTests.swift */; };
 		AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
+		AA00001C000000000000AA1C /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D000000000000AA1D /* AuthHeaderView.swift */; };
+		AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F000000000000AA1F /* PasswordStrengthBar.swift */; };
 		AD3A592A0E854B3603816430 /* WidgetDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		C78A19A1430B7B62516243CC /* AddSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */; };
@@ -244,6 +246,8 @@
 		AA000015000000000000AA15 /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
 		AA000017000000000000AA17 /* BiometricPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPreferenceTests.swift; sourceTree = "<group>"; };
 		AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
+		AA00001D000000000000AA1D /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
+		AA00001F000000000000AA1F /* PasswordStrengthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrengthBar.swift; sourceTree = "<group>"; };
 		C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Repository.swift; sourceTree = "<group>"; };
 		C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionCard.swift; sourceTree = "<group>"; };
 		CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionRepository.swift; path = Core/Repositories/SubscriptionRepository.swift; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 		02218DF92F589B1E00E8DCEF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AA00001D000000000000AA1D /* AuthHeaderView.swift */,
+				AA00001F000000000000AA1F /* PasswordStrengthBar.swift */,
 				02F038C12F5984EF008DD1E7 /* ForgotPasswordView.swift */,
 				02F038BF2F5984DC008DD1E7 /* RegisterView.swift */,
 				02218DFA2F589B2700E8DCEF /* LoginView.swift */,
@@ -972,6 +978,8 @@
 				02F038A52F589EC5008DD1E7 /* PiggyPulseApp.swift in Sources */,
 				02F038A62F589EC5008DD1E7 /* LoginView.swift in Sources */,
 				AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */,
+				AA00001C000000000000AA1C /* AuthHeaderView.swift in Sources */,
+				AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */,
 				02F038DA2F59A15D008DD1E7 /* TransactionRepository.swift in Sources */,
 				02F038D82F59A129008DD1E7 /* Transaction.swift in Sources */,
 				02F038A72F589EC5008DD1E7 /* MainTabView.swift in Sources */,

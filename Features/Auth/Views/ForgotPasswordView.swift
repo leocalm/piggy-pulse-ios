@@ -15,28 +15,9 @@ struct ForgotPasswordView: View {
 
             ScrollView {
                 VStack(spacing: 0) {
-                    Spacer()
-                        .frame(height: 60)
+                    AuthHeaderView(tagline: String(localized: "auth.tagline.forgotPassword"))
 
                     VStack(spacing: PPSpacing.xxl) {
-                        // Logo
-                        VStack(spacing: PPSpacing.sm) {
-                            Image("piggy-logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 44)
-
-                            Text("PiggyPulse")
-                                .font(.ppTitle)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [theme.tertiary, theme.primary],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                        }
-
                         if viewModel.forgotPasswordSent {
                             successContent
                         } else {
@@ -51,8 +32,10 @@ struct ForgotPasswordView: View {
                             .stroke(Color.ppBorder, lineWidth: 1)
                     )
                     .padding(.horizontal, PPSpacing.lg)
+                    .padding(.top, PPSpacing.xl)
 
                     Spacer()
+                        .frame(height: PPSpacing.xxl)
                 }
             }
         }

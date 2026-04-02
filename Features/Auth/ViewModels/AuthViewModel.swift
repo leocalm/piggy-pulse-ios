@@ -21,6 +21,7 @@ final class AuthViewModel: ObservableObject {
     @Published var needs2FA = false
     @Published var twoFactorToken = ""
     @Published var twoFactorCode = ""
+    @Published var twoFactorUseRecovery = false
 
     // Shared
     @Published var isLoading = false
@@ -48,9 +49,17 @@ final class AuthViewModel: ObservableObject {
     var isRegisterDisabled: Bool {
         registerName.trimmingCharacters(in: .whitespaces).isEmpty ||
         registerEmail.trimmingCharacters(in: .whitespaces).isEmpty ||
+        !isValidEmail(registerEmail) ||
         registerPassword.isEmpty ||
+        PasswordStrength.score(for: registerPassword) < 3 ||
         registerConfirmPassword.isEmpty ||
+        registerPassword != registerConfirmPassword ||
         isLoading
+    }
+
+    private func isValidEmail(_ email: String) -> Bool {
+        let trimmed = email.trimmingCharacters(in: .whitespaces)
+        return trimmed.contains("@") && trimmed.contains(".")
     }
 
     var isForgotDisabled: Bool {
@@ -224,6 +233,7 @@ final class AuthViewModel: ObservableObject {
         needs2FA = false
         twoFactorToken = ""
         twoFactorCode = ""
+        twoFactorUseRecovery = false
         isLoading = false
     }
 }
