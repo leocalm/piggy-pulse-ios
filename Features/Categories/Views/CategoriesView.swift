@@ -207,7 +207,8 @@ struct CategoriesView: View {
     private var categoryStatsBar: some View {
         let allActive = incoming + outgoing
         let totalCount = allActive.count
-        let unbudgetedCount = allActive.filter { overviewMap[$0.id]?.budgeted == nil || overviewMap[$0.id]?.budgeted == 0 }.count
+        // Only count unbudgeted when overview data has loaded
+        let unbudgetedCount = overviewMap.isEmpty ? 0 : allActive.filter { overviewMap[$0.id]?.budgeted == nil || overviewMap[$0.id]?.budgeted == 0 }.count
 
         return VStack(spacing: 0) {
             summaryRow(

@@ -82,6 +82,7 @@ private struct EmojiKeyboardSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeManager) private var theme
     @State private var inputText = ""
+    @State private var focusKeyboard = false
 
     var body: some View {
         NavigationStack {
@@ -104,7 +105,7 @@ private struct EmojiKeyboardSheet: View {
                     )
 
                 // Hidden emoji-only text field
-                EmojiTextField(text: $inputText)
+                EmojiTextField(text: $inputText, shouldBecomeFirstResponder: focusKeyboard)
                     .frame(width: 1, height: 1)
                     .opacity(0.01)
 
@@ -140,9 +141,9 @@ private struct EmojiKeyboardSheet: View {
         .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
         .onAppear {
-            // Auto-focus the emoji field after a short delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                EmojiTextField.becomeFirstResponderGlobal = true
+            // Auto-focus the emoji field after sheet animation
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                focusKeyboard = true
             }
         }
         .onChange(of: inputText) { _, newValue in
@@ -162,7 +163,7 @@ private struct EmojiKeyboardSheet: View {
 /// A UITextField wrapper that forces the emoji keyboard.
 struct EmojiTextField: UIViewRepresentable {
     @Binding var text: String
-    static var becomeFirstResponderGlobal = false
+    var shouldBecomeFirstResponder: Bool
 
     func makeUIView(context: Context) -> UITextField {
         let field = EmojiUITextField()
@@ -174,8 +175,7 @@ struct EmojiTextField: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UITextField, context: Context) {
-        if Self.becomeFirstResponderGlobal {
-            Self.becomeFirstResponderGlobal = false
+        if shouldBecomeFirstResponder && !uiView.isFirstResponder {
             DispatchQueue.main.async {
                 uiView.becomeFirstResponder()
             }

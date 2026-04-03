@@ -122,18 +122,24 @@ struct AutoCreationView: View {
                     .font(.ppTitle3)
                     .foregroundColor(.ppTextPrimary)
 
-                // Start Day
-                VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                    Text(String(localized: "field.startDayOfMonth"))
-                        .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                    Text(String(localized: "field.startDayOfMonth.desc"))
-                        .font(.ppCaption).foregroundColor(.ppTextTertiary)
-                    Picker("", selection: $startDay) {
-                        ForEach(1...31, id: \.self) { day in
-                            Text("\(day)").tag(day)
+                // Start Day (only for dayOfMonth and businessDay)
+                if recurrenceMethod != "dayOfWeek" {
+                    VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                        Text(recurrenceMethod == "businessDay"
+                            ? String(localized: "field.startBusinessDay")
+                            : String(localized: "field.startDayOfMonth"))
+                            .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
+                        Text(recurrenceMethod == "businessDay"
+                            ? String(localized: "field.startBusinessDay.desc")
+                            : String(localized: "field.startDayOfMonth.desc"))
+                            .font(.ppCaption).foregroundColor(.ppTextTertiary)
+                        Picker("", selection: $startDay) {
+                            ForEach(1...31, id: \.self) { day in
+                                Text("\(day)").tag(day)
+                            }
                         }
+                        .tint(theme.primary)
                     }
-                    .tint(theme.primary)
                 }
 
                 // Duration

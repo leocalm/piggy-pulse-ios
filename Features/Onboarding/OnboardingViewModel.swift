@@ -129,8 +129,10 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     /// Create a category via the API and add it to the list
+    @MainActor
     func createCategory(name: String, icon: String, type: String, behavior: String, target: Int64?) async {
         isCreatingCategory = true
+        errorMessage = nil
         defer { isCreatingCategory = false }
 
         struct CategoryRequest: Encodable {

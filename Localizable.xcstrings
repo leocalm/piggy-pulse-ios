@@ -43,6 +43,7 @@
         }
       }
     },
+    "{MONTH} {MONTH_SHORT} {YEAR} {YEAR_SHORT} {START_DATE} {END_DATE} {PERIOD_NUMBER}": {},
     "{month} {year}": {
       "localizations": {
         "pt-BR": {
@@ -326,6 +327,7 @@
       }
     },
     "%lld periods": {
+      "extractionState": "stale",
       "localizations": {
         "pt-BR": {
           "stringUnit": {
@@ -2152,6 +2154,118 @@
         }
       }
     },
+    "autoCreation.availableVars": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Available variables:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variáveis disponíveis:"
+          }
+        }
+      }
+    },
+    "autoCreation.businessDay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Business day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia útil"
+          }
+        }
+      }
+    },
+    "autoCreation.businessDay.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period starts on the Nth business day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O período começa no N-ésimo dia útil"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfMonth": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day of month"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia do mês"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfMonth.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period starts on a specific calendar day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O período começa num dia específico do calendário"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfWeek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day of week"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia da semana"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfWeek.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period starts on a specific weekday"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O período começa num dia da semana específico"
+          }
+        }
+      }
+    },
     "autoCreation.disabled": {
       "localizations": {
         "en": {
@@ -2180,6 +2294,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ative um agendamento para gerar períodos futuros automaticamente."
+          }
+        }
+      }
+    },
+    "autoCreation.every": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cada"
           }
         }
       }
@@ -2248,7 +2378,24 @@
         }
       }
     },
+    "autoCreation.periodsPrepared": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "periods prepared"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "períodos preparados"
+          }
+        }
+      }
+    },
     "autoCreation.placeholderHint": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2260,6 +2407,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use {month} e {year} como espaços reservados."
+          }
+        }
+      }
+    },
+    "autoCreation.preview": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pré-visualização"
+          }
+        }
+      }
+    },
+    "autoCreation.recurrenceMethod": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recurrence Method"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Método de Recorrência"
+          }
+        }
+      }
+    },
+    "autoCreation.startingOn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "starting on day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "começando no dia"
           }
         }
       }
@@ -6843,6 +7038,22 @@
         }
       }
     },
+    "field.generateAhead.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of future periods to pre-generate"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Número de períodos futuros a pré-gerar"
+          }
+        }
+      }
+    },
     "field.icon": {
       "localizations": {
         "en": {
@@ -7063,6 +7274,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dia de Início do Mês"
+          }
+        }
+      }
+    },
+    "field.startDayOfMonth.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day of the month when the period begins (1-31)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia do mês em que o período começa (1-31)"
           }
         }
       }
@@ -14303,6 +14530,22 @@
         }
       }
     },
+    "unit.day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dia"
+          }
+        }
+      }
+    },
     "unit.days": {
       "localizations": {
         "en": {
@@ -14319,6 +14562,22 @@
         }
       }
     },
+    "unit.month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "month"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mês"
+          }
+        }
+      }
+    },
     "unit.months": {
       "localizations": {
         "en": {
@@ -14331,6 +14590,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Meses"
+          }
+        }
+      }
+    },
+    "unit.week": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "week"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "semana"
           }
         }
       }
@@ -16027,274 +16302,34 @@
         }
       }
     },
-    "autoCreation.recurrenceMethod": {
+    "field.startBusinessDay": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recurrence Method"
+            "value": "Start Business Day"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Método de Recorrência"
+            "value": "Dia Útil de Início"
           }
         }
       }
     },
-    "autoCreation.dayOfMonth": {
+    "field.startBusinessDay.desc": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Day of month"
+            "value": "The Nth business day when the period begins"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dia do mês"
-          }
-        }
-      }
-    },
-    "autoCreation.dayOfMonth.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Period starts on a specific calendar day"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O período começa num dia específico do calendário"
-          }
-        }
-      }
-    },
-    "autoCreation.businessDay": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Business day"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dia útil"
-          }
-        }
-      }
-    },
-    "autoCreation.businessDay.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Period starts on the Nth business day"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O período começa no N-ésimo dia útil"
-          }
-        }
-      }
-    },
-    "autoCreation.dayOfWeek": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day of week"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dia da semana"
-          }
-        }
-      }
-    },
-    "autoCreation.dayOfWeek.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Period starts on a specific weekday"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O período começa num dia da semana específico"
-          }
-        }
-      }
-    },
-    "field.startDayOfMonth.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day of the month when the period begins (1-31)"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dia do mês em que o período começa (1-31)"
-          }
-        }
-      }
-    },
-    "field.generateAhead.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Number of future periods to pre-generate"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Número de períodos futuros a pré-gerar"
-          }
-        }
-      }
-    },
-    "autoCreation.availableVars": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Available variables:"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Variáveis disponíveis:"
-          }
-        }
-      }
-    },
-    "autoCreation.preview": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Preview"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pré-visualização"
-          }
-        }
-      }
-    },
-    "autoCreation.periodsPrepared": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "periods prepared"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "períodos preparados"
-          }
-        }
-      }
-    },
-    "autoCreation.every": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Every"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A cada"
-          }
-        }
-      }
-    },
-    "autoCreation.startingOn": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "starting on day"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "começando no dia"
-          }
-        }
-      }
-    },
-    "unit.day": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "day"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "dia"
-          }
-        }
-      }
-    },
-    "unit.week": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "week"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "semana"
-          }
-        }
-      }
-    },
-    "unit.month": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "month"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "mês"
+            "value": "O N-ésimo dia útil em que o período começa"
           }
         }
       }
