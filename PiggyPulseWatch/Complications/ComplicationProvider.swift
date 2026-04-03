@@ -1,6 +1,16 @@
 import WidgetKit
 import SwiftUI
 
+// MARK: - Helper to get active period
+
+private func fetchActivePeriodId() async throws -> UUID {
+    let periods = try await WatchAPIClient.shared.fetchPeriods()
+    guard let id = periods.first(where: { $0.status == "active" })?.id ?? periods.first?.id else {
+        throw WatchAPIError.notFound
+    }
+    return id
+}
+
 // MARK: - Net Position Complication
 
 struct NetPositionEntry: TimelineEntry {
@@ -22,7 +32,8 @@ struct NetPositionProvider: TimelineProvider {
 
         Task {
             do {
-                let position = try await WatchAPIClient.shared.fetchNetPosition()
+                let periodId = try await fetchActivePeriodId()
+                let position = try await WatchAPIClient.shared.fetchNetPosition(periodId: periodId)
                 completion(NetPositionEntry(date: .now, total: position.total))
             } catch {
                 completion(NetPositionEntry(date: .now, total: nil))
@@ -33,7 +44,8 @@ struct NetPositionProvider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<NetPositionEntry>) -> Void) {
         Task {
             do {
-                let position = try await WatchAPIClient.shared.fetchNetPosition()
+                let periodId = try await fetchActivePeriodId()
+                let position = try await WatchAPIClient.shared.fetchNetPosition(periodId: periodId)
                 let entry = NetPositionEntry(date: .now, total: position.total)
                 let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: .now)!
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
@@ -71,7 +83,7 @@ struct NetPositionComplicationView: View {
 
     @Environment(\.widgetFamily) var family
 
-    private let accentColor = Color(red: 139.0/255, green: 126.0/255, blue: 200.0/255)
+    private let accentColor = WatchDesign.accentColor
 
     var body: some View {
         switch family {
@@ -154,7 +166,8 @@ struct DaysRemainingProvider: TimelineProvider {
 
         Task {
             do {
-                let period = try await WatchAPIClient.shared.fetchCurrentPeriod()
+                let periodId = try await fetchActivePeriodId()
+                let period = try await WatchAPIClient.shared.fetchCurrentPeriod(periodId: periodId)
                 completion(DaysRemainingEntry(
                     date: .now,
                     daysRemaining: period.daysRemaining,
@@ -169,13 +182,13 @@ struct DaysRemainingProvider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<DaysRemainingEntry>) -> Void) {
         Task {
             do {
-                let period = try await WatchAPIClient.shared.fetchCurrentPeriod()
+                let periodId = try await fetchActivePeriodId()
+                let period = try await WatchAPIClient.shared.fetchCurrentPeriod(periodId: periodId)
                 let entry = DaysRemainingEntry(
                     date: .now,
                     daysRemaining: period.daysRemaining,
                     daysInPeriod: period.daysInPeriod
                 )
-                // Update at midnight to reflect the new day
                 let nextMidnight = Calendar.current.startOfDay(
                     for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!
                 )
@@ -214,7 +227,7 @@ struct DaysRemainingComplicationView: View {
 
     @Environment(\.widgetFamily) var family
 
-    private let accentColor = Color(red: 139.0/255, green: 126.0/255, blue: 200.0/255)
+    private let accentColor = WatchDesign.accentColor
 
     var body: some View {
         switch family {

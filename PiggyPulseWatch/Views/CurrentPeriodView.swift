@@ -4,7 +4,7 @@ struct CurrentPeriodView: View {
 
     let state: WatchLoadingState<WatchCurrentPeriod>
 
-    private let accentColor = Color(red: 139.0/255, green: 126.0/255, blue: 200.0/255)
+    private let accentColor = WatchDesign.accentColor
 
     var body: some View {
         ScrollView {
@@ -52,7 +52,7 @@ struct CurrentPeriodView: View {
                 Image(systemName: "calendar")
                     .foregroundStyle(.secondary)
                     .font(.caption)
-                Text(String(localized: "\(period.daysRemaining) days remaining"))
+                Text(String(localized: "\(max(period.daysRemaining, 0)) days remaining"))
                     .font(.caption)
             }
 
@@ -80,7 +80,7 @@ struct CurrentPeriodView: View {
             ? min(Double(period.spent) / Double(period.target), 1.0)
             : 0.0
         let daysProgress = period.daysInPeriod > 0
-            ? Double(period.daysInPeriod - period.daysRemaining) / Double(period.daysInPeriod)
+            ? min(max(Double(period.daysInPeriod - period.daysRemaining) / Double(period.daysInPeriod), 0.0), 1.0)
             : 0.0
 
         VStack(spacing: 4) {

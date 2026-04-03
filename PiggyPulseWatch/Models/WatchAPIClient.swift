@@ -1,11 +1,12 @@
 import Foundation
 import Security
 
-// MARK: - Watch Keychain
+// MARK: - Watch Token Storage (App Group UserDefaults — shared with widget extension)
 
-enum WatchKeychainHelper {
+enum WatchTokenStore {
 
-    private static let accessGroup = "com.piggypulse.shared"
+    static let appGroupId = "group.com.piggypulse.watch"
+    private static let defaults = UserDefaults(suiteName: appGroupId) ?? .standard
 
     enum Key: String {
         case accessToken = "com.piggypulse.watch.accessToken"
@@ -13,39 +14,15 @@ enum WatchKeychainHelper {
     }
 
     static func save(_ value: String, for key: Key) {
-        let data = Data(value.utf8)
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key.rawValue,
-            kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        ]
-
-        SecItemDelete(query as CFDictionary)
-        SecItemAdd(query as CFDictionary, nil)
+        defaults.set(value, forKey: key.rawValue)
     }
 
     static func read(_ key: Key) -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key.rawValue,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-
-        guard status == errSecSuccess, let data = result as? Data else { return nil }
-        return String(data: data, encoding: .utf8)
+        defaults.string(forKey: key.rawValue)
     }
 
     static func delete(_ key: Key) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key.rawValue
-        ]
-        SecItemDelete(query as CFDictionary)
+        defaults.removeObject(forKey: key.rawValue)
     }
 
     static func clearAll() {
@@ -54,13 +31,20 @@ enum WatchKeychainHelper {
     }
 }
 
+// Keep old name as typealias for compatibility
+typealias WatchKeychainHelper = WatchTokenStore
+
 // MARK: - Watch API Client
 
 final class WatchAPIClient {
 
     static let shared = WatchAPIClient()
 
+    #if DEBUG
+    private let baseURL = "http://192.168.1.148:8000/v2"
+    #else
     private let baseURL = "https://api.piggy-pulse.com/v2"
+    #endif
 
     private let decoder: JSONDecoder = {
         let d = JSONDecoder()
@@ -83,29 +67,35 @@ final class WatchAPIClient {
     // MARK: - Auth
 
     var isAuthenticated: Bool {
-        WatchKeychainHelper.read(.accessToken) != nil
+        WatchTokenStore.read(.accessToken) != nil
     }
 
     func setAccessToken(_ token: String) {
-        WatchKeychainHelper.save(token, for: .accessToken)
+        WatchTokenStore.save(token, for: .accessToken)
     }
 
     func clearAuth() {
-        WatchKeychainHelper.clearAll()
+        WatchTokenStore.clearAll()
     }
 
     // MARK: - API Methods
 
-    func fetchCurrentPeriod() async throws -> WatchCurrentPeriod {
-        try await get("/dashboard/current-period")
+    func fetchPeriods() async throws -> [WatchPeriod] {
+        let response: PaginatedResponse<WatchPeriod> = try await get("/periods?limit=100")
+        return response.data
     }
 
-    func fetchNetPosition() async throws -> WatchNetPosition {
-        try await get("/dashboard/net-position")
+    func fetchCurrentPeriod(periodId: UUID) async throws -> WatchCurrentPeriod {
+        try await get("/dashboard/current-period?periodId=\(periodId.uuidString)")
+    }
+
+    func fetchNetPosition(periodId: UUID) async throws -> WatchNetPosition {
+        try await get("/dashboard/net-position?periodId=\(periodId.uuidString)")
     }
 
     func fetchAccounts() async throws -> [WatchAccountSummary] {
-        try await get("/accounts")
+        let response: PaginatedResponse<WatchAccountSummary> = try await get("/accounts?limit=100")
+        return response.data
     }
 
     func fetchUserInfo() async throws -> WatchUserInfo {
@@ -115,7 +105,7 @@ final class WatchAPIClient {
     // MARK: - Private
 
     private func get<T: Decodable>(_ path: String) async throws -> T {
-        guard let token = WatchKeychainHelper.read(.accessToken) else {
+        guard let token = WatchTokenStore.read(.accessToken) else {
             throw WatchAPIError.unauthorized
         }
 
@@ -138,7 +128,7 @@ final class WatchAPIClient {
         case 200...299:
             return try decoder.decode(T.self, from: data)
         case 401:
-            WatchKeychainHelper.clearAll()
+            WatchTokenStore.clearAll()
             throw WatchAPIError.unauthorized
         case 404:
             throw WatchAPIError.notFound

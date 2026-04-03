@@ -4,7 +4,7 @@ struct AccountsListView: View {
 
     let state: WatchLoadingState<[WatchAccountSummary]>
 
-    private let accentColor = Color(red: 139.0/255, green: 126.0/255, blue: 200.0/255)
+    private let accentColor = WatchDesign.accentColor
 
     var body: some View {
         switch state {

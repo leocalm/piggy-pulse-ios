@@ -1,5 +1,11 @@
 import Foundation
 
+// MARK: - Paginated Response Wrapper
+
+struct PaginatedResponse<T: Codable>: Codable {
+    let data: [T]
+}
+
 // MARK: - API Response Models
 
 struct WatchCurrentPeriod: Codable {
@@ -23,14 +29,25 @@ struct WatchAccountSummary: Codable, Identifiable {
     let id: UUID
     let name: String
     let type: String
-    let currentBalance: Int64
+    let initialBalance: Int64
+    let status: String
+
+    /// Accounts endpoint returns initialBalance, not currentBalance
+    var currentBalance: Int64 { initialBalance }
+}
+
+// MARK: - Period (to find active period ID)
+
+struct WatchPeriod: Codable, Identifiable {
+    let id: UUID
+    let name: String
     let status: String
 }
 
 // MARK: - User Info (from /auth/me)
 
 struct WatchUserInfo: Codable {
-    let currencyCode: String?
+    let currency: String?
 }
 
 // MARK: - Loading State
