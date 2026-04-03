@@ -82,6 +82,7 @@
 		438B8A35E1A2EEE2AAEC013B /* DashboardCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC1266FA5F9008EC31D0E72 /* DashboardCardStyle.swift */; };
 		48B7E956527EE37B6016880E /* CancelSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075AFDCD4DB916D66358E382 /* CancelSubscriptionSheet.swift */; };
 		585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC8F45593269B73F9767AA8 /* AppTips.swift */; };
+		58DAF53C883817FCAB844EC8 /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */; };
 		594CFFC8227767181047BBAD /* CurrentPeriodCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E53F608D1028A3D810AE21 /* CurrentPeriodCard.swift */; };
 		5C0104D5FB8DB480948DBB1A /* NoPeriodStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */; };
 		6997DB49D5EC16DA70365FAF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */; };
@@ -107,6 +108,8 @@
 		AA00001A000000000000AA1A /* BiometricLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B000000000000AA1B /* BiometricLockView.swift */; };
 		AA00001C000000000000AA1C /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D000000000000AA1D /* AuthHeaderView.swift */; };
 		AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F000000000000AA1F /* PasswordStrengthBar.swift */; };
+		AA100001000000000000BB01 /* WelcomeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002000000000000BB02 /* WelcomeStepView.swift */; };
+		AA100003000000000000BB03 /* CurrencyStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004000000000000BB04 /* CurrencyStepView.swift */; };
 		AD3A592A0E854B3603816430 /* WidgetDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		C78A19A1430B7B62516243CC /* AddSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */; };
@@ -118,8 +121,6 @@
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
 		F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
-		AA100001000000000000BB01 /* WelcomeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002000000000000BB02 /* WelcomeStepView.swift */; };
-		AA100003000000000000BB03 /* CurrencyStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004000000000000BB04 /* CurrencyStepView.swift */; };
 		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
 		FEA03AD1124CC45545E6885C /* RecentTransactionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */; };
 		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
@@ -210,8 +211,6 @@
 		11CE78C71FBEC1E705C286DD /* SummaryStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SummaryStepView.swift; sourceTree = "<group>"; };
 		11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		125697D5718FA1710F492888 /* CategoriesStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CategoriesStepView.swift; sourceTree = "<group>"; };
-		AA100002000000000000BB02 /* WelcomeStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeStepView.swift; sourceTree = "<group>"; };
-		AA100004000000000000BB04 /* CurrencyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyStepView.swift; sourceTree = "<group>"; };
 		17E53F608D1028A3D810AE21 /* CurrentPeriodCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrentPeriodCard.swift; sourceTree = "<group>"; };
 		18EA6862EBC54B090D8654EB /* PeriodStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PeriodStepView.swift; sourceTree = "<group>"; };
 		1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddSubscriptionSheet.swift; path = Features/Subscriptions/Views/AddSubscriptionSheet.swift; sourceTree = "<group>"; };
@@ -248,9 +247,12 @@
 		AA00001B000000000000AA1B /* BiometricLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricLockView.swift; sourceTree = "<group>"; };
 		AA00001D000000000000AA1D /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		AA00001F000000000000AA1F /* PasswordStrengthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrengthBar.swift; sourceTree = "<group>"; };
+		AA100002000000000000BB02 /* WelcomeStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeStepView.swift; sourceTree = "<group>"; };
+		AA100004000000000000BB04 /* CurrencyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyStepView.swift; sourceTree = "<group>"; };
 		C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Repository.swift; sourceTree = "<group>"; };
 		C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionCard.swift; sourceTree = "<group>"; };
 		CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionRepository.swift; path = Core/Repositories/SubscriptionRepository.swift; sourceTree = "<group>"; };
+		CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		DEC8F45593269B73F9767AA8 /* AppTips.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppTips.swift; sourceTree = "<group>"; };
 		E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailView.swift; path = Features/Subscriptions/Views/SubscriptionDetailView.swift; sourceTree = "<group>"; };
 		E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Models.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */,
 				11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */,
 				DEC8F45593269B73F9767AA8 /* AppTips.swift */,
+				CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1047,6 +1050,7 @@
 				F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */,
 				585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */,
 				E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */,
+				58DAF53C883817FCAB844EC8 /* EmojiPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1195,7 +1199,7 @@
 		020853B32F5898F9004E2FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-sunrise AppIcon-sage_stone AppIcon-deep_ocean AppIcon-warm_rose AppIcon-moonlit";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-sunrise AppIcon-neon AppIcon-tropical AppIcon-candy_pop AppIcon-moonlit";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
@@ -1238,7 +1242,7 @@
 		020853B42F5898F9004E2FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-sunrise AppIcon-sage_stone AppIcon-deep_ocean AppIcon-warm_rose AppIcon-moonlit";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-sunrise AppIcon-neon AppIcon-tropical AppIcon-candy_pop AppIcon-moonlit";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;

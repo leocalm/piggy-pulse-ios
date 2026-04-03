@@ -1,33 +1,6 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "1": {
-      "localizations": {
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1"
-          }
-        }
-      }
-    },
-    "123456": {
-      "comment": "2FA code field placeholder",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "123456"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "123456"
-          }
-        }
-      }
-    },
     "": {
       "localizations": {
         "pt-BR": {
@@ -38,8 +11,7 @@
         }
       }
     },
-    " · ": {},
-    " %@": {},
+    " — ": {},
     "—": {
       "localizations": {
         "pt-BR": {
@@ -61,6 +33,7 @@
       }
     },
     "(optional)": {
+      "extractionState": "stale",
       "localizations": {
         "pt-BR": {
           "stringUnit": {
@@ -70,6 +43,7 @@
         }
       }
     },
+    "{MONTH} {MONTH_SHORT} {YEAR} {YEAR_SHORT} {START_DATE} {END_DATE} {PERIOD_NUMBER}": {},
     "{month} {year}": {
       "localizations": {
         "pt-BR": {
@@ -101,6 +75,26 @@
       }
     },
     "%@": {},
+    "%@ · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · %@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@ %3$@"
+          }
+        }
+      }
+    },
     "%@ / %@": {
       "localizations": {
         "en": {
@@ -128,6 +122,7 @@
       }
     },
     "%@ %@ — %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -169,6 +164,16 @@
         }
       }
     },
+    "%@: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$@"
+          }
+        }
+      }
+    },
     "%@%@": {
       "localizations": {
         "en": {
@@ -181,6 +186,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%1$@%2$@"
+          }
+        }
+      }
+    },
+    "%@%@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@%2$@ %3$@"
           }
         }
       }
@@ -208,6 +223,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld %2$@"
           }
         }
       }
@@ -251,6 +276,7 @@
     },
     "%lld months": {
       "comment": "Plural month count in onboarding summary",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -301,6 +327,7 @@
       }
     },
     "%lld periods": {
+      "extractionState": "stale",
       "localizations": {
         "pt-BR": {
           "stringUnit": {
@@ -372,6 +399,16 @@
         }
       }
     },
+    "1": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1"
+          }
+        }
+      }
+    },
     "1 day": {
       "comment": "Singular day count in overlay date range",
       "localizations": {
@@ -391,6 +428,7 @@
     },
     "1 month": {
       "comment": "Singular month count in onboarding summary",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -408,6 +446,7 @@
     },
     "5 basic categories to get started": {
       "comment": "Category template description",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -425,6 +464,7 @@
     },
     "12 categories for detailed tracking": {
       "comment": "Category template description",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -436,6 +476,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "12 categorias para acompanhamento detalhado"
+          }
+        }
+      }
+    },
+    "123456": {
+      "comment": "2FA code field placeholder",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "123456"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "123456"
           }
         }
       }
@@ -473,6 +530,7 @@
       }
     },
     "accessibility.netPosition.breakdown %@ %@ %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -489,6 +547,7 @@
       }
     },
     "accessibility.spendingTrend.bar %@ %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -564,6 +623,135 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tipo de Conta"
+          }
+        }
+      }
+    },
+    "account.card.availableToSpend": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Available to spend"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponível para gastar"
+          }
+        }
+      }
+    },
+    "account.card.avgDailyBalance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avg Daily Balance"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saldo Médio Diário"
+          }
+        }
+      }
+    },
+    "account.card.balanceAfterTopUp": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance after top-up"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saldo após recarga"
+          }
+        }
+      }
+    },
+    "account.card.creditLimit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Credit Limit"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limite de Crédito"
+          }
+        }
+      }
+    },
+    "account.card.limit": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limit"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limite"
+          }
+        }
+      }
+    },
+    "account.card.nextTopUp": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next top-up"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próxima recarga"
+          }
+        }
+      }
+    },
+    "account.card.spentThisCycle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spent this cycle"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gasto neste ciclo"
+          }
+        }
+      }
+    },
+    "account.card.transactions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transactions"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transações"
           }
         }
       }
@@ -672,6 +860,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esta conta sera excluida permanentemente."
+          }
+        }
+      }
+    },
+    "accounts.description1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where does your money live? Accounts represent your real accounts, and are not connected to your bank."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onde está o seu dinheiro? As contas representam as suas contas reais."
+          }
+        }
+      }
+    },
+    "accounts.description2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add as many as you'd like — or skip and add them later."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione quantas quiser — ou avance e adicione mais tarde."
           }
         }
       }
@@ -916,7 +1136,24 @@
         }
       }
     },
+    "accounts.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your accounts"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione as suas contas"
+          }
+        }
+      }
+    },
     "Across %lld accounts": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1278,6 +1515,7 @@
       }
     },
     "ARCHIVED": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1382,6 +1620,7 @@
       }
     },
     "auth.createAccount": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1397,178 +1636,52 @@
         }
       }
     },
-    "auth.noAccount": {
+    "auth.forgotPassword": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Don't have an account?"
+            "value": "Forgot password?"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não tem uma conta?"
+            "value": "Esqueceu a senha?"
           }
         }
       }
     },
-    "auth.passwordRecovery": {
+    "auth.login.rememberMe": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Password recovery"
+            "value": "Remember me"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recuperação de senha"
+            "value": "Lembrar-me"
           }
         }
       }
     },
-    "auth.passwordRecoveryDesc": {
+    "auth.login.sessionExpired": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enter your email address. If it is registered, you will receive a reset link."
+            "value": "Your session has expired. Please sign in again."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Insira seu endereço de e-mail. Se estiver registrado, você receberá um link de redefinição."
-          }
-        }
-      }
-    },
-    "auth.tagline": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clarity begins with structure."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clareza começa com estrutura."
-          }
-        }
-      }
-    },
-    "auth.twoFactor": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Two-Factor Authentication"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Autenticação de Dois Fatores"
-          }
-        }
-      }
-    },
-    "auth.twoFactorDesc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enter the code from your authenticator app."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Insira o código do seu aplicativo autenticador."
-          }
-        }
-      }
-    },
-    "auth.welcomeBack": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welcome back"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bem-vindo de volta"
-          }
-        }
-      }
-    },
-    "auth.tagline.login": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welcome back. Your financial pulse awaits."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bem-vindo de volta. O seu pulso financeiro espera."
-          }
-        }
-      }
-    },
-    "auth.tagline.register": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start your financial journey today."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Comece a sua jornada financeira hoje."
-          }
-        }
-      }
-    },
-    "auth.tagline.forgotPassword": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "We'll help you get back in."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vamos ajudá-lo a recuperar o acesso."
-          }
-        }
-      }
-    },
-    "auth.login.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Iniciar sessão"
+            "value": "A sua sessão expirou. Inicie sessão novamente."
           }
         }
       }
@@ -1589,130 +1702,34 @@
         }
       }
     },
-    "auth.login.rememberMe": {
+    "auth.login.title": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Remember me"
+            "value": "Sign in"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lembrar-me"
+            "value": "Iniciar sessão"
           }
         }
       }
     },
-    "auth.login.sessionExpired": {
+    "auth.noAccount": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your session has expired. Please sign in again."
+            "value": "Don't have an account?"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "A sua sessão expirou. Inicie sessão novamente."
-          }
-        }
-      }
-    },
-    "auth.register.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create your account"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Criar conta"
-          }
-        }
-      }
-    },
-    "auth.register.subtitle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Join PiggyPulse to take control of your finances."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Junte-se ao PiggyPulse para controlar as suas finanças."
-          }
-        }
-      }
-    },
-    "auth.register.agreeToTerms": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I agree to the Terms of Service and Privacy Policy"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Concordo com os Termos de Serviço e Política de Privacidade"
-          }
-        }
-      }
-    },
-    "auth.register.passwordsDoNotMatch": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Passwords do not match"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "As senhas não coincidem"
-          }
-        }
-      }
-    },
-    "auth.password.veryWeak": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Very weak"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Muito fraca"
-          }
-        }
-      }
-    },
-    "auth.password.weak": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Weak"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fraca"
+            "value": "Não tem uma conta?"
           }
         }
       }
@@ -1765,50 +1782,212 @@
         }
       }
     },
-    "auth.twoFactor.useRecoveryCode": {
+    "auth.password.veryWeak": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use a recovery code"
+            "value": "Very weak"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usar código de recuperação"
+            "value": "Muito fraca"
           }
         }
       }
     },
-    "auth.twoFactor.useAuthenticator": {
+    "auth.password.weak": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use authenticator app"
+            "value": "Weak"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usar aplicação autenticadora"
+            "value": "Fraca"
           }
         }
       }
     },
-    "auth.twoFactor.recoveryTitle": {
+    "auth.passwordRecovery": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enter recovery code"
+            "value": "Password recovery"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Insira o código de recuperação"
+            "value": "Recuperação de senha"
+          }
+        }
+      }
+    },
+    "auth.passwordRecoveryDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter your email address. If it is registered, you will receive a reset link."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insira seu endereço de e-mail. Se estiver registrado, você receberá um link de redefinição."
+          }
+        }
+      }
+    },
+    "auth.register.agreeToTerms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I agree to the Terms of Service and Privacy Policy"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Concordo com os Termos de Serviço e Política de Privacidade"
+          }
+        }
+      }
+    },
+    "auth.register.errorGeneric": {},
+    "auth.register.passwordsDoNotMatch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passwords do not match"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As senhas não coincidem"
+          }
+        }
+      }
+    },
+    "auth.register.subtitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Join PiggyPulse to take control of your finances."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Junte-se ao PiggyPulse para controlar as suas finanças."
+          }
+        }
+      }
+    },
+    "auth.register.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create your account"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Criar conta"
+          }
+        }
+      }
+    },
+    "auth.tagline": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clarity begins with structure."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clareza começa com estrutura."
+          }
+        }
+      }
+    },
+    "auth.tagline.forgotPassword": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll help you get back in."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos ajudá-lo a recuperar o acesso."
+          }
+        }
+      }
+    },
+    "auth.tagline.login": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back. Your financial pulse awaits."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo de volta. O seu pulso financeiro espera."
+          }
+        }
+      }
+    },
+    "auth.tagline.register": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start your financial journey today."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comece a sua jornada financeira hoje."
+          }
+        }
+      }
+    },
+    "auth.twoFactor": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two-Factor Authentication"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autenticação de Dois Fatores"
           }
         }
       }
@@ -1829,50 +2008,83 @@
         }
       }
     },
-    "auth.forgotPassword": {
+    "auth.twoFactor.recoveryTitle": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forgot password?"
+            "value": "Enter recovery code"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Esqueceu a senha?"
+            "value": "Insira o código de recuperação"
           }
         }
       }
     },
-    "button.signUp": {
+    "auth.twoFactor.useAuthenticator": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign up"
+            "value": "Use authenticator app"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Registar"
+            "value": "Usar aplicação autenticadora"
           }
         }
       }
     },
-    "field.recoveryCode": {
+    "auth.twoFactor.useRecoveryCode": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recovery code"
+            "value": "Use a recovery code"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Código de recuperação"
+            "value": "Usar código de recuperação"
+          }
+        }
+      }
+    },
+    "auth.twoFactorDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the code from your authenticator app."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insira o código do seu aplicativo autenticador."
+          }
+        }
+      }
+    },
+    "auth.welcomeBack": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo de volta"
           }
         }
       }
@@ -1942,6 +2154,118 @@
         }
       }
     },
+    "autoCreation.availableVars": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Available variables:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variáveis disponíveis:"
+          }
+        }
+      }
+    },
+    "autoCreation.businessDay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Business day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia útil"
+          }
+        }
+      }
+    },
+    "autoCreation.businessDay.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period starts on the Nth business day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O período começa no N-ésimo dia útil"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfMonth": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day of month"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia do mês"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfMonth.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period starts on a specific calendar day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O período começa num dia específico do calendário"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfWeek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day of week"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia da semana"
+          }
+        }
+      }
+    },
+    "autoCreation.dayOfWeek.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period starts on a specific weekday"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O período começa num dia da semana específico"
+          }
+        }
+      }
+    },
     "autoCreation.disabled": {
       "localizations": {
         "en": {
@@ -1970,6 +2294,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ative um agendamento para gerar períodos futuros automaticamente."
+          }
+        }
+      }
+    },
+    "autoCreation.every": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cada"
           }
         }
       }
@@ -2038,7 +2378,24 @@
         }
       }
     },
+    "autoCreation.periodsPrepared": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "periods prepared"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "períodos preparados"
+          }
+        }
+      }
+    },
     "autoCreation.placeholderHint": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2050,6 +2407,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use {month} e {year} como espaços reservados."
+          }
+        }
+      }
+    },
+    "autoCreation.preview": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pré-visualização"
+          }
+        }
+      }
+    },
+    "autoCreation.recurrenceMethod": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recurrence Method"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Método de Recorrência"
+          }
+        }
+      }
+    },
+    "autoCreation.startingOn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "starting on day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "começando no dia"
           }
         }
       }
@@ -2696,6 +3101,7 @@
       }
     },
     "button.finish": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2871,6 +3277,38 @@
         }
       }
     },
+    "button.signUp": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign up"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registar"
+          }
+        }
+      }
+    },
+    "button.skipForNow": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip for now"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorar por agora"
+          }
+        }
+      }
+    },
     "button.verify": {
       "localizations": {
         "en": {
@@ -3001,6 +3439,39 @@
         }
       }
     },
+    "categories.budgetedLabel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "budgeted"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "orçado"
+          }
+        }
+      }
+    },
+    "categories.colorHint": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colors auto-assigned by direction + behavior. You can customize categories anytime."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cores atribuídas automaticamente."
+          }
+        }
+      }
+    },
     "categories.delete.failed": {
       "localizations": {
         "en": {
@@ -3029,6 +3500,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esta categoria sera excluida permanentemente."
+          }
+        }
+      }
+    },
+    "categories.description1": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories help you organize your transactions, and set-up targets."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As categorias ajudam a organizar as suas transações."
+          }
+        }
+      }
+    },
+    "categories.description2": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a starting template — you can add, remove, or change categories anytime."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha um modelo inicial."
           }
         }
       }
@@ -3242,6 +3747,7 @@
       }
     },
     "categories.stats.archived": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3258,6 +3764,7 @@
       }
     },
     "categories.stats.expense": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3274,6 +3781,7 @@
       }
     },
     "categories.stats.income": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3290,6 +3798,7 @@
       }
     },
     "categories.stats.total": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3305,7 +3814,104 @@
         }
       }
     },
+    "categories.summary.categories": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categorias"
+          }
+        }
+      }
+    },
+    "categories.summary.expenseBudget": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expense Budget"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orçamento de Despesas"
+          }
+        }
+      }
+    },
+    "categories.summary.incomeTarget": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Income Target"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta de Receita"
+          }
+        }
+      }
+    },
+    "categories.summary.totalSpent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Spent"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Gasto"
+          }
+        }
+      }
+    },
+    "categories.summary.unbudgeted": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unbudgeted"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem Orçamento"
+          }
+        }
+      }
+    },
+    "categories.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configure categorias"
+          }
+        }
+      }
+    },
     "categories.transactionCount %lld": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3391,6 +3997,87 @@
           "stringUnit": {
             "state": "translated",
             "value": "Metas por Categoria"
+          }
+        }
+      }
+    },
+    "category.behavior": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Behavior"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportamento"
+          }
+        }
+      }
+    },
+    "category.behavior.fixed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixed"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixo"
+          }
+        }
+      }
+    },
+    "category.behavior.none": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum"
+          }
+        }
+      }
+    },
+    "category.behavior.subscription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assinatura"
+          }
+        }
+      }
+    },
+    "category.behavior.variable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variable"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variável"
           }
         }
       }
@@ -3907,6 +4594,22 @@
         }
       }
     },
+    "common.incoming": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incoming"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Receita"
+          }
+        }
+      }
+    },
     "common.none": {
       "localizations": {
         "en": {
@@ -3919,6 +4622,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nenhum"
+          }
+        }
+      }
+    },
+    "common.outgoing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outgoing"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Despesa"
           }
         }
       }
@@ -3956,6 +4675,7 @@
       }
     },
     "common.system": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3985,6 +4705,71 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modo Compacto"
+          }
+        }
+      }
+    },
+    "complete.addFirstTransaction": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first transaction"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar a primeira transação"
+          }
+        }
+      }
+    },
+    "complete.goToDashboard": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go to Dashboard"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ir para o Painel"
+          }
+        }
+      }
+    },
+    "complete.subtitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your dashboard is ready. Here's what we configured:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O seu painel está pronto."
+          }
+        }
+      }
+    },
+    "complete.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're all set!"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Está tudo pronto!"
           }
         }
       }
@@ -4232,6 +5017,86 @@
         }
       }
     },
+    "currency.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All your accounts and transactions will use this currency."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todas as suas contas e transações usarão esta moeda."
+          }
+        }
+      }
+    },
+    "currency.multiCurrencyNote": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Currently, PiggyPulse don't support multiple currencies. This feature is coming soon."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atualmente, o PiggyPulse não suporta múltiplas moedas. Esta funcionalidade estará disponível em breve."
+          }
+        }
+      }
+    },
+    "currency.requiredStep": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the only required step."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este é o único passo obrigatório."
+          }
+        }
+      }
+    },
+    "currency.searchPlaceholder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search currencies..."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pesquisar moedas..."
+          }
+        }
+      }
+    },
+    "currency.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose your currency"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha a sua moeda"
+          }
+        }
+      }
+    },
     "Current Password": {
       "comment": "Form field label in Change Password",
       "extractionState": "stale",
@@ -4298,6 +5163,7 @@
       }
     },
     "Customize": {
+      "extractionState": "stale",
       "localizations": {
         "pt-BR": {
           "stringUnit": {
@@ -4350,6 +5216,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Painel"
+          }
+        }
+      }
+    },
+    "dashboard.accountCards": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account Cards"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartões de Conta"
           }
         }
       }
@@ -4700,6 +5582,7 @@
     },
     "Detailed 12": {
       "comment": "Category template option in onboarding",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5035,6 +5918,70 @@
         }
       }
     },
+    "emoji.more": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais…"
+          }
+        }
+      }
+    },
+    "emoji.pickSubtitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap the emoji keyboard to choose any emoji."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toque no teclado de emojis para escolher qualquer emoji."
+          }
+        }
+      }
+    },
+    "emoji.pickTitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick an emoji"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha um emoji"
+          }
+        }
+      }
+    },
+    "emoji.selected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecionado:"
+          }
+        }
+      }
+    },
     "emptyState.tips": {
       "localizations": {
         "en": {
@@ -5226,6 +6173,7 @@
     },
     "Essential 5": {
       "comment": "Category template option in onboarding",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5754,6 +6702,22 @@
         }
       }
     },
+    "field.accountName": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account name"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome da conta"
+          }
+        }
+      }
+    },
     "field.accountType": {
       "localizations": {
         "en": {
@@ -6074,6 +7038,22 @@
         }
       }
     },
+    "field.generateAhead.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of future periods to pre-generate"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Número de períodos futuros a pré-gerar"
+          }
+        }
+      }
+    },
     "field.icon": {
       "localizations": {
         "en": {
@@ -6202,6 +7182,22 @@
         }
       }
     },
+    "field.recoveryCode": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recovery code"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código de recuperação"
+          }
+        }
+      }
+    },
     "field.saturday": {
       "localizations": {
         "en": {
@@ -6278,6 +7274,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dia de Início do Mês"
+          }
+        }
+      }
+    },
+    "field.startDayOfMonth.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day of the month when the period begins (1-31)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia do mês em que o período começa (1-31)"
           }
         }
       }
@@ -6417,6 +7429,7 @@
     },
     "Forgot password?": {
       "comment": "Link to forgot password screen",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6485,10 +7498,7 @@
         }
       }
     },
-    "gettingStarted.steps.%@.desc": {},
-    "gettingStarted.steps.%@.title": {},
     "gettingStarted.steps.addTransaction.desc": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6505,7 +7515,6 @@
       }
     },
     "gettingStarted.steps.addTransaction.title": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6522,7 +7531,6 @@
       }
     },
     "gettingStarted.steps.createAccount.desc": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6539,7 +7547,6 @@
       }
     },
     "gettingStarted.steps.createAccount.title": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6556,7 +7563,6 @@
       }
     },
     "gettingStarted.steps.createPeriod.desc": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6573,7 +7579,6 @@
       }
     },
     "gettingStarted.steps.createPeriod.title": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6590,7 +7595,6 @@
       }
     },
     "gettingStarted.steps.setCategories.desc": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6607,7 +7611,6 @@
       }
     },
     "gettingStarted.steps.setCategories.title": {
-      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6705,6 +7708,7 @@
     },
     "If Saturday": {
       "comment": "Onboarding summary label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6722,6 +7726,7 @@
     },
     "If Sunday": {
       "comment": "Onboarding summary label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6738,6 +7743,7 @@
       }
     },
     "If the period start date falls on a weekend, PiggyPulse can shift it to the nearest weekday. This only affects when a period is recorded as starting — it does not change how long the period lasts.": {
+      "extractionState": "stale",
       "localizations": {
         "pt-BR": {
           "stringUnit": {
@@ -8206,6 +9212,7 @@
       }
     },
     "of %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8258,6 +9265,7 @@
       }
     },
     "onboarding.accounts": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8274,6 +9282,7 @@
       }
     },
     "onboarding.accountsIntro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8289,7 +9298,136 @@
         }
       }
     },
+    "onboarding.categories.addButton": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Category"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Categoria"
+          }
+        }
+      }
+    },
+    "onboarding.categories.created": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR CATEGORIES"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AS SUAS CATEGORIAS"
+          }
+        }
+      }
+    },
+    "onboarding.categories.createDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories organize your transactions. Start with at least one — you can always add more later."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As categorias organizam as suas transações. Comece com pelo menos uma — pode adicionar mais depois."
+          }
+        }
+      }
+    },
+    "onboarding.categories.createFailed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to create category. Please try again."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falha ao criar categoria. Tente novamente."
+          }
+        }
+      }
+    },
+    "onboarding.categories.createTitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create your first categories"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie as suas primeiras categorias"
+          }
+        }
+      }
+    },
+    "onboarding.categories.hint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can add, edit, or remove categories anytime from the Categories screen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pode adicionar, editar ou remover categorias a qualquer momento no ecrã de Categorias."
+          }
+        }
+      }
+    },
+    "onboarding.categories.namePlaceholder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. Groceries, Salary, Rent..."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ex. Supermercado, Salário, Renda..."
+          }
+        }
+      }
+    },
+    "onboarding.categories.targetHint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional — set a monthly target for this category."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcional — defina uma meta mensal para esta categoria."
+          }
+        }
+      }
+    },
     "onboarding.categoriesIntro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8306,6 +9444,7 @@
       }
     },
     "onboarding.chooseStartingPoint": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8322,6 +9461,7 @@
       }
     },
     "onboarding.configuration": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8338,6 +9478,7 @@
       }
     },
     "onboarding.defaultPeriod": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8354,6 +9495,7 @@
       }
     },
     "onboarding.ifSaturday": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8370,6 +9512,7 @@
       }
     },
     "onboarding.ifSunday": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8386,6 +9529,7 @@
       }
     },
     "onboarding.periodsCustomizeHint": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8402,6 +9546,7 @@
       }
     },
     "onboarding.periodsIntro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8418,6 +9563,7 @@
       }
     },
     "onboarding.summaryIntro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8434,6 +9580,7 @@
       }
     },
     "onboarding.weekendDays": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8450,6 +9597,7 @@
       }
     },
     "onboarding.welcome": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8463,222 +9611,6 @@
             "value": "Bem-vindo ao PiggyPulse"
           }
         }
-      }
-    },
-    "welcome.title": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Welcome to PiggyPulse" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Bem-vindo ao PiggyPulse" } }
-      }
-    },
-    "welcome.subtitle": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Your financial pulse — calm, clear, and entirely yours." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "O seu pulso financeiro — calmo, claro e inteiramente seu." } }
-      }
-    },
-    "welcome.noJudgment": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No judgment" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Sem julgamentos" } }
-      }
-    },
-    "welcome.noJudgmentDesc": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "we don't label spending as good or bad" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "não rotulamos gastos como bons ou maus" } }
-      }
-    },
-    "welcome.justClarity": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Just clarity" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Apenas clareza" } }
-      }
-    },
-    "welcome.justClarityDesc": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "see your data, understand your patterns" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "veja os seus dados, compreenda os seus padrões" } }
-      }
-    },
-    "welcome.yourRules": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Your rules" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "As suas regras" } }
-      }
-    },
-    "welcome.yourRulesDesc": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "you decide what your numbers mean" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "você decide o que os seus números significam" } }
-      }
-    },
-    "welcome.quote": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "PiggyPulse shows you reality through data. We don't celebrate or criticize — you decide what your numbers mean." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "O PiggyPulse mostra-lhe a realidade através dos dados. Não celebramos nem criticamos — você decide o que os seus números significam." } }
-      }
-    },
-    "welcome.getStarted": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Let's get started" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Vamos começar" } }
-      }
-    },
-    "currency.title": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Choose your currency" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Escolha a sua moeda" } }
-      }
-    },
-    "currency.requiredStep": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "This is the only required step." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Este é o único passo obrigatório." } }
-      }
-    },
-    "currency.description": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "All your accounts and transactions will use this currency." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Todas as suas contas e transações usarão esta moeda." } }
-      }
-    },
-    "currency.searchPlaceholder": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Search currencies..." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pesquisar moedas..." } }
-      }
-    },
-    "currency.multiCurrencyNote": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Currently, PiggyPulse don't support multiple currencies. This feature is coming soon." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Atualmente, o PiggyPulse não suporta múltiplas moedas. Esta funcionalidade estará disponível em breve." } }
-      }
-    },
-    "periods.title": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "How PiggyPulse tracks time" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Como o PiggyPulse organiza o tempo" } }
-      }
-    },
-    "periods.description1": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Periods are time windows that organize your transactions." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Os períodos organizam as suas transações." } }
-      }
-    },
-    "periods.description2": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Transactions fall into periods based on their date — no manual assignment needed." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "As transações são atribuídas automaticamente." } }
-      }
-    },
-    "periods.defaultLabel": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "We'll set you up with the default:" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Vamos configurar com o padrão:" } }
-      }
-    },
-    "periods.defaultMonthly": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Monthly periods, starting on the 1st" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Períodos mensais, começando no dia 1" } }
-      }
-    },
-    "periods.defaultAhead": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "3 periods prepared in advance" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "3 períodos preparados com antecedência" } }
-      }
-    },
-    "periods.changeHint": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "You can change these settings later in Periods → Schedule." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pode alterar mais tarde em Períodos → Calendário." } }
-      }
-    },
-    "accounts.title": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Add your accounts" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Adicione as suas contas" } }
-      }
-    },
-    "accounts.description1": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Where does your money live? Accounts represent your real accounts, and are not connected to your bank." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Onde está o seu dinheiro? As contas representam as suas contas reais." } }
-      }
-    },
-    "accounts.description2": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Add as many as you'd like — or skip and add them later." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Adicione quantas quiser — ou avance e adicione mais tarde." } }
-      }
-    },
-    "categories.title": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Set up categories" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Configure categorias" } }
-      }
-    },
-    "categories.description1": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Categories help you organize your transactions, and set-up targets." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "As categorias ajudam a organizar as suas transações." } }
-      }
-    },
-    "categories.description2": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Pick a starting template — you can add, remove, or change categories anytime." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Escolha um modelo inicial." } }
-      }
-    },
-    "categories.colorHint": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Colors auto-assigned by direction + behavior. You can customize categories anytime." } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Cores atribuídas automaticamente." } }
-      }
-    },
-    "complete.title": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "You're all set!" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Está tudo pronto!" } }
-      }
-    },
-    "complete.subtitle": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Your dashboard is ready. Here's what we configured:" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "O seu painel está pronto." } }
-      }
-    },
-    "complete.goToDashboard": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Go to Dashboard" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Ir para o Painel" } }
-      }
-    },
-    "complete.addFirstTransaction": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Add your first transaction" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Adicionar a primeira transação" } }
-      }
-    },
-    "button.skipForNow": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Skip for now" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Ignorar por agora" } }
-      }
-    },
-    "field.accountName": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Account name" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Nome da conta" } }
-      }
-    },
-    "summary.noCurrency": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No currency selected" } },
-        "pt-BR": { "stringUnit": { "state": "translated", "value": "Nenhuma moeda selecionada" } }
       }
     },
     "Optional": {
@@ -9190,6 +10122,7 @@
     },
     "Period": {
       "comment": "Onboarding summary section title",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -9225,6 +10158,7 @@
     },
     "Period Length": {
       "comment": "Onboarding summary label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -9328,6 +10262,7 @@
     },
     "Periods to Prepare": {
       "comment": "Onboarding summary label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -9439,6 +10374,22 @@
         }
       }
     },
+    "periods.changeHint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can change these settings later in Periods → Schedule."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pode alterar mais tarde em Períodos → Calendário."
+          }
+        }
+      }
+    },
     "periods.daysCount %lld": {
       "localizations": {
         "en": {
@@ -9451,6 +10402,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld dias"
+          }
+        }
+      }
+    },
+    "periods.defaultAhead": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 periods prepared in advance"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 períodos preparados com antecedência"
+          }
+        }
+      }
+    },
+    "periods.defaultLabel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll set you up with the default:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos configurar com o padrão:"
+          }
+        }
+      }
+    },
+    "periods.defaultMonthly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monthly periods, starting on the 1st"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Períodos mensais, começando no dia 1"
           }
         }
       }
@@ -9483,6 +10482,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Isso removerá permanentemente o período."
+          }
+        }
+      }
+    },
+    "periods.description1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Periods are time windows that organize your transactions."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os períodos organizam as suas transações."
+          }
+        }
+      }
+    },
+    "periods.description2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transactions fall into periods based on their date — no manual assignment needed."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As transações são atribuídas automaticamente."
           }
         }
       }
@@ -9707,6 +10738,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Não configurado"
+          }
+        }
+      }
+    },
+    "periods.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How PiggyPulse tracks time"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como o PiggyPulse organiza o tempo"
           }
         }
       }
@@ -9972,6 +11019,7 @@
     },
     "Review": {
       "comment": "Onboarding step title",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -10017,6 +11065,7 @@
     },
     "Saturday": {
       "comment": "Weekend adjustment row label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -10919,6 +11968,7 @@
     },
     "Sign up": {
       "comment": "Link to registration screen",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -11018,6 +12068,7 @@
     },
     "Start Day": {
       "comment": "Onboarding summary label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -12109,6 +13160,7 @@
       }
     },
     "subscriptions.empty.action": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -12311,8 +13363,25 @@
         }
       }
     },
+    "summary.noCurrency": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No currency selected"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma moeda selecionada"
+          }
+        }
+      }
+    },
     "Sunday": {
       "comment": "Weekend adjustment row label",
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -12450,34 +13519,34 @@
         }
       }
     },
-    "theme.deepOcean": {
+    "theme.candyPop": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deep Ocean"
+            "value": "Candy Pop"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Oceano Profundo"
+            "value": "Candy Pop"
           }
         }
       }
     },
-    "theme.deepOcean.desc": {
+    "theme.candyPop.desc": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Teal + Sand"
+            "value": "Playful and bright — pink, blue, and yellow"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verde-azulado + Areia"
+            "value": "Divertido e brilhante — rosa, azul e amarelo"
           }
         }
       }
@@ -12546,34 +13615,34 @@
         }
       }
     },
-    "theme.sageStone": {
+    "theme.neon": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sage & Stone"
+            "value": "Electric Neon"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sálvia e Pedra"
+            "value": "Neon Elétrico"
           }
         }
       }
     },
-    "theme.sageStone.desc": {
+    "theme.neon.desc": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Green + Sandstone"
+            "value": "Bold and electric — cyan, pink, and lime"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verde + Arenito"
+            "value": "Ousado e elétrico — ciano, rosa e lima"
           }
         }
       }
@@ -12610,34 +13679,34 @@
         }
       }
     },
-    "theme.warmRose": {
+    "theme.tropical": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Warm Rose"
+            "value": "Tropical"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rosa Quente"
+            "value": "Tropical"
           }
         }
       }
     },
-    "theme.warmRose.desc": {
+    "theme.tropical.desc": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rose + Linen"
+            "value": "Vibrant and warm — coral, teal, and gold"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rosa + Linho"
+            "value": "Vibrante e quente — coral, turquesa e dourado"
           }
         }
       }
@@ -13461,6 +14530,22 @@
         }
       }
     },
+    "unit.day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dia"
+          }
+        }
+      }
+    },
     "unit.days": {
       "localizations": {
         "en": {
@@ -13477,6 +14562,22 @@
         }
       }
     },
+    "unit.month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "month"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mês"
+          }
+        }
+      }
+    },
     "unit.months": {
       "localizations": {
         "en": {
@@ -13489,6 +14590,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Meses"
+          }
+        }
+      }
+    },
+    "unit.week": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "week"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "semana"
           }
         }
       }
@@ -13633,6 +14750,7 @@
       }
     },
     "Use default": {
+      "extractionState": "stale",
       "localizations": {
         "pt-BR": {
           "stringUnit": {
@@ -14211,6 +15329,166 @@
         }
       }
     },
+    "welcome.getStarted": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's get started"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos começar"
+          }
+        }
+      }
+    },
+    "welcome.justClarity": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Just clarity"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apenas clareza"
+          }
+        }
+      }
+    },
+    "welcome.justClarityDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "see your data, understand your patterns"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "veja os seus dados, compreenda os seus padrões"
+          }
+        }
+      }
+    },
+    "welcome.noJudgment": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No judgment"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem julgamentos"
+          }
+        }
+      }
+    },
+    "welcome.noJudgmentDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "we don't label spending as good or bad"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "não rotulamos gastos como bons ou maus"
+          }
+        }
+      }
+    },
+    "welcome.quote": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PiggyPulse shows you reality through data. We don't celebrate or criticize — you decide what your numbers mean."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O PiggyPulse mostra-lhe a realidade através dos dados. Não celebramos nem criticamos — você decide o que os seus números significam."
+          }
+        }
+      }
+    },
+    "welcome.subtitle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your financial pulse — calm, clear, and entirely yours."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O seu pulso financeiro — calmo, claro e inteiramente seu."
+          }
+        }
+      }
+    },
+    "welcome.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to PiggyPulse"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo ao PiggyPulse"
+          }
+        }
+      }
+    },
+    "welcome.yourRules": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your rules"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As suas regras"
+          }
+        }
+      }
+    },
+    "welcome.yourRulesDesc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "you decide what your numbers mean"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "você decide o que os seus números significam"
+          }
+        }
+      }
+    },
     "When a new period begins": {
       "extractionState": "stale",
       "localizations": {
@@ -14505,6 +15783,7 @@
       }
     },
     "widget.netPosition.accounts %lld": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -14516,6 +15795,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Em %lld contas"
+          }
+        }
+      }
+    },
+    "widget.netPosition.accountsLabel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "accounts"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "contas"
           }
         }
       }
@@ -14597,6 +15892,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Protegido"
+          }
+        }
+      }
+    },
+    "widget.netPosition.thisPeriod": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "this period"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "neste período"
           }
         }
       }
@@ -14889,6 +16200,7 @@
         }
       }
     },
+    "xxxxxxxx-xxxx-xxxx": {},
     "You can further customize periods later in the Periods screen, including renaming them or adjusting individual start dates.": {
       "extractionState": "stale",
       "localizations": {
@@ -14990,306 +16302,34 @@
         }
       }
     },
-    "dashboard.accountCards": {
+    "field.startBusinessDay": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Account Cards"
+            "value": "Start Business Day"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cartões de Conta"
+            "value": "Dia Útil de Início"
           }
         }
       }
     },
-    "widget.netPosition.accountsLabel": {
+    "field.startBusinessDay.desc": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "accounts"
+            "value": "The Nth business day when the period begins"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "contas"
-          }
-        }
-      }
-    },
-    "widget.netPosition.thisPeriod": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "this period"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "neste período"
-          }
-        }
-      }
-    },
-    "account.card.transactions": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Transactions"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Transações"
-          }
-        }
-      }
-    },
-    "account.card.limit": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Limit"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Limite"
-          }
-        }
-      }
-    },
-    "account.card.availableToSpend": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Available to spend"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Disponível para gastar"
-          }
-        }
-      }
-    },
-    "account.card.nextTopUp": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next top-up"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Próxima recarga"
-          }
-        }
-      }
-    },
-    "account.card.balanceAfterTopUp": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Balance after top-up"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saldo após recarga"
-          }
-        }
-      }
-    },
-    "account.card.spentThisCycle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Spent this cycle"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gasto neste ciclo"
-          }
-        }
-      }
-    },
-    "account.card.creditLimit": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Credit Limit"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Limite de Crédito"
-          }
-        }
-      }
-    },
-    "account.card.avgDailyBalance": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Avg Daily Balance"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saldo Médio Diário"
-          }
-        }
-      }
-    },
-    "categories.budgetedLabel": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "budgeted"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "orçado"
-          }
-        }
-      }
-    },
-    "common.incoming": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Incoming"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Receita"
-          }
-        }
-      }
-    },
-    "common.outgoing": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Outgoing"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Despesa"
-          }
-        }
-      }
-    },
-    "category.behavior": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Behavior"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Comportamento"
-          }
-        }
-      }
-    },
-    "category.behavior.none": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "None"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nenhum"
-          }
-        }
-      }
-    },
-    "category.behavior.fixed": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fixed"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fixo"
-          }
-        }
-      }
-    },
-    "category.behavior.variable": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Variable"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Variável"
-          }
-        }
-      }
-    },
-    "category.behavior.subscription": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Subscription"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Assinatura"
+            "value": "O N-ésimo dia útil em que o período começa"
           }
         }
       }

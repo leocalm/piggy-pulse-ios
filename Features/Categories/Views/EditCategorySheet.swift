@@ -25,7 +25,6 @@ struct EditCategorySheet: View {
     @State private var errorMessage: String?
 
     private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
-    private let icons = ["🛒", "🏠", "🚗", "💡", "🎮", "👕", "🍽️", "☕", "✈️", "🏥", "📚", "🎵", "💼", "🎁", "🐾", "💰", "📱", "🏋️", "🎬", "🧾", "💳", "🚌", "🍕", "🛍️"]
     private var isDisabled: Bool { name.trimmingCharacters(in: .whitespaces).count < 3 || isLoading }
 
     var body: some View {
@@ -63,17 +62,7 @@ struct EditCategorySheet: View {
                                 }
                             }
 
-                            VStack(alignment: .leading, spacing: PPSpacing.sm) {
-                                Text(String(localized: "field.icon")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: PPSpacing.sm) {
-                                    ForEach(icons, id: \.self) { i in
-                                        Text(i).font(.system(size: 24)).frame(width: 36, height: 36)
-                                            .background(icon == i ? theme.primary.opacity(0.3) : Color.clear).clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))
-                                            .overlay(RoundedRectangle(cornerRadius: PPRadius.sm).stroke(icon == i ? theme.primary : Color.clear, lineWidth: 1))
-                                            .onTapGesture { icon = i }
-                                    }
-                                }
-                            }
+                            EmojiPicker(selection: $icon)
 
                             // Color is determined by type+behavior on the server
                             // Behavior

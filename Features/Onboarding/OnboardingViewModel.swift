@@ -39,15 +39,17 @@ final class OnboardingViewModel: ObservableObject {
 
     @Published var accounts: [DraftAccount] = [DraftAccount()]
 
-    // MARK: - Step 4: Categories (API templates)
+    // MARK: - Step 4: Categories (inline creation)
 
-    @Published var templates: [OnboardingTemplate] = []
-    @Published var selectedTemplateId: String?
-    @Published var appliedCategories: [OnboardingTemplateCategory] = []
-    @Published var isLoadingTemplates = false
+    @Published var createdCategories: [CreatedCategory] = []
+    @Published var isCreatingCategory = false
 
-    var selectedTemplate: OnboardingTemplate? {
-        templates.first { $0.id == selectedTemplateId }
+    struct CreatedCategory: Identifiable {
+        let id: UUID
+        let name: String
+        let icon: String
+        let type: String      // "income" | "expense"
+        let behavior: String  // "fixed" | "variable"
     }
 
     // MARK: - Validation
@@ -64,7 +66,7 @@ final class OnboardingViewModel: ObservableObject {
             // Skippable: valid if empty OR all entries are valid
             return accounts.isEmpty || accounts.allSatisfy(\.isValid)
         case .categories:
-            return true
+            return !createdCategories.isEmpty
         case .summary:
             return true
         }
@@ -126,15 +128,51 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
 
-    func loadTemplates() async {
-        guard templates.isEmpty else { return }
-        isLoadingTemplates = true
-        defer { isLoadingTemplates = false }
+    /// Create a category via the API and add it to the list
+    @MainActor
+    func createCategory(name: String, icon: String, type: String, behavior: String, target: Int64?) async {
+        isCreatingCategory = true
+        errorMessage = nil
+        defer { isCreatingCategory = false }
+
+        struct CategoryRequest: Encodable {
+            let name: String; let icon: String; let color: String
+            let type: String; let behavior: String; let target: Int64?
+            func encode(to encoder: Encoder) throws {
+                var c = encoder.container(keyedBy: CodingKeys.self)
+                try c.encode(name, forKey: .name)
+                try c.encode(icon, forKey: .icon)
+                try c.encode(color, forKey: .color)
+                try c.encode(type, forKey: .type)
+                try c.encode(behavior, forKey: .behavior)
+                try c.encodeIfPresent(target, forKey: .target)
+            }
+            enum CodingKeys: String, CodingKey { case name, icon, color, type, behavior, target }
+        }
+
+        struct CategoryResponse: Decodable { let id: UUID }
+
         do {
-            let list: [OnboardingTemplate] = try await apiClient.request(.onboardingTemplates)
-            templates = list
+            let response: CategoryResponse = try await apiClient.request(
+                .createCategory,
+                body: CategoryRequest(name: name, icon: icon, color: "#000000", type: type, behavior: behavior, target: target)
+            )
+            createdCategories.append(CreatedCategory(
+                id: response.id, name: name, icon: icon, type: type, behavior: behavior
+            ))
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } catch {
-            // Non-fatal — user can still skip
+            errorMessage = String(localized: "onboarding.categories.createFailed")
+        }
+    }
+
+    /// Delete a category created during onboarding
+    func deleteOnboardingCategory(_ category: CreatedCategory) async {
+        do {
+            try await apiClient.request(.deleteCategory(category.id))
+            createdCategories.removeAll { $0.id == category.id }
+        } catch {
+            // Non-fatal
         }
     }
 
@@ -182,12 +220,13 @@ final class OnboardingViewModel: ObservableObject {
             let response: CategoriesManagementResponse = try await apiClient.request(.categoriesManagement)
             let active = (response.incoming + response.outgoing).filter { !$0.isArchived }
             if !active.isEmpty {
-                appliedCategories = active.map { item in
-                    OnboardingTemplateCategory(
+                createdCategories = active.map { item in
+                    CreatedCategory(
+                        id: item.id,
                         name: item.name,
                         icon: item.icon,
                         type: item.type,
-                        behavior: item.behavior
+                        behavior: item.behavior ?? "variable"
                     )
                 }
                 savedSteps.insert(.categories)
@@ -228,10 +267,8 @@ final class OnboardingViewModel: ObservableObject {
                     savedSteps.insert(.accounts)
                 }
             case .categories:
-                if !savedSteps.contains(.categories), let templateId = selectedTemplateId {
-                    try await applyTemplate(templateId)
-                    savedSteps.insert(.categories)
-                }
+                // Categories are created inline as the user adds them — nothing to save here
+                savedSteps.insert(.categories)
             case .summary:
                 try await finish()
                 return
@@ -318,17 +355,6 @@ final class OnboardingViewModel: ObservableObject {
             try await apiClient.request(.createAccount, body: req)
         }
     }
-
-    private func applyTemplate(_ templateId: String) async throws {
-        struct ApplyRequest: Encodable { let templateId: String }
-        let cats: [AppliedCategory] = try await apiClient.request(.applyOnboardingTemplate, body: ApplyRequest(templateId: templateId))
-        // Store the template categories for the summary
-        if let template = selectedTemplate {
-            appliedCategories = template.categories
-        }
-    }
-
-    private struct AppliedCategory: Decodable { let id: UUID; let name: String }
 
     private func finish() async throws {
         struct Empty: Encodable {}

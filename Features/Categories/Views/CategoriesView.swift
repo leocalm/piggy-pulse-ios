@@ -9,6 +9,7 @@ struct CategoriesView: View {
     @State private var outgoing: [CategoryManagementItem] = []
     @State private var archived: [CategoryManagementItem] = []
     @State private var overviewMap: [UUID: CategoriesOverviewSummaryItem] = [:]
+    @State private var overviewSummary: CategoriesOverviewSummary?
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showArchived = false
@@ -206,56 +207,55 @@ struct CategoriesView: View {
     private var categoryStatsBar: some View {
         let allActive = incoming + outgoing
         let totalCount = allActive.count
-        let incomeCount = incoming.count
-        let expenseCount = outgoing.count
-        let archivedCount = archived.count
+        // Only count unbudgeted when overview data has loaded
+        let unbudgetedCount = overviewMap.isEmpty ? 0 : allActive.filter { overviewMap[$0.id]?.budgeted == nil || overviewMap[$0.id]?.budgeted == 0 }.count
 
-        return HStack(spacing: 0) {
-            VStack(spacing: 4) {
-                Text("\(totalCount)")
-                    .font(.ppCallout)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.ppTextPrimary)
-                Text(String(localized: "categories.stats.total"))
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            VStack(spacing: 4) {
-                Text("\(incomeCount)")
-                    .font(.ppCallout)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.ppTextPrimary)
-                Text(String(localized: "categories.stats.income"))
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            VStack(spacing: 4) {
-                Text("\(expenseCount)")
-                    .font(.ppCallout)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.ppTextPrimary)
-                Text(String(localized: "categories.stats.expense"))
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            VStack(spacing: 4) {
-                Text("\(archivedCount)")
-                    .font(.ppCallout)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.ppTextPrimary)
-                Text(String(localized: "categories.stats.archived"))
-                    .font(.ppCaption)
-                    .foregroundColor(.ppTextSecondary)
-            }
-            .frame(maxWidth: .infinity)
+        return VStack(spacing: 0) {
+            summaryRow(
+                label: String(localized: "categories.summary.expenseBudget"),
+                value: overviewSummary.map { formatCurrency($0.totalBudgeted ?? 0, code: appState.currencyCode) } ?? "—"
+            )
+            Divider().background(Color.ppBorder)
+            summaryRow(
+                label: String(localized: "categories.summary.incomeTarget"),
+                value: overviewSummary.map { s in
+                    s.totalBudgetedIncoming.map { formatCurrency($0, code: appState.currencyCode) } ?? "—"
+                } ?? "—"
+            )
+            Divider().background(Color.ppBorder)
+            summaryRow(
+                label: String(localized: "categories.summary.totalSpent"),
+                value: overviewSummary.map { formatCurrency($0.totalSpent, code: appState.currencyCode) } ?? "—"
+            )
+            Divider().background(Color.ppBorder)
+            summaryRow(
+                label: String(localized: "categories.summary.categories"),
+                value: "\(totalCount)"
+            )
+            Divider().background(Color.ppBorder)
+            summaryRow(
+                label: String(localized: "categories.summary.unbudgeted"),
+                value: "\(unbudgetedCount)"
+            )
         }
-        .padding(PPSpacing.md)
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private func summaryRow(label: String, value: String) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.xs) {
+            Text(label.uppercased())
+                .font(.ppOverline)
+                .foregroundColor(.ppTextSecondary)
+                .tracking(1)
+            Text(value)
+                .font(.ppHeadline)
+                .foregroundColor(.ppTextPrimary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, PPSpacing.lg)
+        .padding(.vertical, PPSpacing.md)
     }
 
     private func categorySection(_ title: String, categories: [CategoryManagementItem], color: Color) -> some View {
@@ -431,6 +431,7 @@ struct CategoriesView: View {
                     queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
                 ) {
                     overviewMap = Dictionary(uniqueKeysWithValues: overview.categories.map { ($0.id, $0) })
+                    overviewSummary = overview.summary
                 }
             }
         } catch {

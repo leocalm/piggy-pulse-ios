@@ -86,8 +86,8 @@ struct AccountsView: View {
                         }
 
                         // Grouped by type
-                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" || $0.accountType == "Allowance" })
-                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" })
+                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Wallet" || $0.accountType == "Allowance" })
+                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Savings" || $0.accountType == "Investment" || $0.accountType == "Protected" })
                         accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
                     }
                 }
@@ -285,11 +285,11 @@ struct AccountsView: View {
     }
 
     private var liquidTotal: Int64 {
-        accounts.filter { $0.accountType == "Checking" || $0.accountType == "Savings" || $0.accountType == "Allowance" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "Checking" || $0.accountType == "Wallet" || $0.accountType == "Allowance" }.reduce(0) { $0 + $1.balance }
     }
 
     private var protectedTotal: Int64 {
-        accounts.filter { $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "Savings" || $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
     }
 
     private var debtTotal: Int64 {

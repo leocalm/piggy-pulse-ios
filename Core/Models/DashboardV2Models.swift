@@ -133,6 +133,16 @@ struct CategoriesOverviewSummaryItem: Codable {
     let variance: Int64
 }
 
+struct CategoriesOverviewSummary: Codable {
+    let periodName: String
+    let periodElapsedPercent: Int64
+    let totalSpent: Int64
+    let totalBudgeted: Int64?
+    let totalBudgetedIncoming: Int64?
+    let variance: Int64
+}
+
 struct CategoriesOverviewResponse: Codable {
+    let summary: CategoriesOverviewSummary
     let categories: [CategoriesOverviewSummaryItem]
 }
