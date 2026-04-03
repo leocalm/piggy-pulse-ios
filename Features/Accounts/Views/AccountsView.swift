@@ -4,7 +4,7 @@ import TipKit
 struct AccountsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.themeManager) private var theme
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.isWideLayout) private var isWideLayout
     @State private var accounts: [AccountListItem] = []
     @State private var summary: AccountsSummary?
     @State private var isLoading = false
@@ -139,7 +139,7 @@ struct AccountsView: View {
         Group {
             if !accounts.isEmpty {
                 Section {
-                    if horizontalSizeClass == .regular {
+                    if isWideLayout {
                         // Wide layout: 2-column grid for account cards
                         LazyVGrid(columns: [GridItem(.flexible(), spacing: PPSpacing.md), GridItem(.flexible(), spacing: PPSpacing.md)], spacing: PPSpacing.md) {
                             ForEach(accounts) { account in

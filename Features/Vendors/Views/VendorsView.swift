@@ -4,7 +4,7 @@ import TipKit
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.themeManager) private var theme
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.isWideLayout) private var isWideLayout
     @State private var vendors: [VendorListItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -118,7 +118,7 @@ struct VendorsView: View {
 
                         // Vendor rows
                         Section {
-                            if horizontalSizeClass == .regular {
+                            if isWideLayout {
                                 // Wide layout: 2-column grid
                                 LazyVGrid(columns: [GridItem(.flexible(), spacing: PPSpacing.md), GridItem(.flexible(), spacing: PPSpacing.md)], spacing: PPSpacing.md) {
                                     ForEach(filteredVendors) { vendor in

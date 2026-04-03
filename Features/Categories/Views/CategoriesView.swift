@@ -5,7 +5,7 @@ struct CategoriesView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.themeManager) private var theme
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    
     @State private var incoming: [CategoryManagementItem] = []
     @State private var outgoing: [CategoryManagementItem] = []
     @State private var archived: [CategoryManagementItem] = []
@@ -260,12 +260,10 @@ struct CategoriesView: View {
                     }
                 }
             }
+
     }
 
-    /// Whether the current layout is wide enough for multi-column display (iPad landscape).
-    private var isWideLayout: Bool {
-        horizontalSizeClass == .regular
-    }
+    @Environment(\.isWideLayout) private var isWideLayout
 
     private var categoryStatsBar: some View {
         let allActive = incoming + outgoing

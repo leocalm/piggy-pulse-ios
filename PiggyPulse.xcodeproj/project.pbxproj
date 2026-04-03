@@ -115,6 +115,7 @@
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		C78A19A1430B7B62516243CC /* AddSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */; };
 		CDDE9B15F1319EF473B7D27B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */; };
+		CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		D2A6D9629A6935A89D85D271 /* DashboardV2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */; };
 		D5F42F028E63A5901C39662D /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */; };
@@ -233,6 +234,7 @@
 		64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoPeriodStateView.swift; sourceTree = "<group>"; };
 		65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		6C51E983FAB6592A05645D65 /* VariableCategoriesCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VariableCategoriesCard.swift; sourceTree = "<group>"; };
+		7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WideLayoutModifier.swift; sourceTree = "<group>"; };
 		73873C0A9C57AAFE509D3D46 /* Subscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Subscription.swift; path = Core/Models/Subscription.swift; sourceTree = "<group>"; };
 		80F9AF27323DC57349FAA271 /* EditSubscriptionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditSubscriptionSheet.swift; path = Features/Subscriptions/Views/EditSubscriptionSheet.swift; sourceTree = "<group>"; };
 		85AE8E34B0ECEF1C0554A8E1 /* SpendingTrendCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpendingTrendCard.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */,
 				DEC8F45593269B73F9767AA8 /* AppTips.swift */,
 				CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */,
+				7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1061,6 +1064,7 @@
 				CDDE9B15F1319EF473B7D27B /* SidebarNavigationView.swift in Sources */,
 				0478809786A7E3893AC8B020 /* AdaptiveNavigationView.swift in Sources */,
 				E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */,
+				CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

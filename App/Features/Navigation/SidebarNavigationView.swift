@@ -107,15 +107,18 @@ struct SidebarNavigationView: View {
 
     @ViewBuilder
     private var detailView: some View {
-        switch selection {
-        case .dashboard:
-            DashboardView().environmentObject(appState)
-        case .transactions:
-            NavigationStack {
-                TransactionsView().environmentObject(appState)
-            }
-        case .accounts:
-            NavigationStack {
+        GeometryReader { geo in
+            let wide = geo.size.width >= 600
+            Group {
+                switch selection {
+                case .dashboard:
+                    DashboardView().environmentObject(appState)
+                case .transactions:
+                    NavigationStack {
+                        TransactionsView().environmentObject(appState)
+                    }
+                case .accounts:
+                    NavigationStack {
                 AccountsView().environmentObject(appState)
             }
         case .periods:
@@ -146,6 +149,9 @@ struct SidebarNavigationView: View {
             Text(String(localized: "sidebar.selectSection"))
                 .font(.ppTitle3)
                 .foregroundColor(.ppTextTertiary)
+                }
+            }
+            .environment(\.isWideLayout, wide)
         }
     }
 }
