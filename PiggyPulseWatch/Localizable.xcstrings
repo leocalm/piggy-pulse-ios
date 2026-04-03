@@ -1,0 +1,361 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "--" : {
+
+    },
+    "%lld" : {
+
+    },
+    "%lld accounts" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld contas"
+          }
+        }
+      }
+    },
+    "%lld days left" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dias restantes"
+          }
+        }
+      }
+    },
+    "%lld days remaining" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dias restantes"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+
+    },
+    "%lld%% of period elapsed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%% do periodo decorrido"
+          }
+        }
+      }
+    },
+    "Accounts" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contas"
+          }
+        }
+      }
+    },
+    "Allowance" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesada"
+          }
+        }
+      }
+    },
+    "Checking" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conta Corrente"
+          }
+        }
+      }
+    },
+    "Credit Card" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cartao de Credito"
+          }
+        }
+      }
+    },
+    "Current Period" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periodo Atual"
+          }
+        }
+      }
+    },
+    "Data not found." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dados nao encontrados."
+          }
+        }
+      }
+    },
+    "Days Remaining" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dias Restantes"
+          }
+        }
+      }
+    },
+    "Debt" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Divida"
+          }
+        }
+      }
+    },
+    "Invalid request URL." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL de requisicao invalida."
+          }
+        }
+      }
+    },
+    "Liquid" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liquido"
+          }
+        }
+      }
+    },
+    "Loading..." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando..."
+          }
+        }
+      }
+    },
+    "Net Position" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posicao Liquida"
+          }
+        }
+      }
+    },
+    "Net Position: --" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posicao Liquida: --"
+          }
+        }
+      }
+    },
+    "Net: %@" : {
+
+    },
+    "No accounts" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhuma conta"
+          }
+        }
+      }
+    },
+    "of %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de %@"
+          }
+        }
+      }
+    },
+    "Open PiggyPulse on your iPhone to sign in." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abra o PiggyPulse no seu iPhone para entrar."
+          }
+        }
+      }
+    },
+    "Period" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periodo"
+          }
+        }
+      }
+    },
+    "Period: --" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periodo: --"
+          }
+        }
+      }
+    },
+    "Please open PiggyPulse on your iPhone to sign in." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abra o PiggyPulse no seu iPhone para entrar."
+          }
+        }
+      }
+    },
+    "Projected" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projetado"
+          }
+        }
+      }
+    },
+    "Protected" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protegido"
+          }
+        }
+      }
+    },
+    "Savings" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poupanca"
+          }
+        }
+      }
+    },
+    "Server error (%lld). Try again later." : {
+
+    },
+    "Shows days left in your current budget period." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra os dias restantes no seu periodo de orcamento atual."
+          }
+        }
+      }
+    },
+    "Shows your total net position." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra sua posicao liquida total."
+          }
+        }
+      }
+    },
+    "Sign In Required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login Necessario"
+          }
+        }
+      }
+    },
+    "Spent" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasto"
+          }
+        }
+      }
+    },
+    "Total" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        }
+      }
+    },
+    "Unable to connect. Check your connection." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nao foi possivel conectar. Verifique sua conexao."
+          }
+        }
+      }
+    },
+    "Unexpected response format." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formato de resposta inesperado."
+          }
+        }
+      }
+    },
+    "Wallet" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carteira"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

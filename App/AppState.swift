@@ -117,6 +117,7 @@ final class AppState: ObservableObject {
         self.notificationScheduler = NotificationScheduler()
         self.isAuthenticated = tm.isAuthenticated
         loadTheme()
+        WatchSessionManager.shared.activate()
     }
 
     /// Called on app launch to validate existing tokens
@@ -138,6 +139,10 @@ final class AppState: ObservableObject {
             await loadUserCurrency()
             await checkOnboardingStatus()
             await scheduleNotifications()
+            // Sync auth token to Apple Watch
+            if let token = tokenManager.getAccessToken() {
+                WatchSessionManager.shared.sendAuthToken(token, currencyCode: currencyCode)
+            }
         } catch {
             tokenManager.clearTokens()
             isAuthenticated = false
@@ -193,6 +198,7 @@ final class AppState: ObservableObject {
         }
 
         tokenManager.clearTokens()
+        WatchSessionManager.shared.clearAuth()
         currentUser = nil
         selectedPeriod = nil
         isAuthenticated = false
