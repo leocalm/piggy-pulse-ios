@@ -17,22 +17,27 @@ struct DashboardView: View {
                 NoPeriodStateView(pageTitle: String(localized: "tab.dashboard"), showTitle: false)
                     .navigationTitle(String(localized: "tab.dashboard"))
             } else {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: PPSpacing.xl) {
-                        TipView(dashboardTip)
+                GeometryReader { geo in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: PPSpacing.xl) {
+                            TipView(dashboardTip)
 
-                        if viewModel.isLoading {
-                            loadingState
-                        } else if let error = viewModel.errorMessage {
-                            errorState(error)
-                        } else {
-                            AdaptiveWidgetGrid(widgets: viewModel.layout.visibleWidgets) { widgetId in
-                                renderWidget(widgetId)
+                            if viewModel.isLoading {
+                                loadingState
+                            } else if let error = viewModel.errorMessage {
+                                errorState(error)
+                            } else {
+                                AdaptiveWidgetGrid(
+                                    widgets: viewModel.layout.visibleWidgets,
+                                    useGrid: geo.size.width >= 700
+                                ) { widgetId in
+                                    renderWidget(widgetId)
+                                }
+                                .id(layoutVersion)
                             }
-                            .id(layoutVersion)
                         }
+                        .padding(PPSpacing.lg)
                     }
-                    .padding(PPSpacing.lg)
                 }
                 .background(Color.ppBackground)
                 .refreshable {

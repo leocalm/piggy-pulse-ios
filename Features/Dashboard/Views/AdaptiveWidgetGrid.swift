@@ -1,32 +1,26 @@
 import SwiftUI
 
 /// Displays dashboard widgets in a single column when narrow, 2-column grid when wide.
-/// Hero widgets (getting_started, current_period, net_position) always span full width.
-/// Non-hero widgets in the grid are height-equalized per row.
+/// Hero widgets always span full width. Non-hero widgets pair up in wide mode.
 struct AdaptiveWidgetGrid<Content: View>: View {
     let widgets: [String]
     let content: (String) -> Content
-
-    /// Minimum width to switch to 2-column grid
-    private let twoColumnThreshold: CGFloat = 700
-
-    init(widgets: [String], @ViewBuilder content: @escaping (String) -> Content) {
-        self.widgets = widgets
-        self.content = content
-    }
+    let useGrid: Bool
 
     private let heroIds: Set<String> = ["getting_started", "current_period", "net_position"]
 
+    init(widgets: [String], useGrid: Bool, @ViewBuilder content: @escaping (String) -> Content) {
+        self.widgets = widgets
+        self.useGrid = useGrid
+        self.content = content
+    }
+
     var body: some View {
-        GeometryReader { geo in
-            let useGrid = geo.size.width >= twoColumnThreshold
-            if useGrid {
-                gridLayout(width: geo.size.width)
-            } else {
-                stackLayout
-            }
+        if useGrid {
+            gridLayout
+        } else {
+            stackLayout
         }
-        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: - Single column
@@ -39,30 +33,22 @@ struct AdaptiveWidgetGrid<Content: View>: View {
 
     // MARK: - Two-column grid
 
-    private func gridLayout(width: CGFloat) -> some View {
-        let spacing = PPSpacing.lg
-        let columnWidth = (width - spacing) / 2
+    private var gridLayout: some View {
         let rows = buildRows()
-
-        return VStack(spacing: spacing) {
+        return VStack(spacing: PPSpacing.lg) {
             ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
                 if row.count == 1 {
                     content(row[0])
                 } else {
-                    HStack(alignment: .top, spacing: spacing) {
+                    EqualHeightHStack(spacing: PPSpacing.lg) {
                         content(row[0])
-                            .frame(maxWidth: .infinity)
                         content(row[1])
-                            .frame(maxWidth: .infinity)
                     }
-                    // Equal heights: both cards stretch to match the taller one
-                    .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
     }
 
-    /// Group widgets into rows: heroes get their own full-width row, non-heroes pair up.
     private func buildRows() -> [[String]] {
         var rows: [[String]] = []
         var pending: String? = nil
@@ -90,5 +76,30 @@ struct AdaptiveWidgetGrid<Content: View>: View {
         }
 
         return rows
+    }
+}
+
+// MARK: - Equal Height HStack
+
+/// An HStack where all children are stretched to the height of the tallest child.
+struct EqualHeightHStack: Layout {
+    var spacing: CGFloat = 0
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.width ?? 0
+        let childWidth = (width - spacing * CGFloat(max(subviews.count - 1, 0))) / CGFloat(max(subviews.count, 1))
+        let maxHeight = subviews.map { $0.sizeThatFits(.init(width: childWidth, height: nil)).height }.max() ?? 0
+        return CGSize(width: width, height: maxHeight)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let childWidth = (bounds.width - spacing * CGFloat(max(subviews.count - 1, 0))) / CGFloat(max(subviews.count, 1))
+        let maxHeight = subviews.map { $0.sizeThatFits(.init(width: childWidth, height: nil)).height }.max() ?? bounds.height
+
+        var x = bounds.minX
+        for subview in subviews {
+            subview.place(at: CGPoint(x: x, y: bounds.minY), proposal: .init(width: childWidth, height: maxHeight))
+            x += childWidth + spacing
+        }
     }
 }
