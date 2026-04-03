@@ -72,16 +72,22 @@
 		02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
 		02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
 		0478809786A7E3893AC8B020 /* AdaptiveNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34586628093E9F2F08581B5 /* AdaptiveNavigationView.swift */; };
+		05F2FB52C2B657C06B876239 /* WatchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6620EB698A2E39C8B06488 /* WatchModels.swift */; };
 		07377F8683481B3296B407BA /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED90CBA90BF7606037E96B2 /* ColorTheme.swift */; };
 		0DC01C1676C90147308E6EBF /* TopVendorsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C77DED5397C4C50F0A62D1 /* TopVendorsCard.swift */; };
+		0F5348ABC6294DD9D4EFB4B1 /* CurrentPeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A121D67E790EE4AF914A0A91 /* CurrentPeriodView.swift */; };
 		10397A3AEC49F6F3C76601C3 /* EditSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F9AF27323DC57349FAA271 /* EditSubscriptionSheet.swift */; };
 		22C0F8ED521141D76137ED2A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73873C0A9C57AAFE509D3D46 /* Subscription.swift */; };
 		23E2629D9FD1AA581DAA074C /* VariableCategoriesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C51E983FAB6592A05645D65 /* VariableCategoriesCard.swift */; };
+		2E763C80CAB58F9D890A449E /* NetPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CA8A8A20F56C499BCF4284 /* NetPositionView.swift */; };
 		3438EFA3F79C8C716E8AFCDB /* FixedCategoriesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20E1305F3F75D9179B8C51 /* FixedCategoriesCard.swift */; };
 		345423E543024ED76C6D1D31 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D345ACC7079F29AADBABDE4 /* DateHelper.swift */; };
+		4104D42EE6609B3EF8912200 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535AB889773EDA5101964BA3 /* WatchConnectivityManager.swift */; };
 		410E0A67E994B01A5C322D16 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */; };
 		438B8A35E1A2EEE2AAEC013B /* DashboardCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC1266FA5F9008EC31D0E72 /* DashboardCardStyle.swift */; };
+		4614B1186B463CB13A13BEF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3742CEFE751DF09D6519AB4 /* Assets.xcassets */; };
 		48B7E956527EE37B6016880E /* CancelSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075AFDCD4DB916D66358E382 /* CancelSubscriptionSheet.swift */; };
+		4E7B2629C845EBBF98C3C288 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171FF03E4C9DF4BE71D78E58 /* CurrencyFormatter.swift */; };
 		585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC8F45593269B73F9767AA8 /* AppTips.swift */; };
 		58DAF53C883817FCAB844EC8 /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */; };
 		594CFFC8227767181047BBAD /* CurrentPeriodCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E53F608D1028A3D810AE21 /* CurrentPeriodCard.swift */; };
@@ -91,13 +97,20 @@
 		6EF02EAE215F5094A4EE7EF1 /* SummaryStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CE78C71FBEC1E705C286DD /* SummaryStepView.swift */; };
 		6F0A78FE9C3880F3B8EC3F0F /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998D40913E3DF0F3A133339E /* ThemeManager.swift */; };
 		6F27D7755ABDFAC055F0A784 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5387D46E2C06BBF30DE7429B /* OnboardingViewModel.swift */; };
+		71000BDB5BE9B8E046E3094F /* PiggyPulseWatchWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8B35CCAA2B7E828ECC1A899C /* PiggyPulseWatchWidgets.appex */; };
 		7352FA8DE4D850AB38450768 /* AccountsStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009EF4876FF657BCAD295807 /* AccountsStepView.swift */; };
+		766B86A22B323358E18D18A2 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171FF03E4C9DF4BE71D78E58 /* CurrencyFormatter.swift */; };
+		819F62A7038D398569E5AF6B /* WatchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6620EB698A2E39C8B06488 /* WatchModels.swift */; };
 		82EE09342522CA6F1F6C52D8 /* DashboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBCA62AA85E9444E9E35E4 /* DashboardLayout.swift */; };
+		8367AE29ACA29298FDE44B5E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3D56099E7A4C5BEF5D3C87FF /* Localizable.xcstrings */; };
 		8A578ECD8C416132C18565E6 /* DashboardV2Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */; };
 		9514F846680B3E2DB7734D79 /* SubscriptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24113472B37FCBFA9F8BBB3B /* SubscriptionsViewModel.swift */; };
+		9A3387EC3F3EB66039A8331F /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6A07769210E81EC2760287 /* AccountsListView.swift */; };
 		9E825238089F2B7812B98380 /* SubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */; };
 		A0E670ABF2A2CEE413D4D00E /* NetPositionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */; };
 		A31C62A16B986E0077837D83 /* SubscriptionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAA737F835552FC189AA687 /* SubscriptionsCard.swift */; };
+		A3C9E8C4A79CE5B19CC81798 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D1517FF30A220625F17AE2 /* Foundation.framework */; };
+		A3E9B9A5A3012CC24C5E63F8 /* ComplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE054E88818BB7F1EE0723 /* ComplicationProvider.swift */; };
 		A5C969713FF3FD8C2959FF57 /* DashboardV2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD441B3134F3F0800429F2D /* DashboardV2ViewModel.swift */; };
 		A7597E8D7185D46E7332F5F1 /* SpendingTrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE8E34B0ECEF1C0554A8E1 /* SpendingTrendCard.swift */; };
 		AA000002000000000000AA02 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* NotificationPreferences.swift */; };
@@ -111,10 +124,15 @@
 		AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F000000000000AA1F /* PasswordStrengthBar.swift */; };
 		AA100001000000000000BB01 /* WelcomeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002000000000000BB02 /* WelcomeStepView.swift */; };
 		AA100003000000000000BB03 /* CurrencyStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004000000000000BB04 /* CurrencyStepView.swift */; };
+		AD39A29ABDC2072820FB52A9 /* WatchAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7887857EDA414E961916B54B /* WatchAPIClient.swift */; };
 		AD3A592A0E854B3603816430 /* WidgetDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
+		B25AE07BB57EA6BE2C98A58D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3742CEFE751DF09D6519AB4 /* Assets.xcassets */; };
+		B40F9699D898D1E28F35B037 /* WatchAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7887857EDA414E961916B54B /* WatchAPIClient.swift */; };
 		C78A19A1430B7B62516243CC /* AddSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */; };
+		C83C00BA1473C60050A0C7A4 /* PiggyPulseWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C8F563AF040946E209467 /* PiggyPulseWatchApp.swift */; };
 		CDDE9B15F1319EF473B7D27B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */; };
+		CE0C7D4C9822074106738FE0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3D56099E7A4C5BEF5D3C87FF /* Localizable.xcstrings */; };
 		CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		D2A6D9629A6935A89D85D271 /* DashboardV2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */; };
@@ -123,6 +141,8 @@
 		E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */; };
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
 		E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */; };
+		E9DFADC3D3A8F9181D5063B9 /* PiggyPulseWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */; };
+		F6700F6B42CBDE524592AA2A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D1517FF30A220625F17AE2 /* Foundation.framework */; };
 		F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
 		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
@@ -138,7 +158,46 @@
 			remoteGlobalIDString = 020853A62F5898F7004E2FD4;
 			remoteInfo = PiggyPulse;
 		};
+		BFFC7CBCE075F54046B3D328 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1344D5D7D5E0F17BD64E0B74;
+			remoteInfo = PiggyPulseWatch;
+		};
+		CDEB719E417BB2D60847EBCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F871A6718F83B5F206CE0CC7;
+			remoteInfo = PiggyPulseWatchWidgets;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1D3DCDDB667F3891F0A84437 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				E9DFADC3D3A8F9181D5063B9 /* PiggyPulseWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63513C9C838A977655700262 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				71000BDB5BE9B8E046E3094F /* PiggyPulseWatchWidgets.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		009EF4876FF657BCAD295807 /* AccountsStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsStepView.swift; sourceTree = "<group>"; };
@@ -215,17 +274,23 @@
 		11CE78C71FBEC1E705C286DD /* SummaryStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SummaryStepView.swift; sourceTree = "<group>"; };
 		11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		125697D5718FA1710F492888 /* CategoriesStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CategoriesStepView.swift; sourceTree = "<group>"; };
+		171FF03E4C9DF4BE71D78E58 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		17E53F608D1028A3D810AE21 /* CurrentPeriodCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrentPeriodCard.swift; sourceTree = "<group>"; };
 		18EA6862EBC54B090D8654EB /* PeriodStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PeriodStepView.swift; sourceTree = "<group>"; };
+		1975BF8812F1EA282C70F85C /* PiggyPulseWatch-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PiggyPulseWatch-Info.plist"; sourceTree = "<group>"; };
 		1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddSubscriptionSheet.swift; path = Features/Subscriptions/Views/AddSubscriptionSheet.swift; sourceTree = "<group>"; };
 		1BAA737F835552FC189AA687 /* SubscriptionsCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SubscriptionsCard.swift; sourceTree = "<group>"; };
 		218D425998B41C87A5820AA6 /* OnboardingStepIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingStepIndicator.swift; sourceTree = "<group>"; };
 		2273D6A650B1C2CE0C6C2D0E /* CashFlowCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CashFlowCard.swift; sourceTree = "<group>"; };
+		227C8F563AF040946E209467 /* PiggyPulseWatchApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PiggyPulseWatchApp.swift; sourceTree = "<group>"; };
 		24113472B37FCBFA9F8BBB3B /* SubscriptionsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionsViewModel.swift; path = Features/Subscriptions/ViewModels/SubscriptionsViewModel.swift; sourceTree = "<group>"; };
 		28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CategorySubscriptionSection.swift; sourceTree = "<group>"; };
 		2AC1266FA5F9008EC31D0E72 /* DashboardCardStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardCardStyle.swift; sourceTree = "<group>"; };
 		2ED90CBA90BF7606037E96B2 /* ColorTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		3D56099E7A4C5BEF5D3C87FF /* Localizable.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		45D1517FF30A220625F17AE2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS11.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentTransactionsCard.swift; sourceTree = "<group>"; };
+		535AB889773EDA5101964BA3 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
 		5387D46E2C06BBF30DE7429B /* OnboardingViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		5CD441B3134F3F0800429F2D /* DashboardV2ViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2ViewModel.swift; sourceTree = "<group>"; };
 		5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
@@ -233,15 +298,20 @@
 		629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionsView.swift; path = Features/Subscriptions/Views/SubscriptionsView.swift; sourceTree = "<group>"; };
 		64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoPeriodStateView.swift; sourceTree = "<group>"; };
 		65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		6B6620EB698A2E39C8B06488 /* WatchModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchModels.swift; sourceTree = "<group>"; };
 		6C51E983FAB6592A05645D65 /* VariableCategoriesCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VariableCategoriesCard.swift; sourceTree = "<group>"; };
 		7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WideLayoutModifier.swift; sourceTree = "<group>"; };
 		73873C0A9C57AAFE509D3D46 /* Subscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Subscription.swift; path = Core/Models/Subscription.swift; sourceTree = "<group>"; };
+		7887857EDA414E961916B54B /* WatchAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchAPIClient.swift; sourceTree = "<group>"; };
+		7DAE054E88818BB7F1EE0723 /* ComplicationProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ComplicationProvider.swift; sourceTree = "<group>"; };
 		80F9AF27323DC57349FAA271 /* EditSubscriptionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditSubscriptionSheet.swift; path = Features/Subscriptions/Views/EditSubscriptionSheet.swift; sourceTree = "<group>"; };
 		85AE8E34B0ECEF1C0554A8E1 /* SpendingTrendCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpendingTrendCard.swift; sourceTree = "<group>"; };
+		8B35CCAA2B7E828ECC1A899C /* PiggyPulseWatchWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PiggyPulseWatchWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		998D40913E3DF0F3A133339E /* ThemeManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		9AF8DDC560849A681137F2C6 /* Onboarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GettingStartedCard.swift; sourceTree = "<group>"; };
 		9D345ACC7079F29AADBABDE4 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		A121D67E790EE4AF914A0A91 /* CurrentPeriodView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrentPeriodView.swift; sourceTree = "<group>"; };
 		A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetDefinition.swift; sourceTree = "<group>"; };
 		AA000001000000000000AA01 /* NotificationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferences.swift; sourceTree = "<group>"; };
 		AA000003000000000000AA03 /* NotificationPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesTests.swift; sourceTree = "<group>"; };
@@ -256,16 +326,21 @@
 		AA100002000000000000BB02 /* WelcomeStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeStepView.swift; sourceTree = "<group>"; };
 		AA100004000000000000BB04 /* CurrencyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyStepView.swift; sourceTree = "<group>"; };
 		AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveWidgetGrid.swift; sourceTree = "<group>"; };
+		B3742CEFE751DF09D6519AB4 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiggyPulseWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Repository.swift; sourceTree = "<group>"; };
 		C34586628093E9F2F08581B5 /* AdaptiveNavigationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveNavigationView.swift; sourceTree = "<group>"; };
 		C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionCard.swift; sourceTree = "<group>"; };
 		CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionRepository.swift; path = Core/Repositories/SubscriptionRepository.swift; sourceTree = "<group>"; };
 		CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
+		CE6A07769210E81EC2760287 /* AccountsListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
 		DEC8F45593269B73F9767AA8 /* AppTips.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppTips.swift; sourceTree = "<group>"; };
 		E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailView.swift; path = Features/Subscriptions/Views/SubscriptionDetailView.swift; sourceTree = "<group>"; };
 		E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Models.swift; sourceTree = "<group>"; };
+		F4CA8A8A20F56C499BCF4284 /* NetPositionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionView.swift; sourceTree = "<group>"; };
 		F8EBCA62AA85E9444E9E35E4 /* DashboardLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardLayout.swift; sourceTree = "<group>"; };
 		FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountSheet.swift; sourceTree = "<group>"; };
+		FEAAC4950F7605762F10A451 /* PiggyPulseWatchWidgets-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PiggyPulseWatchWidgets-Info.plist"; sourceTree = "<group>"; };
 		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -274,6 +349,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1687F86BCFE956CC307D760F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3C9E8C4A79CE5B19CC81798 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90F99ED5F56532D3ABC4BA21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6700F6B42CBDE524592AA2A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +394,8 @@
 				AA000010000000000000AA10 /* PiggyPulseTests */,
 				28EFFADF3178CB4871112AB7 /* Features */,
 				1D912DE08DFEEC9904F12CB4 /* Core */,
+				0F67B58298ACCD2D29F760D5 /* PiggyPulseWatch */,
+				9F9C8E881A0AAC5E155BE8CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -311,6 +404,8 @@
 			children = (
 				020853A72F5898F7004E2FD4 /* PiggyPulse.app */,
 				AA000008000000000000AA08 /* PiggyPulseTests.xctest */,
+				B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */,
+				8B35CCAA2B7E828ECC1A899C /* PiggyPulseWatchWidgets.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -710,6 +805,15 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		07E0181C1AE6AFAA84433A67 /* Complications */ = {
+			isa = PBXGroup;
+			children = (
+				7DAE054E88818BB7F1EE0723 /* ComplicationProvider.swift */,
+			);
+			name = Complications;
+			path = Complications;
+			sourceTree = "<group>";
+		};
 		0CF1DCEE1929103CE7A05BCB /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -720,6 +824,22 @@
 				E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		0F67B58298ACCD2D29F760D5 /* PiggyPulseWatch */ = {
+			isa = PBXGroup;
+			children = (
+				C674B2B097DC5246C5D29B8A /* Views */,
+				6190010422BE3CFA5E22461E /* Models */,
+				07E0181C1AE6AFAA84433A67 /* Complications */,
+				227C8F563AF040946E209467 /* PiggyPulseWatchApp.swift */,
+				1975BF8812F1EA282C70F85C /* PiggyPulseWatch-Info.plist */,
+				3D56099E7A4C5BEF5D3C87FF /* Localizable.xcstrings */,
+				B3742CEFE751DF09D6519AB4 /* Assets.xcassets */,
+				FEAAC4950F7605762F10A451 /* PiggyPulseWatchWidgets-Info.plist */,
+			);
+			name = PiggyPulseWatch;
+			path = PiggyPulseWatch;
 			sourceTree = "<group>";
 		};
 		13E20CEDACA31F96C63931A3 /* Repositories */ = {
@@ -786,6 +906,18 @@
 			path = Steps;
 			sourceTree = "<group>";
 		};
+		6190010422BE3CFA5E22461E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6B6620EB698A2E39C8B06488 /* WatchModels.swift */,
+				7887857EDA414E961916B54B /* WatchAPIClient.swift */,
+				535AB889773EDA5101964BA3 /* WatchConnectivityManager.swift */,
+				171FF03E4C9DF4BE71D78E58 /* CurrencyFormatter.swift */,
+			);
+			name = Models;
+			path = Models;
+			sourceTree = "<group>";
+		};
 		6270A3E1D3F7A63BA62AA78C /* Cards */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,6 +953,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		9F9C8E881A0AAC5E155BE8CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1843E4108B4503E07F3114D /* watchOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AA00000E000000000000AA0E /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -848,6 +988,25 @@
 			path = Biometrics;
 			sourceTree = "<group>";
 		};
+		C674B2B097DC5246C5D29B8A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A121D67E790EE4AF914A0A91 /* CurrentPeriodView.swift */,
+				F4CA8A8A20F56C499BCF4284 /* NetPositionView.swift */,
+				CE6A07769210E81EC2760287 /* AccountsListView.swift */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D1843E4108B4503E07F3114D /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				45D1517FF30A220625F17AE2 /* Foundation.framework */,
+			);
+			name = watchOS;
+			sourceTree = "<group>";
+		};
 		D65B984A52C3F21DA80F719E /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -869,14 +1028,35 @@
 				020853A32F5898F7004E2FD4 /* Sources */,
 				020853A42F5898F7004E2FD4 /* Frameworks */,
 				020853A52F5898F7004E2FD4 /* Resources */,
+				1D3DCDDB667F3891F0A84437 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D11FB25AF7ED16B1140613EC /* PBXTargetDependency */,
 			);
 			name = PiggyPulse;
 			productName = PiggyPulse;
 			productReference = 020853A72F5898F7004E2FD4 /* PiggyPulse.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1344D5D7D5E0F17BD64E0B74 /* PiggyPulseWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F41290E89385CAC6CCBF7DDF /* Build configuration list for PBXNativeTarget "PiggyPulseWatch" */;
+			buildPhases = (
+				6E91E3BF98C26F17A86356C6 /* Sources */,
+				1687F86BCFE956CC307D760F /* Frameworks */,
+				ACF365B36FA0F85868071DA8 /* Resources */,
+				63513C9C838A977655700262 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03754E4ED576ACB4D442D538 /* PBXTargetDependency */,
+			);
+			name = PiggyPulseWatch;
+			productName = PiggyPulseWatch;
+			productReference = B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AA000005000000000000AA05 /* PiggyPulseTests */ = {
@@ -895,6 +1075,23 @@
 			productName = PiggyPulseTests;
 			productReference = AA000008000000000000AA08 /* PiggyPulseTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F871A6718F83B5F206CE0CC7 /* PiggyPulseWatchWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BC06F9BD3D3EEFB7C318736 /* Build configuration list for PBXNativeTarget "PiggyPulseWatchWidgets" */;
+			buildPhases = (
+				E9D63D298E463CFEBAC6735B /* Sources */,
+				90F99ED5F56532D3ABC4BA21 /* Frameworks */,
+				5A9086A8C080A7EF5BC8A873 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PiggyPulseWatchWidgets;
+			productName = PiggyPulseWatchWidgets;
+			productReference = 8B35CCAA2B7E828ECC1A899C /* PiggyPulseWatchWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -928,6 +1125,8 @@
 			targets = (
 				020853A62F5898F7004E2FD4 /* PiggyPulse */,
 				AA000005000000000000AA05 /* PiggyPulseTests */,
+				1344D5D7D5E0F17BD64E0B74 /* PiggyPulseWatch */,
+				F871A6718F83B5F206CE0CC7 /* PiggyPulseWatchWidgets */,
 			);
 		};
 /* End PBXProject section */
@@ -941,6 +1140,24 @@
 				027B34B12F5B6D5900E96DF6 /* LaunchScreen.storyboard in Resources */,
 				02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */,
 				02F038BD2F58E87A008DD1E7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A9086A8C080A7EF5BC8A873 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4614B1186B463CB13A13BEF8 /* Assets.xcassets in Resources */,
+				CE0C7D4C9822074106738FE0 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACF365B36FA0F85868071DA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8367AE29ACA29298FDE44B5E /* Localizable.xcstrings in Resources */,
+				B25AE07BB57EA6BE2C98A58D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1068,6 +1285,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6E91E3BF98C26F17A86356C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C83C00BA1473C60050A0C7A4 /* PiggyPulseWatchApp.swift in Sources */,
+				0F5348ABC6294DD9D4EFB4B1 /* CurrentPeriodView.swift in Sources */,
+				2E763C80CAB58F9D890A449E /* NetPositionView.swift in Sources */,
+				9A3387EC3F3EB66039A8331F /* AccountsListView.swift in Sources */,
+				819F62A7038D398569E5AF6B /* WatchModels.swift in Sources */,
+				B40F9699D898D1E28F35B037 /* WatchAPIClient.swift in Sources */,
+				4104D42EE6609B3EF8912200 /* WatchConnectivityManager.swift in Sources */,
+				4E7B2629C845EBBF98C3C288 /* CurrencyFormatter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA000006000000000000AA06 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1078,13 +1310,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9D63D298E463CFEBAC6735B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3E9B9A5A3012CC24C5E63F8 /* ComplicationProvider.swift in Sources */,
+				05F2FB52C2B657C06B876239 /* WatchModels.swift in Sources */,
+				AD39A29ABDC2072820FB52A9 /* WatchAPIClient.swift in Sources */,
+				766B86A22B323358E18D18A2 /* CurrencyFormatter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		03754E4ED576ACB4D442D538 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PiggyPulseWatchWidgets;
+			target = F871A6718F83B5F206CE0CC7 /* PiggyPulseWatchWidgets */;
+			targetProxy = CDEB719E417BB2D60847EBCD /* PBXContainerItemProxy */;
+		};
 		AA00000C000000000000AA0C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 020853A62F5898F7004E2FD4 /* PiggyPulse */;
 			targetProxy = AA00000D000000000000AA0D /* PBXContainerItemProxy */;
+		};
+		D11FB25AF7ED16B1140613EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PiggyPulseWatch;
+			target = 1344D5D7D5E0F17BD64E0B74 /* PiggyPulseWatch */;
+			targetProxy = BFFC7CBCE075F54046B3D328 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1298,6 +1553,65 @@
 			};
 			name = Release;
 		};
+		48B561F8128951407A34957D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = 742MF6AGHS;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PiggyPulseWatch/PiggyPulseWatch-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.ios.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		9BE16127A7EBF914FA853E1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = 742MF6AGHS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PiggyPulseWatch/PiggyPulseWatchWidgets-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.ios.watchkitapp.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 		AA000009000000000000AA09 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1336,6 +1650,65 @@
 			};
 			name = Release;
 		};
+		B616F6884118137BE2DC727A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = 742MF6AGHS;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PiggyPulseWatch/PiggyPulseWatch-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.ios.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		E4BCA77E7FB155CF72E0F592 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = 742MF6AGHS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PiggyPulseWatch/PiggyPulseWatchWidgets-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.ios.watchkitapp.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1357,11 +1730,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2BC06F9BD3D3EEFB7C318736 /* Build configuration list for PBXNativeTarget "PiggyPulseWatchWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BE16127A7EBF914FA853E1E /* Release */,
+				E4BCA77E7FB155CF72E0F592 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AA00000B000000000000AA0B /* Build configuration list for PBXNativeTarget "PiggyPulseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA000009000000000000AA09 /* Debug */,
 				AA00000A000000000000AA0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F41290E89385CAC6CCBF7DDF /* Build configuration list for PBXNativeTarget "PiggyPulseWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B616F6884118137BE2DC727A /* Release */,
+				48B561F8128951407A34957D /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
