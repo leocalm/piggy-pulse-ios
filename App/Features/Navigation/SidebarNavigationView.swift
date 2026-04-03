@@ -21,10 +21,21 @@ struct SidebarNavigationView: View {
     @State private var selection: Destination? = .dashboard
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
-    /// Returns a list row background for the given destination based on selection state.
+    /// Returns a list row background with a leading accent line for the selected item.
     private func rowBackground(for destination: Destination) -> some View {
-        RoundedRectangle(cornerRadius: 8)
-            .fill(selection == destination ? theme.primary.opacity(0.1) : Color.clear)
+        let isSelected = selection == destination
+        return HStack(spacing: 0) {
+            // Accent line
+            RoundedRectangle(cornerRadius: 2)
+                .fill(isSelected ? theme.primary : Color.clear)
+                .frame(width: 3)
+                .padding(.vertical, 4)
+
+            // Background fill
+            Rectangle()
+                .fill(isSelected ? theme.primary.opacity(0.08) : Color.clear)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
     var body: some View {
