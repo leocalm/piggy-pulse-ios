@@ -16333,6 +16333,38 @@
           }
         }
       }
+    },
+    "sidebar.overview": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visão Geral"
+          }
+        }
+      }
+    },
+    "sidebar.selectSection": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select a section from the sidebar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione uma secção na barra lateral"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -26,7 +26,7 @@ struct DashboardView: View {
                         } else if let error = viewModel.errorMessage {
                             errorState(error)
                         } else {
-                            ForEach(viewModel.layout.visibleWidgets, id: \.self) { widgetId in
+                            AdaptiveWidgetGrid(widgets: viewModel.layout.visibleWidgets) { widgetId in
                                 renderWidget(widgetId)
                             }
                             .id(layoutVersion)
