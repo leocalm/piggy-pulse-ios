@@ -86,7 +86,8 @@ struct EqualHeightHStack: Layout {
     var spacing: CGFloat = 0
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let width = proposal.width ?? 0
+        let resolved = proposal.replacingUnspecifiedDimensions()
+        let width = resolved.width
         let childWidth = (width - spacing * CGFloat(max(subviews.count - 1, 0))) / CGFloat(max(subviews.count, 1))
         let maxHeight = subviews.map { $0.sizeThatFits(.init(width: childWidth, height: nil)).height }.max() ?? 0
         return CGSize(width: width, height: maxHeight)

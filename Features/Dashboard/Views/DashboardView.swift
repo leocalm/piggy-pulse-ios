@@ -38,9 +38,7 @@ struct DashboardView: View {
                         }
                         .padding(PPSpacing.lg)
                     }
-                }
-                .background(Color.ppBackground)
-                .refreshable {
+                    .refreshable {
                     viewModel.configure(apiClient: appState.apiClient)
                     guard let periodId = appState.selectedPeriod?.id else { return }
                     // Use a detached task so SwiftUI's refreshable cancellation
@@ -50,6 +48,8 @@ struct DashboardView: View {
                         await vm.load(periodId: periodId)
                     }.value
                 }
+                } // GeometryReader
+                .background(Color.ppBackground)
                 .task(id: appState.selectedPeriod?.id) {
                     viewModel.configure(apiClient: appState.apiClient)
                     if let periodId = appState.selectedPeriod?.id {

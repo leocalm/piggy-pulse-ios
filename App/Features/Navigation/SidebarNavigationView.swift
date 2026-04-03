@@ -19,7 +19,8 @@ struct SidebarNavigationView: View {
     }
 
     @State private var selection: Destination? = .dashboard
-    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var columnVisibility: NavigationSplitViewVisibility = .doubleColumn
+    @State private var detailWidth: CGFloat = 0
 
     /// Returns a list row background with a leading accent line for the selected item.
     private func rowBackground(for destination: Destination) -> some View {
@@ -118,52 +119,49 @@ struct SidebarNavigationView: View {
 
     @ViewBuilder
     private var detailView: some View {
-        GeometryReader { geo in
-            let wide = geo.size.width >= 600
-            Group {
-                switch selection {
-                case .dashboard:
-                    DashboardView().environmentObject(appState)
-                case .transactions:
-                    NavigationStack {
-                        TransactionsView().environmentObject(appState)
-                    }
-                case .accounts:
-                    NavigationStack {
+        Group {
+            switch selection {
+            case .dashboard:
+                DashboardView().environmentObject(appState)
+            case .transactions:
+                TransactionsView().environmentObject(appState)
+            case .accounts:
                 AccountsView().environmentObject(appState)
-            }
-        case .periods:
-            NavigationStack {
+            case .periods:
                 PeriodsView().environmentObject(appState)
-            }
-        case .categories:
-            NavigationStack {
+            case .categories:
                 CategoriesView().environmentObject(appState)
-            }
-        case .targets:
-            NavigationStack {
+            case .targets:
                 BudgetPlanView().environmentObject(appState)
-            }
-        case .subscriptions:
-            NavigationStack {
+            case .subscriptions:
                 SubscriptionsView().environmentObject(appState)
-            }
-        case .vendors:
-            NavigationStack {
+            case .vendors:
                 VendorsView().environmentObject(appState)
-            }
-        case .settings:
-            NavigationStack {
+            case .settings:
                 SettingsView().environmentObject(appState)
+            case nil:
+                Text(String(localized: "sidebar.selectSection"))
+                    .font(.ppTitle3)
+                    .foregroundColor(.ppTextTertiary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-        case nil:
-            Text(String(localized: "sidebar.selectSection"))
-                .font(.ppTitle3)
-                .foregroundColor(.ppTextTertiary)
-                }
-            }
-            .environment(\.isWideLayout, wide)
         }
+        .environment(\.isWideLayout, detailWidth >= 600)
+        .background(
+            GeometryReader { geo in
+                Color.clear.preference(key: DetailWidthKey.self, value: geo.size.width)
+            }
+        )
+        .onPreferenceChange(DetailWidthKey.self) { detailWidth = $0 }
+    }
+}
+
+// MARK: - Detail Width Preference Key
+
+private struct DetailWidthKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 
