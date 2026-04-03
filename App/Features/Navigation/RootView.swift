@@ -13,7 +13,7 @@ struct RootView: View {
                         .background(Color.ppBackground)
                 } else if appState.isAuthenticated {
                     if appState.onboardingCompleted {
-                        MainTabView()
+                        AdaptiveNavigationView()
                     } else {
                         OnboardingView(apiClient: appState.apiClient)
                     }

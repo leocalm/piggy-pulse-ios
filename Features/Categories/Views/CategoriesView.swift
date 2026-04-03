@@ -3,8 +3,9 @@ import TipKit
 
 struct CategoriesView: View {
     @EnvironmentObject var appState: AppState
-@Environment(\.colorScheme) private var colorScheme
-@Environment(\.themeManager) private var theme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeManager) private var theme
+    
     @State private var incoming: [CategoryManagementItem] = []
     @State private var outgoing: [CategoryManagementItem] = []
     @State private var archived: [CategoryManagementItem] = []
@@ -133,8 +134,65 @@ struct CategoriesView: View {
                         .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
                     }
                 } else {
-                    categorySection(String(localized: "INCOMING"), categories: filteredIncoming, color: theme.tertiary)
-                    categorySection(String(localized: "OUTGOING"), categories: filteredOutgoing, color: theme.primary)
+                    if isWideLayout {
+                        // Wide layout: incoming and outgoing side by side
+                        Section {
+                            HStack(alignment: .top, spacing: PPSpacing.lg) {
+                                // Incoming column
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack {
+                                        Text(String(localized: "INCOMING")).font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
+                                        Spacer()
+                                        Text("\(filteredIncoming.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
+                                    }
+                                    ForEach(filteredIncoming) { cat in
+                                        categoryRow(cat, dimmed: false)
+                                            .contextMenu {
+                                                categoryContextMenu(cat)
+                                            }
+                                    }
+                                    if filteredIncoming.isEmpty {
+                                        Text(String(localized: "common.none"))
+                                            .font(.ppCaption)
+                                            .foregroundColor(.ppTextTertiary)
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, PPSpacing.lg)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+
+                                // Outgoing column
+                                VStack(alignment: .leading, spacing: PPSpacing.sm) {
+                                    HStack {
+                                        Text(String(localized: "OUTGOING")).font(.ppOverline).foregroundColor(.ppTextSecondary).tracking(1)
+                                        Spacer()
+                                        Text("\(filteredOutgoing.count)").font(.ppCaption).foregroundColor(.ppTextSecondary)
+                                    }
+                                    ForEach(filteredOutgoing) { cat in
+                                        categoryRow(cat, dimmed: false)
+                                            .contextMenu {
+                                                categoryContextMenu(cat)
+                                            }
+                                    }
+                                    if filteredOutgoing.isEmpty {
+                                        Text(String(localized: "common.none"))
+                                            .font(.ppCaption)
+                                            .foregroundColor(.ppTextTertiary)
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, PPSpacing.lg)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                            .listRowBackground(Color.ppBackground)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
+                    } else {
+                        // Compact layout: stacked sections
+                        categorySection(String(localized: "INCOMING"), categories: filteredIncoming, color: theme.tertiary)
+                        categorySection(String(localized: "OUTGOING"), categories: filteredOutgoing, color: theme.primary)
+                    }
 
                     if !filteredArchived.isEmpty {
                         Section {
@@ -202,7 +260,10 @@ struct CategoriesView: View {
                     }
                 }
             }
+
     }
+
+    @Environment(\.isWideLayout) private var isWideLayout
 
     private var categoryStatsBar: some View {
         let allActive = incoming + outgoing
@@ -210,37 +271,64 @@ struct CategoriesView: View {
         // Only count unbudgeted when overview data has loaded
         let unbudgetedCount = overviewMap.isEmpty ? 0 : allActive.filter { overviewMap[$0.id]?.budgeted == nil || overviewMap[$0.id]?.budgeted == 0 }.count
 
-        return VStack(spacing: 0) {
-            summaryRow(
-                label: String(localized: "categories.summary.expenseBudget"),
-                value: overviewSummary.map { formatCurrency($0.totalBudgeted ?? 0, code: appState.currencyCode) } ?? "—"
-            )
-            Divider().background(Color.ppBorder)
-            summaryRow(
-                label: String(localized: "categories.summary.incomeTarget"),
-                value: overviewSummary.map { s in
-                    s.totalBudgetedIncoming.map { formatCurrency($0, code: appState.currencyCode) } ?? "—"
-                } ?? "—"
-            )
-            Divider().background(Color.ppBorder)
-            summaryRow(
-                label: String(localized: "categories.summary.totalSpent"),
-                value: overviewSummary.map { formatCurrency($0.totalSpent, code: appState.currencyCode) } ?? "—"
-            )
-            Divider().background(Color.ppBorder)
-            summaryRow(
-                label: String(localized: "categories.summary.categories"),
-                value: "\(totalCount)"
-            )
-            Divider().background(Color.ppBorder)
-            summaryRow(
-                label: String(localized: "categories.summary.unbudgeted"),
-                value: "\(unbudgetedCount)"
-            )
+        let items: [(String, String)] = [
+            (String(localized: "categories.summary.expenseBudget"),
+             overviewSummary.map { formatCurrency($0.totalBudgeted ?? 0, code: appState.currencyCode) } ?? "—"),
+            (String(localized: "categories.summary.incomeTarget"),
+             overviewSummary.map { s in
+                 s.totalBudgetedIncoming.map { formatCurrency($0, code: appState.currencyCode) } ?? "—"
+             } ?? "—"),
+            (String(localized: "categories.summary.totalSpent"),
+             overviewSummary.map { formatCurrency($0.totalSpent, code: appState.currencyCode) } ?? "—"),
+            (String(localized: "categories.summary.categories"),
+             "\(totalCount)"),
+            (String(localized: "categories.summary.unbudgeted"),
+             "\(unbudgetedCount)")
+        ]
+
+        return Group {
+            if isWideLayout {
+                // Wide: 3-column grid for stats
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: PPSpacing.sm), count: 3), spacing: PPSpacing.sm) {
+                    ForEach(Array(items.enumerated()), id: \.offset) { _, item in
+                        summaryGridCell(label: item.0, value: item.1)
+                    }
+                }
+                .padding(PPSpacing.md)
+                .background(Color.ppCard)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+            } else {
+                // Compact: vertical stack with dividers
+                VStack(spacing: 0) {
+                    ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                        if index > 0 {
+                            Divider().background(Color.ppBorder)
+                        }
+                        summaryRow(label: item.0, value: item.1)
+                    }
+                }
+                .background(Color.ppCard)
+                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+            }
         }
-        .background(Color.ppCard)
-        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    private func summaryGridCell(label: String, value: String) -> some View {
+        VStack(alignment: .leading, spacing: PPSpacing.xs) {
+            Text(label.uppercased())
+                .font(.ppOverline)
+                .foregroundColor(.ppTextSecondary)
+                .tracking(1)
+            Text(value)
+                .font(.ppHeadline)
+                .foregroundColor(.ppTextPrimary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(PPSpacing.md)
+        .background(Color.ppSurface.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
     }
 
     private func summaryRow(label: String, value: String) -> some View {
@@ -323,6 +411,30 @@ struct CategoriesView: View {
         }
     }
     
+    @ViewBuilder
+    private func categoryContextMenu(_ cat: CategoryManagementItem) -> some View {
+        if !cat.isSystem {
+            Button {
+                editingCategory = cat
+            } label: {
+                Label(String(localized: "common.edit"), systemImage: "pencil")
+            }
+        }
+        if cat.globalTransactionCount > 0 {
+            Button {
+                categoryToArchive = cat
+            } label: {
+                Label(String(localized: "common.archive"), systemImage: "archivebox")
+            }
+        } else {
+            Button(role: .destructive) {
+                categoryToDelete = cat
+            } label: {
+                Label(String(localized: "common.delete"), systemImage: "trash")
+            }
+        }
+    }
+
     private func deleteCategory(_ cat: CategoryManagementItem) async {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {

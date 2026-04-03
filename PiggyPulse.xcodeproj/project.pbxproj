@@ -71,6 +71,7 @@
 		02F038E22F59A1CD008DD1E7 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E12F59A1CC008DD1E7 /* TransactionsView.swift */; };
 		02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
 		02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
+		0478809786A7E3893AC8B020 /* AdaptiveNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34586628093E9F2F08581B5 /* AdaptiveNavigationView.swift */; };
 		07377F8683481B3296B407BA /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED90CBA90BF7606037E96B2 /* ColorTheme.swift */; };
 		0DC01C1676C90147308E6EBF /* TopVendorsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C77DED5397C4C50F0A62D1 /* TopVendorsCard.swift */; };
 		10397A3AEC49F6F3C76601C3 /* EditSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F9AF27323DC57349FAA271 /* EditSubscriptionSheet.swift */; };
@@ -113,12 +114,15 @@
 		AD3A592A0E854B3603816430 /* WidgetDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
 		C78A19A1430B7B62516243CC /* AddSubscriptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20E043F7DCE1A1290C3E4F /* AddSubscriptionSheet.swift */; };
+		CDDE9B15F1319EF473B7D27B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */; };
+		CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		D2A6D9629A6935A89D85D271 /* DashboardV2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */; };
 		D5F42F028E63A5901C39662D /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */; };
 		DD2D49A2851C67CF68991EF2 /* CashFlowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2273D6A650B1C2CE0C6C2D0E /* CashFlowCard.swift */; };
 		E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */; };
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
+		E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */; };
 		F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
 		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
@@ -224,11 +228,13 @@
 		4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentTransactionsCard.swift; sourceTree = "<group>"; };
 		5387D46E2C06BBF30DE7429B /* OnboardingViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		5CD441B3134F3F0800429F2D /* DashboardV2ViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2ViewModel.swift; sourceTree = "<group>"; };
+		5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
 		6209A42534C14F2167B98336 /* NumberStepperView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NumberStepperView.swift; sourceTree = "<group>"; };
 		629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionsView.swift; path = Features/Subscriptions/Views/SubscriptionsView.swift; sourceTree = "<group>"; };
 		64BC7DCCB4E6E4A45AD65E09 /* NoPeriodStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoPeriodStateView.swift; sourceTree = "<group>"; };
 		65DB4F1AAFE4A955E72BFC7C /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		6C51E983FAB6592A05645D65 /* VariableCategoriesCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VariableCategoriesCard.swift; sourceTree = "<group>"; };
+		7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WideLayoutModifier.swift; sourceTree = "<group>"; };
 		73873C0A9C57AAFE509D3D46 /* Subscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Subscription.swift; path = Core/Models/Subscription.swift; sourceTree = "<group>"; };
 		80F9AF27323DC57349FAA271 /* EditSubscriptionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditSubscriptionSheet.swift; path = Features/Subscriptions/Views/EditSubscriptionSheet.swift; sourceTree = "<group>"; };
 		85AE8E34B0ECEF1C0554A8E1 /* SpendingTrendCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpendingTrendCard.swift; sourceTree = "<group>"; };
@@ -249,7 +255,9 @@
 		AA00001F000000000000AA1F /* PasswordStrengthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrengthBar.swift; sourceTree = "<group>"; };
 		AA100002000000000000BB02 /* WelcomeStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeStepView.swift; sourceTree = "<group>"; };
 		AA100004000000000000BB04 /* CurrencyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyStepView.swift; sourceTree = "<group>"; };
+		AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveWidgetGrid.swift; sourceTree = "<group>"; };
 		C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Repository.swift; sourceTree = "<group>"; };
+		C34586628093E9F2F08581B5 /* AdaptiveNavigationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveNavigationView.swift; sourceTree = "<group>"; };
 		C642A6F87F39D5293C7DE6EF /* NetPositionCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionCard.swift; sourceTree = "<group>"; };
 		CBC37C3B489D6D7C50505996 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionRepository.swift; path = Core/Repositories/SubscriptionRepository.swift; sourceTree = "<group>"; };
 		CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
@@ -322,6 +330,8 @@
 			children = (
 				02218DF42F589AEE00E8DCEF /* MainTabView.swift */,
 				02218DF32F589AE500E8DCEF /* RootView.swift */,
+				5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */,
+				C34586628093E9F2F08581B5 /* AdaptiveNavigationView.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -540,6 +550,7 @@
 				11CE9AAE204D48FDB2609F9C /* EmptyStateView.swift */,
 				DEC8F45593269B73F9767AA8 /* AppTips.swift */,
 				CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */,
+				7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -641,6 +652,7 @@
 			isa = PBXGroup;
 			children = (
 				02F038D52F599A8F008DD1E7 /* DashboardView.swift */,
+				AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -741,7 +753,6 @@
 				A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */,
 				F8EBCA62AA85E9444E9E35E4 /* DashboardLayout.swift */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -790,7 +801,6 @@
 				1BAA737F835552FC189AA687 /* SubscriptionsCard.swift */,
 				9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */,
 			);
-			name = Cards;
 			path = Cards;
 			sourceTree = "<group>";
 		};
@@ -1051,6 +1061,10 @@
 				585C0CCE64C3927A84967D39 /* AppTips.swift in Sources */,
 				E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */,
 				58DAF53C883817FCAB844EC8 /* EmojiPicker.swift in Sources */,
+				CDDE9B15F1319EF473B7D27B /* SidebarNavigationView.swift in Sources */,
+				0478809786A7E3893AC8B020 /* AdaptiveNavigationView.swift in Sources */,
+				E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */,
+				CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1205,7 +1219,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1217,6 +1231,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1235,7 +1250,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1248,7 +1263,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1260,6 +1275,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1278,7 +1294,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

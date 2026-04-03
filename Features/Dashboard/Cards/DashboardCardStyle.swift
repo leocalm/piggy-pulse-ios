@@ -7,7 +7,7 @@ struct DashboardCardModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(PPSpacing.xl)
             .background(Color.ppCard)
             .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
