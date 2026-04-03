@@ -4,6 +4,7 @@ import TipKit
 struct VendorsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.themeManager) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var vendors: [VendorListItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -117,51 +118,49 @@ struct VendorsView: View {
 
                         // Vendor rows
                         Section {
-                            ForEach(filteredVendors) { vendor in
-                                vendorRow(vendor)
-                                    .swipeActions(edge: .trailing) {
-                                        if vendor.transactionCount > 0 {
-                                            Button {
-                                                vendorToArchive = vendor
-                                            } label: {
-                                                Label(String(localized: "common.archive"), systemImage: "archivebox")
+                            if horizontalSizeClass == .regular {
+                                // Wide layout: 2-column grid
+                                LazyVGrid(columns: [GridItem(.flexible(), spacing: PPSpacing.md), GridItem(.flexible(), spacing: PPSpacing.md)], spacing: PPSpacing.md) {
+                                    ForEach(filteredVendors) { vendor in
+                                        vendorRow(vendor)
+                                            .contextMenu {
+                                                vendorContextMenu(vendor)
                                             }
-                                            .tint(theme.secondary)
-                                        } else {
-                                            Button(role: .destructive) {
-                                                vendorToDelete = vendor
-                                            } label: {
-                                                Label(String(localized: "common.delete"), systemImage: "trash")
-                                            }
-                                            .tint(.ppDestructive)
-                                        }
                                     }
-                                    .swipeActions(edge: .leading) {
-                                        Button { editingVendor = vendor } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(theme.primary)
-                                    }
-                                    .contextMenu {
-                                        Button {
-                                            editingVendor = vendor
-                                        } label: {
-                                            Label(String(localized: "common.edit"), systemImage: "pencil")
-                                        }
-                                        if vendor.transactionCount > 0 {
-                                            Button {
-                                                vendorToArchive = vendor
-                                            } label: {
-                                                Label(String(localized: "common.archive"), systemImage: "archivebox")
-                                            }
-                                        } else {
-                                            Button(role: .destructive) {
-                                                vendorToDelete = vendor
-                                            } label: {
-                                                Label(String(localized: "common.delete"), systemImage: "trash")
+                                }
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                            } else {
+                                ForEach(filteredVendors) { vendor in
+                                    vendorRow(vendor)
+                                        .swipeActions(edge: .trailing) {
+                                            if vendor.transactionCount > 0 {
+                                                Button {
+                                                    vendorToArchive = vendor
+                                                } label: {
+                                                    Label(String(localized: "common.archive"), systemImage: "archivebox")
+                                                }
+                                                .tint(theme.secondary)
+                                            } else {
+                                                Button(role: .destructive) {
+                                                    vendorToDelete = vendor
+                                                } label: {
+                                                    Label(String(localized: "common.delete"), systemImage: "trash")
+                                                }
+                                                .tint(.ppDestructive)
                                             }
                                         }
-                                    }
-                                    .listRowBackground(Color.ppBackground)
-                                    .listRowSeparator(.hidden)
-                                    .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                        .swipeActions(edge: .leading) {
+                                            Button { editingVendor = vendor } label: { Label(String(localized: "common.edit"), systemImage: "pencil") }.tint(theme.primary)
+                                        }
+                                        .contextMenu {
+                                            vendorContextMenu(vendor)
+                                        }
+                                        .listRowBackground(Color.ppBackground)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                }
                             }
                         } header: {
                             Text(String(localized: "vendors.section.all"))
@@ -256,6 +255,28 @@ struct VendorsView: View {
         .background(Color.ppCard)
         .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
         .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+    }
+
+    @ViewBuilder
+    private func vendorContextMenu(_ vendor: VendorListItem) -> some View {
+        Button {
+            editingVendor = vendor
+        } label: {
+            Label(String(localized: "common.edit"), systemImage: "pencil")
+        }
+        if vendor.transactionCount > 0 {
+            Button {
+                vendorToArchive = vendor
+            } label: {
+                Label(String(localized: "common.archive"), systemImage: "archivebox")
+            }
+        } else {
+            Button(role: .destructive) {
+                vendorToDelete = vendor
+            } label: {
+                Label(String(localized: "common.delete"), systemImage: "trash")
+            }
+        }
     }
 
     private func deleteVendor(_ vendor: VendorListItem) async {

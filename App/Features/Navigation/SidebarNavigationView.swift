@@ -21,6 +21,12 @@ struct SidebarNavigationView: View {
     @State private var selection: Destination? = .dashboard
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
+    /// Returns a list row background for the given destination based on selection state.
+    private func rowBackground(for destination: Destination) -> some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(selection == destination ? theme.primary.opacity(0.1) : Color.clear)
+    }
+
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             sidebar
@@ -43,34 +49,43 @@ struct SidebarNavigationView: View {
             Section(String(localized: "sidebar.overview")) {
                 Label(String(localized: "tab.dashboard"), systemImage: "house.fill")
                     .tag(Destination.dashboard)
+                    .listRowBackground(rowBackground(for: .dashboard))
                 Label(String(localized: "tab.transactions"), systemImage: "arrow.left.arrow.right")
                     .tag(Destination.transactions)
+                    .listRowBackground(rowBackground(for: .transactions))
                 Label(String(localized: "tab.accounts"), systemImage: "creditcard.fill")
                     .tag(Destination.accounts)
+                    .listRowBackground(rowBackground(for: .accounts))
             }
 
             // Planning
             Section(String(localized: "more.planning")) {
                 Label(String(localized: "more.periods"), systemImage: "calendar")
                     .tag(Destination.periods)
+                    .listRowBackground(rowBackground(for: .periods))
                 Label(String(localized: "more.categories"), systemImage: "tag")
                     .tag(Destination.categories)
+                    .listRowBackground(rowBackground(for: .categories))
                 Label(String(localized: "more.targets"), systemImage: "chart.pie")
                     .tag(Destination.targets)
+                    .listRowBackground(rowBackground(for: .targets))
             }
 
             // Tracking
             Section(String(localized: "more.tracking")) {
                 Label(String(localized: "more.subscriptions"), systemImage: "repeat")
                     .tag(Destination.subscriptions)
+                    .listRowBackground(rowBackground(for: .subscriptions))
                 Label(String(localized: "more.vendors"), systemImage: "storefront")
                     .tag(Destination.vendors)
+                    .listRowBackground(rowBackground(for: .vendors))
             }
 
             // App
             Section(String(localized: "more.app")) {
                 Label(String(localized: "more.settings"), systemImage: "gearshape")
                     .tag(Destination.settings)
+                    .listRowBackground(rowBackground(for: .settings))
             }
 
             // Logout

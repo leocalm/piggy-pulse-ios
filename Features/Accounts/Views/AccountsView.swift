@@ -4,6 +4,7 @@ import TipKit
 struct AccountsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.themeManager) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var accounts: [AccountListItem] = []
     @State private var summary: AccountsSummary?
     @State private var isLoading = false
@@ -138,55 +139,53 @@ struct AccountsView: View {
         Group {
             if !accounts.isEmpty {
                 Section {
-                    ForEach(accounts) { account in
-                        accountRow(account)
-                            .swipeActions(edge: .trailing) {
-                                if account.transactionCount > 0 {
+                    if horizontalSizeClass == .regular {
+                        // Wide layout: 2-column grid for account cards
+                        LazyVGrid(columns: [GridItem(.flexible(), spacing: PPSpacing.md), GridItem(.flexible(), spacing: PPSpacing.md)], spacing: PPSpacing.md) {
+                            ForEach(accounts) { account in
+                                accountRow(account)
+                                    .contextMenu {
+                                        accountContextMenu(account)
+                                    }
+                            }
+                        }
+                        .listRowBackground(Color.ppBackground)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                    } else {
+                        ForEach(accounts) { account in
+                            accountRow(account)
+                                .swipeActions(edge: .trailing) {
+                                    if account.transactionCount > 0 {
+                                        Button {
+                                            accountToArchive = account
+                                        } label: {
+                                            Label(String(localized: "common.archive"), systemImage: "archivebox")
+                                        }
+                                        .tint(theme.secondary)
+                                    } else {
+                                        Button(role: .destructive) {
+                                            accountToDelete = account
+                                        } label: {
+                                            Label(String(localized: "common.delete"), systemImage: "trash")
+                                        }
+                                        .tint(.ppDestructive)
+                                    }
+                                }
+                                .swipeActions(edge: .leading) {
                                     Button {
-                                        accountToArchive = account
+                                        editingAccount = account
                                     } label: {
-                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
-                                    }
-                                    .tint(theme.secondary)
-                                } else {
-                                    Button(role: .destructive) {
-                                        accountToDelete = account
-                                    } label: {
-                                        Label(String(localized: "common.delete"), systemImage: "trash")
-                                    }
-                                    .tint(.ppDestructive)
-                                }
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button {
-                                    editingAccount = account
-                                } label: {
-                                    Label(String(localized: "common.edit"), systemImage: "pencil")
-                                }
-                            }
-                            .contextMenu {
-                                Button {
-                                    editingAccount = account
-                                } label: {
-                                    Label(String(localized: "common.edit"), systemImage: "pencil")
-                                }
-                                if account.transactionCount > 0 {
-                                    Button {
-                                        accountToArchive = account
-                                    } label: {
-                                        Label(String(localized: "common.archive"), systemImage: "archivebox")
-                                    }
-                                } else {
-                                    Button(role: .destructive) {
-                                        accountToDelete = account
-                                    } label: {
-                                        Label(String(localized: "common.delete"), systemImage: "trash")
+                                        Label(String(localized: "common.edit"), systemImage: "pencil")
                                     }
                                 }
-                            }
-                            .listRowBackground(Color.ppBackground)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                                .contextMenu {
+                                    accountContextMenu(account)
+                                }
+                                .listRowBackground(Color.ppBackground)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: PPSpacing.xs, leading: PPSpacing.lg, bottom: PPSpacing.xs, trailing: PPSpacing.lg))
+                        }
                     }
                 } header: {
                     HStack {
@@ -200,6 +199,28 @@ struct AccountsView: View {
                             .foregroundColor(.ppTextSecondary)
                     }
                 }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func accountContextMenu(_ account: AccountListItem) -> some View {
+        Button {
+            editingAccount = account
+        } label: {
+            Label(String(localized: "common.edit"), systemImage: "pencil")
+        }
+        if account.transactionCount > 0 {
+            Button {
+                accountToArchive = account
+            } label: {
+                Label(String(localized: "common.archive"), systemImage: "archivebox")
+            }
+        } else {
+            Button(role: .destructive) {
+                accountToDelete = account
+            } label: {
+                Label(String(localized: "common.delete"), systemImage: "trash")
             }
         }
     }
