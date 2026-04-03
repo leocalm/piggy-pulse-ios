@@ -75,7 +75,7 @@ struct NoPeriodStateView: View {
                     showPeriodPicker = false
                 }
             )
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
     }

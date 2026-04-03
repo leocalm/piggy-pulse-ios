@@ -183,7 +183,7 @@ struct PeriodSelectorSidebarRow: View {
                     showPicker = false
                 }
             )
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
         .task(id: appState.isAuthenticated) {
