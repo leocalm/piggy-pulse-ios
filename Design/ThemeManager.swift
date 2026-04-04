@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 
 /// Manages the active color theme and appearance mode.
 /// Injected into the SwiftUI environment via `.environment(themeManager)`.
@@ -14,6 +15,8 @@ final class ThemeManager {
         didSet {
             UserDefaults.standard.set(colorTheme.rawValue, forKey: Self.themeKey)
             updateAppIcon()
+            WidgetTokenStore.save(colorTheme.rawValue, for: .colorTheme)
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
 
@@ -53,6 +56,9 @@ final class ThemeManager {
 
         let storedMode = UserDefaults.standard.string(forKey: Self.modeKey) ?? AppearanceMode.system.rawValue
         self.appearanceMode = AppearanceMode(rawValue: storedMode) ?? .system
+
+        // Sync theme to widget App Group
+        WidgetTokenStore.save(colorTheme.rawValue, for: .colorTheme)
     }
     // MARK: - App Icon
 

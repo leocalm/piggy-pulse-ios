@@ -14,6 +14,7 @@ enum WidgetTokenStore {
     enum Key: String {
         case accessToken = "com.piggypulse.widget.accessToken"
         case currencyCode = "com.piggypulse.widget.currencyCode"
+        case colorTheme = "com.piggypulse.widget.colorTheme"
     }
 
     static func save(_ value: String, for key: Key) {
@@ -28,6 +29,7 @@ enum WidgetTokenStore {
         let d = defaults
         d?.removeObject(forKey: Key.accessToken.rawValue)
         d?.removeObject(forKey: Key.currencyCode.rawValue)
+        // Keep colorTheme on logout — widgets still look nice themed
     }
 
     /// Called from the main app to sync auth state to widgets.

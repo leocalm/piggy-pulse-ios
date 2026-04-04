@@ -96,7 +96,7 @@ struct NetPositionWidgetView: View {
 
     @Environment(\.widgetFamily) var family
 
-    private let accent = Color(red: 139.0/255, green: 126.0/255, blue: 200.0/255)
+    private var accent: Color { WidgetTheme.current.primary }
 
     var body: some View {
         switch family {
