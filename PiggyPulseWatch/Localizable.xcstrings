@@ -18,6 +18,7 @@
       }
     },
     "%lld days left" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -50,6 +51,9 @@
         }
       }
     },
+    "%lldd left" : {
+
+    },
     "Accounts" : {
       "localizations" : {
         "pt-BR" : {
@@ -69,6 +73,9 @@
           }
         }
       }
+    },
+    "Budget Period" : {
+
     },
     "Checking" : {
       "localizations" : {
@@ -110,7 +117,11 @@
         }
       }
     },
+    "days" : {
+
+    },
     "Days Remaining" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -276,7 +287,11 @@
     "Server error (%lld). Try again later." : {
 
     },
+    "Shows days left and spending progress." : {
+
+    },
     "Shows days left in your current budget period." : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
