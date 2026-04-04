@@ -6,54 +6,48 @@ enum WidgetCurrencyFormatter {
         WidgetTokenStore.read(.currencyCode) ?? "EUR"
     }
 
-    nonisolated(unsafe) private static var _cachedFormatter: NumberFormatter?
-    nonisolated(unsafe) private static var _cachedCode: String?
-
-    private static var formatter: NumberFormatter {
-        let code = currencyCode
-        if let cached = _cachedFormatter, _cachedCode == code {
-            return cached
-        }
+    private static func makeFormatter() -> NumberFormatter {
         let f = NumberFormatter()
         f.numberStyle = .currency
-        f.currencyCode = code
-        _cachedFormatter = f
-        _cachedCode = code
+        f.currencyCode = currencyCode
         return f
     }
 
     static func format(_ cents: Int64, compact: Bool = false) -> String {
         let value = Double(cents) / 100.0
-        let f = formatter
+        let f = makeFormatter()
 
-        let saved = f.maximumFractionDigits
         if compact && abs(value) >= 1000 {
             f.maximumFractionDigits = 0
         }
 
-        let result = f.string(from: NSNumber(value: value))
+        return f.string(from: NSNumber(value: value))
             ?? "\(currencyCode) \(String(format: "%.2f", value))"
-
-        f.maximumFractionDigits = saved
-        return result
     }
 
     static func formatCompact(_ cents: Int64) -> String {
         let value = Double(cents) / 100.0
         let absValue = abs(value)
-        let sign = value < 0 ? "-" : ""
-        let symbol = currencySymbol
+        let f = makeFormatter()
+        f.maximumFractionDigits = 0
 
         if absValue >= 1_000_000 {
-            return "\(sign)\(symbol)\(String(format: "%.1fM", absValue / 1_000_000))"
+            f.maximumFractionDigits = 1
+            f.multiplier = NSNumber(value: 0.000001)
+            f.positiveSuffix = "M"
+            f.negativeSuffix = "M"
         } else if absValue >= 1000 {
-            return "\(sign)\(symbol)\(String(format: "%.1fK", absValue / 1000))"
-        } else {
-            return "\(sign)\(symbol)\(String(format: "%.0f", absValue))"
+            f.maximumFractionDigits = 1
+            f.multiplier = NSNumber(value: 0.001)
+            f.positiveSuffix = "K"
+            f.negativeSuffix = "K"
         }
+
+        return f.string(from: NSNumber(value: value))
+            ?? "\(currencyCode) \(String(format: "%.0f", value))"
     }
 
     static var currencySymbol: String {
-        formatter.currencySymbol ?? currencyCode
+        makeFormatter().currencySymbol ?? currencyCode
     }
 }

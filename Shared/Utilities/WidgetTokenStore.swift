@@ -14,7 +14,6 @@ enum WidgetTokenStore {
     enum Key: String {
         case accessToken = "com.piggypulse.widget.accessToken"
         case currencyCode = "com.piggypulse.widget.currencyCode"
-        case periodId = "com.piggypulse.widget.periodId"
     }
 
     static func save(_ value: String, for key: Key) {
@@ -29,16 +28,12 @@ enum WidgetTokenStore {
         let d = defaults
         d?.removeObject(forKey: Key.accessToken.rawValue)
         d?.removeObject(forKey: Key.currencyCode.rawValue)
-        d?.removeObject(forKey: Key.periodId.rawValue)
     }
 
     /// Called from the main app to sync auth state to widgets.
-    static func syncFromApp(token: String, currencyCode: String, periodId: String?) {
+    static func syncFromApp(token: String, currencyCode: String) {
         save(token, for: .accessToken)
         save(currencyCode, for: .currencyCode)
-        if let periodId = periodId {
-            save(periodId, for: .periodId)
-        }
         WidgetCenter.shared.reloadAllTimelines()
     }
 

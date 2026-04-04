@@ -55,17 +55,25 @@ enum WidgetAPIClient {
 
     // MARK: - API Methods
 
+    /// Shared resolved period ID for the current refresh cycle (avoids duplicate /periods calls)
+    private static var resolvedPeriodId: UUID?
+
     static func fetchActivePeriodId() async throws -> UUID {
-        // Check if we have a cached period ID
-        if let cached = WidgetTokenStore.read(.periodId), let id = UUID(uuidString: cached) {
-            return id
-        }
+        // Return already-resolved ID for this refresh cycle
+        if let resolved = resolvedPeriodId { return resolved }
+
+        // Always fetch fresh from API — period can change between refreshes
         let response: WidgetPaginatedResponse<WidgetPeriod> = try await get("/periods?limit=100")
         guard let period = response.data.first(where: { $0.status == "active" }) ?? response.data.first else {
             throw URLError(.badServerResponse)
         }
-        WidgetTokenStore.save(period.id.uuidString, for: .periodId)
+        resolvedPeriodId = period.id
         return period.id
+    }
+
+    /// Reset the per-cycle cache (call at start of each timeline refresh)
+    static func resetCache() {
+        resolvedPeriodId = nil
     }
 
     static func fetchCurrentPeriod(periodId: UUID) async throws -> WidgetCurrentPeriod {
@@ -94,7 +102,16 @@ enum WidgetAPIClient {
 
         let (data, response) = try await session.data(for: request)
 
-        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+
+        if httpResponse.statusCode == 401 {
+            WidgetTokenStore.clearAll()
+            throw URLError(.userAuthenticationRequired)
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }
 

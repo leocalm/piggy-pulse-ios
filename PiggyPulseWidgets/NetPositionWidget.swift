@@ -81,6 +81,7 @@ struct NetPositionWidget: Widget {
             .systemSmall,
             .systemMedium,
             .systemLarge,
+            .systemExtraLarge,
             .accessoryCircular,
             .accessoryRectangular,
             .accessoryInline,
@@ -305,7 +306,7 @@ struct NetPositionWidgetView: View {
                 .font(.caption2)
                 .foregroundStyle(.secondary)
             Spacer()
-            Text(WidgetCurrencyFormatter.format(amount ?? 0, compact: true))
+            Text(amount.map { WidgetCurrencyFormatter.format($0, compact: true) } ?? "--")
                 .font(.caption)
                 .fontWeight(.medium)
         }
@@ -321,7 +322,7 @@ struct NetPositionWidgetView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Spacer()
-            Text(WidgetCurrencyFormatter.format(amount ?? 0, compact: true))
+            Text(amount.map { WidgetCurrencyFormatter.format($0, compact: true) } ?? "--")
                 .font(.subheadline)
                 .fontWeight(.semibold)
         }

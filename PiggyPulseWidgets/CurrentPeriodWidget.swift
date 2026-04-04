@@ -90,6 +90,7 @@ struct CurrentPeriodWidget: Widget {
             .systemSmall,
             .systemMedium,
             .systemLarge,
+            .systemExtraLarge,
             .accessoryCircular,
             .accessoryRectangular,
             .accessoryInline,

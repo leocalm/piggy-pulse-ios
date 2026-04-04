@@ -142,11 +142,7 @@ final class AppState: ObservableObject {
             // Sync auth token to Apple Watch and widgets
             if let token = tokenManager.getAccessToken() {
                 WatchSessionManager.shared.sendAuthToken(token, currencyCode: currencyCode)
-                WidgetTokenStore.syncFromApp(
-                    token: token,
-                    currencyCode: currencyCode,
-                    periodId: selectedPeriod?.id.uuidString
-                )
+                WidgetTokenStore.syncFromApp(token: token, currencyCode: currencyCode)
             }
         } catch {
             tokenManager.clearTokens()
