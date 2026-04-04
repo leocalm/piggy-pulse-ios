@@ -139,9 +139,10 @@ final class AppState: ObservableObject {
             await loadUserCurrency()
             await checkOnboardingStatus()
             await scheduleNotifications()
-            // Sync auth token to Apple Watch
+            // Sync auth token to Apple Watch and widgets
             if let token = tokenManager.getAccessToken() {
                 WatchSessionManager.shared.sendAuthToken(token, currencyCode: currencyCode)
+                WidgetTokenStore.syncFromApp(token: token, currencyCode: currencyCode)
             }
         } catch {
             tokenManager.clearTokens()
@@ -182,6 +183,7 @@ final class AppState: ObservableObject {
         try await apiClient.request(.deleteUserAccount, body: DeleteAccountRequest(confirmation: confirmation))
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         tokenManager.clearTokens()
+        WidgetTokenStore.clearAndReload()
         currentUser = nil
         selectedPeriod = nil
         isAuthenticated = false
@@ -199,6 +201,7 @@ final class AppState: ObservableObject {
 
         tokenManager.clearTokens()
         WatchSessionManager.shared.clearAuth()
+        WidgetTokenStore.clearAndReload()
         currentUser = nil
         selectedPeriod = nil
         isAuthenticated = false
