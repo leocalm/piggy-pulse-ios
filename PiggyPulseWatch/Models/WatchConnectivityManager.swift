@@ -72,7 +72,12 @@ extension WatchConnectivityManager: WCSessionDelegate {
         error: Error?
     ) {
         guard activationState == .activated else { return }
-        // Try to get token immediately on activation
+        requestTokenFromPhone()
+    }
+
+    /// When iPhone becomes reachable, immediately request the token
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        guard session.isReachable, !isAuthenticated else { return }
         requestTokenFromPhone()
     }
 

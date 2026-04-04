@@ -93,6 +93,23 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         }
     }
 
+    /// When Watch becomes reachable, resend the token immediately
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        guard session.isReachable else { return }
+
+        lock.lock()
+        let token = latestToken
+        let currency = latestCurrency
+        lock.unlock()
+
+        if let token = token {
+            sendContext([
+                "accessToken": token,
+                "currencyCode": currency ?? "EUR"
+            ])
+        }
+    }
+
     /// Respond to Watch requesting the auth token
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         lock.lock()
