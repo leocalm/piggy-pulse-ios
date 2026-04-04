@@ -143,6 +143,7 @@
 		CB9A0032AAB816CA4ED613E8 /* PiggyPulseWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878ACD1879EB69E0938C5527 /* PiggyPulseWidgets.swift */; };
 		CDDE9B15F1319EF473B7D27B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F65FBCBEE9F7343C5A4AB1D /* SidebarNavigationView.swift */; };
 		CE0C7D4C9822074106738FE0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3D56099E7A4C5BEF5D3C87FF /* Localizable.xcstrings */; };
+		CE3268EE6800198A9BB669E0 /* WidgetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDEF9CF43DDF79689F4651F /* WidgetTheme.swift */; };
 		CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7217051ADAA8F0947D00139C /* WideLayoutModifier.swift */; };
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		D2A6D9629A6935A89D85D271 /* DashboardV2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */; };
@@ -375,6 +376,7 @@
 		EE19A667CD5DB6C85DF57776 /* CurrentPeriodWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrentPeriodWidget.swift; sourceTree = "<group>"; };
 		F4CA8A8A20F56C499BCF4284 /* NetPositionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPositionView.swift; sourceTree = "<group>"; };
 		F8EBCA62AA85E9444E9E35E4 /* DashboardLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardLayout.swift; sourceTree = "<group>"; };
+		FCDEF9CF43DDF79689F4651F /* WidgetTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetTheme.swift; sourceTree = "<group>"; };
 		FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountSheet.swift; sourceTree = "<group>"; };
 		FEAAC4950F7605762F10A451 /* PiggyPulseWatchWidgets-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PiggyPulseWatchWidgets-Info.plist"; sourceTree = "<group>"; };
 		FFEF4D0E1942DF267446A9BE /* WidgetCurrencyFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetCurrencyFormatter.swift; sourceTree = "<group>"; };
@@ -1057,6 +1059,7 @@
 				EE19A667CD5DB6C85DF57776 /* CurrentPeriodWidget.swift */,
 				D3D51332D241F3AA3E677D80 /* WidgetAPIClient.swift */,
 				FFEF4D0E1942DF267446A9BE /* WidgetCurrencyFormatter.swift */,
+				FCDEF9CF43DDF79689F4651F /* WidgetTheme.swift */,
 			);
 			name = PiggyPulseWidgets;
 			path = PiggyPulseWidgets;
@@ -1420,6 +1423,7 @@
 				C9FCB676717D387647517C5C /* WidgetAPIClient.swift in Sources */,
 				30AB4999A9A22B7E959CD0E6 /* WidgetCurrencyFormatter.swift in Sources */,
 				B3DBD98EC5122DA4D35E1886 /* WidgetTokenStore.swift in Sources */,
+				CE3268EE6800198A9BB669E0 /* WidgetTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
