@@ -1,5 +1,5 @@
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 // MARK: - Helper to get active period
 
@@ -73,7 +73,8 @@ struct NetPositionComplication: Widget {
         .supportedFamilies([
             .accessoryCircular,
             .accessoryRectangular,
-            .accessoryInline
+            .accessoryInline,
+            .accessoryCorner,
         ])
     }
 }
@@ -93,6 +94,8 @@ struct NetPositionComplicationView: View {
             rectangularView
         case .accessoryInline:
             inlineView
+        case .accessoryCorner:
+            cornerView
         default:
             Text("--")
         }
@@ -142,6 +145,23 @@ struct NetPositionComplicationView: View {
             Text(String(localized: "Net Position: --"))
         }
     }
+
+    @ViewBuilder
+    private var cornerView: some View {
+        if let total = entry.total {
+            Text(WatchCurrencyFormatter.formatCompact(total))
+                .font(.system(size: 16, weight: .bold))
+                .minimumScaleFactor(0.5)
+                .widgetLabel {
+                    Text(String(localized: "Net Position"))
+                }
+        } else {
+            Image(systemName: "banknote")
+                .widgetLabel {
+                    Text("--")
+                }
+        }
+    }
 }
 
 // MARK: - Days Remaining Complication
@@ -150,17 +170,19 @@ struct DaysRemainingEntry: TimelineEntry {
     let date: Date
     let daysRemaining: Int?
     let daysInPeriod: Int?
+    let spent: Int64?
+    let target: Int64?
 }
 
 struct DaysRemainingProvider: TimelineProvider {
 
     func placeholder(in context: Context) -> DaysRemainingEntry {
-        DaysRemainingEntry(date: .now, daysRemaining: 12, daysInPeriod: 30)
+        DaysRemainingEntry(date: .now, daysRemaining: 12, daysInPeriod: 30, spent: 250_000, target: 500_000)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (DaysRemainingEntry) -> Void) {
         if context.isPreview {
-            completion(DaysRemainingEntry(date: .now, daysRemaining: 12, daysInPeriod: 30))
+            completion(DaysRemainingEntry(date: .now, daysRemaining: 12, daysInPeriod: 30, spent: 250_000, target: 500_000))
             return
         }
 
@@ -171,10 +193,12 @@ struct DaysRemainingProvider: TimelineProvider {
                 completion(DaysRemainingEntry(
                     date: .now,
                     daysRemaining: period.daysRemaining,
-                    daysInPeriod: period.daysInPeriod
+                    daysInPeriod: period.daysInPeriod,
+                    spent: period.spent,
+                    target: period.target
                 ))
             } catch {
-                completion(DaysRemainingEntry(date: .now, daysRemaining: nil, daysInPeriod: nil))
+                completion(DaysRemainingEntry(date: .now, daysRemaining: nil, daysInPeriod: nil, spent: nil, target: nil))
             }
         }
     }
@@ -187,7 +211,9 @@ struct DaysRemainingProvider: TimelineProvider {
                 let entry = DaysRemainingEntry(
                     date: .now,
                     daysRemaining: period.daysRemaining,
-                    daysInPeriod: period.daysInPeriod
+                    daysInPeriod: period.daysInPeriod,
+                    spent: period.spent,
+                    target: period.target
                 )
                 let nextMidnight = Calendar.current.startOfDay(
                     for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!
@@ -195,7 +221,7 @@ struct DaysRemainingProvider: TimelineProvider {
                 let timeline = Timeline(entries: [entry], policy: .after(nextMidnight))
                 completion(timeline)
             } catch {
-                let entry = DaysRemainingEntry(date: .now, daysRemaining: nil, daysInPeriod: nil)
+                let entry = DaysRemainingEntry(date: .now, daysRemaining: nil, daysInPeriod: nil, spent: nil, target: nil)
                 let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: .now)!
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
@@ -212,12 +238,13 @@ struct DaysRemainingComplication: Widget {
             DaysRemainingComplicationView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName(String(localized: "Days Remaining"))
-        .description(String(localized: "Shows days left in your current budget period."))
+        .configurationDisplayName(String(localized: "Budget Period"))
+        .description(String(localized: "Shows days left and spending progress."))
         .supportedFamilies([
             .accessoryCircular,
             .accessoryRectangular,
-            .accessoryInline
+            .accessoryInline,
+            .accessoryCorner,
         ])
     }
 }
@@ -237,6 +264,8 @@ struct DaysRemainingComplicationView: View {
             rectangularView
         case .accessoryInline:
             inlineView
+        case .accessoryCorner:
+            cornerView
         default:
             Text("--")
         }
@@ -247,8 +276,8 @@ struct DaysRemainingComplicationView: View {
         if let days = entry.daysRemaining, let total = entry.daysInPeriod {
             let progress = total > 0 ? Double(total - days) / Double(total) : 0
 
-            Gauge(value: progress) {
-                Text("\(days)")
+            Gauge(value: min(max(progress, 0), 1)) {
+                Text("\(max(days, 0))")
                     .font(.system(size: 16, weight: .bold))
             }
             .gaugeStyle(.accessoryCircularCapacity)
@@ -265,30 +294,79 @@ struct DaysRemainingComplicationView: View {
 
     @ViewBuilder
     private var rectangularView: some View {
-        HStack {
+        if let days = entry.daysRemaining, let spent = entry.spent, let target = entry.target {
             VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: "Period"))
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                if let days = entry.daysRemaining {
-                    Text(String(localized: "\(days) days left"))
-                        .font(.headline)
-                        .fontWeight(.bold)
-                } else {
+                HStack {
+                    Text(String(localized: "Budget Period"))
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(String(localized: "\(max(days, 0))d left"))
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                }
+
+                // Spending progress bar
+                let spendProgress = target > 0 ? min(Double(spent) / Double(target), 1.0) : 0
+                Gauge(value: spendProgress) {
+                    EmptyView()
+                }
+                .gaugeStyle(.accessoryLinearCapacity)
+                .tint(accentColor)
+
+                HStack {
+                    Text(WatchCurrencyFormatter.formatCompact(spent))
+                        .font(.caption2)
+                        .fontWeight(.medium)
+                    Spacer()
+                    Text(WatchCurrencyFormatter.formatCompact(target))
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        } else {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "Period"))
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                     Text("--")
                         .font(.headline)
                 }
+                Spacer()
             }
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var inlineView: some View {
         if let days = entry.daysRemaining {
-            Text(String(localized: "\(days) days remaining"))
+            Text(String(localized: "\(max(days, 0)) days remaining"))
         } else {
             Text(String(localized: "Period: --"))
+        }
+    }
+
+    @ViewBuilder
+    private var cornerView: some View {
+        if let days = entry.daysRemaining, let total = entry.daysInPeriod {
+            let progress = total > 0 ? min(max(Double(total - days) / Double(total), 0), 1) : 0
+
+            Text("\(max(days, 0))")
+                .font(.system(size: 20, weight: .bold))
+                .minimumScaleFactor(0.5)
+                .widgetLabel {
+                    Gauge(value: progress) {
+                        Text(String(localized: "days"))
+                    }
+                    .gaugeStyle(.accessoryLinearCapacity)
+                    .tint(accentColor)
+                }
+        } else {
+            Image(systemName: "calendar")
+                .widgetLabel {
+                    Text("--")
+                }
         }
     }
 }
