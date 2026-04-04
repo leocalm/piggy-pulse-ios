@@ -2,41 +2,18 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.themeManager) private var theme
     @StateObject private var viewModel = AuthViewModel(appState: AppState())
     @State private var viewModelReady = false
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        ZStack {
-            Color.ppBackground
-                .ignoresSafeArea()
-
-            ScrollView {
-                VStack(spacing: 0) {
-                    AuthHeaderView(tagline: String(localized: "auth.tagline.forgotPassword"))
-
-                    VStack(spacing: PPSpacing.xxl) {
-                        if viewModel.forgotPasswordSent {
-                            successContent
-                        } else {
-                            formContent
-                        }
-                    }
-                    .padding(PPSpacing.xxl)
-                    .background(Color.ppCard)
-                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: PPRadius.xl)
-                            .stroke(Color.ppBorder, lineWidth: 1)
-                    )
-                    .padding(.horizontal, PPSpacing.lg)
-                    .padding(.top, PPSpacing.xl)
-
-                    Spacer()
-                        .frame(height: PPSpacing.xxl)
-                }
+        Group {
+            if sizeClass == .regular {
+                iPadLayout
+            } else {
+                iPhoneLayout
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -46,6 +23,64 @@ struct ForgotPasswordView: View {
                 viewModelReady = true
             }
         }
+    }
+
+    // MARK: - iPad Split Layout
+
+    private var iPadLayout: some View {
+        GeometryReader { geo in
+            ScrollView {
+                VStack {
+                    Spacer()
+                    formCard
+                        .frame(maxWidth: 420)
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, minHeight: geo.size.height)
+            }
+        }
+        .background(Color.ppBackground)
+    }
+
+    // MARK: - iPhone Stacked Layout
+
+    private var iPhoneLayout: some View {
+        ZStack {
+            Color.ppBackground
+                .ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 0) {
+                    AuthHeaderView(tagline: String(localized: "auth.tagline.forgotPassword"))
+
+                    formCard
+                        .padding(.horizontal, PPSpacing.lg)
+                        .padding(.top, PPSpacing.xl)
+
+                    Spacer()
+                        .frame(height: PPSpacing.xxl)
+                }
+            }
+        }
+    }
+
+    // MARK: - Shared Form Card
+
+    private var formCard: some View {
+        VStack(spacing: PPSpacing.xxl) {
+            if viewModel.forgotPasswordSent {
+                successContent
+            } else {
+                formContent
+            }
+        }
+        .padding(PPSpacing.xxl)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.xl))
+        .overlay(
+            RoundedRectangle(cornerRadius: PPRadius.xl)
+                .stroke(Color.ppBorder, lineWidth: 1)
+        )
     }
 
     // MARK: - Form
