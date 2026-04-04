@@ -149,11 +149,10 @@ struct NetPositionComplicationView: View {
     @ViewBuilder
     private var cornerView: some View {
         if let total = entry.total {
-            Text(WatchCurrencyFormatter.formatCompact(total))
-                .font(.system(size: 16, weight: .bold))
-                .minimumScaleFactor(0.5)
+            Image(systemName: "banknote")
+                .font(.title3)
                 .widgetLabel {
-                    Text(String(localized: "Net Position"))
+                    Text(WatchCurrencyFormatter.format(total, compact: true))
                 }
         } else {
             Image(systemName: "banknote")
