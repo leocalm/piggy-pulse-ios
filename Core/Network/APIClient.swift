@@ -177,20 +177,15 @@ final class APIClient {
             throw APIError.noRefreshToken
         }
 
-        struct RefreshRequest: Encodable {
-            let refreshToken: String
-        }
-
         struct RefreshResponse: Decodable {
-            let accessToken: String
-            let expiresIn: Int
+            let token: String
         }
 
         var urlRequest = URLRequest(url: APIEndpoint.refreshToken.url)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        urlRequest.httpBody = try encoder.encode(RefreshRequest(refreshToken: refreshToken))
+        urlRequest.setValue("Bearer \(refreshToken)", forHTTPHeaderField: "Authorization")
 
         let (data, response) = try await session.data(for: urlRequest)
 
@@ -200,8 +195,8 @@ final class APIClient {
         }
 
         let refreshResponse = try decoder.decode(RefreshResponse.self, from: data)
-        await tokenManager.updateAccessToken(refreshResponse.accessToken)
-        return refreshResponse.accessToken
+        await tokenManager.setTokens(access: refreshResponse.token, refresh: refreshResponse.token)
+        return refreshResponse.token
     }
     
     /// Request with a body, returning raw response string
