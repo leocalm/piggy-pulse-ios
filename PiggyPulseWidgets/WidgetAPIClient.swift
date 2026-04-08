@@ -84,6 +84,35 @@ enum WidgetAPIClient {
         try await get("/dashboard/net-position?periodId=\(periodId.uuidString)")
     }
 
+    // MARK: - Token Refresh
+
+    private struct RefreshResponse: Decodable {
+        let token: String
+    }
+
+    /// Attempt to refresh the bearer token. Returns the new token on success.
+    private static func refreshToken(_ currentToken: String) async -> String? {
+        guard let url = URL(string: baseURL + "/auth/refresh") else { return nil }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("Bearer \(currentToken)", forHTTPHeaderField: "Authorization")
+
+        guard let (data, response) = try? await session.data(for: request),
+              let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200,
+              let refreshResponse = try? decoder.decode(RefreshResponse.self, from: data) else {
+            return nil
+        }
+
+        // Save refreshed token for both widget and main app
+        let currencyCode = WidgetTokenStore.read(.currencyCode) ?? "EUR"
+        WidgetTokenStore.syncFromApp(token: refreshResponse.token, currencyCode: currencyCode)
+        return refreshResponse.token
+    }
+
     // MARK: - Private
 
     private static func get<T: Decodable>(_ path: String) async throws -> T {
@@ -91,6 +120,11 @@ enum WidgetAPIClient {
             throw URLError(.userAuthenticationRequired)
         }
 
+        let data = try await performRequest(path, token: token)
+        return try decoder.decode(T.self, from: data)
+    }
+
+    private static func performRequest(_ path: String, token: String, isRetry: Bool = false) async throws -> Data {
         guard let url = URL(string: baseURL + path) else {
             throw URLError(.badURL)
         }
@@ -106,7 +140,12 @@ enum WidgetAPIClient {
             throw URLError(.badServerResponse)
         }
 
-        if httpResponse.statusCode == 401 {
+        if httpResponse.statusCode == 401 && !isRetry {
+            // Try to refresh the token and retry once
+            if let newToken = await refreshToken(token) {
+                return try await performRequest(path, token: newToken, isRetry: true)
+            }
+            // Refresh failed — token is truly dead
             WidgetTokenStore.clearAll()
             throw URLError(.userAuthenticationRequired)
         }
@@ -115,6 +154,6 @@ enum WidgetAPIClient {
             throw URLError(.badServerResponse)
         }
 
-        return try decoder.decode(T.self, from: data)
+        return data
     }
 }
