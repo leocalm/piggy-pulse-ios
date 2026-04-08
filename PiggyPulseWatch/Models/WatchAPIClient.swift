@@ -102,6 +102,32 @@ final class WatchAPIClient {
         try await get("/auth/me")
     }
 
+    // MARK: - Token Refresh
+
+    private struct RefreshResponse: Decodable {
+        let token: String
+    }
+
+    private func refreshToken(_ currentToken: String) async -> String? {
+        guard let url = URL(string: baseURL + "/auth/refresh") else { return nil }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("Bearer \(currentToken)", forHTTPHeaderField: "Authorization")
+
+        guard let (data, response) = try? await session.data(for: request),
+              let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200,
+              let refreshResponse = try? decoder.decode(RefreshResponse.self, from: data) else {
+            return nil
+        }
+
+        WatchTokenStore.save(refreshResponse.token, for: .accessToken)
+        return refreshResponse.token
+    }
+
     // MARK: - Private
 
     private func get<T: Decodable>(_ path: String) async throws -> T {
@@ -109,6 +135,11 @@ final class WatchAPIClient {
             throw WatchAPIError.unauthorized
         }
 
+        let data = try await performRequest(path, token: token)
+        return try decoder.decode(T.self, from: data)
+    }
+
+    private func performRequest(_ path: String, token: String, isRetry: Bool = false) async throws -> Data {
         guard let url = URL(string: baseURL + path) else {
             throw WatchAPIError.invalidURL
         }
@@ -126,8 +157,11 @@ final class WatchAPIClient {
 
         switch httpResponse.statusCode {
         case 200...299:
-            return try decoder.decode(T.self, from: data)
+            return data
         case 401:
+            if !isRetry, let newToken = await refreshToken(token) {
+                return try await performRequest(path, token: newToken, isRetry: true)
+            }
             WatchTokenStore.clearAll()
             throw WatchAPIError.unauthorized
         case 404:
