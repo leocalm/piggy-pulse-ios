@@ -196,6 +196,9 @@ final class APIClient {
 
         let refreshResponse = try decoder.decode(RefreshResponse.self, from: data)
         await tokenManager.setTokens(access: refreshResponse.token, refresh: refreshResponse.token)
+        // Sync the new token to widgets so they don't show "login required"
+        let currencyCode = WidgetTokenStore.read(.currencyCode) ?? "EUR"
+        WidgetTokenStore.syncFromApp(token: refreshResponse.token, currencyCode: currencyCode)
         return refreshResponse.token
     }
     
