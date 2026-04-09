@@ -44,8 +44,10 @@ struct TransactionsPage {
         app.swipeDown()
         sleep(1)
 
-        // Select from picker: try buttons first (menu items), then staticTexts
-        selectPickerOption(app: app, pickerID: "transaction-category-select", optionText: category)
+        // Category picker is hidden in transfer mode (uses system Transfer category)
+        if !isTransfer {
+            selectPickerOption(app: app, pickerID: "transaction-category-select", optionText: category)
+        }
         selectPickerOption(app: app, pickerID: "transaction-account-select", optionText: account)
 
         if isTransfer, let toAccount {
