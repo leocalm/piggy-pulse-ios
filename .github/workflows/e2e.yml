@@ -100,16 +100,20 @@ jobs:
           echo "Using: $XCODE_PATH"
           sudo xcode-select -s "$XCODE_PATH"
 
+      - name: List available simulators
+        run: xcrun simctl list devices available | grep iPhone | head -10
+
       - name: Run XCUITests
         run: |
+          set -o pipefail
           xcodebuild test \
             -project PiggyPulse.xcodeproj \
             -scheme PiggyPulse \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16 Pro' \
             -parallel-testing-enabled NO \
             -only-testing:PiggyPulseUITests \
             CODE_SIGNING_ALLOWED=NO \
-            2>&1 | tee test-output.log | grep -E "Test Case|BUILD|error:" || true
+            2>&1 | tee test-output.log
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
