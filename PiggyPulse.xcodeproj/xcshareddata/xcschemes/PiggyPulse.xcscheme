@@ -66,6 +66,17 @@
                ReferencedContainer = "container:PiggyPulse.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "02E06CC92F88069A000F7EE7"
+               BuildableName = "PiggyPulseUITests.xctest"
+               BlueprintName = "PiggyPulseUITests"
+               ReferencedContainer = "container:PiggyPulse.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
