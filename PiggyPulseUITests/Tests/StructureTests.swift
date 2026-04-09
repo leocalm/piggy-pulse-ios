@@ -6,10 +6,15 @@ final class StructureTests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app.launchForE2E()
 
-        // Register + login + skip onboarding
+        // Register user and seed data via API BEFORE launching the app
         let user = APIHelper.registerUser(name: "Structure Test")
+        if let token = user.token {
+            APIHelper.seedUserData(token: token)
+        }
+
+        // Launch app and login
+        app.launchForE2E()
         let auth = AuthPage(app: app)
         auth.login(email: user.email, password: user.password)
         auth.expectDashboardOrOnboarding()

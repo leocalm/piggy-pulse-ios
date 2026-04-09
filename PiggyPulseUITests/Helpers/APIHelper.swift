@@ -39,6 +39,57 @@ enum APIHelper {
         return TestUser(name: name, email: email, password: TestConfig.testPassword, token: token)
     }
 
+    /// Set the user's currency via profile update (required before creating accounts).
+    static func setProfile(token: String, currency: String = "EUR") {
+        _ = syncRequest(
+            method: "PUT",
+            path: "/settings/profile",
+            body: ["name": "E2E User", "currency": currency, "avatar": "🐷"],
+            token: token
+        )
+    }
+
+    /// Create a budget period for the current month.
+    static func createPeriod(token: String) {
+        let now = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: now)
+        let month = calendar.component(.month, from: now)
+        let startDate = String(format: "%04d-%02d-01", year, month)
+
+        // End date: last day of month
+        let range = calendar.range(of: .day, in: .month, for: now)!
+        let endDate = String(format: "%04d-%02d-%02d", year, month, range.count)
+
+        let fmt = DateFormatter()
+        fmt.dateFormat = "MMMM yyyy"
+        let name = fmt.string(from: now)
+
+        _ = syncRequest(
+            method: "POST",
+            path: "/periods",
+            body: [
+                "periodType": "ManualEndDate",
+                "startDate": startDate,
+                "name": name,
+                "manualEndDate": endDate,
+            ],
+            token: token
+        )
+    }
+
+    /// Complete onboarding for the user.
+    static func completeOnboarding(token: String) {
+        _ = syncRequest(method: "POST", path: "/onboarding/complete", token: token)
+    }
+
+    /// Full seed: set profile, create period, complete onboarding.
+    static func seedUserData(token: String) {
+        setProfile(token: token)
+        createPeriod(token: token)
+        completeOnboarding(token: token)
+    }
+
     /// Make a synchronous API request. Returns the response data or nil.
     static func syncRequest(
         method: String,
