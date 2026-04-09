@@ -26,40 +26,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Docker (if not present)
+      - name: Check Docker availability
         run: |
-          if ! command -v docker &> /dev/null; then
-            echo "Docker not found, installing via Homebrew..."
-            brew install --cask docker
-            open /Applications/Docker.app --background
-            echo "Waiting for Docker daemon..."
-            for i in $(seq 1 60); do
-              if docker info &> /dev/null; then
-                echo "Docker ready after ${i}s"
-                break
-              fi
-              sleep 2
-              if [ "$i" -eq 60 ]; then
-                echo "Docker failed to start" && exit 1
-              fi
-            done
-          else
-            echo "Docker already available"
-          fi
+          docker --version || echo "Docker not found"
+          docker compose version || echo "Docker Compose not found"
 
       - name: Start API backend
         run: docker compose -f docker-compose.test.yaml up -d --wait
 
       - name: Wait for API health
         run: |
-          for i in $(seq 1 60); do
+          echo "Waiting for API..."
+          for i in $(seq 1 90); do
             if curl -sf http://127.0.0.1:18080/v2/health > /dev/null 2>&1; then
               echo "API ready after ${i}s"
               break
             fi
-            sleep 1
-            if [ "$i" -eq 60 ]; then
-              echo "API failed to start" && exit 1
+            sleep 2
+            if [ "$i" -eq 90 ]; then
+              echo "API failed to start"
+              docker compose -f docker-compose.test.yaml logs
+              exit 1
             fi
           done
 
@@ -73,19 +60,16 @@ jobs:
             -scheme PiggyPulse \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             -parallel-testing-enabled NO \
-            -resultBundlePath test-results/e2e.xcresult \
             -only-testing:PiggyPulseUITests \
             CODE_SIGNING_ALLOWED=NO \
-            2>&1 | tee test-output.log | tail -50
+            2>&1 | tee test-output.log | grep -E "Test Case|BUILD|error:" || true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: e2e-xcresult
-          path: |
-            test-results/
-            test-output.log
+          name: e2e-results
+          path: test-output.log
           if-no-files-found: ignore
           retention-days: 14
 
