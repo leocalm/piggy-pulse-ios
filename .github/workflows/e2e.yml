@@ -26,8 +26,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Docker (if not present)
+        run: |
+          if ! command -v docker &> /dev/null; then
+            echo "Docker not found, installing via Homebrew..."
+            brew install --cask docker
+            open /Applications/Docker.app --background
+            echo "Waiting for Docker daemon..."
+            for i in $(seq 1 60); do
+              if docker info &> /dev/null; then
+                echo "Docker ready after ${i}s"
+                break
+              fi
+              sleep 2
+              if [ "$i" -eq 60 ]; then
+                echo "Docker failed to start" && exit 1
+              fi
+            done
+          else
+            echo "Docker already available"
+          fi
+
       - name: Start API backend
-        run: docker-compose -f docker-compose.test.yaml up -d --wait
+        run: docker compose -f docker-compose.test.yaml up -d --wait
 
       - name: Wait for API health
         run: |
@@ -50,22 +71,24 @@ jobs:
           xcodebuild test \
             -project PiggyPulse.xcodeproj \
             -scheme PiggyPulse \
-            -testPlan E2E \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -parallel-testing-enabled NO \
             -resultBundlePath test-results/e2e.xcresult \
-            E2E_API_URL="${{ env.E2E_API_URL }}" \
+            -only-testing:PiggyPulseUITests \
             CODE_SIGNING_ALLOWED=NO \
-            | xcbeautify 2>/dev/null || true
+            2>&1 | tee test-output.log | tail -50
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: e2e-xcresult
-          path: test-results/
+          path: |
+            test-results/
+            test-output.log
           if-no-files-found: ignore
           retention-days: 14
 
       - name: Stop API backend
         if: always()
-        run: docker-compose -f docker-compose.test.yaml down
+        run: docker compose -f docker-compose.test.yaml down
