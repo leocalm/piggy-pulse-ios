@@ -40,41 +40,53 @@ struct TransactionsPage {
         descField.tap()
         descField.typeText(description)
 
-        // Select category (option text may include emoji prefix like "🛒 Food")
-        let categoryPicker = app.buttons["transaction-category-select"]
-        if categoryPicker.waitForExistence(timeout: 3) {
-            categoryPicker.tap()
-            let option = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", category)).firstMatch
-            XCTAssertTrue(option.waitForExistence(timeout: TestConfig.defaultTimeout),
-                          "Category option containing '\(category)' not found")
-            option.tap()
-        }
+        // Select from picker: try buttons first (menu items), then staticTexts
+        selectPickerOption(app: app, pickerID: "transaction-category-select", optionText: category)
+        selectPickerOption(app: app, pickerID: "transaction-account-select", optionText: account)
 
-        // Select account
-        let accountPicker = app.buttons["transaction-account-select"]
-        if accountPicker.waitForExistence(timeout: 3) {
-            accountPicker.tap()
-            let option = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", account)).firstMatch
-            XCTAssertTrue(option.waitForExistence(timeout: TestConfig.defaultTimeout),
-                          "Account option containing '\(account)' not found")
-            option.tap()
-        }
-
-        // Select to-account for transfers
         if isTransfer, let toAccount {
-            let toAccountPicker = app.buttons["transaction-to-account-select"]
-            if toAccountPicker.waitForExistence(timeout: 3) {
-                toAccountPicker.tap()
-                let option = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", toAccount)).firstMatch
-                XCTAssertTrue(option.waitForExistence(timeout: TestConfig.defaultTimeout),
-                              "To-account option containing '\(toAccount)' not found")
-                option.tap()
-            }
+            selectPickerOption(app: app, pickerID: "transaction-to-account-select", optionText: toAccount)
         }
 
         // Submit
         app.buttons["transaction-form-submit"].tap()
         sleep(1)
+    }
+
+    /// Select an option from a Picker/Menu by tapping the picker, then finding the option.
+    private func selectPickerOption(app: XCUIApplication, pickerID: String, optionText: String) {
+        let picker = app.buttons[pickerID]
+        guard picker.waitForExistence(timeout: 5) else {
+            XCTFail("Picker '\(pickerID)' not found")
+            return
+        }
+        picker.tap()
+        sleep(1) // Wait for menu/picker to open
+
+        let predicate = NSPredicate(format: "label CONTAINS %@", optionText)
+
+        // Try buttons first (menu items in iOS)
+        let menuButton = app.buttons.matching(predicate).firstMatch
+        if menuButton.waitForExistence(timeout: 3) {
+            menuButton.tap()
+            return
+        }
+
+        // Try static texts
+        let text = app.staticTexts.matching(predicate).firstMatch
+        if text.waitForExistence(timeout: 3) {
+            text.tap()
+            return
+        }
+
+        // Try any element
+        let any = app.descendants(matching: .any).matching(predicate).firstMatch
+        if any.waitForExistence(timeout: 3) {
+            any.tap()
+            return
+        }
+
+        XCTFail("Option containing '\(optionText)' not found in picker '\(pickerID)'")
     }
 
     func expectTransactionVisible(description: String) {
