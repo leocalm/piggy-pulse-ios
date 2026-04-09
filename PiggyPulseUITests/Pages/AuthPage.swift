@@ -88,8 +88,18 @@ struct AuthPage {
         app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
         sleep(1)
 
+        // If deep in a NavigationStack (e.g. came from Categories detail), go back to root
+        while app.navigationBars.buttons.firstMatch.exists {
+            let backButton = app.navigationBars.buttons.firstMatch
+            if backButton.label.isEmpty || backButton.label == "More" || !backButton.isHittable {
+                break
+            }
+            backButton.tap()
+            sleep(1)
+        }
+
         let logoutButton = app.buttons["logout-button"]
-        // Scroll down to find the logout button (it's at the bottom of the More list)
+        // Scroll down to find the logout button
         for _ in 0..<5 {
             if logoutButton.exists && logoutButton.isHittable {
                 break
@@ -97,7 +107,7 @@ struct AuthPage {
             app.swipeUp()
             sleep(1)
         }
-        XCTAssertTrue(logoutButton.waitForExistence(timeout: 5), "logout-button not found after scrolling")
+        XCTAssertTrue(logoutButton.waitForExistence(timeout: 10), "logout-button not found after scrolling")
         logoutButton.tap()
         sleep(1)
     }
