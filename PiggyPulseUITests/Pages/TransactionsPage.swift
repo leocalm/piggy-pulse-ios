@@ -40,20 +40,24 @@ struct TransactionsPage {
         descField.tap()
         descField.typeText(description)
 
-        // Select category
+        // Select category (option text may include emoji prefix like "🛒 Food")
         let categoryPicker = app.buttons["transaction-category-select"]
         if categoryPicker.waitForExistence(timeout: 3) {
             categoryPicker.tap()
-            app.staticTexts[category].waitForExistence()
-            app.staticTexts[category].tap()
+            let option = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", category)).firstMatch
+            XCTAssertTrue(option.waitForExistence(timeout: TestConfig.defaultTimeout),
+                          "Category option containing '\(category)' not found")
+            option.tap()
         }
 
         // Select account
         let accountPicker = app.buttons["transaction-account-select"]
         if accountPicker.waitForExistence(timeout: 3) {
             accountPicker.tap()
-            app.staticTexts[account].waitForExistence()
-            app.staticTexts[account].tap()
+            let option = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", account)).firstMatch
+            XCTAssertTrue(option.waitForExistence(timeout: TestConfig.defaultTimeout),
+                          "Account option containing '\(account)' not found")
+            option.tap()
         }
 
         // Select to-account for transfers
@@ -61,8 +65,10 @@ struct TransactionsPage {
             let toAccountPicker = app.buttons["transaction-to-account-select"]
             if toAccountPicker.waitForExistence(timeout: 3) {
                 toAccountPicker.tap()
-                app.staticTexts[toAccount].waitForExistence()
-                app.staticTexts[toAccount].tap()
+                let option = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", toAccount)).firstMatch
+                XCTAssertTrue(option.waitForExistence(timeout: TestConfig.defaultTimeout),
+                              "To-account option containing '\(toAccount)' not found")
+                option.tap()
             }
         }
 
