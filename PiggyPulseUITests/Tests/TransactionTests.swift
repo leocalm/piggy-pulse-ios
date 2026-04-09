@@ -68,7 +68,7 @@ final class TransactionTests: XCTestCase {
         // Create a second account for the transfer
         let accounts = AccountsPage(app: app)
         accounts.navigateTo()
-        accounts.createAccount(name: "Savings", type: "Savings", balance: "0")
+        accounts.createAccount(name: "Savings", type: "Checking", balance: "0")
 
         let transactions = TransactionsPage(app: app)
         transactions.navigateTo()
