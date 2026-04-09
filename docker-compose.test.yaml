@@ -39,8 +39,8 @@ services:
       PIGGY_PULSE_SERVER__ADDRESS: 0.0.0.0
       PIGGY_PULSE_SERVER__PORT: 8000
       PIGGY_PULSE_API__BASE_PATH: /v1
-      PIGGY_PULSE_CORS__ALLOWED_ORIGINS: '["*"]'
-      PIGGY_PULSE_CORS__ALLOW_CREDENTIALS: "true"
+      PIGGY_PULSE_CORS__ALLOWED_ORIGINS: '["http://127.0.0.1:18080"]'
+      PIGGY_PULSE_CORS__ALLOW_CREDENTIALS: "false"
       PIGGY_PULSE_SESSION__COOKIE_SECURE: "false"
       PIGGY_PULSE_EMAIL__ENABLED: "false"
       PIGGY_PULSE_TWO_FACTOR__ENCRYPTION_KEY: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef" # pragma: allowlist secret
