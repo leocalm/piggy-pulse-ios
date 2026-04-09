@@ -22,34 +22,28 @@ struct AuthPage {
     func expectDashboard() {
         let dashboard = app.tabBars.buttons["Dashboard"]
         XCTAssertTrue(dashboard.waitForExistence(timeout: TestConfig.longTimeout),
-                      "Expected to land on Dashboard after login")
-    }
-
-    func expectOnboarding() {
-        let onboarding = app.staticTexts["onboarding-title"]
-        XCTAssertTrue(onboarding.waitForExistence(timeout: TestConfig.longTimeout),
-                      "Expected onboarding screen")
+                      "Expected Dashboard tab after login")
     }
 
     func expectDashboardOrOnboarding() {
-        // Wait for either Dashboard tab or onboarding title
-        let dashboard = app.tabBars.buttons["Dashboard"]
-        let onboarding = app.otherElements["onboarding-wizard"]
-        let predicate = NSPredicate(format: "exists == true")
-        let expectations = [
-            XCTNSPredicateExpectation(predicate: predicate, object: dashboard),
-            XCTNSPredicateExpectation(predicate: predicate, object: onboarding),
-        ]
-        // Wait for any one
-        let result = XCTWaiter().wait(for: expectations, timeout: TestConfig.longTimeout)
-        XCTAssertTrue(result == .completed || result == .invertedFulfillment,
-                      "Expected Dashboard or Onboarding after auth")
+        // Simple approach: wait and check what appeared
+        sleep(3)
+        let onDashboard = app.tabBars.buttons["Dashboard"].exists
+        let onOnboarding = app.otherElements["onboarding-wizard"].exists
+            || app.buttons["onboarding-next"].exists
+            || app.staticTexts["onboarding-title"].exists
+        XCTAssertTrue(onDashboard || onOnboarding,
+                      "Expected Dashboard or Onboarding after auth, but found neither")
     }
 
     // MARK: - Register
 
     func register(name: String, email: String, password: String) {
-        app.buttons["register-link"].tap()
+        // Navigate to register screen
+        let signUpLink = app.buttons["register-link"]
+        if signUpLink.waitForExistence(timeout: 5) {
+            signUpLink.tap()
+        }
 
         let nameField = app.textFields["register-name"]
         nameField.waitForExistence()
@@ -69,7 +63,16 @@ struct AuthPage {
         confirmField.typeText(password)
 
         // Accept terms
-        app.switches["register-terms"].tap()
+        let termsToggle = app.switches["register-terms"]
+        if termsToggle.exists {
+            termsToggle.tap()
+        } else {
+            // Try as button (checkbox-style)
+            let termsButton = app.buttons["register-terms"]
+            if termsButton.exists {
+                termsButton.tap()
+            }
+        }
 
         app.buttons["register-submit"].tap()
     }
@@ -79,14 +82,21 @@ struct AuthPage {
     func logout() {
         // Navigate to More tab → Logout
         app.tabBars.buttons["More"].tap()
+        sleep(1)
+
+        // Scroll down to find logout button if needed
         let logoutButton = app.buttons["logout-button"]
+        if !logoutButton.exists {
+            app.swipeUp()
+        }
         logoutButton.waitForExistence()
         logoutButton.tap()
 
         // Confirm logout if dialog appears
-        let confirmButton = app.buttons["Logout"]
-        if confirmButton.waitForExistence(timeout: 2) {
-            confirmButton.tap()
+        sleep(1)
+        let confirmSheet = app.buttons["Logout"]
+        if confirmSheet.exists {
+            confirmSheet.tap()
         }
     }
 
