@@ -11,8 +11,10 @@ struct VendorsPage {
     }
 
     func createVendor(name: String) {
-        app.buttons["vendors-add-button"].waitForExistence()
-        app.buttons["vendors-add-button"].tap()
+        let addButton = app.buttons["vendors-add-button"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: TestConfig.longTimeout),
+                      "vendors-add-button not found")
+        addButton.tap()
 
         let nameField = app.textFields["vendor-name-input"]
         nameField.waitForExistence()

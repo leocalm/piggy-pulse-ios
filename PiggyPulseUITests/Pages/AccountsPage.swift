@@ -9,8 +9,10 @@ struct AccountsPage {
     }
 
     func createAccount(name: String, type: String, balance: String) {
-        app.buttons["accounts-add-button"].waitForExistence()
-        app.buttons["accounts-add-button"].tap()
+        let addButton = app.buttons["accounts-add-button"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: TestConfig.longTimeout),
+                      "accounts-add-button not found — page may show NoPeriodState")
+        addButton.tap()
 
         // Select account type
         let typeButton = app.buttons["account-type-\(type.lowercased())"]
