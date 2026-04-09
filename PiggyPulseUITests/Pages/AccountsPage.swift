@@ -5,7 +5,7 @@ struct AccountsPage {
     let app: XCUIApplication
 
     func navigateTo() {
-        app.tabBars.buttons["Accounts"].tap()
+        app.tabBars.firstMatch.buttons.element(boundBy: 2).tap() // Accounts tab
     }
 
     func createAccount(name: String, type: String, balance: String) {

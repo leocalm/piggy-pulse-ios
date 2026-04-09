@@ -28,7 +28,7 @@ final class JourneyTest: XCTestCase {
         auth.expectDashboardOrOnboarding()
 
         // ── Step 2: Skip onboarding ──
-        if !app.tabBars.buttons["Dashboard"].waitForExistence(timeout: 5) {
+        if !app.tabBars.firstMatch.waitForExistence(timeout: 5) {
             onboarding.skipToEnd()
         }
         onboarding.expectDashboard()
@@ -92,7 +92,7 @@ final class JourneyTest: XCTestCase {
         auth.expectDashboardOrOnboarding()
 
         // ── Step 11: Verify dashboard still works ──
-        if app.tabBars.buttons["Dashboard"].waitForExistence(timeout: 5) {
+        if app.tabBars.firstMatch.waitForExistence(timeout: 5) {
             dashboard.navigateTo()
             dashboard.expectLoaded()
         }

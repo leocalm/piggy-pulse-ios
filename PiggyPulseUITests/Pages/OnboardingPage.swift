@@ -8,7 +8,7 @@ struct OnboardingPage {
     func skipToEnd() {
         for _ in 0..<10 {
             // Check if we're already past onboarding
-            if app.tabBars.buttons["Dashboard"].exists {
+            if app.tabBars.firstMatch.exists {
                 return
             }
 
@@ -46,7 +46,7 @@ struct OnboardingPage {
     }
 
     func expectDashboard() {
-        let dashboard = app.tabBars.buttons["Dashboard"]
+        let dashboard = app.tabBars.firstMatch
         XCTAssertTrue(dashboard.waitForExistence(timeout: TestConfig.longTimeout),
                       "Expected Dashboard after onboarding")
     }

@@ -5,7 +5,7 @@ struct VendorsPage {
     let app: XCUIApplication
 
     func navigateTo() {
-        app.tabBars.buttons["More"].tap()
+        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap() // More tab
         app.buttons["more-vendors"].waitForExistence()
         app.buttons["more-vendors"].tap()
     }

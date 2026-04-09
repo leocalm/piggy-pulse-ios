@@ -6,7 +6,7 @@ struct CategoriesPage {
 
     func navigateTo() {
         // Categories is in the More tab
-        app.tabBars.buttons["More"].tap()
+        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap() // More tab
         app.buttons["more-categories"].waitForExistence()
         app.buttons["more-categories"].tap()
     }

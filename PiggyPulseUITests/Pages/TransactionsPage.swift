@@ -5,7 +5,7 @@ struct TransactionsPage {
     let app: XCUIApplication
 
     func navigateTo() {
-        app.tabBars.buttons["Transactions"].tap()
+        app.tabBars.firstMatch.buttons.element(boundBy: 1).tap() // Transactions tab
     }
 
     func createTransaction(

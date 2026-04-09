@@ -15,7 +15,7 @@ final class TransactionTests: XCTestCase {
         auth.expectDashboardOrOnboarding()
 
         // Skip onboarding if shown
-        if !app.tabBars.buttons["Dashboard"].waitForExistence(timeout: 5) {
+        if !app.tabBars.firstMatch.waitForExistence(timeout: 5) {
             let onboarding = OnboardingPage(app: app)
             onboarding.skipToEnd()
             onboarding.expectDashboard()

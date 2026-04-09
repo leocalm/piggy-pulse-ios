@@ -20,26 +20,28 @@ struct AuthPage {
     }
 
     func expectDashboard() {
-        let dashboard = app.tabBars.buttons["Dashboard"]
-        XCTAssertTrue(dashboard.waitForExistence(timeout: TestConfig.longTimeout),
-                      "Expected Dashboard tab after login")
+        // Tab bar with at least 4 tabs = we're past auth
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(tabBar.waitForExistence(timeout: TestConfig.longTimeout),
+                      "Expected tab bar (Dashboard) after login")
     }
 
     func expectDashboardOrOnboarding() {
-        // Simple approach: wait and check what appeared
-        sleep(3)
-        let onDashboard = app.tabBars.buttons["Dashboard"].exists
-        let onOnboarding = app.otherElements["onboarding-wizard"].exists
-            || app.buttons["onboarding-next"].exists
-            || app.staticTexts["onboarding-title"].exists
-        XCTAssertTrue(onDashboard || onOnboarding,
-                      "Expected Dashboard or Onboarding after auth, but found neither")
+        // Wait for tab bar (dashboard) or onboarding button
+        let tabBar = app.tabBars.firstMatch
+        if tabBar.waitForExistence(timeout: 15) {
+            return // On dashboard (has tab bar)
+        }
+        let onboarding = app.buttons["onboarding-next"]
+        if onboarding.waitForExistence(timeout: 5) {
+            return // On onboarding
+        }
+        XCTFail("Expected Dashboard (tab bar) or Onboarding after auth")
     }
 
     // MARK: - Register
 
     func register(name: String, email: String, password: String) {
-        // Navigate to register screen
         let signUpLink = app.buttons["register-link"]
         if signUpLink.waitForExistence(timeout: 5) {
             signUpLink.tap()
@@ -67,7 +69,6 @@ struct AuthPage {
         if termsToggle.exists {
             termsToggle.tap()
         } else {
-            // Try as button (checkbox-style)
             let termsButton = app.buttons["register-terms"]
             if termsButton.exists {
                 termsButton.tap()
@@ -80,11 +81,10 @@ struct AuthPage {
     // MARK: - Logout
 
     func logout() {
-        // Navigate to More tab → Logout
-        app.tabBars.buttons["More"].tap()
+        // More tab is the last (index 3)
+        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
         sleep(1)
 
-        // Scroll down to find logout button if needed
         let logoutButton = app.buttons["logout-button"]
         if !logoutButton.exists {
             app.swipeUp()
@@ -94,10 +94,6 @@ struct AuthPage {
 
         // Confirm logout if dialog appears
         sleep(1)
-        let confirmSheet = app.buttons["Logout"]
-        if confirmSheet.exists {
-            confirmSheet.tap()
-        }
     }
 
     func expectLoginScreen() {

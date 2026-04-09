@@ -5,7 +5,7 @@ struct DashboardPage {
     let app: XCUIApplication
 
     func navigateTo() {
-        app.tabBars.buttons["Dashboard"].tap()
+        app.tabBars.firstMatch.buttons.element(boundBy: 0).tap() // Dashboard tab
     }
 
     func expectLoaded() {
