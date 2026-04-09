@@ -17,7 +17,7 @@ jobs:
   e2e:
     name: XCUITest E2E (iPhone Simulator)
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     env:
       E2E_API_URL: http://127.0.0.1:18080/v2
@@ -26,10 +26,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check Docker availability
+      - name: Setup Docker (Colima)
         run: |
-          docker --version || echo "Docker not found"
-          docker compose version || echo "Docker Compose not found"
+          brew install docker docker-compose colima
+          colima start --cpu 2 --memory 4 --arch aarch64
+          docker info
 
       - name: Start API backend
         run: docker compose -f docker-compose.test.yaml up -d --wait
@@ -76,3 +77,7 @@ jobs:
       - name: Stop API backend
         if: always()
         run: docker compose -f docker-compose.test.yaml down
+
+      - name: Stop Colima
+        if: always()
+        run: colima stop
