@@ -12,7 +12,7 @@ final class APIClient {
             return ProcessInfo.processInfo.arguments[argIndex + 1]
         }
         #if DEBUG
-        return "http://192.168.1.148:8000/v2"
+        return "http://localhost:18080/v2"
         #else
         return "https://api.piggy-pulse.com/v2"
         #endif
