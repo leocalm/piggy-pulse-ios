@@ -22,7 +22,7 @@ struct SummaryStepView: View {
                         .font(.ppTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.ppTextPrimary)
-                        .accessibilityIdentifier("onboarding-title")
+                        .accessibilityIdentifier("onboarding-summary-title")
 
                     Text(String(localized: "complete.subtitle"))
                         .font(.ppBody)

@@ -27,6 +27,13 @@ struct OnboardingPage {
                 return
             }
 
+            let welcomeStart = app.buttons["onboarding-welcome-start"]
+            if welcomeStart.exists {
+                welcomeStart.tap()
+                sleep(1)
+                continue
+            }
+
             let skip = app.buttons["onboarding-skip"]
             if skip.waitForExistence(timeout: 1) {
                 skip.tap()

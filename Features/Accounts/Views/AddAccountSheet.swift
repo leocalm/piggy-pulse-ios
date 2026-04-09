@@ -94,7 +94,7 @@ struct AddAccountSheet: View {
                                 }
                                 .pickerStyle(.menu)
                                 .tint(theme.primary)
-                                .accessibilityIdentifier("account-type-\(accountType.lowercased())")
+                                .accessibilityIdentifier("account-type-picker")
                             }
 
                             // Starting Balance

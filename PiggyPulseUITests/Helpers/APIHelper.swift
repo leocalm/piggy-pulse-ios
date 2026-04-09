@@ -36,6 +36,7 @@ enum APIHelper {
             token = json["token"] as? String
         }
 
+        XCTAssertNotNil(token, "Registration succeeded but no token returned")
         return TestUser(name: name, email: email, password: TestConfig.testPassword, token: token)
     }
 
@@ -63,6 +64,7 @@ enum APIHelper {
 
         let fmt = DateFormatter()
         fmt.dateFormat = "MMMM yyyy"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
         let name = fmt.string(from: now)
 
         _ = syncRequest(
@@ -83,11 +85,11 @@ enum APIHelper {
         _ = syncRequest(method: "POST", path: "/onboarding/complete", token: token)
     }
 
-    /// Full seed: set profile, create period, complete onboarding.
+    /// Seed: set profile (currency) and create a period for the current month.
+    /// Onboarding completion is handled via the UI (skip flow).
     static func seedUserData(token: String) {
         setProfile(token: token)
         createPeriod(token: token)
-        completeOnboarding(token: token)
     }
 
     /// Make a synchronous API request. Returns the response data or nil.
@@ -116,10 +118,12 @@ enum APIHelper {
 
         let semaphore = DispatchSemaphore(value: 0)
         var responseData: Data?
+        var responseStatus: Int?
         var responseError: Error?
 
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             responseData = data
+            responseStatus = (response as? HTTPURLResponse)?.statusCode
             responseError = error
             semaphore.signal()
         }
@@ -128,6 +132,11 @@ enum APIHelper {
 
         if let error = responseError {
             XCTFail("API request failed: \(method) \(path) — \(error.localizedDescription)")
+        }
+
+        if let status = responseStatus, status >= 400 {
+            let body = responseData.flatMap { String(data: $0, encoding: .utf8) } ?? "no body"
+            XCTFail("API \(method) \(path) returned \(status): \(body)")
         }
 
         return responseData

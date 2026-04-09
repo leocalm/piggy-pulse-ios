@@ -23,7 +23,7 @@ struct WelcomeStepView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.ppTextPrimary)
                         .multilineTextAlignment(.center)
-                        .accessibilityIdentifier("onboarding-title")
+                        .accessibilityIdentifier("onboarding-welcome-title")
 
                     Text(String(localized: "welcome.subtitle"))
                         .font(.ppBody)
@@ -74,7 +74,7 @@ struct WelcomeStepView: View {
                 .padding(.vertical, PPSpacing.md)
                 .background(theme.primary)
                 .clipShape(Capsule())
-                .accessibilityIdentifier("onboarding-next")
+                .accessibilityIdentifier("onboarding-welcome-start")
 
                 Spacer(minLength: PPSpacing.xl)
             }

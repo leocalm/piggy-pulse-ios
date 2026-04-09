@@ -18,7 +18,7 @@ struct AccountsPage {
         // The account type defaults to Checking. Only change if different.
         // Tapping the Picker opens a menu — select the desired type then dismiss.
         if type.lowercased() != "checking" {
-            let typePicker = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'account-type-'")).firstMatch
+            let typePicker = app.buttons["account-type-picker"]
             if typePicker.waitForExistence(timeout: 3) {
                 typePicker.tap()
                 // Select the desired type from the menu
