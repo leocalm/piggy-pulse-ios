@@ -109,7 +109,8 @@ jobs:
           xcodebuild test \
             -project PiggyPulse.xcodeproj \
             -scheme PiggyPulse \
-            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16 Pro' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            IPHONEOS_DEPLOYMENT_TARGET=26.0 \
             -parallel-testing-enabled NO \
             -only-testing:PiggyPulseUITests \
             CODE_SIGNING_ALLOWED=NO \
