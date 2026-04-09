@@ -1,0 +1,44 @@
+import XCTest
+
+/// Page object for the Accounts screen.
+struct AccountsPage {
+    let app: XCUIApplication
+
+    func navigateTo() {
+        app.tabBars.buttons["Accounts"].tap()
+    }
+
+    func createAccount(name: String, type: String, balance: String) {
+        app.buttons["accounts-add-button"].waitForExistence()
+        app.buttons["accounts-add-button"].tap()
+
+        // Select account type
+        let typeButton = app.buttons["account-type-\(type.lowercased())"]
+        if typeButton.waitForExistence(timeout: 3) {
+            typeButton.tap()
+        }
+
+        // Fill name
+        let nameField = app.textFields["account-name-input"]
+        nameField.waitForExistence()
+        nameField.tap()
+        nameField.typeText(name)
+
+        // Fill balance
+        let balanceField = app.textFields["account-balance-input"]
+        balanceField.tap()
+        balanceField.typeText(balance)
+
+        // Submit
+        app.buttons["account-form-submit"].tap()
+
+        // Wait for sheet to close
+        sleep(1)
+    }
+
+    func expectAccountVisible(name: String) {
+        let account = app.staticTexts[name]
+        XCTAssertTrue(account.waitForExistence(timeout: TestConfig.defaultTimeout),
+                      "Expected account '\(name)' to be visible")
+    }
+}

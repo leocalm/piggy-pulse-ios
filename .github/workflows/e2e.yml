@@ -1,0 +1,107 @@
+name: E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: XCUITest E2E (iPhone Simulator)
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    services:
+      db-e2e:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: piggy_pulse_e2e_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      E2E_API_URL: http://127.0.0.1:18080/v2
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Pull and start API backend
+        run: |
+          docker pull ghcr.io/leocalm/piggy-pulse-api:latest-arm64
+          docker run -d --name backend-e2e \
+            --network host \
+            -e DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/piggy_pulse_e2e_db \
+            -e PIGGY_PULSE_DATABASE__URL=postgres://postgres:postgres@127.0.0.1:5432/piggy_pulse_e2e_db \
+            -e PIGGY_PULSE_DATABASE__MAX_CONNECTIONS=10 \
+            -e PIGGY_PULSE_DATABASE__MIN_CONNECTIONS=1 \
+            -e PIGGY_PULSE_SERVER__ADDRESS=0.0.0.0 \
+            -e PIGGY_PULSE_SERVER__PORT=18080 \
+            -e PIGGY_PULSE_API__BASE_PATH=/v1 \
+            -e "PIGGY_PULSE_CORS__ALLOWED_ORIGINS=[\"*\"]" \
+            -e PIGGY_PULSE_CORS__ALLOW_CREDENTIALS=true \
+            -e PIGGY_PULSE_SESSION__COOKIE_SECURE=false \
+            -e PIGGY_PULSE_EMAIL__ENABLED=false \
+            -e PIGGY_PULSE_TWO_FACTOR__ENCRYPTION_KEY=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef \
+            -e ROCKET_SECRET_KEY=MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY= \
+            -e ROCKET_ADDRESS=0.0.0.0 \
+            -e ROCKET_PORT=18080 \
+            -e RUST_LOG=info \
+            ghcr.io/leocalm/piggy-pulse-api:latest-arm64
+
+      - name: Wait for API health
+        run: |
+          echo "Waiting for API..."
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:18080/v2/health > /dev/null 2>&1; then
+              echo "API ready after ${i}s"
+              break
+            fi
+            sleep 1
+            if [ "$i" -eq 60 ]; then
+              echo "API failed to start" && exit 1
+            fi
+          done
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_26.app
+
+      - name: Run XCUITests
+        run: |
+          xcodebuild test \
+            -project PiggyPulse.xcodeproj \
+            -scheme PiggyPulse \
+            -testPlan E2E \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -resultBundlePath test-results/e2e.xcresult \
+            E2E_API_URL="${{ env.E2E_API_URL }}" \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify 2>/dev/null || true
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-xcresult
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Stop API backend
+        if: always()
+        run: docker stop backend-e2e && docker rm backend-e2e
