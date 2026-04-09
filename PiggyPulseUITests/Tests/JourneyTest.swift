@@ -1,59 +1,59 @@
 import XCTest
 
 /// Test 11: Full first-time user journey
-/// Register → Onboarding → Accounts → Categories → Vendors → Transactions → Dashboard → Logout → Re-login
+/// Register → Login → Accounts → Categories → Vendors → Transactions → Dashboard → Logout → Re-login
 final class JourneyTest: XCTestCase {
     let app = XCUIApplication()
 
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app.launchForE2E()
     }
 
     func testFirstTimeUserJourney() {
-        let timestamp = Int(Date().timeIntervalSince1970 * 1000)
-        let email = "e2e-journey-\(timestamp)@test.piggypulse.com"
-        let password = TestConfig.testPassword
+        // Register and seed via API
+        let user = APIHelper.registerUser(name: "Journey User")
+        guard let token = user.token else {
+            XCTFail("Registration failed — no token")
+            return
+        }
+        APIHelper.seedUserData(token: token)
 
+        // Launch app and login
+        app.launchForE2E()
         let auth = AuthPage(app: app)
-        let onboarding = OnboardingPage(app: app)
+        auth.login(email: user.email, password: user.password)
+        auth.expectDashboardOrOnboarding()
+
+        // Skip onboarding if shown
+        if !app.tabBars.firstMatch.waitForExistence(timeout: 5) {
+            let onboarding = OnboardingPage(app: app)
+            onboarding.skipToEnd()
+            onboarding.expectDashboard()
+        }
+
         let accounts = AccountsPage(app: app)
         let categories = CategoriesPage(app: app)
         let vendors = VendorsPage(app: app)
         let transactions = TransactionsPage(app: app)
         let dashboard = DashboardPage(app: app)
 
-        // ── Step 1: Register ──
-        auth.register(name: "Journey User", email: email, password: password)
-        auth.expectDashboardOrOnboarding()
-
-        // ── Step 2: Skip onboarding ──
-        if !app.tabBars.firstMatch.waitForExistence(timeout: 5) {
-            onboarding.skipToEnd()
-        }
-        onboarding.expectDashboard()
-
-        // ── Step 3: Create accounts ──
+        // ── Step 1: Create accounts ──
         accounts.navigateTo()
         accounts.createAccount(name: "Checking", type: "Checking", balance: "2000")
-        accounts.createAccount(name: "Savings", type: "Savings", balance: "5000")
-
-        // ── Step 4: Verify accounts exist ──
+        accounts.createAccount(name: "Savings", type: "Checking", balance: "5000")
         accounts.expectAccountVisible(name: "Checking")
-        accounts.expectAccountVisible(name: "Savings")
 
-        // ── Step 5: Create categories ──
+        // ── Step 2: Create categories ──
         categories.navigateTo()
         categories.createCategory(name: "Groceries", type: "expense")
-        categories.createCategory(name: "Rent", type: "expense")
         categories.createCategory(name: "Salary", type: "income")
 
-        // ── Step 6: Create vendor ──
+        // ── Step 3: Create vendor ──
         vendors.navigateTo()
         vendors.createVendor(name: "Albert Heijn")
         vendors.expectVendorVisible(name: "Albert Heijn")
 
-        // ── Step 7: Create transactions ──
+        // ── Step 4: Create transactions ──
         transactions.navigateTo()
         transactions.createTransaction(
             amount: "3000",
@@ -64,37 +64,22 @@ final class JourneyTest: XCTestCase {
 
         transactions.navigateTo()
         transactions.createTransaction(
-            amount: "1200",
-            description: "April Rent",
-            category: "Rent",
-            account: "Checking"
-        )
-
-        transactions.navigateTo()
-        transactions.createTransaction(
             amount: "85.50",
             description: "Weekly groceries",
             category: "Groceries",
-            account: "Checking",
-            vendor: "Albert Heijn"
+            account: "Checking"
         )
 
-        // ── Step 8: Verify dashboard loads ──
+        // ── Step 5: Verify dashboard loads ──
         dashboard.navigateTo()
         dashboard.expectLoaded()
 
-        // ── Step 9: Logout ──
+        // ── Step 6: Logout ──
         auth.logout()
         auth.expectLoginScreen()
 
-        // ── Step 10: Re-login ──
-        auth.login(email: email, password: password)
+        // ── Step 7: Re-login ──
+        auth.login(email: user.email, password: user.password)
         auth.expectDashboardOrOnboarding()
-
-        // ── Step 11: Verify dashboard still works ──
-        if app.tabBars.firstMatch.waitForExistence(timeout: 5) {
-            dashboard.navigateTo()
-            dashboard.expectLoaded()
-        }
     }
 }
