@@ -207,6 +207,7 @@ struct VendorsView: View {
                         } label: {
                             Image(systemName: "plus")
                         }
+                        .accessibilityIdentifier("vendors-add-button")
                     }
                 }
             } // else

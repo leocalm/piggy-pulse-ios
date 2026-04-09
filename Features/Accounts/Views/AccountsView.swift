@@ -129,6 +129,7 @@ struct AccountsView: View {
                         } label: {
                             Image(systemName: "plus")
                         }
+                        .accessibilityIdentifier("accounts-add-button")
                     }
                 }
             } // else

@@ -39,9 +39,11 @@ struct MainTabView: View {
                         moreLink("more.periods", icon: "calendar") {
                             PeriodsView().environmentObject(appState)
                         }
+                        .accessibilityIdentifier("more-periods")
                         moreLink("more.categories", icon: "tag") {
                             CategoriesView().environmentObject(appState)
                         }
+                        .accessibilityIdentifier("more-categories")
                         moreLink("more.targets", icon: "chart.pie") {
                             BudgetPlanView().environmentObject(appState)
                         }
@@ -55,6 +57,7 @@ struct MainTabView: View {
                         moreLink("more.vendors", icon: "storefront") {
                             VendorsView().environmentObject(appState)
                         }
+                        .accessibilityIdentifier("more-vendors")
                     }
 
                     // App section
@@ -62,6 +65,7 @@ struct MainTabView: View {
                         moreLink("more.settings", icon: "gearshape") {
                             SettingsView().environmentObject(appState)
                         }
+                        .accessibilityIdentifier("more-settings")
                     }
 
                     // Logout
@@ -84,6 +88,7 @@ struct MainTabView: View {
                                 .stroke(Color.ppBorder, lineWidth: 1)
                         )
                     }
+                    .accessibilityIdentifier("logout-button")
                 }
                 .padding(PPSpacing.lg)
             }

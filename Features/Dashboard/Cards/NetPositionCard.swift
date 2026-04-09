@@ -24,6 +24,7 @@ struct NetPositionCard: View {
             Text(formatCurrency(data.total, code: currencyCode))
                 .font(.ppAmount)
                 .foregroundColor(.ppTextPrimary)
+                .accessibilityIdentifier("dashboard-net-position-value")
 
             // Change this period
             let prefix = data.differenceThisPeriod >= 0 ? "+" : ""

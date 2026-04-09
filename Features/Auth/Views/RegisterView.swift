@@ -111,6 +111,7 @@ struct RegisterView: View {
                             .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                             .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .accessibilityIdentifier("register-name")
                     }
 
                     // Email
@@ -128,6 +129,7 @@ struct RegisterView: View {
                             .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                             .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .accessibilityIdentifier("register-email")
                     }
 
                     // Password + strength bar
@@ -142,6 +144,7 @@ struct RegisterView: View {
                             .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                             .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            .accessibilityIdentifier("register-password")
 
                         if !viewModel.registerPassword.isEmpty {
                             PasswordStrengthBar(password: viewModel.registerPassword)
@@ -163,6 +166,7 @@ struct RegisterView: View {
                                 passwordsDoNotMatch ? Color.ppDestructive : Color.ppBorder,
                                 lineWidth: 1
                             ))
+                            .accessibilityIdentifier("register-confirm-password")
 
                         if passwordsDoNotMatch {
                             Text(String(localized: "auth.register.passwordsDoNotMatch"))
@@ -188,6 +192,7 @@ struct RegisterView: View {
                     }
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("register-terms")
 
                 Button {
                     Task { await viewModel.register() }
@@ -208,6 +213,7 @@ struct RegisterView: View {
                 .tint(theme.primary)
                 .buttonBorderShape(.capsule)
                 .disabled(viewModel.isRegisterDisabled || !agreedToTerms || passwordsDoNotMatch)
+                .accessibilityIdentifier("register-submit")
 
                 HStack(spacing: 4) {
                     Text(String(localized: "auth.alreadyHaveAccount"))

@@ -258,6 +258,7 @@ struct CategoriesView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("categories-add-button")
                 }
             }
 

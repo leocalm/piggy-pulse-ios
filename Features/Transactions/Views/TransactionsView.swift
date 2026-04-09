@@ -227,6 +227,7 @@ struct TransactionsView: View {
                     } label: {
                         Image("custom.arrow.left.arrow.right.badge.plus")
                     }
+                    .accessibilityIdentifier("transactions-add-button")
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
