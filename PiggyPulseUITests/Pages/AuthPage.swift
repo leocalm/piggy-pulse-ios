@@ -89,13 +89,16 @@ struct AuthPage {
         sleep(1)
 
         let logoutButton = app.buttons["logout-button"]
-        if !logoutButton.exists {
+        // Scroll down to find the logout button (it's at the bottom of the More list)
+        for _ in 0..<5 {
+            if logoutButton.exists && logoutButton.isHittable {
+                break
+            }
             app.swipeUp()
+            sleep(1)
         }
-        logoutButton.waitForExistence()
+        XCTAssertTrue(logoutButton.waitForExistence(timeout: 5), "logout-button not found after scrolling")
         logoutButton.tap()
-
-        // Confirm logout if dialog appears
         sleep(1)
     }
 
