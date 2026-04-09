@@ -40,6 +40,10 @@ struct TransactionsPage {
         descField.tap()
         descField.typeText(description)
 
+        // Dismiss keyboard before interacting with pickers
+        app.swipeDown()
+        sleep(1)
+
         // Select from picker: try buttons first (menu items), then staticTexts
         selectPickerOption(app: app, pickerID: "transaction-category-select", optionText: category)
         selectPickerOption(app: app, pickerID: "transaction-account-select", optionText: account)
@@ -48,8 +52,12 @@ struct TransactionsPage {
             selectPickerOption(app: app, pickerID: "transaction-to-account-select", optionText: toAccount)
         }
 
-        // Submit
-        app.buttons["transaction-form-submit"].tap()
+        // Dismiss keyboard and submit
+        app.swipeDown()
+        sleep(1)
+        let submitButton = app.buttons["transaction-form-submit"]
+        XCTAssertTrue(submitButton.waitForExistence(timeout: 5), "transaction-form-submit not found")
+        submitButton.tap()
         sleep(1)
     }
 

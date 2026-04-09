@@ -40,8 +40,14 @@ struct AccountsPage {
         balanceField.tap()
         balanceField.typeText(balance)
 
+        // Dismiss keyboard (numeric keypad blocks the toolbar submit button)
+        app.swipeDown()
+        sleep(1)
+
         // Submit
-        app.buttons["account-form-submit"].tap()
+        let submitButton = app.buttons["account-form-submit"]
+        XCTAssertTrue(submitButton.waitForExistence(timeout: 5), "account-form-submit not found")
+        submitButton.tap()
 
         // Wait for sheet to close
         sleep(1)
