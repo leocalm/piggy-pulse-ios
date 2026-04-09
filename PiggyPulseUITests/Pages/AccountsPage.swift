@@ -13,11 +13,20 @@ struct AccountsPage {
         XCTAssertTrue(addButton.waitForExistence(timeout: TestConfig.longTimeout),
                       "accounts-add-button not found — page may show NoPeriodState")
         addButton.tap()
+        sleep(1) // Wait for sheet animation
 
-        // Select account type
-        let typeButton = app.buttons["account-type-\(type.lowercased())"]
-        if typeButton.waitForExistence(timeout: 3) {
-            typeButton.tap()
+        // The account type defaults to Checking. Only change if different.
+        // Tapping the Picker opens a menu — select the desired type then dismiss.
+        if type.lowercased() != "checking" {
+            let typePicker = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'account-type-'")).firstMatch
+            if typePicker.waitForExistence(timeout: 3) {
+                typePicker.tap()
+                // Select the desired type from the menu
+                let option = app.buttons[type]
+                if option.waitForExistence(timeout: 3) {
+                    option.tap()
+                }
+            }
         }
 
         // Fill name
