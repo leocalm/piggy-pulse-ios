@@ -44,6 +44,7 @@
 		02AB12352F5B320E00E96DF6 /* EditCategoryTargetSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */; };
 		02ADDBBA819B39E550E59149 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8DDC560849A681137F2C6 /* Onboarding.swift */; };
 		02BBBBBB2F5B6D5900E96DF7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */; };
+		02E06D142F8806EC000F7EE7 /* E2E.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 02E06D132F8806EC000F7EE7 /* E2E.xctestplan */; };
 		02F038A12F589EC5008DD1E7 /* BudgetPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFE2F589B4E00E8DCEF /* BudgetPeriod.swift */; };
 		02F038A22F589EC5008DD1E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DFD2F589B4500E8DCEF /* User.swift */; };
 		02F038A32F589EC5008DD1E7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02218DF62F589B0100E8DCEF /* Theme.swift */; };
@@ -162,6 +163,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		02E06CD02F88069A000F7EE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 020853A62F5898F7004E2FD4;
+			remoteInfo = PiggyPulse;
+		};
 		AA00000D000000000000AA0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
@@ -275,6 +283,8 @@
 		02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		02AB12312F5B320200E96DF6 /* CategoryTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTarget.swift; sourceTree = "<group>"; };
 		02AB12362F5B320200E96DF6 /* EditCategoryTargetSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryTargetSheet.swift; sourceTree = "<group>"; };
+		02E06CCA2F88069A000F7EE7 /* PiggyPulseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiggyPulseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		02E06D132F8806EC000F7EE7 /* E2E.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = E2E.xctestplan; sourceTree = "<group>"; };
 		02F038AB2F58DF46008DD1E7 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		02F038AD2F58DF9E008DD1E7 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		02F038AF2F58DFCB008DD1E7 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
@@ -383,8 +393,23 @@
 		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		02E06CCB2F88069A000F7EE7 /* PiggyPulseUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PiggyPulseUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		020853A42F5898F7004E2FD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02E06CC72F88069A000F7EE7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -437,6 +462,7 @@
 				02218DFB2F589B3500E8DCEF /* Core */,
 				02218DF52F589AFA00E8DCEF /* Design */,
 				02218DEE2F589A6F00E8DCEF /* App */,
+				02E06CCB2F88069A000F7EE7 /* PiggyPulseUITests */,
 				020853A82F5898F7004E2FD4 /* Products */,
 				AA000010000000000000AA10 /* PiggyPulseTests */,
 				28EFFADF3178CB4871112AB7 /* Features */,
@@ -444,6 +470,7 @@
 				0F67B58298ACCD2D29F760D5 /* PiggyPulseWatch */,
 				9F9C8E881A0AAC5E155BE8CC /* Frameworks */,
 				CEAA35D3FB378C3A81FA265E /* PiggyPulseWidgets */,
+				02E06D132F8806EC000F7EE7 /* E2E.xctestplan */,
 			);
 			sourceTree = "<group>";
 		};
@@ -455,6 +482,7 @@
 				B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */,
 				8B35CCAA2B7E828ECC1A899C /* PiggyPulseWatchWidgets.appex */,
 				8833B32D19B195C8F1710402 /* PiggyPulseWidgets.appex */,
+				02E06CCA2F88069A000F7EE7 /* PiggyPulseUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1111,6 +1139,29 @@
 			productReference = 020853A72F5898F7004E2FD4 /* PiggyPulse.app */;
 			productType = "com.apple.product-type.application";
 		};
+		02E06CC92F88069A000F7EE7 /* PiggyPulseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02E06CD42F88069A000F7EE7 /* Build configuration list for PBXNativeTarget "PiggyPulseUITests" */;
+			buildPhases = (
+				02E06CC62F88069A000F7EE7 /* Sources */,
+				02E06CC72F88069A000F7EE7 /* Frameworks */,
+				02E06CC82F88069A000F7EE7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02E06CD12F88069A000F7EE7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				02E06CCB2F88069A000F7EE7 /* PiggyPulseUITests */,
+			);
+			name = PiggyPulseUITests;
+			packageProductDependencies = (
+			);
+			productName = PiggyPulseUITests;
+			productReference = 02E06CCA2F88069A000F7EE7 /* PiggyPulseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		1344D5D7D5E0F17BD64E0B74 /* PiggyPulseWatch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F41290E89385CAC6CCBF7DDF /* Build configuration list for PBXNativeTarget "PiggyPulseWatch" */;
@@ -1188,11 +1239,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					020853A62F5898F7004E2FD4 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					02E06CC92F88069A000F7EE7 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 020853A62F5898F7004E2FD4;
 					};
 				};
 			};
@@ -1216,6 +1271,7 @@
 				1344D5D7D5E0F17BD64E0B74 /* PiggyPulseWatch */,
 				F871A6718F83B5F206CE0CC7 /* PiggyPulseWatchWidgets */,
 				1FF08A46BBB33609254AF57C /* PiggyPulseWidgets */,
+				02E06CC92F88069A000F7EE7 /* PiggyPulseUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1229,6 +1285,14 @@
 				027B34B12F5B6D5900E96DF6 /* LaunchScreen.storyboard in Resources */,
 				02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */,
 				02F038BD2F58E87A008DD1E7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02E06CC82F88069A000F7EE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02E06D142F8806EC000F7EE7 /* E2E.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1383,6 +1447,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		02E06CC62F88069A000F7EE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6E91E3BF98C26F17A86356C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1436,6 +1507,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		02E06CD12F88069A000F7EE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 020853A62F5898F7004E2FD4 /* PiggyPulse */;
+			targetProxy = 02E06CD02F88069A000F7EE7 /* PBXContainerItemProxy */;
+		};
 		03754E4ED576ACB4D442D538 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PiggyPulseWatchWidgets;
@@ -1673,6 +1749,46 @@
 			};
 			name = Release;
 		};
+		02E06CD22F88069A000F7EE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.PiggyPulseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PiggyPulse;
+			};
+			name = Debug;
+		};
+		02E06CD32F88069A000F7EE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piggypulse.PiggyPulseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PiggyPulse;
+			};
+			name = Release;
+		};
 		1D4762B1776861DC1131E158 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1897,6 +2013,15 @@
 			buildConfigurations = (
 				020853B32F5898F9004E2FD4 /* Debug */,
 				020853B42F5898F9004E2FD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02E06CD42F88069A000F7EE7 /* Build configuration list for PBXNativeTarget "PiggyPulseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02E06CD22F88069A000F7EE7 /* Debug */,
+				02E06CD32F88069A000F7EE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

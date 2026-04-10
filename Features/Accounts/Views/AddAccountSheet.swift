@@ -79,6 +79,7 @@ struct AddAccountSheet: View {
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                     .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    .accessibilityIdentifier("account-name-input")
                             }
 
                             // Account Type
@@ -93,6 +94,7 @@ struct AddAccountSheet: View {
                                 }
                                 .pickerStyle(.menu)
                                 .tint(theme.primary)
+                                .accessibilityIdentifier("account-type-picker")
                             }
 
                             // Starting Balance
@@ -103,12 +105,13 @@ struct AddAccountSheet: View {
                                     Text(currencySymbol).font(.ppAmount).foregroundColor(.ppTextSecondary)
                                     TextField("0.00", text: $balanceText).keyboardType(.decimalPad)
                                         .font(.ppAmount).foregroundColor(.ppTextPrimary)
+                                        .accessibilityIdentifier("account-balance-input")
                                 }
                                 .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                 .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                 .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
-                            
+
                             // Spend Limit (for CreditCard and Allowance)
                             if showSpendLimit {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
@@ -178,6 +181,7 @@ struct AddAccountSheet: View {
                     .foregroundColor(.ppTextSecondary)
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
+                    .accessibilityIdentifier("account-form-submit")
                 }
             }
         }
@@ -185,7 +189,7 @@ struct AddAccountSheet: View {
 
     private func create() async {
         isLoading = true; errorMessage = nil
-        
+
         let spendLimit: Int32? = {
             guard showSpendLimit, !spendLimitText.isEmpty else { return nil }
             let cleaned = spendLimitText.replacingOccurrences(of: ",", with: ".")

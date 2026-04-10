@@ -22,6 +22,7 @@ struct SummaryStepView: View {
                         .font(.ppTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.ppTextPrimary)
+                        .accessibilityIdentifier("onboarding-summary-title")
 
                     Text(String(localized: "complete.subtitle"))
                         .font(.ppBody)
@@ -129,6 +130,7 @@ struct SummaryStepView: View {
                     .background(theme.primary)
                     .clipShape(Capsule())
                     .disabled(vm.isSaving)
+                    .accessibilityIdentifier("onboarding-go-to-dashboard")
 
                 }
 

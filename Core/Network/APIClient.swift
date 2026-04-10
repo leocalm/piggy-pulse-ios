@@ -1,9 +1,18 @@
 import Foundation
 
 final class APIClient {
-    static let baseURL = {
+    static let baseURL: String = {
+        // Allow override via launch argument or environment for E2E testing
+        if let e2eURL = ProcessInfo.processInfo.environment["E2E_API_URL"] {
+            return e2eURL
+        }
+        if let argIndex = ProcessInfo.processInfo.arguments.firstIndex(of: "-E2E_API_URL"),
+           argIndex + 1 < ProcessInfo.processInfo.arguments.count
+        {
+            return ProcessInfo.processInfo.arguments[argIndex + 1]
+        }
         #if DEBUG
-        return "http://192.168.1.148:8000/v2"
+        return "http://localhost:8000/v2"
         #else
         return "https://api.piggy-pulse.com/v2"
         #endif

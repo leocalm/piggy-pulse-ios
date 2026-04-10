@@ -40,6 +40,7 @@ struct AddVendorSheet: View {
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                     .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    .accessibilityIdentifier("vendor-name-input")
                             }
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 Text(String(localized: "field.description")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
@@ -80,6 +81,7 @@ struct AddVendorSheet: View {
                     .foregroundColor(.ppTextSecondary)
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
+                    .accessibilityIdentifier("vendor-form-submit")
                 }
             }
         }

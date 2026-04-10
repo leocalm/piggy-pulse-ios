@@ -47,6 +47,7 @@ struct AddCategorySheet: View {
                                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                                     .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                                    .accessibilityIdentifier("category-name-input")
                             }
 
                             // Type
@@ -54,7 +55,9 @@ struct AddCategorySheet: View {
                                 Text(String(localized: "field.type")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 Picker("Type", selection: $categoryType) {
                                     Text(String(localized: "category.incoming")).tag("Incoming")
+                                        .accessibilityIdentifier("category-type-income")
                                     Text(String(localized: "category.outgoing")).tag("Outgoing")
+                                        .accessibilityIdentifier("category-type-expense")
                                 }
                                 .pickerStyle(.segmented)
                             }
@@ -137,6 +140,7 @@ struct AddCategorySheet: View {
                     .foregroundColor(.ppTextSecondary)
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
+                    .accessibilityIdentifier("category-form-submit")
                 }
             }
         }

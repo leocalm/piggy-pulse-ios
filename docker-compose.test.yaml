@@ -1,0 +1,62 @@
+# Docker Compose for E2E XCUITest tests (API + DB only).
+# The iOS app runs in the Simulator, not Docker.
+#
+# Usage:
+#   docker-compose -f docker-compose.test.yaml up -d --wait
+#
+# Uses the published GHCR API image. For ARM64 Macs:
+#   PIGGY_PULSE_API_IMAGE=ghcr.io/leocalm/piggy-pulse-api:latest-arm64
+
+services:
+  db-e2e:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: piggy_pulse_e2e_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d piggy_pulse_e2e_db"]
+      interval: 2s
+      timeout: 3s
+      retries: 10
+    tmpfs:
+      - /var/lib/postgresql/data
+    networks:
+      - e2e-network
+
+  backend-e2e:
+    image: ${PIGGY_PULSE_API_IMAGE:-ghcr.io/leocalm/piggy-pulse-api:latest-arm64}
+    depends_on:
+      db-e2e:
+        condition: service_healthy
+    ports:
+      - "18080:8000"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db-e2e:5432/piggy_pulse_e2e_db # pragma: allowlist secret
+      PIGGY_PULSE_DATABASE__URL: postgres://postgres:postgres@db-e2e:5432/piggy_pulse_e2e_db # pragma: allowlist secret
+      PIGGY_PULSE_DATABASE__MAX_CONNECTIONS: 10
+      PIGGY_PULSE_DATABASE__MIN_CONNECTIONS: 1
+      PIGGY_PULSE_SERVER__ADDRESS: 0.0.0.0
+      PIGGY_PULSE_SERVER__PORT: 8000
+      PIGGY_PULSE_API__BASE_PATH: /v1
+      PIGGY_PULSE_CORS__ALLOWED_ORIGINS: '["http://127.0.0.1:18080"]'
+      PIGGY_PULSE_CORS__ALLOW_CREDENTIALS: "false"
+      PIGGY_PULSE_SESSION__COOKIE_SECURE: "false"
+      PIGGY_PULSE_EMAIL__ENABLED: "false"
+      PIGGY_PULSE_TWO_FACTOR__ENCRYPTION_KEY: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef" # pragma: allowlist secret
+      ROCKET_SECRET_KEY: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY= # pragma: allowlist secret
+      ROCKET_ADDRESS: 0.0.0.0
+      ROCKET_PORT: 8000
+      RUST_LOG: info
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8000/v2/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 30s
+    networks:
+      - e2e-network
+
+networks:
+  e2e-network:
+    driver: bridge

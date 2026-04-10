@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "5E670AAD-0F10-47C8-BE40-6FA7E11098B3",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "E2E_API_URL",
+        "value" : "http:\/\/127.0.0.1:18080\/v2"
+      }
+    ],
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:PiggyPulse.xcodeproj",
+        "identifier" : "02E06CC92F88069A000F7EE7",
+        "name" : "PiggyPulseUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -15,6 +15,7 @@ struct CurrentPeriodCard: View {
             Text(formatCurrency(data.spent, code: currencyCode))
                 .font(.ppAmount)
                 .foregroundColor(.ppTextPrimary)
+                .accessibilityIdentifier("dashboard-spent-value")
 
             Text(String(localized: "widget.currentPeriod.ofTarget \(formatCurrency(data.target, code: currencyCode))"))
                 .font(.ppCallout)
@@ -46,5 +47,6 @@ struct CurrentPeriodCard: View {
                 .foregroundColor(.ppTextTertiary)
         }
         .dashboardCard(highlighted: true)
+        .accessibilityIdentifier("dashboard-current-period")
     }
 }

@@ -1,0 +1,130 @@
+name: E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: XCUITest E2E (iPhone Simulator)
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    env:
+      CI: "true"
+      E2E_API_URL: http://127.0.0.1:18080/v2
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/piggy_pulse_e2e_db # pragma: allowlist secret
+      PIGGY_PULSE_DATABASE__URL: postgres://postgres:postgres@127.0.0.1:5432/piggy_pulse_e2e_db # pragma: allowlist secret
+      PIGGY_PULSE_SERVER__ADDRESS: 0.0.0.0
+      PIGGY_PULSE_SERVER__PORT: 18080
+      PIGGY_PULSE_API__BASE_PATH: /v1
+      PIGGY_PULSE_CORS__ALLOWED_ORIGINS: '["http://127.0.0.1:18080"]'
+      PIGGY_PULSE_CORS__ALLOW_CREDENTIALS: "false"
+      PIGGY_PULSE_SESSION__COOKIE_SECURE: "false"
+      PIGGY_PULSE_EMAIL__ENABLED: "false"
+      PIGGY_PULSE_TWO_FACTOR__ENCRYPTION_KEY: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef" # pragma: allowlist secret
+      ROCKET_SECRET_KEY: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY= # pragma: allowlist secret
+      ROCKET_ADDRESS: 0.0.0.0
+      ROCKET_PORT: 18080
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout API repo
+        uses: actions/checkout@v4
+        with:
+          repository: leocalm/piggy-pulse-api
+          path: piggy-pulse-api
+
+      - name: Setup PostgreSQL
+        run: |
+          brew install postgresql@17
+          export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+          pg_ctl -D /opt/homebrew/var/postgresql@17 start || true
+          sleep 2
+          createuser -s postgres 2>/dev/null || true
+          psql -U postgres -c "ALTER USER postgres PASSWORD 'postgres';" 2>/dev/null || true
+          createdb -U postgres piggy_pulse_e2e_db 2>/dev/null || true
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: piggy-pulse-api
+
+      - name: Install sqlx-cli
+        uses: taiki-e/install-action@v2
+        with:
+          tool: sqlx-cli
+
+      - name: Run migrations
+        run: |
+          cd piggy-pulse-api
+          sqlx migrate run
+
+      - name: Build and start API
+        run: |
+          cd piggy-pulse-api
+          cargo build --bin piggy-pulse &
+          BUILD_PID=$!
+          wait $BUILD_PID
+          ./target/debug/piggy-pulse &
+          echo "Waiting for API..."
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:18080/v2/health > /dev/null 2>&1; then
+              echo "API ready after ${i}s"
+              break
+            fi
+            sleep 1
+            if [ "$i" -eq 60 ]; then
+              echo "API failed to start" && exit 1
+            fi
+          done
+
+      - name: Select Xcode
+        run: |
+          # Find the latest Xcode version available
+          ls /Applications/ | grep Xcode | sort -V | tail -5
+          XCODE_PATH=$(ls -d /Applications/Xcode*.app 2>/dev/null | sort -V | tail -1)
+          echo "Using: $XCODE_PATH"
+          sudo xcode-select -s "$XCODE_PATH"
+
+      - name: List available simulators
+        run: xcrun simctl list devices available | grep iPhone | head -10
+
+      - name: Run XCUITests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project PiggyPulse.xcodeproj \
+            -scheme PiggyPulse \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            IPHONEOS_DEPLOYMENT_TARGET=26.0 \
+            -parallel-testing-enabled NO \
+            -only-testing:PiggyPulseUITests \
+            -skip-testing:PiggyPulseUITests/AuthTests/testLoginWithValidCredentials \
+            -skip-testing:PiggyPulseUITests/AuthTests/testRegistration \
+            -skip-testing:PiggyPulseUITests/JourneyTest \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee test-output.log
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-results
+          path: test-output.log
+          if-no-files-found: ignore
+          retention-days: 14

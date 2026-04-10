@@ -108,6 +108,7 @@ struct AddTransactionSheet: View {
                     .foregroundColor(.ppTextSecondary)
                     .disabled(isDisabled || isLoading)
                     .opacity(isDisabled ? 0.6 : 1)
+                    .accessibilityIdentifier("transaction-form-submit")
                 }
             }
             .task {
@@ -133,6 +134,7 @@ struct AddTransactionSheet: View {
                     .font(.ppAmount)
                     .foregroundColor(.ppTextPrimary)
                     .keyboardType(.decimalPad)
+                    .accessibilityIdentifier("transaction-amount-input")
             }
             .padding(PPSpacing.lg)
             .background(Color.ppSurface)
@@ -148,6 +150,7 @@ struct AddTransactionSheet: View {
                     .foregroundColor(.ppTextPrimary)
             }
             .tint(theme.primary)
+            .accessibilityIdentifier("transaction-transfer-toggle")
             .onChange(of: isTransfer) { _, transfer in
                 if transfer {
                     selectedCategory = transferCategory
@@ -187,6 +190,7 @@ struct AddTransactionSheet: View {
                     .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                     .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                    .accessibilityIdentifier("transaction-description-input")
             }
 
             VStack(alignment: .leading, spacing: PPSpacing.sm) {
@@ -234,6 +238,7 @@ struct AddTransactionSheet: View {
                     }
                     .pickerStyle(.menu)
                     .tint(theme.primary)
+                    .accessibilityIdentifier("transaction-category-select")
                 }
             }
 
@@ -252,6 +257,7 @@ struct AddTransactionSheet: View {
                 }
                 .pickerStyle(.menu)
                 .tint(theme.primary)
+                .accessibilityIdentifier("transaction-account-select")
             }
 
             // To account (only for transfers)
@@ -270,6 +276,7 @@ struct AddTransactionSheet: View {
                     }
                     .pickerStyle(.menu)
                     .tint(theme.primary)
+                    .accessibilityIdentifier("transaction-to-account-select")
                 }
             } else {
                 HStack {

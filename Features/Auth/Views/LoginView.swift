@@ -110,6 +110,7 @@ struct LoginView: View {
                     .foregroundColor(.ppDestructive)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
+                    .accessibilityIdentifier("login-error")
             }
 
             VStack(spacing: PPSpacing.lg) {
@@ -127,6 +128,7 @@ struct LoginView: View {
                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                         .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        .accessibilityIdentifier("login-email")
                 }
 
                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
@@ -140,6 +142,7 @@ struct LoginView: View {
                         .padding(.horizontal, PPSpacing.lg).padding(.vertical, PPSpacing.md)
                         .background(Color.ppSurface).clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        .accessibilityIdentifier("login-password")
                 }
             }
 
@@ -162,6 +165,7 @@ struct LoginView: View {
             .tint(theme.primary)
             .buttonBorderShape(.capsule)
             .disabled(viewModel.isLoginDisabled)
+            .accessibilityIdentifier("login-submit")
 
             VStack(spacing: PPSpacing.md) {
                 NavigationLink(String(localized: "auth.forgotPassword")) {
@@ -181,6 +185,7 @@ struct LoginView: View {
                     }
                     .font(.ppCallout)
                     .foregroundColor(theme.primary)
+                    .accessibilityIdentifier("register-link")
                 }
             }
         }

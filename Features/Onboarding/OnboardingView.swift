@@ -63,6 +63,7 @@ struct OnboardingView: View {
         }
         .task { await vm.loadStatus() }
         .interactiveDismissDisabled(true)
+        .accessibilityIdentifier("onboarding-wizard")
         .onChange(of: vm.isComplete) { _, complete in
             if complete {
                 Task { await appState.checkAuth() }
@@ -78,6 +79,7 @@ struct OnboardingView: View {
             Button(String(localized: "common.back")) { vm.goBack() }
                 .font(.ppCallout).foregroundColor(.ppTextSecondary)
                 .frame(minWidth: 80)
+                .accessibilityIdentifier("onboarding-back")
 
             Spacer()
 
@@ -86,6 +88,7 @@ struct OnboardingView: View {
                     .font(.ppCallout).foregroundColor(.ppTextSecondary)
                     .padding(.horizontal, PPSpacing.lg)
                     .padding(.vertical, PPSpacing.md)
+                    .accessibilityIdentifier("onboarding-skip")
             }
 
             Button {
@@ -104,6 +107,7 @@ struct OnboardingView: View {
             .background(vm.canAdvance ? theme.primary : theme.primary.opacity(0.4))
             .clipShape(Capsule())
             .disabled(!vm.canAdvance || vm.isSaving)
+            .accessibilityIdentifier("onboarding-next")
         }
         .padding(.horizontal, PPSpacing.xl)
         .padding(.vertical, PPSpacing.lg)
