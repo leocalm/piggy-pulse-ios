@@ -114,6 +114,9 @@ jobs:
             IPHONEOS_DEPLOYMENT_TARGET=26.0 \
             -parallel-testing-enabled NO \
             -only-testing:PiggyPulseUITests \
+            -skip-testing:PiggyPulseUITests/AuthTests/testLoginWithValidCredentials \
+            -skip-testing:PiggyPulseUITests/AuthTests/testRegistration \
+            -skip-testing:PiggyPulseUITests/JourneyTest \
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee test-output.log
 

@@ -10,8 +10,7 @@ final class JourneyTest: XCTestCase {
     }
 
     /// TODO: Logout button scroll needs more attempts on slow CI runners
-    func testFirstTimeUserJourney() throws {
-        try XCTSkipIf(ProcessInfo.processInfo.environment["CI"] != nil, "Skipped on CI — logout scroll timing")
+    func testFirstTimeUserJourney() {
         // Register and seed via API
         let user = APIHelper.registerUser(name: "Journey User")
         guard let token = user.token else {
