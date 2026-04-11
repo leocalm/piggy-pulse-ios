@@ -81,7 +81,11 @@ struct DashboardView: View {
                     }
                 }
                 .sheet(isPresented: $showAddTransaction) {
-                    AddTransactionSheet(onCreated: {})
+                    AddTransactionSheet(onCreated: {
+                        if let periodId = appState.selectedPeriod?.id {
+                            Task { await viewModel.load(periodId: periodId) }
+                        }
+                    })
                         .environmentObject(appState)
                 }
                 .sheet(isPresented: $showAddWidget, onDismiss: {
