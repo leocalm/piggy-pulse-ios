@@ -65,6 +65,11 @@ struct TransactionVendor: Codable, Identifiable {
     let name: String
 }
 
+// Response for /transactions/has-any
+struct HasTransactionsResponse: Codable {
+    let hasTransactions: Bool
+}
+
 // Cursor-paginated response for transactions
 struct CursorPaginatedTransactions: Codable {
     let data: [Transaction]

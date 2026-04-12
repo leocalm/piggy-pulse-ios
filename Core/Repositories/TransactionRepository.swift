@@ -43,4 +43,8 @@ final class TransactionRepository {
 
         return try await apiClient.request(.transactions, queryItems: queryItems)
     }
+
+    func fetchHasAnyTransactions() async throws -> HasTransactionsResponse {
+        try await apiClient.request(.transactionsHasAny)
+    }
 }
