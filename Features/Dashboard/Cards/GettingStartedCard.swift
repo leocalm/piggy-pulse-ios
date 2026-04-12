@@ -75,22 +75,16 @@ struct GettingStartedCard: View {
         async let accountsTask: PaginatedResponse<SimpleAccount>? = try? api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")])
         async let periodsTask = try? PeriodRepository(apiClient: api).fetchPeriods()
         async let catsTask: PaginatedResponse<CategoryListItem>? = try? api.request(.categories, queryItems: [URLQueryItem(name: "limit", value: "1")])
-
-        let txnsTask: CursorPaginatedTransactions? = await {
-            guard let periodId = appState.selectedPeriod?.id else { return nil }
-            return try? await api.request(.transactions, queryItems: [
-                URLQueryItem(name: "periodId", value: periodId.uuidString),
-                URLQueryItem(name: "limit", value: "1")
-            ])
-        }()
+        async let txnsTask: HasTransactionsResponse? = try? TransactionRepository(apiClient: api).fetchHasAnyTransactions()
 
         let accounts = await accountsTask
         let periods = await periodsTask
         let cats = await catsTask
+        let txns = await txnsTask
 
         hasAccounts = !(accounts?.data.isEmpty ?? true)
         hasPeriods = !(periods ?? []).isEmpty
         hasCategories = !(cats?.data.isEmpty ?? true)
-        hasTransactions = !(txnsTask?.data.isEmpty ?? true)
+        hasTransactions = txns?.hasTransactions ?? false
     }
 }

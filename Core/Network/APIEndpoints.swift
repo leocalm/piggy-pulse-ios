@@ -57,6 +57,7 @@ extension APIEndpoint {
     static func deleteTransaction(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/transactions/\(id)", method: .delete, requiresAuth: true)
     }
+    static let transactionsHasAny = APIEndpoint(path: "/transactions/has-any", method: .get, requiresAuth: true)
 }
 
 // MARK: - Periods
