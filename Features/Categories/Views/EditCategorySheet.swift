@@ -51,6 +51,14 @@ struct EditCategorySheet: View {
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
 
+                            // Category type is immutable after creation. The backend
+                            // enforces this via a BEFORE UPDATE trigger on the `category`
+                            // table (piggy-pulse-api migration 20260327000004) because
+                            // category_type is snapshotted by the transaction aggregate
+                            // trigger at insert time to classify inflow/outflow/spending.
+                            // Editing it would silently drift the materialized aggregates.
+                            // We keep the picker visible so the user can see the current
+                            // type, but disable it in edit mode.
                             if !category.isSystem {
                                 VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                     Text(String(localized: "field.type")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
@@ -59,6 +67,7 @@ struct EditCategorySheet: View {
                                         Text(String(localized: "category.outgoing")).tag("Outgoing")
                                     }
                                     .pickerStyle(.segmented)
+                                    .disabled(true)
                                 }
                             }
 

@@ -61,6 +61,14 @@ struct EditAccountSheet: View {
                                     .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
                             }
 
+                            // Account type is immutable after creation. The backend enforces
+                            // this via a BEFORE UPDATE trigger on the `account` table
+                            // (piggy-pulse-api migration 20260327000004) because
+                            // account_type is snapshotted by the transaction aggregate
+                            // trigger at insert time to classify Transfer-to-Allowance
+                            // spending. Editing it would silently drift the materialized
+                            // aggregates. We keep the picker visible so the user can see
+                            // the current type, but disable it in edit mode.
                             HStack {
                                 Text(String(localized: "field.accountType")).font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
                                 Spacer()
@@ -71,6 +79,7 @@ struct EditAccountSheet: View {
                                 }
                                 .pickerStyle(.menu)
                                 .tint(theme.primary)
+                                .disabled(true)
                             }
 
                             if showSpendLimit {
