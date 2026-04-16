@@ -308,26 +308,19 @@ struct AddTransactionSheet: View {
         isLoadingOptions = true
 
         let store = appState.dataStore
-        if store.isLoaded {
-            accounts = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
-            let allCats = store.categories.filter { $0.status == "active" }
-                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
-            transferCategory = allCats.first(where: { $0.name == "Transfer" })
-            categories = allCats.filter { $0.name != "Transfer" }
-            vendors = store.vendors.filter { $0.status == "active" }
-                .map { VendorOption(id: $0.id, name: $0.name) }
-        } else {
-            do {
-                accounts = try await appState.apiClient.request(.accountOptions) as [AccountOption]
-                let allOptions: [CategoryOption] = try await appState.apiClient.request(.categoryOptions)
-                transferCategory = allOptions.first(where: { $0.name == "Transfer" })
-                categories = allOptions.filter { $0.name != "Transfer" }
-                vendors = []
-            } catch {
-                errorMessage = String(localized: "Failed to load form options.")
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-            }
+        // Always refresh to pick up newly created entities
+        if let periodId = appState.selectedPeriod?.id {
+            store.clear()
+            try? await store.loadAll(periodId: periodId)
         }
+
+        accounts = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
+        let allCats = store.categories.filter { $0.status == "active" }
+            .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+        transferCategory = allCats.first(where: { $0.name == "Transfer" })
+        categories = allCats.filter { $0.name != "Transfer" }
+        vendors = store.vendors.filter { $0.status == "active" }
+            .map { VendorOption(id: $0.id, name: $0.name) }
 
         isLoadingOptions = false
     }
