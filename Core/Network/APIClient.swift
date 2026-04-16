@@ -2,7 +2,7 @@ import Foundation
 
 final class APIClient {
     static let baseURL: String = {
-        // Allow override via launch argument or environment for E2E testing
+        // E2E override (keep this as-is for testing)
         if let e2eURL = ProcessInfo.processInfo.environment["E2E_API_URL"] {
             return e2eURL
         }
@@ -11,11 +11,13 @@ final class APIClient {
         {
             return ProcessInfo.processInfo.arguments[argIndex + 1]
         }
-        #if DEBUG
-        return "http://localhost:8000/v2"
-        #else
-        return "https://api.piggy-pulse.com/v2"
-        #endif
+        
+        // Read from Info.plist (set per build configuration)
+        guard let url = Bundle.main.object(forInfoDictionaryKey: "APIBaseURL") as? String,
+              !url.isEmpty else {
+            fatalError("APIBaseURL not set in Info.plist")
+        }
+        return url
     }()
 
     private let tokenManager: TokenManager
