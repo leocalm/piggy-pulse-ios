@@ -139,9 +139,11 @@ struct EditProfileSheet: View {
             let name: String
             let timezone: String
             let defaultCurrencyId: UUID?
+            let currency: String
         }
 
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), timezone: timezone, defaultCurrencyId: selectedCurrencyId)
+        let currencyCode = currencies.first(where: { $0.id == selectedCurrencyId })?.code ?? appState.currencyCode
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), timezone: timezone, defaultCurrencyId: selectedCurrencyId, currency: currencyCode)
         do {
             try await appState.apiClient.request(.updateProfile, body: req) as Void
             await appState.loadUserCurrency()
