@@ -153,7 +153,11 @@ struct AddTransactionSheet: View {
             .accessibilityIdentifier("transaction-transfer-toggle")
             .onChange(of: isTransfer) { _, transfer in
                 if transfer {
-                    selectedCategory = transferCategory
+                    if transferCategory == nil {
+                        Task { await createTransferCategory() }
+                    } else {
+                        selectedCategory = transferCategory
+                    }
                     selectedVendor = nil
                 } else {
                     selectedToAccount = nil
@@ -327,6 +331,23 @@ struct AddTransactionSheet: View {
     }
 
     // MARK: - Create Transaction
+
+    private func createTransferCategory() async {
+        struct Req: Encodable { let name: String; let icon: String; let type: String; let color: String }
+        struct Resp: Decodable { let id: UUID }
+        do {
+            let resp: Resp = try await appState.apiClient.request(
+                .createCategory,
+                body: Req(name: "Transfer", icon: "↔", type: "transfer", color: "#868E96")
+            )
+            let option = CategoryOption(id: resp.id, name: "Transfer", icon: "↔", color: "#868E96")
+            transferCategory = option
+            selectedCategory = option
+            appState.dataStore.clear()
+        } catch {
+            errorMessage = String(localized: "Failed to create transfer category.")
+        }
+    }
 
     private func createTransaction() async {
         isLoading = true
