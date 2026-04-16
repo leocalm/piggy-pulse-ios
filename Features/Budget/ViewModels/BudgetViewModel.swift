@@ -49,12 +49,19 @@ final class BudgetViewModel: ObservableObject {
     func setTarget(categoryId: UUID, value: Int32, periodId: UUID) async {
         guard let apiClient else { return }
         isSaving = true
-        let body = BatchUpsertTargetsRequest(
-            periodId: periodId,
-            targets: [.init(categoryId: categoryId, budgetedValue: value)]
-        )
         do {
-            try await apiClient.request(.upsertCategoryTargets, body: body)
+            // Check if a target already exists for this category
+            if let existing = targets.first(where: { $0.categoryId == categoryId }) {
+                try await apiClient.request(
+                    .updateCategoryTarget(existing.id),
+                    body: UpdateTargetRequest(value: Int64(value))
+                )
+            } else {
+                try await apiClient.request(
+                    .createCategoryTarget,
+                    body: CreateTargetRequest(categoryId: categoryId, value: Int64(value))
+                )
+            }
             dataStore?.clear()
             await load(periodId: periodId)
         } catch {

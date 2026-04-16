@@ -51,11 +51,11 @@ struct CategoryTarget: Codable, Identifiable {
 
 // TargetSummary is no longer returned by the encrypted API — computed locally from decrypted targets + transactions
 
-struct BatchUpsertTargetsRequest: Encodable {
-    struct TargetItem: Encodable {
-        let categoryId: UUID
-        let budgetedValue: Int32
-    }
-    let periodId: UUID
-    let targets: [TargetItem]
+struct CreateTargetRequest: Encodable {
+    let categoryId: UUID
+    let value: Int64
+}
+
+struct UpdateTargetRequest: Encodable {
+    let value: Int64
 }
