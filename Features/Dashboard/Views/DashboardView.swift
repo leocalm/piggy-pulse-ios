@@ -79,13 +79,13 @@ struct DashboardView: View {
                         }
                     }
                 }
-                .sheet(isPresented: $showAddTransaction) {
-                    AddTransactionSheet(onCreated: {
-                        if let period = appState.selectedPeriod {
-                            appState.dataStore.clear()
-                            Task { await viewModel.load(period: period) }
-                        }
-                    })
+                .sheet(isPresented: $showAddTransaction, onDismiss: {
+                    if let period = appState.selectedPeriod {
+                        appState.dataStore.clear()
+                        Task { await viewModel.load(period: period) }
+                    }
+                }) {
+                    AddTransactionSheet(onCreated: { })
                         .environmentObject(appState)
                 }
                 .sheet(isPresented: $showAddWidget, onDismiss: {
