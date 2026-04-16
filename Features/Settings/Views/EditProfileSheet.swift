@@ -119,7 +119,7 @@ struct EditProfileSheet: View {
             .task {
                 name = profile?.name ?? ""
                 timezone = profile?.timezone ?? ""
-                selectedCurrencyId = profile?.defaultCurrencyId
+                selectedCurrencyId = profile?.defaultCurrencyId ?? appState.currencyId
                 await loadCurrencies()
             }
         }
@@ -142,7 +142,7 @@ struct EditProfileSheet: View {
 
         let req = Req(name: name.trimmingCharacters(in: .whitespaces), timezone: timezone, defaultCurrencyId: selectedCurrencyId)
         do {
-            let _: ProfileResponse = try await appState.apiClient.request(.updateProfile, body: req)
+            try await appState.apiClient.request(.updateProfile, body: req) as Void
             await appState.loadUserCurrency()
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             dismiss()
