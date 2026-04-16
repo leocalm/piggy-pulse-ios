@@ -228,10 +228,11 @@ struct EditTransactionSheet: View {
                 try await store.loadAll(periodId: periodId)
             }
 
-            let allCats = store.categories.filter { $0.status == "active" }
+            let activeCats = store.categories.filter { $0.status == "active" }
+            transferCategory = activeCats.first(where: { $0.type == "transfer" })
                 .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
-            transferCategory = allCats.first(where: { $0.name == "Transfer" })
-            categories = allCats.filter { $0.name != "Transfer" }
+            categories = activeCats.filter { $0.type != "transfer" }
+                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
             accounts = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
             vendors = store.vendors.filter { $0.status == "active" }
                 .map { VendorOption(id: $0.id, name: $0.name) }

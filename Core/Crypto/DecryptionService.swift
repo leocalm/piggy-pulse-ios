@@ -42,7 +42,7 @@ final class DecryptionService {
     }
 
     func decrypt(_ accounts: [EncryptedAccount]) throws -> [AccountListItem] {
-        try accounts.map { try decrypt($0) }
+        accounts.compactMap { try? decrypt($0) }
     }
 
     // MARK: - Category decryption
@@ -62,7 +62,7 @@ final class DecryptionService {
     }
 
     func decrypt(_ categories: [EncryptedCategory]) throws -> [CategoryListItem] {
-        try categories.map { try decrypt($0) }
+        categories.compactMap { try? decrypt($0) }
     }
 
     // MARK: - Vendor decryption
@@ -78,7 +78,7 @@ final class DecryptionService {
     }
 
     func decrypt(_ vendors: [EncryptedVendor]) throws -> [VendorListItem] {
-        try vendors.map { try decrypt($0) }
+        vendors.compactMap { try? decrypt($0) }
     }
 
     // MARK: - Subscription decryption
@@ -102,7 +102,7 @@ final class DecryptionService {
     }
 
     func decrypt(_ subscriptions: [EncryptedSubscription]) throws -> [Subscription] {
-        try subscriptions.map { try decrypt($0) }
+        subscriptions.compactMap { try? decrypt($0) }
     }
 
     // MARK: - Target decryption
@@ -162,6 +162,6 @@ final class DecryptionService {
     }
 
     func decryptTransactions(_ encrypted: [EncryptedTransaction], accounts: [AccountListItem], categories: [CategoryListItem], vendors: [VendorListItem]) throws -> [Transaction] {
-        try encrypted.map { try decrypt($0, accounts: accounts, categories: categories, vendors: vendors) }
+        encrypted.compactMap { try? decrypt($0, accounts: accounts, categories: categories, vendors: vendors) }
     }
 }
