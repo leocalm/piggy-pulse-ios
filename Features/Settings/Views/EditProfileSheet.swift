@@ -46,7 +46,7 @@ struct EditProfileSheet: View {
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 Text(String(localized: "field.email"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                Text(profile?.email ?? "")
+                                Text(profile?.email ?? appState.currentUser?.email ?? "")
                                     .font(.ppBody)
                                     .foregroundColor(.ppTextTertiary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -118,8 +118,9 @@ struct EditProfileSheet: View {
             }
             .task {
                 name = profile?.name ?? ""
-                timezone = profile?.timezone ?? ""
+                timezone = profile?.timezone ?? TimeZone.current.identifier
                 selectedCurrencyId = profile?.defaultCurrencyId ?? appState.currencyId
+                // Show current user's email from AppState if profile doesn't have it
                 await loadCurrencies()
             }
         }
