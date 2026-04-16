@@ -533,8 +533,9 @@ struct CategoriesView: View {
         errorMessage = nil
         do {
             let store = appState.dataStore
-            // Ensure data store is loaded (may have been cleared after a mutation)
-            if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+            // Always reload to pick up mutations (create/edit/delete)
+            if let periodId = appState.selectedPeriod?.id {
+                store.clear()
                 try await store.loadAll(periodId: periodId)
             }
 
