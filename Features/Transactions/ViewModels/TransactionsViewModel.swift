@@ -24,16 +24,18 @@ final class TransactionsViewModel: ObservableObject {
     private var hasMore = true
     private var currentPeriodId: UUID?
     private var repository: TransactionRepository?
+    private var dataStore: EncryptedDataStore?
 
-    init(apiClient: APIClient) {
-        self.repository = TransactionRepository(apiClient: apiClient)
+    init(apiClient: APIClient, decryptionService: DecryptionService) {
+        self.repository = TransactionRepository(apiClient: apiClient, decryptionService: decryptionService)
     }
 
     init() {}
 
-    func configure(apiClient: APIClient) {
+    func configure(apiClient: APIClient, decryptionService: DecryptionService, dataStore: EncryptedDataStore) {
         guard repository == nil else { return }
-        repository = TransactionRepository(apiClient: apiClient)
+        repository = TransactionRepository(apiClient: apiClient, decryptionService: decryptionService)
+        self.dataStore = dataStore
     }
 
     var activeFilterCount: Int {
@@ -41,7 +43,7 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func load(periodId: UUID) async {
-        guard let repository else { return }
+        guard let repository, let dataStore else { return }
         currentPeriodId = periodId
         isLoading = true
         errorMessage = nil
@@ -55,7 +57,10 @@ final class TransactionsViewModel: ObservableObject {
                 direction: selectedDirection,
                 accountIds: Array(selectedAccountIds),
                 categoryIds: Array(selectedCategoryIds),
-                vendorIds: Array(selectedVendorIds)
+                vendorIds: Array(selectedVendorIds),
+                accounts: dataStore.accounts,
+                categories: dataStore.categories,
+                vendors: dataStore.vendors
             )
             transactions = response.data
             nextCursor = response.nextCursor
@@ -68,7 +73,7 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func loadMore() async {
-        guard let repository,
+        guard let repository, let dataStore,
               let periodId = currentPeriodId,
               let cursor = nextCursor,
               hasMore,
@@ -83,13 +88,16 @@ final class TransactionsViewModel: ObservableObject {
                 cursor: cursor,
                 accountIds: Array(selectedAccountIds),
                 categoryIds: Array(selectedCategoryIds),
-                vendorIds: Array(selectedVendorIds)
+                vendorIds: Array(selectedVendorIds),
+                accounts: dataStore.accounts,
+                categories: dataStore.categories,
+                vendors: dataStore.vendors
             )
             transactions.append(contentsOf: response.data)
             nextCursor = response.nextCursor
             hasMore = response.nextCursor != nil
         } catch {
-            // Silently fail on load more — user can scroll again
+            // Silently fail on load more
         }
 
         isLoadingMore = false
@@ -117,7 +125,6 @@ final class TransactionsViewModel: ObservableObject {
         async let accounts: [AccountOption] = (try? repository.apiClient.request(.accountOptions)) ?? []
         async let categories: [CategoryOption] = (try? repository.apiClient.request(.categoryOptions)) ?? []
 
-        // Fetch all pages of vendors
         var allVendors: [VendorOption] = []
         var vendorCursor: String? = nil
         repeat {

@@ -187,7 +187,7 @@ struct TransactionsView: View {
                 }
             }
             .task(id: appState.selectedPeriod?.id) {
-                viewModel.configure(apiClient: appState.apiClient)
+                viewModel.configure(apiClient: appState.apiClient, decryptionService: appState.decryptionService, dataStore: appState.dataStore)
                 if let periodId = appState.selectedPeriod?.id {
                     await viewModel.load(periodId: periodId)
                 }

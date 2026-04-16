@@ -6,167 +6,122 @@ struct SubscriptionDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeManager) private var theme
 
-    let subscriptionId: UUID
+    let subscription: Subscription
     let apiClient: APIClient
 
-    @State private var detail: SubscriptionDetail?
-    @State private var isLoading = true
-    @State private var errorMessage: String?
+    @State private var currentSub: Subscription
     @State private var showEditSheet = false
     @State private var showCancelSheet = false
     @State private var showDeleteConfirm = false
 
-    private let repository: SubscriptionRepository
+    private var repository: SubscriptionRepository {
+        SubscriptionRepository(apiClient: apiClient, decryptionService: appState.decryptionService)
+    }
 
-    init(subscriptionId: UUID, apiClient: APIClient) {
-        self.subscriptionId = subscriptionId
+    init(subscription: Subscription, apiClient: APIClient) {
+        self.subscription = subscription
         self.apiClient = apiClient
-        self.repository = SubscriptionRepository(apiClient: apiClient)
+        self._currentSub = State(initialValue: subscription)
     }
 
     var body: some View {
         ZStack {
             Color.ppBackground.ignoresSafeArea()
 
-            if isLoading {
-                ProgressView().tint(.ppTextSecondary)
-            } else if let error = errorMessage {
-                VStack(spacing: PPSpacing.md) {
-                    Image(systemName: "exclamationmark.triangle").font(.system(size: 32)).foregroundColor(theme.secondary)
-                    Text(error).font(.ppBody).foregroundColor(.ppTextSecondary)
-                    Button(String(localized: "subscription.retry")) { Task { await load() } }
-                        .font(.ppHeadline).foregroundColor(theme.primary)
-                }
-            } else if let detail = detail {
-                ScrollView {
-                    VStack(spacing: PPSpacing.xl) {
-                        // Info card
-                        VStack(alignment: .leading, spacing: PPSpacing.lg) {
-                            HStack {
-                                Text(detail.name)
-                                    .font(.ppTitle).foregroundColor(.ppTextPrimary)
-                                Spacer()
-                                statusBadge(detail.status)
-                            }
-
-                            Divider().background(Color.ppBorder)
-
-                            infoRow(label: String(localized: "subscription.detail.amount"),
-                                    value: formatCurrency(detail.billingAmount, code: appState.currencyCode))
-                            infoRow(label: String(localized: "subscription.detail.cycle"),
-                                    value: detail.billingCycle.displayName)
-                            infoRow(label: String(localized: "subscription.detail.billingDay"),
-                                    value: "\(detail.billingDay)")
-                            infoRow(label: String(localized: "subscription.detail.nextCharge"),
-                                    value: formatDateString(detail.nextChargeDate))
-
-                            if let cancelledAt = detail.cancelledAt {
-                                infoRow(label: String(localized: "subscription.detail.cancelledAt"),
-                                        value: formatDateString(cancelledAt))
-                            }
-
-                            infoRow(label: String(localized: "subscription.detail.created"),
-                                    value: formatDateString(detail.createdAt))
-                        }
-                        .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
-
-                        // Billing history
-                        if !detail.billingHistory.isEmpty {
-                            VStack(alignment: .leading, spacing: PPSpacing.md) {
-                                Text(String(localized: "subscription.detail.history"))
-                                    .font(.ppTitle3).foregroundColor(.ppTextPrimary)
-
-                                ForEach(detail.billingHistory) { event in
-                                    billingEventRow(event)
-                                }
-                            }
-                            .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                            .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+            ScrollView {
+                VStack(spacing: PPSpacing.xl) {
+                    VStack(alignment: .leading, spacing: PPSpacing.lg) {
+                        HStack {
+                            Text(currentSub.name)
+                                .font(.ppTitle).foregroundColor(.ppTextPrimary)
+                            Spacer()
+                            statusBadge(currentSub.status)
                         }
 
-                        // Action buttons
-                        VStack(spacing: PPSpacing.md) {
-                            if detail.status == .active {
-                                Button {
-                                    showEditSheet = true
-                                } label: {
-                                    HStack {
-                                        Spacer()
-                                        Label(String(localized: "subscription.edit"), systemImage: "pencil")
-                                            .font(.ppHeadline)
-                                        Spacer()
-                                    }
-                                    .padding(.vertical, PPSpacing.md)
-                                    .background(theme.primary)
-                                    .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                }
+                        Divider().background(Color.ppBorder)
 
-                                Button {
-                                    showCancelSheet = true
-                                } label: {
-                                    HStack {
-                                        Spacer()
-                                        Label(String(localized: "subscription.cancel"), systemImage: "xmark.circle")
-                                            .font(.ppHeadline)
-                                        Spacer()
-                                    }
-                                    .padding(.vertical, PPSpacing.md)
-                                    .background(theme.secondary)
-                                    .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                }
-                            }
+                        infoRow(label: String(localized: "subscription.detail.amount"),
+                                value: formatCurrency(currentSub.billingAmount, code: appState.currencyCode))
+                        infoRow(label: String(localized: "subscription.detail.cycle"),
+                                value: currentSub.billingCycle.displayName)
+                        infoRow(label: String(localized: "subscription.detail.billingDay"),
+                                value: "\(currentSub.billingDay)")
+                        infoRow(label: String(localized: "subscription.detail.nextCharge"),
+                                value: formatDateString(currentSub.nextChargeDate))
 
+                        if let cancelledAt = currentSub.cancelledAt {
+                            infoRow(label: String(localized: "subscription.detail.cancelledAt"),
+                                    value: formatDateString(cancelledAt))
+                        }
+
+                        infoRow(label: String(localized: "subscription.detail.created"),
+                                value: formatDateString(currentSub.createdAt))
+                    }
+                    .padding(PPSpacing.lg).background(Color.ppCard).clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+                    .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
+
+                    VStack(spacing: PPSpacing.md) {
+                        if currentSub.status == .active {
                             Button {
-                                showDeleteConfirm = true
+                                showEditSheet = true
                             } label: {
                                 HStack {
                                     Spacer()
-                                    Label(String(localized: "subscription.delete"), systemImage: "trash")
+                                    Label(String(localized: "subscription.edit"), systemImage: "pencil")
                                         .font(.ppHeadline)
                                     Spacer()
                                 }
                                 .padding(.vertical, PPSpacing.md)
-                                .background(Color.ppSurface)
-                                .foregroundColor(.sharedDestructive)
+                                .background(theme.primary)
+                                .foregroundColor(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
-                                .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                            }
+
+                            Button {
+                                showCancelSheet = true
+                            } label: {
+                                HStack {
+                                    Spacer()
+                                    Label(String(localized: "subscription.cancel"), systemImage: "xmark.circle")
+                                        .font(.ppHeadline)
+                                    Spacer()
+                                }
+                                .padding(.vertical, PPSpacing.md)
+                                .background(theme.secondary)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
                             }
                         }
+
+                        Button {
+                            showDeleteConfirm = true
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Label(String(localized: "subscription.delete"), systemImage: "trash")
+                                    .font(.ppHeadline)
+                                Spacer()
+                            }
+                            .padding(.vertical, PPSpacing.md)
+                            .background(Color.ppSurface)
+                            .foregroundColor(.sharedDestructive)
+                            .clipShape(RoundedRectangle(cornerRadius: PPRadius.md))
+                            .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
+                        }
                     }
-                    .padding(PPSpacing.xl)
                 }
+                .padding(PPSpacing.xl)
             }
         }
-        .navigationTitle(detail?.name ?? String(localized: "subscription.detail.navTitle"))
+        .navigationTitle(currentSub.name)
         .navigationBarTitleDisplayMode(.inline)
-        .task { await load() }
-        .refreshable { await Task { @MainActor in await self.load() }.value }
-        .sheet(isPresented: $showEditSheet, onDismiss: { Task { await load() } }) {
-            if let d = detail {
-                let sub = Subscription(
-                    id: d.id, name: d.name, categoryId: d.categoryId, vendorId: d.vendorId,
-                    billingAmount: d.billingAmount, billingCycle: d.billingCycle, billingDay: d.billingDay,
-                    nextChargeDate: d.nextChargeDate, status: d.status, cancelledAt: d.cancelledAt,
-                    createdAt: d.createdAt, updatedAt: d.updatedAt
-                )
-                EditSubscriptionSheet(subscription: sub, apiClient: apiClient) { Task { await load() } }
-                    .environmentObject(appState)
-            }
+        .sheet(isPresented: $showEditSheet) {
+            EditSubscriptionSheet(subscription: currentSub, apiClient: apiClient) { }
+                .environmentObject(appState)
         }
-        .sheet(isPresented: $showCancelSheet, onDismiss: { Task { await load() } }) {
-            if let d = detail {
-                let sub = Subscription(
-                    id: d.id, name: d.name, categoryId: d.categoryId, vendorId: d.vendorId,
-                    billingAmount: d.billingAmount, billingCycle: d.billingCycle, billingDay: d.billingDay,
-                    nextChargeDate: d.nextChargeDate, status: d.status, cancelledAt: d.cancelledAt,
-                    createdAt: d.createdAt, updatedAt: d.updatedAt
-                )
-                CancelSubscriptionSheet(subscription: sub, apiClient: apiClient) { Task { await load() } }
-                    .environmentObject(appState)
-            }
+        .sheet(isPresented: $showCancelSheet) {
+            CancelSubscriptionSheet(subscription: currentSub, apiClient: apiClient) { }
+                .environmentObject(appState)
         }
         .confirmationDialog(
             String(localized: "subscription.deleteConfirm"),
@@ -177,11 +132,9 @@ struct SubscriptionDetailView: View {
                 Task {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     do {
-                        try await repository.deleteSubscription(id: subscriptionId)
+                        try await repository.deleteSubscription(id: subscription.id)
                         dismiss()
-                    } catch {
-                        errorMessage = String(localized: "subscription.deleteFailed")
-                    }
+                    } catch {}
                 }
             }
             Button(String(localized: "subscription.cancelAction"), role: .cancel) {}
@@ -226,40 +179,5 @@ struct SubscriptionDetailView: View {
             Text(value)
                 .font(.ppBody).foregroundColor(.ppTextPrimary)
         }
-    }
-
-    private func billingEventRow(_ event: BillingEvent) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(formatDateString(event.date))
-                    .font(.ppBody).foregroundColor(.ppTextPrimary)
-                HStack(spacing: PPSpacing.xs) {
-                    if event.detected {
-                        Text(String(localized: "subscription.detail.detected"))
-                            .font(.ppCaption).foregroundColor(.ppTextSecondary)
-                    }
-                    if event.postCancellation {
-                        Text(String(localized: "subscription.detail.postCancel"))
-                            .font(.ppCaption).foregroundColor(theme.secondary)
-                    }
-                }
-            }
-            Spacer()
-            Text(formatCurrency(event.amount, code: appState.currencyCode))
-                .font(.ppHeadline).foregroundColor(.ppTextPrimary)
-        }
-        .padding(.vertical, PPSpacing.sm)
-    }
-
-    // MARK: - Load
-
-    private func load() async {
-        isLoading = true; errorMessage = nil
-        do {
-            detail = try await repository.fetchSubscription(id: subscriptionId)
-        } catch {
-            errorMessage = String(localized: "subscription.loadError")
-        }
-        isLoading = false
     }
 }

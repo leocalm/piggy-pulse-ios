@@ -386,19 +386,15 @@ struct AccountsView: View {
     }
 
     private func load() async {
-        guard let periodId = appState.selectedPeriod?.id else { return }
         isLoading = true
         errorMessage = nil
 
         do {
-            let response: PaginatedResponse<AccountListItem> = try await appState.apiClient.request(
-                .accountsSummary,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            accounts = response.data
-            // Compute summary from accounts
-            let assets = accounts.filter { $0.type != "CreditCard" && $0.status == "active" }.reduce(Int64(0)) { $0 + $1.currentBalance }
-            let liabilities = accounts.filter { $0.type == "CreditCard" && $0.status == "active" }.reduce(Int64(0)) { $0 + $1.currentBalance }
+            let encrypted: [EncryptedAccount] = try await appState.apiClient.request(.accounts)
+            accounts = try await appState.decryptionService.decrypt(encrypted)
+            let active = accounts.filter { $0.status == "active" }
+            let assets = active.filter { $0.type != "CreditCard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
+            let liabilities = active.filter { $0.type == "CreditCard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
             summary = AccountsSummary(totalNetWorth: assets - liabilities, totalAssets: assets, totalLiabilities: liabilities)
         } catch {
             errorMessage = String(localized: "Failed to load accounts.")

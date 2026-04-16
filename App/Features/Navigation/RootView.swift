@@ -15,7 +15,7 @@ struct RootView: View {
                     if appState.onboardingCompleted {
                         AdaptiveNavigationView()
                     } else {
-                        OnboardingView(apiClient: appState.apiClient)
+                        OnboardingView(apiClient: appState.apiClient, decryptionService: appState.decryptionService)
                     }
                 } else {
                     NavigationStack {

@@ -341,15 +341,11 @@ struct VendorsView: View {
     }
 
     private func load() async {
-        guard let periodId = appState.selectedPeriod?.id else { return }
         isLoading = true
         errorMessage = nil
         do {
-            let response: PaginatedResponse<VendorListItem> = try await appState.apiClient.request(
-                .vendors,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            vendors = response.data
+            let encrypted: [EncryptedVendor] = try await appState.apiClient.request(.vendors)
+            vendors = try await appState.decryptionService.decrypt(encrypted)
         } catch {
             errorMessage = String(localized: "Failed to load vendors.")
         }

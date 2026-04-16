@@ -2,44 +2,40 @@ import Foundation
 
 final class SubscriptionRepository {
     private let apiClient: APIClient
+    private let decryptionService: DecryptionService
 
-    init(apiClient: APIClient) {
+    init(apiClient: APIClient, decryptionService: DecryptionService) {
         self.apiClient = apiClient
+        self.decryptionService = decryptionService
     }
 
+    @MainActor
     func fetchSubscriptions() async throws -> [Subscription] {
-        try await apiClient.request(.subscriptions)
+        let encrypted: [EncryptedSubscription] = try await apiClient.request(.subscriptions)
+        return try decryptionService.decrypt(encrypted)
     }
 
+    @MainActor
     func fetchSubscriptions(categoryId: UUID) async throws -> [Subscription] {
-        try await apiClient.request(.subscriptions, queryItems: [
+        let encrypted: [EncryptedSubscription] = try await apiClient.request(.subscriptions, queryItems: [
             URLQueryItem(name: "categoryId", value: categoryId.uuidString)
         ])
+        return try decryptionService.decrypt(encrypted)
     }
 
-    func fetchSubscription(id: UUID) async throws -> SubscriptionDetail {
-        try await apiClient.request(.subscription(id))
+    func createSubscription(body: CreateSubscriptionRequest) async throws {
+        try await apiClient.request(.createSubscription, body: body) as Subscription
     }
 
-    func createSubscription(body: CreateSubscriptionRequest) async throws -> Subscription {
-        try await apiClient.request(.createSubscription, body: body)
-    }
-
-    func updateSubscription(id: UUID, body: UpdateSubscriptionRequest) async throws -> Subscription {
-        try await apiClient.request(.updateSubscription(id), body: body)
+    func updateSubscription(id: UUID, body: UpdateSubscriptionRequest) async throws {
+        try await apiClient.request(.updateSubscription(id), body: body) as Subscription
     }
 
     func deleteSubscription(id: UUID) async throws {
         try await apiClient.requestVoid(.deleteSubscription(id))
     }
 
-    func cancelSubscription(id: UUID, body: CancelSubscriptionRequest) async throws -> Subscription {
-        try await apiClient.request(.cancelSubscription(id), body: body)
-    }
-
-    func fetchUpcomingCharges(limit: Int = 5) async throws -> [UpcomingCharge] {
-        try await apiClient.request(.upcomingCharges, queryItems: [
-            URLQueryItem(name: "limit", value: String(limit))
-        ])
+    func cancelSubscription(id: UUID, body: CancelSubscriptionRequest) async throws {
+        try await apiClient.request(.cancelSubscription(id), body: body) as Subscription
     }
 }

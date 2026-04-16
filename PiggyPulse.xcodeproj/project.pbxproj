@@ -160,6 +160,11 @@
 		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
 		FEA03AD1124CC45545E6885C /* RecentTransactionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */; };
 		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
+		E1F100020000000100000001 /* CryptoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000100000001 /* CryptoManager.swift */; };
+		E1F100020000000200000002 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000200000002 /* KeyManager.swift */; };
+		E1F100020000000300000003 /* EncryptedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000300000003 /* EncryptedModels.swift */; };
+		E1F100020000000400000004 /* DecryptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000400000004 /* DecryptionService.swift */; };
+		E1F100020000000500000005 /* EncryptedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000500000005 /* EncryptedDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -391,6 +396,11 @@
 		FEAAC4950F7605762F10A451 /* PiggyPulseWatchWidgets-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PiggyPulseWatchWidgets-Info.plist"; sourceTree = "<group>"; };
 		FFEF4D0E1942DF267446A9BE /* WidgetCurrencyFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetCurrencyFormatter.swift; sourceTree = "<group>"; };
 		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
+		E1F100010000000100000001 /* CryptoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoManager.swift; sourceTree = "<group>"; };
+		E1F100010000000200000002 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
+		E1F100010000000300000003 /* EncryptedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedModels.swift; sourceTree = "<group>"; };
+		E1F100010000000400000004 /* DecryptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptionService.swift; sourceTree = "<group>"; };
+		E1F100010000000500000005 /* EncryptedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -546,6 +556,7 @@
 			children = (
 				AA00000E000000000000AA0E /* Notifications */,
 				AA000019000000000000AA19 /* Biometrics */,
+				E1F100030000000600000006 /* Crypto */,
 				027B34B22F5B74CE00E96DF6 /* Utilities */,
 				02F038C32F598BF9008DD1E7 /* Repositories */,
 				02F038AC2F58DF94008DD1E7 /* Network */,
@@ -1115,6 +1126,18 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		E1F100030000000600000006 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				E1F100010000000100000001 /* CryptoManager.swift */,
+				E1F100010000000200000002 /* KeyManager.swift */,
+				E1F100010000000300000003 /* EncryptedModels.swift */,
+				E1F100010000000400000004 /* DecryptionService.swift */,
+				E1F100010000000500000005 /* EncryptedDataStore.swift */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1135,6 +1158,9 @@
 				439A081628F32F8AA576045C /* PBXTargetDependency */,
 			);
 			name = PiggyPulse;
+			packageProductDependencies = (
+				E1C0A00000000001AAAA0001 /* Argon2Kit */,
+			);
 			productName = PiggyPulse;
 			productReference = 020853A72F5898F7004E2FD4 /* PiggyPulse.app */;
 			productType = "com.apple.product-type.application";
@@ -1261,6 +1287,9 @@
 			);
 			mainGroup = 0208539E2F5898F7004E2FD4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E1C0A00000000002AAAA0002 /* XCRemoteSwiftPackageReference "Argon2Kit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 020853A82F5898F7004E2FD4 /* Products */;
 			projectDirPath = "";
@@ -1328,6 +1357,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F100020000000100000001 /* CryptoManager.swift in Sources */,
+				E1F100020000000200000002 /* KeyManager.swift in Sources */,
+				E1F100020000000300000003 /* EncryptedModels.swift in Sources */,
+				E1F100020000000400000004 /* DecryptionService.swift in Sources */,
+				E1F100020000000500000005 /* EncryptedDataStore.swift in Sources */,
 				027B34792F5B325700E96DF6 /* BudgetPlanView.swift in Sources */,
 				02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */,
 				02F038C92F598D78008DD1E7 /* PeriodSelectorBar.swift in Sources */,
@@ -2063,6 +2097,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1C0A00000000002AAAA0002 /* XCRemoteSwiftPackageReference "Argon2Kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rkreutz/Argon2Kit.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1C0A00000000001AAAA0001 /* Argon2Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1C0A00000000002AAAA0002 /* XCRemoteSwiftPackageReference "Argon2Kit" */;
+			productName = Argon2Kit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0208539F2F5898F7004E2FD4 /* Project object */;
 }

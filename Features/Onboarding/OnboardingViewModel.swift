@@ -75,11 +75,12 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Init
 
     private let apiClient: APIClient
-    /// Steps that have already been saved to the server; skipped on re-advance.
+    private let decryptionService: DecryptionService
     private var savedSteps: Set<OnboardingStep> = []
 
-    init(apiClient: APIClient) {
+    init(apiClient: APIClient, decryptionService: DecryptionService) {
         self.apiClient = apiClient
+        self.decryptionService = decryptionService
     }
 
     // MARK: - Load on appear
@@ -186,25 +187,15 @@ final class OnboardingViewModel: ObservableObject {
                 selectedCurrencyId = currencies.first?.id
             }
 
-            // AccountResponse uses Serde tagged enum: {"type": "Checking", "name": ..., "status": ...}
-            // The "type" field acts as both the discriminator and the account type.
-            struct AccountItem: Decodable {
-                let name: String; let type: String
-                let initialBalance: Int64; let spendLimit: Int64?
-                let status: String
-                enum CodingKeys: String, CodingKey { case name, type, initialBalance, spendLimit, status }
-            }
-            struct AccountListResponse: Decodable {
-                let data: [AccountItem]
-            }
-            let response: AccountListResponse = try await apiClient.request(.accounts)
-            let active = response.data.filter { $0.status.lowercased() == "active" }
+            let encrypted: [EncryptedAccount] = try await apiClient.request(.accounts)
+            let decrypted = try await MainActor.run { try decryptionService.decrypt(encrypted) }
+            let active = decrypted.filter { $0.status == "active" }
             if !active.isEmpty {
                 accounts = active.map { item in
                     var draft = DraftAccount()
                     draft.name = item.name
                     draft.accountType = item.type
-                    draft.balanceText = String(format: "%.2f", Double(item.initialBalance) / 100)
+                    draft.balanceText = String(format: "%.2f", Double(item.currentBalance) / 100)
                     if let limit = item.spendLimit, limit > 0 {
                         draft.spendLimitText = String(format: "%.2f", Double(limit) / 100)
                     }
@@ -217,8 +208,11 @@ final class OnboardingViewModel: ObservableObject {
 
     private func loadExistingCategories() async {
         do {
-            let response: CategoriesManagementResponse = try await apiClient.request(.categoriesManagement)
-            let active = (response.incoming + response.outgoing).filter { !$0.isArchived }
+            let encrypted: [EncryptedCategory] = try await apiClient.request(.categories)
+            let decrypted: [CategoryListItem] = try await MainActor.run {
+                try decryptionService.decrypt(encrypted)
+            }
+            let active = decrypted.filter { $0.status == "active" && $0.type != "transfer" }
             if !active.isEmpty {
                 createdCategories = active.map { item in
                     CreatedCategory(

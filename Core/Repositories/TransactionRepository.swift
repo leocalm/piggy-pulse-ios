@@ -2,11 +2,14 @@ import Foundation
 
 final class TransactionRepository {
     let apiClient: APIClient
+    let decryptionService: DecryptionService
 
-    init(apiClient: APIClient) {
+    init(apiClient: APIClient, decryptionService: DecryptionService) {
         self.apiClient = apiClient
+        self.decryptionService = decryptionService
     }
 
+    @MainActor
     func fetchTransactions(
         periodId: UUID,
         direction: TransactionDirection = .all,
@@ -14,7 +17,10 @@ final class TransactionRepository {
         limit: Int = 20,
         accountIds: [UUID] = [],
         categoryIds: [UUID] = [],
-        vendorIds: [UUID] = []
+        vendorIds: [UUID] = [],
+        accounts: [AccountListItem],
+        categories: [CategoryListItem],
+        vendors: [VendorListItem]
     ) async throws -> CursorPaginatedTransactions {
         var queryItems = [
             URLQueryItem(name: "periodId", value: periodId.uuidString),
@@ -41,7 +47,15 @@ final class TransactionRepository {
             queryItems.append(URLQueryItem(name: "vendorId", value: id.uuidString))
         }
 
-        return try await apiClient.request(.transactions, queryItems: queryItems)
+        let encrypted: EncryptedTransactionsResponse = try await apiClient.request(.transactions, queryItems: queryItems)
+        let decrypted = try decryptionService.decryptTransactions(
+            encrypted.data,
+            accounts: accounts,
+            categories: categories,
+            vendors: vendors
+        )
+
+        return CursorPaginatedTransactions(data: decrypted, nextCursor: encrypted.nextCursor)
     }
 
     func fetchHasAnyTransactions() async throws -> HasTransactionsResponse {

@@ -75,7 +75,7 @@ struct GettingStartedCard: View {
         async let accountsTask: PaginatedResponse<SimpleAccount>? = try? api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")])
         async let periodsTask = try? PeriodRepository(apiClient: api).fetchPeriods()
         async let catsTask: PaginatedResponse<CategoryListItem>? = try? api.request(.categories, queryItems: [URLQueryItem(name: "limit", value: "1")])
-        async let txnsTask: HasTransactionsResponse? = try? TransactionRepository(apiClient: api).fetchHasAnyTransactions()
+        async let txnsTask: HasTransactionsResponse? = try? TransactionRepository(apiClient: api, decryptionService: appState.decryptionService).fetchHasAnyTransactions()
 
         let accounts = await accountsTask
         let periods = await periodsTask
