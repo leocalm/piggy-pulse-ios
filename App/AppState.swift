@@ -51,12 +51,20 @@ final class AppState: ObservableObject {
 
         do {
             let profile: ProfileResponse = try await apiClient.request(.profile)
+            let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
+
             if let cId = profile.defaultCurrencyId {
                 self.currencyId = cId
-                let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
                 if let match = currencies.first(where: { $0.id == cId }) {
                     currencyCode = match.code
                 }
+            } else if let code = profile.currency,
+                      let match = currencies.first(where: { $0.code == code }) {
+                self.currencyId = match.id
+                currencyCode = match.code
+            } else if let first = currencies.first {
+                self.currencyId = first.id
+                currencyCode = first.code
             }
         } catch {
             // Keep default EUR
