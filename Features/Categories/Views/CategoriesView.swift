@@ -534,16 +534,54 @@ struct CategoriesView: View {
         do {
             let encrypted: [EncryptedCategory] = try await appState.apiClient.request(.categories)
             let decrypted = try await appState.decryptionService.decrypt(encrypted)
+
+            // Count transactions per category from data store
+            let store = appState.dataStore
+            var txCountByCategory: [UUID: Int64] = [:]
+            for tx in store.periodTransactions {
+                txCountByCategory[tx.category.id, default: 0] += 1
+            }
+
             let items = decrypted.map { cat in
                 CategoryManagementItem(
                     id: cat.id, name: cat.name, color: cat.color, icon: cat.icon,
                     type: cat.type, status: cat.status, parentId: cat.parentId,
-                    behavior: cat.behavior, description: nil, numberOfTransactions: 0
+                    behavior: cat.behavior, description: nil,
+                    numberOfTransactions: txCountByCategory[cat.id] ?? 0
                 )
             }
             incoming = items.filter { !$0.isArchived && $0.type.lowercased() == "income" }
             outgoing = items.filter { !$0.isArchived && $0.type.lowercased() == "expense" }
             archived = items.filter { $0.isArchived }
+
+            // Build overview map from data store targets + transactions
+            var spentByCategory: [UUID: Int64] = [:]
+            for tx in store.periodTransactions {
+                spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
+            }
+
+            let budgetByCategoryId = Dictionary(uniqueKeysWithValues: store.targets.map { ($0.categoryId, $0) })
+
+            overviewMap = Dictionary(uniqueKeysWithValues: decrypted.compactMap { cat -> (UUID, CategoriesOverviewSummaryItem)? in
+                let spent = spentByCategory[cat.id] ?? 0
+                let budgeted = budgetByCategoryId[cat.id].map { Int64($0.budgetedValue) }
+                return (cat.id, CategoriesOverviewSummaryItem(
+                    id: cat.id, name: cat.name, icon: cat.icon, color: cat.color,
+                    type: cat.type, status: cat.status,
+                    actual: spent, projected: spent,
+                    budgeted: budgeted, variance: (budgeted ?? 0) - spent
+                ))
+            })
+
+            let activeExpenseItems = overviewMap.values.filter { $0.type == "expense" && $0.status == "active" }
+            overviewSummary = CategoriesOverviewSummary(
+                periodName: appState.selectedPeriod?.name ?? "",
+                periodElapsedPercent: 0,
+                totalSpent: activeExpenseItems.reduce(0) { $0 + $1.actual },
+                totalBudgeted: activeExpenseItems.reduce(0) { $0 + ($1.budgeted ?? 0) },
+                totalBudgetedIncoming: nil,
+                variance: 0
+            )
         } catch {
             errorMessage = String(localized: "Failed to load categories.")
         }

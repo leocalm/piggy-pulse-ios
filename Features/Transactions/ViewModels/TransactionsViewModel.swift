@@ -113,35 +113,25 @@ final class TransactionsViewModel: ObservableObject {
     }
 
     func loadFilterOptions() async {
-        guard let repository,
-              !isLoadingFilterOptions &&
+        guard !isLoadingFilterOptions &&
               filterOptions.accounts.isEmpty &&
               filterOptions.categories.isEmpty &&
-              filterOptions.vendors.isEmpty else { return }
+              filterOptions.vendors.isEmpty,
+              let dataStore else { return }
 
         isLoadingFilterOptions = true
         defer { isLoadingFilterOptions = false }
 
-        async let accounts: [AccountOption] = (try? repository.apiClient.request(.accountOptions)) ?? []
-        async let categories: [CategoryOption] = (try? repository.apiClient.request(.categoryOptions)) ?? []
+        // Build filter options from already-decrypted data in the data store
+        let accounts = dataStore.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
+        let categories = dataStore.categories
+            .filter { $0.status == "active" }
+            .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+        let vendors = dataStore.vendors
+            .filter { $0.status == "active" }
+            .map { VendorOption(id: $0.id, name: $0.name) }
 
-        var allVendors: [VendorOption] = []
-        var vendorCursor: String? = nil
-        repeat {
-            var queryItems: [URLQueryItem] = [URLQueryItem(name: "limit", value: "100")]
-            if let cursor = vendorCursor {
-                queryItems.append(URLQueryItem(name: "cursor", value: cursor))
-            }
-            if let page: PaginatedResponse<VendorOption> = try? await repository.apiClient.request(.vendors, queryItems: queryItems) {
-                allVendors.append(contentsOf: page.data)
-                vendorCursor = page.nextCursor
-            } else {
-                break
-            }
-        } while vendorCursor != nil
-
-        let (a, c) = await (accounts, categories)
-        filterOptions = TransactionFilterOptions(accounts: a, categories: c, vendors: allVendors)
+        filterOptions = TransactionFilterOptions(accounts: accounts, categories: categories, vendors: vendors)
     }
 
     func applyFilters(

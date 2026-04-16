@@ -307,34 +307,26 @@ struct AddTransactionSheet: View {
     private func loadOptions() async {
         isLoadingOptions = true
 
-        guard let periodId = appState.selectedPeriod?.id else {
-            isLoadingOptions = false
-            return
-        }
-
-        do {
-            // Fetch accounts
-            let accountsResponse: [AccountOption] = try await appState.apiClient.request(
-                .accountOptions
-            )
-            accounts = accountsResponse
-
-            // Fetch categories (options endpoint) — now includes transfer category
-            let allOptions: [CategoryOption] = try await appState.apiClient.request(.categoryOptions)
-            transferCategory = allOptions.first(where: { $0.name == "Transfer" })
-            categories = allOptions.filter { $0.name != "Transfer" }
-
-
-
-            // Fetch vendors (paginated)
-            let vendorsResponse: PaginatedResponse<VendorOption> = try await appState.apiClient.request(
-                .vendors,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            vendors = vendorsResponse.data
-        } catch {
-            errorMessage = String(localized: "Failed to load form options.")
-            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        let store = appState.dataStore
+        if store.isLoaded {
+            accounts = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
+            let allCats = store.categories.filter { $0.status == "active" }
+                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+            transferCategory = allCats.first(where: { $0.name == "Transfer" })
+            categories = allCats.filter { $0.name != "Transfer" }
+            vendors = store.vendors.filter { $0.status == "active" }
+                .map { VendorOption(id: $0.id, name: $0.name) }
+        } else {
+            do {
+                accounts = try await appState.apiClient.request(.accountOptions) as [AccountOption]
+                let allOptions: [CategoryOption] = try await appState.apiClient.request(.categoryOptions)
+                transferCategory = allOptions.first(where: { $0.name == "Transfer" })
+                categories = allOptions.filter { $0.name != "Transfer" }
+                vendors = []
+            } catch {
+                errorMessage = String(localized: "Failed to load form options.")
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+            }
         }
 
         isLoadingOptions = false
