@@ -33,7 +33,25 @@ final class BudgetViewModel: ObservableObject {
             if !dataStore.isLoaded {
                 try await dataStore.loadAll(periodId: periodId)
             }
-            targets = dataStore.targets
+
+            // Merge categories with existing targets so every category appears
+            let existingTargets = dataStore.targets
+            let targetByCategoryId = Dictionary(uniqueKeysWithValues: existingTargets.map { ($0.categoryId, $0) })
+
+            targets = dataStore.categories
+                .filter { $0.status == "active" && $0.type != "transfer" }
+                .map { cat in
+                    if let existing = targetByCategoryId[cat.id] {
+                        return existing
+                    }
+                    // Category without a target — show with zero budget
+                    return CategoryTarget(
+                        id: cat.id, categoryId: cat.id,
+                        name: cat.name, type: cat.type, parentId: cat.parentId,
+                        budgetedValue: 0, isExcluded: false
+                    )
+                }
+
             if let period {
                 burnIn = dashboardRepo.computeCurrentPeriod(period: period)
             }
@@ -50,8 +68,9 @@ final class BudgetViewModel: ObservableObject {
         guard let apiClient else { return }
         isSaving = true
         do {
-            // Check if a target already exists for this category
-            if let existing = targets.first(where: { $0.categoryId == categoryId }) {
+            // Check if a real target (from API) exists — real targets have id != categoryId
+            let existingTarget = dataStore?.targets.first(where: { $0.categoryId == categoryId })
+            if let existing = existingTarget {
                 try await apiClient.request(
                     .updateCategoryTarget(existing.id),
                     body: UpdateTargetRequest(value: Int64(value))
