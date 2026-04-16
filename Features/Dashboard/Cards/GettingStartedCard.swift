@@ -71,21 +71,19 @@ struct GettingStartedCard: View {
     private func checkProgress() async {
         let store = appState.dataStore
 
-        // If data store is loaded, use cached decrypted data
+        // Use already-loaded data when available (avoids extra API calls)
         if store.isLoaded {
             hasAccounts = !store.accounts.isEmpty
             hasCategories = !store.categories.isEmpty
             hasTransactions = !store.periodTransactions.isEmpty
         } else {
-            // Has-any-transactions endpoint returns a simple boolean (not encrypted)
             let txns: HasTransactionsResponse? = try? await appState.apiClient.request(.transactionsHasAny)
             hasTransactions = txns?.hasTransactions ?? false
-            // For accounts/categories, try to decrypt from encrypted endpoints
             hasAccounts = ((try? await appState.apiClient.request(.accounts) as [EncryptedAccount])?.isEmpty == false)
             hasCategories = ((try? await appState.apiClient.request(.categories) as [EncryptedCategory])?.isEmpty == false)
         }
 
-        let periods = try? await PeriodRepository(apiClient: appState.apiClient).fetchPeriods()
-        hasPeriods = !(periods ?? []).isEmpty
+        // Period selector already fetches periods — just check if one is selected
+        hasPeriods = appState.selectedPeriod != nil
     }
 }

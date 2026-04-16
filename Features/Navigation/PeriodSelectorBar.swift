@@ -91,6 +91,7 @@ struct PeriodSelectorBar: View {
     }
 
     private func loadPeriods() async {
+        guard periods.isEmpty else { isLoading = false; return }
         isLoading = true
         let repo = PeriodRepository(apiClient: appState.apiClient)
         do {
@@ -191,6 +192,7 @@ struct PeriodSelectorTitleButton: View {
     }
 
     private func loadPeriods() async {
+        guard periods.isEmpty else { return }
         let repo = PeriodRepository(apiClient: appState.apiClient)
         periods = (try? await repo.fetchPeriods()) ?? []
     }
