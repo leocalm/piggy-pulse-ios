@@ -20,30 +20,33 @@ final class EncryptedDataStore: ObservableObject {
     }
 
     func loadAll(periodId: UUID) async throws {
-        async let accountsTask: [EncryptedAccount] = apiClient.request(.accounts)
-        async let categoriesTask: [EncryptedCategory] = apiClient.request(.categories)
-        async let vendorsTask: [EncryptedVendor] = apiClient.request(.vendors)
+        // Accounts, categories, vendors are wrapped in PaginatedResponse
+        async let accountsTask: PaginatedResponse<EncryptedAccount> = apiClient.request(.accounts)
+        async let categoriesTask: PaginatedResponse<EncryptedCategory> = apiClient.request(.categories)
+        async let vendorsTask: PaginatedResponse<EncryptedVendor> = apiClient.request(.vendors)
+        // Subscriptions and targets return plain arrays
         async let subscriptionsTask: [EncryptedSubscription] = apiClient.request(.subscriptions)
         async let targetsTask: [EncryptedTarget] = apiClient.request(.categoryTargets, queryItems: [
             URLQueryItem(name: "periodId", value: periodId.uuidString)
         ])
-        async let transactionsTask: EncryptedTransactionsResponse = apiClient.request(.transactions, queryItems: [
+        // Transactions return a plain array
+        async let transactionsTask: [EncryptedTransaction] = apiClient.request(.transactions, queryItems: [
             URLQueryItem(name: "periodId", value: periodId.uuidString),
             URLQueryItem(name: "limit", value: "10000"),
         ])
 
-        let (encAccounts, encCategories, encVendors, encSubscriptions, encTargets, encTransactions) =
+        let (encAccountsPage, encCategoriesPage, encVendorsPage, encSubscriptions, encTargets, encTransactions) =
             try await (accountsTask, categoriesTask, vendorsTask, subscriptionsTask, targetsTask, transactionsTask)
 
-        accounts = try decryptionService.decrypt(encAccounts)
-        categories = try decryptionService.decrypt(encCategories)
-        vendors = try decryptionService.decrypt(encVendors)
+        accounts = try decryptionService.decrypt(encAccountsPage.data)
+        categories = try decryptionService.decrypt(encCategoriesPage.data)
+        vendors = try decryptionService.decrypt(encVendorsPage.data)
         subscriptions = try decryptionService.decrypt(encSubscriptions)
 
         targets = try encTargets.map { try decryptionService.decrypt($0, categories: categories) }
 
         periodTransactions = try decryptionService.decryptTransactions(
-            encTransactions.data,
+            encTransactions,
             accounts: accounts,
             categories: categories,
             vendors: vendors

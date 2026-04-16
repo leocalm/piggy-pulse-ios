@@ -532,8 +532,8 @@ struct CategoriesView: View {
         isLoading = true
         errorMessage = nil
         do {
-            let encrypted: [EncryptedCategory] = try await appState.apiClient.request(.categories)
-            let decrypted = try await appState.decryptionService.decrypt(encrypted)
+            let page: PaginatedResponse<EncryptedCategory> = try await appState.apiClient.request(.categories)
+            let decrypted = try await appState.decryptionService.decrypt(page.data)
 
             // Count transactions per category from data store
             let store = appState.dataStore

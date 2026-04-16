@@ -79,8 +79,8 @@ struct GettingStartedCard: View {
         } else {
             let txns: HasTransactionsResponse? = try? await appState.apiClient.request(.transactionsHasAny)
             hasTransactions = txns?.hasTransactions ?? false
-            hasAccounts = ((try? await appState.apiClient.request(.accounts) as [EncryptedAccount])?.isEmpty == false)
-            hasCategories = ((try? await appState.apiClient.request(.categories) as [EncryptedCategory])?.isEmpty == false)
+            hasAccounts = ((try? await appState.apiClient.request(.accounts) as PaginatedResponse<EncryptedAccount>)?.data.isEmpty == false)
+            hasCategories = ((try? await appState.apiClient.request(.categories) as PaginatedResponse<EncryptedCategory>)?.data.isEmpty == false)
         }
 
         // Period selector already fetches periods — just check if one is selected

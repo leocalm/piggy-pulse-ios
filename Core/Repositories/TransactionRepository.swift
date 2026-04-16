@@ -47,15 +47,15 @@ final class TransactionRepository {
             queryItems.append(URLQueryItem(name: "vendorId", value: id.uuidString))
         }
 
-        let encrypted: EncryptedTransactionsResponse = try await apiClient.request(.transactions, queryItems: queryItems)
+        let encrypted: [EncryptedTransaction] = try await apiClient.request(.transactions, queryItems: queryItems)
         let decrypted = try decryptionService.decryptTransactions(
-            encrypted.data,
+            encrypted,
             accounts: accounts,
             categories: categories,
             vendors: vendors
         )
 
-        return CursorPaginatedTransactions(data: decrypted, nextCursor: encrypted.nextCursor)
+        return CursorPaginatedTransactions(data: decrypted, nextCursor: nil)
     }
 
     func fetchHasAnyTransactions() async throws -> HasTransactionsResponse {

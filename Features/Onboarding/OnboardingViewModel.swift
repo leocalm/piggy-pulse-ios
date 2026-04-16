@@ -187,8 +187,8 @@ final class OnboardingViewModel: ObservableObject {
                 selectedCurrencyId = currencies.first?.id
             }
 
-            let encrypted: [EncryptedAccount] = try await apiClient.request(.accounts)
-            let decrypted = try await MainActor.run { try decryptionService.decrypt(encrypted) }
+            let page: PaginatedResponse<EncryptedAccount> = try await apiClient.request(.accounts)
+            let decrypted = try await MainActor.run { try decryptionService.decrypt(page.data) }
             let active = decrypted.filter { $0.status == "active" }
             if !active.isEmpty {
                 accounts = active.map { item in
@@ -208,9 +208,9 @@ final class OnboardingViewModel: ObservableObject {
 
     private func loadExistingCategories() async {
         do {
-            let encrypted: [EncryptedCategory] = try await apiClient.request(.categories)
+            let page: PaginatedResponse<EncryptedCategory> = try await apiClient.request(.categories)
             let decrypted: [CategoryListItem] = try await MainActor.run {
-                try decryptionService.decrypt(encrypted)
+                try decryptionService.decrypt(page.data)
             }
             let active = decrypted.filter { $0.status == "active" && $0.type != "transfer" }
             if !active.isEmpty {

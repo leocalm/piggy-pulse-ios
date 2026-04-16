@@ -390,8 +390,8 @@ struct AccountsView: View {
         errorMessage = nil
 
         do {
-            let encrypted: [EncryptedAccount] = try await appState.apiClient.request(.accounts)
-            accounts = try await appState.decryptionService.decrypt(encrypted)
+            let page: PaginatedResponse<EncryptedAccount> = try await appState.apiClient.request(.accounts)
+            accounts = try await appState.decryptionService.decrypt(page.data)
             let active = accounts.filter { $0.status == "active" }
             let assets = active.filter { $0.type != "CreditCard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
             let liabilities = active.filter { $0.type == "CreditCard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }

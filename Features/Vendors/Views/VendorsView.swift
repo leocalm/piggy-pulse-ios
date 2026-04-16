@@ -344,8 +344,8 @@ struct VendorsView: View {
         isLoading = true
         errorMessage = nil
         do {
-            let encrypted: [EncryptedVendor] = try await appState.apiClient.request(.vendors)
-            vendors = try await appState.decryptionService.decrypt(encrypted)
+            let page: PaginatedResponse<EncryptedVendor> = try await appState.apiClient.request(.vendors)
+            vendors = try await appState.decryptionService.decrypt(page.data)
         } catch {
             errorMessage = String(localized: "Failed to load vendors.")
         }
