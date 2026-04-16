@@ -532,11 +532,13 @@ struct CategoriesView: View {
         isLoading = true
         errorMessage = nil
         do {
-            let page: PaginatedResponse<EncryptedCategory> = try await appState.apiClient.request(.categories)
-            let decrypted = try await appState.decryptionService.decrypt(page.data)
-
-            // Count transactions per category from data store
             let store = appState.dataStore
+            // Ensure data store is loaded (may have been cleared after a mutation)
+            if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+                try await store.loadAll(periodId: periodId)
+            }
+
+            let decrypted = store.categories
             var txCountByCategory: [UUID: Int64] = [:]
             for tx in store.periodTransactions {
                 txCountByCategory[tx.category.id, default: 0] += 1
