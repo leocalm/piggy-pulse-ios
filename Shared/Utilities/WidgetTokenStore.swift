@@ -5,7 +5,7 @@ import WidgetKit
 /// Uses App Group UserDefaults for cross-process access.
 enum WidgetTokenStore {
 
-    static let appGroupId = "group.com.piggypulse.ios"
+    static let appGroupId = AppConstants.appGroupIdentifier
 
     private static var defaults: UserDefaults? {
         UserDefaults(suiteName: appGroupId)

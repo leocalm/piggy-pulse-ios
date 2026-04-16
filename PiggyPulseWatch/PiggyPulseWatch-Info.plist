@@ -12,6 +12,6 @@
 	<key>WKApplication</key>
 	<true/>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.piggypulse.ios</string>
+	<string>com.piggypulse.ios$(PRODUCT_BUNDLE_IDENTIFIER_SUFFIX)</string>
 </dict>
 </plist>

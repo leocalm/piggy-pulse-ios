@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.piggypulse.ios</string>
+		<string>group.com.piggypulse.ios$(PRODUCT_BUNDLE_IDENTIFIER_SUFFIX)</string>
 	</array>
 </dict>
 </plist>
