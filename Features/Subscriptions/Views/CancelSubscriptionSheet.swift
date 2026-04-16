@@ -134,7 +134,7 @@ struct CancelSubscriptionSheet: View {
         let req = CancelSubscriptionRequest(cancellationDate: Self.dateFormatter.string(from: cancellationDate))
 
         do {
-            let _: Subscription = try await apiClient.request(.cancelSubscription(subscription.id), body: req)
+            try await apiClient.request(.cancelSubscription(subscription.id), body: req) as Void
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             onCancelled(); dismiss()

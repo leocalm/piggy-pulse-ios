@@ -238,7 +238,7 @@ struct EditSubscriptionSheet: View {
         )
 
         do {
-            let _: Subscription = try await apiClient.request(.updateSubscription(subscription.id), body: req)
+            try await apiClient.request(.updateSubscription(subscription.id), body: req) as Void
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             onUpdated(); dismiss()
         } catch let e as APIError {

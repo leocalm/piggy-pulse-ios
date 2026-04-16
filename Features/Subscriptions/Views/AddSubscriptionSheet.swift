@@ -251,7 +251,7 @@ struct AddSubscriptionSheet: View {
         )
 
         do {
-            let _: Subscription = try await apiClient.request(.createSubscription, body: req)
+            try await apiClient.request(.createSubscription, body: req) as Void
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated(); dismiss()
         } catch let e as APIError {

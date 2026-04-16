@@ -24,11 +24,11 @@ final class SubscriptionRepository {
     }
 
     func createSubscription(body: CreateSubscriptionRequest) async throws {
-        try await apiClient.request(.createSubscription, body: body) as Subscription
+        try await apiClient.request(.createSubscription, body: body)
     }
 
     func updateSubscription(id: UUID, body: UpdateSubscriptionRequest) async throws {
-        try await apiClient.request(.updateSubscription(id), body: body) as Subscription
+        try await apiClient.request(.updateSubscription(id), body: body)
     }
 
     func deleteSubscription(id: UUID) async throws {
@@ -36,6 +36,6 @@ final class SubscriptionRepository {
     }
 
     func cancelSubscription(id: UUID, body: CancelSubscriptionRequest) async throws {
-        try await apiClient.request(.cancelSubscription(id), body: body) as Subscription
+        try await apiClient.request(.cancelSubscription(id), body: body)
     }
 }
