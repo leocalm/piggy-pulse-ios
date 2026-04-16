@@ -69,6 +69,12 @@ enum CryptoManager {
 
     // MARK: - Optional decryption (for nullable encrypted fields)
 
+    /// Attempts decryption; falls back to treating the value as plaintext
+    /// (for system rows created before encryption was enabled).
+    static func decryptStringOrPlaintext(_ value: String, using dek: SymmetricKey) -> String {
+        (try? decryptString(value, using: dek)) ?? value
+    }
+
     static func decryptStringOptional(_ base64String: String?, using dek: SymmetricKey) throws -> String? {
         guard let s = base64String else { return nil }
         return try decryptString(s, using: dek)

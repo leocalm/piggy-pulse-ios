@@ -51,9 +51,9 @@ final class DecryptionService {
         let key = try getDEK()
         return CategoryListItem(
             id: encrypted.id,
-            name: try CryptoManager.decryptString(encrypted.nameEnc, using: key),
-            color: try CryptoManager.decryptStringOptional(encrypted.colorEnc, using: key) ?? "#888888",
-            icon: try CryptoManager.decryptStringOptional(encrypted.iconEnc, using: key) ?? "📁",
+            name: CryptoManager.decryptStringOrPlaintext(encrypted.nameEnc, using: key),
+            color: encrypted.colorEnc.map { CryptoManager.decryptStringOrPlaintext($0, using: key) } ?? "#888888",
+            icon: encrypted.iconEnc.map { CryptoManager.decryptStringOrPlaintext($0, using: key) } ?? "📁",
             type: encrypted.type,
             status: encrypted.status,
             parentId: encrypted.parentId,
