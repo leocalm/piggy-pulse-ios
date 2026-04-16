@@ -39,21 +39,20 @@ struct DashboardView: View {
                         .padding(PPSpacing.lg)
                     }
                     .refreshable {
-                    viewModel.configure(apiClient: appState.apiClient)
-                    guard let periodId = appState.selectedPeriod?.id else { return }
-                    // Use a detached task so SwiftUI's refreshable cancellation
-                    // doesn't abort the API calls mid-flight
+                    viewModel.configure(dataStore: appState.dataStore)
+                    guard let period = appState.selectedPeriod else { return }
+                    appState.dataStore.clear()
                     let vm = viewModel
                     await Task { @MainActor in
-                        await vm.load(periodId: periodId)
+                        await vm.load(period: period)
                     }.value
                 }
                 } // GeometryReader
                 .background(Color.ppBackground)
                 .task(id: appState.selectedPeriod?.id) {
-                    viewModel.configure(apiClient: appState.apiClient)
-                    if let periodId = appState.selectedPeriod?.id {
-                        await viewModel.load(periodId: periodId)
+                    viewModel.configure(dataStore: appState.dataStore)
+                    if let period = appState.selectedPeriod {
+                        await viewModel.load(period: period)
                     }
                 }
                 .navigationTitle(String(localized: "tab.dashboard"))
@@ -82,8 +81,9 @@ struct DashboardView: View {
                 }
                 .sheet(isPresented: $showAddTransaction) {
                     AddTransactionSheet(onCreated: {
-                        if let periodId = appState.selectedPeriod?.id {
-                            Task { await viewModel.load(periodId: periodId) }
+                        if let period = appState.selectedPeriod {
+                            appState.dataStore.clear()
+                            Task { await viewModel.load(period: period) }
                         }
                     })
                         .environmentObject(appState)
@@ -265,8 +265,8 @@ struct DashboardView: View {
                 .foregroundColor(.ppTextSecondary)
                 .multilineTextAlignment(.center)
             Button(String(localized: "common.retry")) {
-                if let periodId = appState.selectedPeriod?.id {
-                    Task { await viewModel.load(periodId: periodId) }
+                if let period = appState.selectedPeriod {
+                    Task { await viewModel.load(period: period) }
                 }
             }
             .font(.ppHeadline)

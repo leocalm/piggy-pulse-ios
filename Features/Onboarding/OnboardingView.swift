@@ -6,8 +6,8 @@ struct OnboardingView: View {
     @Environment(\.themeManager) private var theme
     @StateObject private var vm: OnboardingViewModel
 
-    init(apiClient: APIClient) {
-        _vm = StateObject(wrappedValue: OnboardingViewModel(apiClient: apiClient))
+    init(apiClient: APIClient, decryptionService: DecryptionService) {
+        _vm = StateObject(wrappedValue: OnboardingViewModel(apiClient: apiClient, decryptionService: decryptionService))
     }
 
     var body: some View {

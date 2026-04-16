@@ -10,38 +10,33 @@ final class BudgetViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private var apiClient: APIClient?
-
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
+    private var dataStore: EncryptedDataStore?
+    private var dashboardRepo: DashboardV2Repository?
 
     init() {}
 
-    func configure(apiClient: APIClient) {
+    func configure(apiClient: APIClient, dataStore: EncryptedDataStore) {
         guard self.apiClient == nil else { return }
         self.apiClient = apiClient
+        self.dataStore = dataStore
+        self.dashboardRepo = DashboardV2Repository(dataStore: dataStore)
     }
 
     // MARK: - Load
 
-    func load(periodId: UUID) async {
-        guard let apiClient else { return }
+    func load(periodId: UUID, period: BudgetPeriod? = nil) async {
+        guard let dataStore, let dashboardRepo else { return }
         isLoading = true
         errorMessage = nil
 
         do {
-            async let burnInTask: DashboardCurrentPeriod = apiClient.request(
-                .dashboardCurrentPeriod,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            async let targetsTask: CategoryTargetsResponse = apiClient.request(
-                .categoryTargets,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-
-            let (b, t) = try await (burnInTask, targetsTask)
-            burnIn = b
-            targets = t.allTargets
+            if !dataStore.isLoaded {
+                try await dataStore.loadAll(periodId: periodId)
+            }
+            targets = dataStore.targets
+            if let period {
+                burnIn = dashboardRepo.computeCurrentPeriod(period: period)
+            }
         } catch {
             errorMessage = String(localized: "Failed to load budget data.")
         }
@@ -60,6 +55,7 @@ final class BudgetViewModel: ObservableObject {
         )
         do {
             try await apiClient.request(.upsertCategoryTargets, body: body)
+            dataStore?.clear()
             await load(periodId: periodId)
         } catch {
             errorMessage = String(localized: "Failed to save target.")
@@ -72,6 +68,7 @@ final class BudgetViewModel: ObservableObject {
         isSaving = true
         do {
             try await apiClient.request(.excludeCategoryTarget(id))
+            dataStore?.clear()
             await load(periodId: periodId)
         } catch {
             errorMessage = String(localized: "Failed to exclude category.")
@@ -84,6 +81,7 @@ final class BudgetViewModel: ObservableObject {
         isSaving = true
         do {
             try await apiClient.request(.includeCategoryTarget(id))
+            dataStore?.clear()
             await load(periodId: periodId)
         } catch {
             errorMessage = String(localized: "Failed to re-include category.")

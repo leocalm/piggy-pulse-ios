@@ -27,6 +27,9 @@ extension APIEndpoint {
     static let revokeToken = APIEndpoint(path: "/auth/logout", method: .post, requiresAuth: true)
     static let register = APIEndpoint(path: "/auth/register", method: .post, requiresAuth: false)
     static let forgotPassword = APIEndpoint(path: "/auth/forgot-password", method: .post, requiresAuth: false)
+    static let unlock = APIEndpoint(path: "/auth/unlock", method: .post, requiresAuth: true)
+    static let wrappedDek = APIEndpoint(path: "/auth/wrapped-dek", method: .get, requiresAuth: true)
+    static let updateWrappedDek = APIEndpoint(path: "/auth/wrapped-dek", method: .put, requiresAuth: true)
 }
 
 // MARK: - User
@@ -92,9 +95,12 @@ extension APIEndpoint {
         APIEndpoint(path: "/accounts/\(id)/archive", method: .post, requiresAuth: true)
     }
     static let accountOptions = APIEndpoint(path: "/accounts/options", method: .get, requiresAuth: true)
-    static let accountsSummary = APIEndpoint(path: "/accounts/summary", method: .get, requiresAuth: true)
-    // accountsManagement removed — use /accounts in v2
-
+    static func unarchiveAccount(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/accounts/\(id)/unarchive", method: .post, requiresAuth: true)
+    }
+    static func adjustBalance(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/accounts/\(id)/adjust-balance", method: .post, requiresAuth: true)
+    }
 }
 
 // MARK: - Categories
@@ -111,11 +117,10 @@ static func updateCategory(_ id: UUID) -> APIEndpoint {
     static func archiveCategory(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/categories/\(id)/archive", method: .post, requiresAuth: true)
     }
+    static func unarchiveCategory(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/categories/\(id)/unarchive", method: .post, requiresAuth: true)
+    }
     static let categoryOptions = APIEndpoint(path: "/categories/options", method: .get, requiresAuth: true)
-    // transferCategory removed — not in v2 API
-    static let categoriesManagement = APIEndpoint(path: "/categories", method: .get, requiresAuth: true)
-    static let categoriesOverview = APIEndpoint(path: "/categories/overview", method: .get, requiresAuth: true)
-
 }
 
 // MARK: - Vendors
@@ -131,6 +136,9 @@ extension APIEndpoint {
     }
     static func archiveVendor(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/vendors/\(id)/archive", method: .post, requiresAuth: true)
+    }
+    static func unarchiveVendor(_ id: UUID) -> APIEndpoint {
+        APIEndpoint(path: "/vendors/\(id)/unarchive", method: .post, requiresAuth: true)
     }
 }
 
@@ -154,18 +162,12 @@ extension APIEndpoint {
     // updateBudgetTarget removed — use /targets in v2
 }
 
-// MARK: - Dashboard
+// MARK: - Dashboard (retired — computed locally from decrypted entities + transactions)
+
+// MARK: - Transaction Range
 
 extension APIEndpoint {
-    static let dashboardCurrentPeriod = APIEndpoint(path: "/dashboard/current-period", method: .get, requiresAuth: true)
-    static let dashboardNetPosition = APIEndpoint(path: "/dashboard/net-position", method: .get, requiresAuth: true)
-    static let dashboardCashFlow = APIEndpoint(path: "/dashboard/cash-flow", method: .get, requiresAuth: true)
-    static let dashboardSpendingTrend = APIEndpoint(path: "/dashboard/spending-trend", method: .get, requiresAuth: true)
-    static let dashboardTopVendors = APIEndpoint(path: "/dashboard/top-vendors", method: .get, requiresAuth: true)
-    static let dashboardFixedCategories = APIEndpoint(path: "/dashboard/fixed-categories", method: .get, requiresAuth: true)
-    static let dashboardSubscriptions = APIEndpoint(path: "/dashboard/subscriptions", method: .get, requiresAuth: true)
-    static let dashboardBudgetStability = APIEndpoint(path: "/dashboard/budget-stability", method: .get, requiresAuth: true)
-    static let dashboardRecentTransactions = APIEndpoint(path: "/transactions", method: .get, requiresAuth: true)
+    static let transactionRange = APIEndpoint(path: "/transactions/range", method: .get, requiresAuth: true)
 }
 
 // MARK: - Subscriptions
@@ -185,7 +187,6 @@ extension APIEndpoint {
     static func cancelSubscription(_ id: UUID) -> APIEndpoint {
         APIEndpoint(path: "/subscriptions/\(id)/cancel", method: .post, requiresAuth: true)
     }
-    static let upcomingCharges = APIEndpoint(path: "/subscriptions/upcoming", method: .get, requiresAuth: true)
 }
 
 // MARK: - Settings

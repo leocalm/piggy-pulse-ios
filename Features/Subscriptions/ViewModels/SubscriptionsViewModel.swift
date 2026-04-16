@@ -4,7 +4,7 @@ internal import Combine
 @MainActor
 final class SubscriptionsViewModel: ObservableObject {
     @Published var subscriptions: [Subscription] = []
-    @Published var upcomingCharges: [UpcomingCharge] = []
+    @Published var upcomingCharges: [Subscription] = []
     @Published var categorySubscriptions: [Subscription] = []
     @Published var isLoading = false
     @Published var isCategoryLoading = false
@@ -12,15 +12,15 @@ final class SubscriptionsViewModel: ObservableObject {
 
     private var repository: SubscriptionRepository?
 
-    init(apiClient: APIClient) {
-        self.repository = SubscriptionRepository(apiClient: apiClient)
+    init(apiClient: APIClient, decryptionService: DecryptionService) {
+        self.repository = SubscriptionRepository(apiClient: apiClient, decryptionService: decryptionService)
     }
 
     init() {}
 
-    func configure(apiClient: APIClient) {
+    func configure(apiClient: APIClient, decryptionService: DecryptionService) {
         guard repository == nil else { return }
-        repository = SubscriptionRepository(apiClient: apiClient)
+        repository = SubscriptionRepository(apiClient: apiClient, decryptionService: decryptionService)
     }
 
     // MARK: - Computed
@@ -37,7 +37,6 @@ final class SubscriptionsViewModel: ObservableObject {
         subscriptions.filter { $0.status == .cancelled }
     }
 
-    /// Monthly cost in cents for all active subscriptions.
     var monthlyCost: Int64 {
         activeSubs.reduce(Int64(0)) { total, sub in
             switch sub.billingCycle {
@@ -48,7 +47,6 @@ final class SubscriptionsViewModel: ObservableObject {
         }
     }
 
-    /// Monthly cost in cents for active category subscriptions.
     var categoryMonthlyCost: Int64 {
         categorySubscriptions.filter { $0.status == .active }.reduce(Int64(0)) { total, sub in
             switch sub.billingCycle {
@@ -59,7 +57,6 @@ final class SubscriptionsViewModel: ObservableObject {
         }
     }
 
-    /// Yearly cost in cents for all active subscriptions.
     var yearlyCost: Int64 {
         activeSubs.reduce(Int64(0)) { total, sub in
             switch sub.billingCycle {
@@ -77,16 +74,17 @@ final class SubscriptionsViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        async let subsTask = repository.fetchSubscriptions()
-        async let upcomingTask: [UpcomingCharge]? = Self.tryFetch { try await repository.fetchUpcomingCharges(limit: 5) }
-
         do {
-            subscriptions = try await subsTask
+            subscriptions = try await repository.fetchSubscriptions()
+            upcomingCharges = subscriptions
+                .filter { $0.status == .active }
+                .sorted { $0.nextChargeDate < $1.nextChargeDate }
+                .prefix(5)
+                .map { $0 }
         } catch {
             errorMessage = String(localized: "subscription.loadError")
         }
 
-        upcomingCharges = await upcomingTask ?? []
         isLoading = false
     }
 
@@ -104,7 +102,7 @@ final class SubscriptionsViewModel: ObservableObject {
     func cancelSubscription(id: UUID, date: String) async {
         guard let repository else { return }
         do {
-            let _ = try await repository.cancelSubscription(id: id, body: CancelSubscriptionRequest(cancellationDate: date))
+            try await repository.cancelSubscription(id: id, body: CancelSubscriptionRequest(cancellationDate: date))
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             await load()
         } catch {
@@ -122,9 +120,5 @@ final class SubscriptionsViewModel: ObservableObject {
             errorMessage = String(localized: "subscription.loadError")
         }
         isCategoryLoading = false
-    }
-
-    private static func tryFetch<T: Sendable>(_ work: @Sendable () async throws -> T) async -> T? {
-        try? await work()
     }
 }

@@ -2,50 +2,54 @@ import Foundation
 
 struct CategoryTarget: Codable, Identifiable {
     let id: UUID
+    let categoryId: UUID
     let name: String
     let type: String            // "income" | "expense" | "transfer"
     let parentId: UUID?
-    let previousTarget: Int32?
-    let currentTarget: Int32?   // cents; nil means no target set
-    let projectedVariance: Int64
-    let status: String          // "active" | "excluded"
-    let spentInPeriod: Int64    // cents; actual spending for this category in the period
+    let budgetedValue: Int32    // cents
+    let isExcluded: Bool
 
     // MARK: - Backward compatibility
 
-    var categoryId: UUID { id }
     var categoryName: String { name }
     var categoryType: String { type }
-    var categoryIcon: String { "" }     // Not in v2 TargetItem — callers should not rely on this
-    var categoryColor: String { "" }    // Not in v2 TargetItem — callers should not rely on this
-    var spentAmount: Int64? { spentInPeriod }
-    var isExcluded: Bool { status == "excluded" }
+    var categoryIcon: String { "" }
+    var categoryColor: String { "" }
+    var currentTarget: Int32? { budgetedValue }
+    var spentAmount: Int64? { nil }
+    var spentInPeriod: Int64 { 0 }
+    var previousTarget: Int32? { nil }
+    var projectedVariance: Int64 { 0 }
     var exclusionReason: String? { nil }
-}
+    var status: String { isExcluded ? "excluded" : "active" }
 
-struct TargetSummary: Codable {
-    let periodName: String
-    let periodStart: String
-    let periodEnd: String?
-    let currentPosition: Int64
-    let incomeTarget: Int64
-    let categoriesWithTargets: CategoriesWithTargets
-    let periodProgress: Int
+    init(id: UUID, categoryId: UUID, name: String, type: String, parentId: UUID?, budgetedValue: Int32, isExcluded: Bool) {
+        self.id = id
+        self.categoryId = categoryId
+        self.name = name
+        self.type = type
+        self.parentId = parentId
+        self.budgetedValue = budgetedValue
+        self.isExcluded = isExcluded
+    }
 
-    struct CategoriesWithTargets: Codable {
-        let withTargets: Int
-        let total: Int
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        categoryId = try container.decodeIfPresent(UUID.self, forKey: .categoryId) ?? UUID()
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        type = try container.decodeIfPresent(String.self, forKey: .type) ?? "expense"
+        parentId = try container.decodeIfPresent(UUID.self, forKey: .parentId)
+        budgetedValue = try container.decodeIfPresent(Int32.self, forKey: .budgetedValue) ?? 0
+        isExcluded = try container.decodeIfPresent(Bool.self, forKey: .isExcluded) ?? false
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id, categoryId, name, type, parentId, budgetedValue, isExcluded
     }
 }
 
-struct CategoryTargetsResponse: Codable {
-    let summary: TargetSummary
-    let targets: [CategoryTarget]
-
-    // MARK: - Backward compatibility
-
-    var allTargets: [CategoryTarget] { targets }
-}
+// TargetSummary is no longer returned by the encrypted API — computed locally from decrypted targets + transactions
 
 struct BatchUpsertTargetsRequest: Encodable {
     struct TargetItem: Encodable {

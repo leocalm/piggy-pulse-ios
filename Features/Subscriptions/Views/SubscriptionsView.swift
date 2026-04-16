@@ -205,14 +205,16 @@ struct SubscriptionsView: View {
                 .background(Color.ppBackground)
                 .refreshable { let vm = viewModel; await Task { @MainActor in await vm.load() }.value }
                 .task {
-                    viewModel.configure(apiClient: appState.apiClient)
+                    viewModel.configure(apiClient: appState.apiClient, decryptionService: appState.decryptionService)
                     await viewModel.load()
-                    // Load categories for "Manage Category" lookup
-                    let catResponse: PaginatedResponse<CategoryManagementItem>? = try? await appState.apiClient.request(
-                        .categoriesManagement,
-                        queryItems: [URLQueryItem(name: "limit", value: "200")]
-                    )
-                    allCategories = catResponse?.data ?? []
+                    // Load categories from data store
+                    allCategories = appState.dataStore.categories.map { cat in
+                        CategoryManagementItem(
+                            id: cat.id, name: cat.name, color: cat.color, icon: cat.icon,
+                            type: cat.type, status: cat.status, parentId: cat.parentId,
+                            behavior: cat.behavior, description: nil, numberOfTransactions: 0
+                        )
+                    }
                 }
                 .sheet(item: $cancellingSubscription, onDismiss: { Task { await viewModel.load() } }) { sub in
                     CancelSubscriptionSheet(subscription: sub, apiClient: appState.apiClient) { }
@@ -227,7 +229,7 @@ struct SubscriptionsView: View {
                     .environmentObject(appState)
                 }
                 .navigationDestination(item: $selectedSubscription) { sub in
-                    SubscriptionDetailView(subscriptionId: sub.id, apiClient: appState.apiClient)
+                    SubscriptionDetailView(subscription: sub, apiClient: appState.apiClient)
                         .environmentObject(appState)
                 }
                 .confirmationDialog(
@@ -294,18 +296,12 @@ struct SubscriptionsView: View {
 
     // MARK: - Rows
 
-    private func upcomingChargeRow(_ charge: UpcomingCharge) -> some View {
+    private func upcomingChargeRow(_ charge: Subscription) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text(charge.name)
                     .font(.ppHeadline)
                     .foregroundColor(.ppTextPrimary)
-                if let vendorName = charge.vendorName {
-                    Text(vendorName)
-                        .font(.ppCaption)
-                        .foregroundColor(.ppTextSecondary)
-                        .lineLimit(1)
-                }
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 2) {

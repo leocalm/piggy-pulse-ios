@@ -532,21 +532,18 @@ struct CategoriesView: View {
         isLoading = true
         errorMessage = nil
         do {
-            let response: CategoriesManagementResponse = try await appState.apiClient.request(.categoriesManagement)
-            incoming = response.incoming
-            outgoing = response.outgoing
-            archived = response.archived
-
-            // Load overview for spent/budgeted data
-            if let periodId = appState.selectedPeriod?.id {
-                if let overview: CategoriesOverviewResponse = try? await appState.apiClient.request(
-                    .categoriesOverview,
-                    queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-                ) {
-                    overviewMap = Dictionary(uniqueKeysWithValues: overview.categories.map { ($0.id, $0) })
-                    overviewSummary = overview.summary
-                }
+            let encrypted: [EncryptedCategory] = try await appState.apiClient.request(.categories)
+            let decrypted = try await appState.decryptionService.decrypt(encrypted)
+            let items = decrypted.map { cat in
+                CategoryManagementItem(
+                    id: cat.id, name: cat.name, color: cat.color, icon: cat.icon,
+                    type: cat.type, status: cat.status, parentId: cat.parentId,
+                    behavior: cat.behavior, description: nil, numberOfTransactions: 0
+                )
             }
+            incoming = items.filter { !$0.isArchived && $0.type.lowercased() == "income" }
+            outgoing = items.filter { !$0.isArchived && $0.type.lowercased() == "expense" }
+            archived = items.filter { $0.isArchived }
         } catch {
             errorMessage = String(localized: "Failed to load categories.")
         }

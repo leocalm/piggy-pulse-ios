@@ -12,6 +12,16 @@ struct VendorListItem: Codable, Identifiable {
 
     var archived: Bool { status == "inactive" }
     var transactionCount: Int64 { numberOfTransactions }
+
+    init(id: UUID, name: String, description: String? = nil, status: String,
+         numberOfTransactions: Int64 = 0, totalSpend: Int64 = 0) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.status = status
+        self.numberOfTransactions = numberOfTransactions
+        self.totalSpend = totalSpend
+    }
 }
 
 extension VendorListItem: Hashable {
