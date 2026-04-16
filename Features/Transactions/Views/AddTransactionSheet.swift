@@ -338,9 +338,9 @@ struct AddTransactionSheet: View {
         do {
             let resp: Resp = try await appState.apiClient.request(
                 .createCategory,
-                body: Req(name: "Transfer", icon: "↔", type: "transfer", color: "#868E96")
+                body: Req(name: "Transfer", icon: "🔄", type: "transfer", color: "#868E96")
             )
-            let option = CategoryOption(id: resp.id, name: "Transfer", icon: "↔", color: "#868E96")
+            let option = CategoryOption(id: resp.id, name: "Transfer", icon: "🔄", color: "#868E96")
             transferCategory = option
             selectedCategory = option
             appState.dataStore.clear()
