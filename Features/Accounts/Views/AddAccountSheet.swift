@@ -199,10 +199,10 @@ struct AddAccountSheet: View {
         
         struct Req: Encodable {
             let name: String; let color: String
-            let type: String; let initialBalance: Int64; let spendLimit: Int32?
+            let accountType: String; let initialBalance: Int64; let spendLimit: Int32?
             let currencyId: String?
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, type: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: nil)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: nil)
         do {
             try await appState.apiClient.request(.createAccount, body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

@@ -166,9 +166,9 @@ struct EditAccountSheet: View {
         }()
 
         struct Req: Encodable {
-            let name: String; let color: String; let type: String; let initialBalance: Int64; let spendLimit: Int32?
+            let name: String; let color: String; let accountType: String; let initialBalance: Int64; let spendLimit: Int32?
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, type: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit)
         do {
             try await appState.apiClient.request(.updateAccount(account.id), body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
