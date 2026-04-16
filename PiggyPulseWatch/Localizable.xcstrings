@@ -215,6 +215,7 @@
       }
     },
     "Open PiggyPulse on your iPhone to sign in." : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -243,6 +244,9 @@
           }
         }
       }
+    },
+    "PiggyPulse now uses end-to-end encryption. Watch support will return in a future update." : {
+
     },
     "Please open PiggyPulse on your iPhone to sign in." : {
       "localizations" : {
@@ -312,6 +316,7 @@
       }
     },
     "Sign In Required" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -360,6 +365,9 @@
           }
         }
       }
+    },
+    "Use iPhone App" : {
+
     },
     "Wallet" : {
       "localizations" : {

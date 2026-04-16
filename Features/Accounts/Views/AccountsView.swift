@@ -87,9 +87,9 @@ struct AccountsView: View {
                         }
 
                         // Grouped by type
-                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Wallet" || $0.accountType == "Allowance" })
-                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Savings" || $0.accountType == "Investment" || $0.accountType == "Protected" })
-                        accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
+                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "checking" || $0.accountType == "wallet" || $0.accountType == "allowance" })
+                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "savings" || $0.accountType == "Investment" || $0.accountType == "Protected" })
+                        accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "creditcard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
                     }
                 }
                 .listStyle(.plain)
@@ -307,15 +307,15 @@ struct AccountsView: View {
     }
 
     private var liquidTotal: Int64 {
-        accounts.filter { $0.accountType == "Checking" || $0.accountType == "Wallet" || $0.accountType == "Allowance" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "checking" || $0.accountType == "wallet" || $0.accountType == "allowance" }.reduce(0) { $0 + $1.balance }
     }
 
     private var protectedTotal: Int64 {
-        accounts.filter { $0.accountType == "Savings" || $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "savings" || $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
     }
 
     private var debtTotal: Int64 {
-        accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "creditcard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" }.reduce(0) { $0 + $1.balance }
     }
 
     private func netPositionBar(_ s: AccountsSummary) -> some View {
@@ -393,8 +393,8 @@ struct AccountsView: View {
             let page: PaginatedResponse<EncryptedAccount> = try await appState.apiClient.request(.accounts)
             accounts = try await appState.decryptionService.decrypt(page.data)
             let active = accounts.filter { $0.status == "active" }
-            let assets = active.filter { $0.type != "CreditCard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
-            let liabilities = active.filter { $0.type == "CreditCard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
+            let assets = active.filter { $0.type != "creditcard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
+            let liabilities = active.filter { $0.type == "creditcard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
             summary = AccountsSummary(totalNetWorth: assets - liabilities, totalAssets: assets, totalLiabilities: liabilities)
         } catch {
             errorMessage = String(localized: "Failed to load accounts.")

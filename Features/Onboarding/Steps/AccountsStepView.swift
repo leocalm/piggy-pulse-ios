@@ -5,11 +5,11 @@ struct AccountsStepView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.themeManager) private var theme
 
-    private let accountTypes = ["Checking", "Savings", "Wallet"]
+    private let accountTypes = ["checking", "savings", "wallet"]
     private let typeLabels: [String: String] = [
-        "Checking": "Checking",
-        "Savings": "Savings",
-        "Wallet": "Wallet"
+        "checking": "checking",
+        "savings": "savings",
+        "wallet": "wallet"
     ]
 
     private var currencySymbol: String {

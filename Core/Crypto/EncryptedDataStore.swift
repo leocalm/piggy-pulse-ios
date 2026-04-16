@@ -75,13 +75,13 @@ final class EncryptedDataStore: ObservableObject {
 
     var totalAssets: Int64 {
         accounts
-            .filter { $0.status == "active" && $0.type != "CreditCard" }
+            .filter { $0.status == "active" && $0.type != "creditcard" }
             .reduce(0) { $0 + max(0, $1.currentBalance) }
     }
 
     var totalLiabilities: Int64 {
         accounts
-            .filter { $0.status == "active" && $0.type == "CreditCard" }
+            .filter { $0.status == "active" && $0.type == "creditcard" }
             .reduce(0) { $0 + abs(min(0, $1.currentBalance)) }
     }
 

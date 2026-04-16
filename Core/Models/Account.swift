@@ -5,7 +5,7 @@ struct AccountListItem: Codable, Identifiable {
     let name: String
     let color: String
     let icon: String
-    let type: String              // "Checking" | "Savings" | "CreditCard" | "Allowance" | "Wallet"
+    let type: String              // "checking" | "savings" | "creditcard" | "allowance" | "wallet"
     let status: String            // "active" | "inactive"
     let currentBalance: Int64
     let netChangeThisPeriod: Int64

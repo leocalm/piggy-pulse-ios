@@ -32,11 +32,11 @@ final class DashboardV2Repository {
 
     func computeNetPosition() -> DashboardNetPosition {
         let accounts = dataStore.accounts.filter { $0.status == "active" }
-        let liquid = accounts.filter { $0.type == "Checking" || $0.type == "Wallet" }
+        let liquid = accounts.filter { $0.type == "checking" || $0.type == "wallet" }
             .reduce(Int64(0)) { $0 + $1.currentBalance }
-        let protected = accounts.filter { $0.type == "Savings" }
+        let protected = accounts.filter { $0.type == "savings" }
             .reduce(Int64(0)) { $0 + $1.currentBalance }
-        let debt = accounts.filter { $0.type == "CreditCard" }
+        let debt = accounts.filter { $0.type == "creditcard" }
             .reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
         let total = dataStore.totalNetWorth
         let income = dataStore.totalIncome

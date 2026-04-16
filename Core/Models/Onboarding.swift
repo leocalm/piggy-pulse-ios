@@ -58,7 +58,7 @@ enum WeekendBehavior: String, CaseIterable {
 struct DraftAccount: Identifiable {
     let id = UUID()
     var name: String = ""
-    var accountType: String = "Checking"
+    var accountType: String = "checking"
     var balanceText: String = ""
     var spendLimitText: String = ""
 
@@ -68,7 +68,7 @@ struct DraftAccount: Identifiable {
     }
 
     var spendLimitInCents: Int32? {
-        guard accountType == "CreditCard" || accountType == "Allowance",
+        guard accountType == "creditcard" || accountType == "allowance",
               !spendLimitText.isEmpty else { return nil }
         let cleaned = spendLimitText.replacingOccurrences(of: ",", with: ".")
         guard let v = Double(cleaned) else { return nil }
@@ -76,16 +76,16 @@ struct DraftAccount: Identifiable {
     }
 
     var showSpendLimit: Bool {
-        accountType == "CreditCard" || accountType == "Allowance"
+        accountType == "creditcard" || accountType == "allowance"
     }
 
     var defaultIcon: String {
         switch accountType {
-        case "Checking":   return "🏦"
-        case "Savings":    return "💰"
-        case "CreditCard": return "💳"
-        case "Wallet":     return "👛"
-        case "Allowance":  return "🎯"
+        case "checking":   return "🏦"
+        case "savings":    return "💰"
+        case "creditcard": return "💳"
+        case "wallet":     return "👛"
+        case "allowance":  return "🎯"
         default:           return "🏦"
         }
     }

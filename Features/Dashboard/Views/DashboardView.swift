@@ -183,7 +183,7 @@ struct DashboardView: View {
                 .foregroundColor(.ppTextSecondary)
 
             // Type-specific info rows
-            if account.type == "Allowance" {
+            if account.type == "allowance" {
                 VStack(spacing: 0) {
                     infoRow(String(localized: "account.card.availableToSpend"), value: formatCurrency(max(account.currentBalance, 0), code: appState.currencyCode))
                     Divider().background(Color.ppBorder)
@@ -200,7 +200,7 @@ struct DashboardView: View {
                 HStack(spacing: PPSpacing.md) {
                     statBox(String(localized: "account.card.transactions"), value: "\(account.numberOfTransactions)")
 
-                    if account.type == "CreditCard" {
+                    if account.type == "creditcard" {
                         statBox(String(localized: "account.card.creditLimit"), value: formatCurrency(Int64(account.spendLimit ?? 0), code: appState.currencyCode))
                     } else {
                         statBox(String(localized: "account.card.avgDailyBalance"), value: formatCurrency(account.currentBalance, code: appState.currencyCode))
