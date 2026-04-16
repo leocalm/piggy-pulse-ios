@@ -200,9 +200,14 @@ struct AddAccountSheet: View {
         struct Req: Encodable {
             let name: String; let color: String
             let accountType: String; let initialBalance: Int64; let spendLimit: Int32?
-            let currencyId: String?
+            let currencyId: UUID
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: nil)
+        guard let cId = appState.currencyId else {
+            errorMessage = String(localized: "No currency configured. Please set a currency in Settings first.")
+            isLoading = false
+            return
+        }
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: cId)
         do {
             try await appState.apiClient.request(.createAccount, body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

@@ -18,6 +18,7 @@ final class AppState: ObservableObject {
     @Published var isLoading = true
     @Published var onboardingCompleted = true
     @Published var currencyCode: String = "EUR"
+    @Published var currencyId: UUID?
     @Published var isEncryptionUnlocked = false
 
     var currencySymbol: String {
@@ -50,9 +51,10 @@ final class AppState: ObservableObject {
 
         do {
             let profile: ProfileResponse = try await apiClient.request(.profile)
-            if let currencyId = profile.defaultCurrencyId {
+            if let cId = profile.defaultCurrencyId {
+                self.currencyId = cId
                 let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
-                if let match = currencies.first(where: { $0.id == currencyId }) {
+                if let match = currencies.first(where: { $0.id == cId }) {
                     currencyCode = match.code
                 }
             }
