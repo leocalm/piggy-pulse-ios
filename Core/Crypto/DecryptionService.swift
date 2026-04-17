@@ -37,7 +37,7 @@ final class DecryptionService {
             type: encrypted.accountType,
             status: encrypted.status,
             currentBalance: try CryptoManager.decryptInt64(encrypted.currentBalanceEnc, using: key),
-            spendLimit: try CryptoManager.decryptInt32Optional(encrypted.spendLimitEnc, using: key)
+            spendLimit: try CryptoManager.decryptInt64Optional(encrypted.spendLimitEnc, using: key).map { Int32(clamping: $0) }
         )
     }
 
