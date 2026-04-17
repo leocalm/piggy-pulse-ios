@@ -67,7 +67,35 @@ final class TransactionsViewModel: ObservableObject {
                 categories: dataStore.categories,
                 vendors: dataStore.vendors
             )
-            transactions = response.data
+            var filtered = response.data
+
+            // Client-side filtering (API returns all transactions)
+            if let dirValue = selectedDirection.queryValue {
+                filtered = filtered.filter { tx in
+                    switch dirValue {
+                    case "income": return tx.category.type == "income"
+                    case "expense": return tx.category.type == "expense"
+                    case "transfer": return tx.toAccount != nil
+                    default: return true
+                    }
+                }
+            }
+            if !selectedAccountIds.isEmpty {
+                filtered = filtered.filter { tx in
+                    selectedAccountIds.contains(tx.fromAccount.id) ||
+                    (tx.toAccount.map { selectedAccountIds.contains($0.id) } ?? false)
+                }
+            }
+            if !selectedCategoryIds.isEmpty {
+                filtered = filtered.filter { selectedCategoryIds.contains($0.category.id) }
+            }
+            if !selectedVendorIds.isEmpty {
+                filtered = filtered.filter { tx in
+                    tx.vendor.map { selectedVendorIds.contains($0.id) } ?? false
+                }
+            }
+
+            transactions = filtered
             nextCursor = response.nextCursor
             hasMore = response.nextCursor != nil
         } catch {
