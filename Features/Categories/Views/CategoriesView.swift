@@ -565,9 +565,27 @@ struct CategoriesView: View {
 
             let budgetByCategoryId = Dictionary(uniqueKeysWithValues: store.targets.map { ($0.categoryId, $0) })
 
+            // Compute subscription budgets for subscription-behavior categories
+            var subscriptionBudgetByCategory: [UUID: Int64] = [:]
+            for sub in store.subscriptions where sub.status == .active {
+                let monthly: Int64
+                switch sub.billingCycle {
+                case .monthly: monthly = sub.billingAmount
+                case .quarterly: monthly = sub.billingAmount / 3
+                case .yearly: monthly = sub.billingAmount / 12
+                }
+                subscriptionBudgetByCategory[sub.categoryId, default: 0] += monthly
+            }
+
             overviewMap = Dictionary(uniqueKeysWithValues: decrypted.compactMap { cat -> (UUID, CategoriesOverviewSummaryItem)? in
                 let spent = spentByCategory[cat.id] ?? 0
-                let budgeted = budgetByCategoryId[cat.id].map { Int64($0.budgetedValue) }
+                let budgeted: Int64? = if let target = budgetByCategoryId[cat.id] {
+                    Int64(target.budgetedValue)
+                } else if cat.behavior == "subscription" {
+                    subscriptionBudgetByCategory[cat.id]
+                } else {
+                    nil
+                }
                 return (cat.id, CategoriesOverviewSummaryItem(
                     id: cat.id, name: cat.name, icon: cat.icon, color: cat.color,
                     type: cat.type, status: cat.status,

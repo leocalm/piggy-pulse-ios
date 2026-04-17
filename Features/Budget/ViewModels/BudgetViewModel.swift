@@ -38,17 +38,32 @@ final class BudgetViewModel: ObservableObject {
             let existingTargets = dataStore.targets
             let targetByCategoryId = Dictionary(uniqueKeysWithValues: existingTargets.map { ($0.categoryId, $0) })
 
+            // For subscription categories, compute budget from active subscription amounts
+            var subscriptionBudgetByCategory: [UUID: Int32] = [:]
+            for sub in dataStore.subscriptions where sub.status == .active {
+                let monthlyAmount: Int64
+                switch sub.billingCycle {
+                case .monthly: monthlyAmount = sub.billingAmount
+                case .quarterly: monthlyAmount = sub.billingAmount / 3
+                case .yearly: monthlyAmount = sub.billingAmount / 12
+                }
+                subscriptionBudgetByCategory[sub.categoryId, default: 0] += Int32(clamping: monthlyAmount)
+            }
+
             targets = dataStore.categories
                 .filter { $0.status == "active" && $0.type != "transfer" }
                 .map { cat in
                     if let existing = targetByCategoryId[cat.id] {
                         return existing
                     }
-                    // Category without a target — show with zero budget
+                    // Subscription categories use their subscription total as budget
+                    let budget = cat.behavior == "subscription"
+                        ? (subscriptionBudgetByCategory[cat.id] ?? 0)
+                        : Int32(0)
                     return CategoryTarget(
                         id: cat.id, categoryId: cat.id,
                         name: cat.name, type: cat.type, parentId: cat.parentId,
-                        budgetedValue: 0, isExcluded: false
+                        budgetedValue: budget, isExcluded: false
                     )
                 }
 
