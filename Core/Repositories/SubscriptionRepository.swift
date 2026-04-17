@@ -17,10 +17,8 @@ final class SubscriptionRepository {
 
     @MainActor
     func fetchSubscriptions(categoryId: UUID) async throws -> [Subscription] {
-        let encrypted: [EncryptedSubscription] = try await apiClient.request(.subscriptions, queryItems: [
-            URLQueryItem(name: "categoryId", value: categoryId.uuidString)
-        ])
-        return try decryptionService.decrypt(encrypted)
+        let encrypted: [EncryptedSubscription] = try await apiClient.request(.subscriptions)
+        return try decryptionService.decrypt(encrypted).filter { $0.categoryId == categoryId }
     }
 
     func createSubscription(body: CreateSubscriptionRequest) async throws {
