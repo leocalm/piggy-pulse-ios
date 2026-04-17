@@ -559,8 +559,14 @@ struct CategoriesView: View {
 
             // Build overview map from data store targets + transactions
             var spentByCategory: [UUID: Int64] = [:]
-            for tx in store.periodTransactions where store.countsAsBudgetExpense(tx) {
-                spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
+            for tx in store.periodTransactions {
+                // Income categories: count income received
+                if tx.category.type == "income" {
+                    spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
+                // Expense categories: count budget expenses (respecting allowance logic)
+                } else if store.countsAsBudgetExpense(tx) {
+                    spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
+                }
             }
 
             let budgetByCategoryId = Dictionary(uniqueKeysWithValues: store.targets.map { ($0.categoryId, $0) })
