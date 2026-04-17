@@ -51,6 +51,11 @@ final class TransactionsViewModel: ObservableObject {
         nextCursor = nil
         hasMore = true
 
+        // Ensure reference data is loaded for category/vendor/account lookups
+        if !dataStore.isLoaded {
+            try? await dataStore.loadAll(periodId: periodId)
+        }
+
         do {
             let response = try await repository.fetchTransactions(
                 periodId: periodId,
