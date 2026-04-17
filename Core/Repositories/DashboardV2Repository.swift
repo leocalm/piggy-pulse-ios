@@ -76,7 +76,7 @@ final class DashboardV2Repository {
         )
 
         var spentByCategory: [UUID: Int64] = [:]
-        for tx in dataStore.periodTransactions where tx.category.type == "expense" {
+        for tx in dataStore.periodTransactions where dataStore.countsAsBudgetExpense(tx) {
             if fixedCategoryIds.contains(tx.category.id) {
                 spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
             }
@@ -109,7 +109,7 @@ final class DashboardV2Repository {
         )
 
         var spentByCategory: [UUID: Int64] = [:]
-        for tx in dataStore.periodTransactions where tx.category.type == "expense" {
+        for tx in dataStore.periodTransactions where dataStore.countsAsBudgetExpense(tx) {
             if variableCategoryIds.contains(tx.category.id) {
                 spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
             }

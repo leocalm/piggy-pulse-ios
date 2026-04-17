@@ -67,6 +67,30 @@ final class EncryptedDataStore: ObservableObject {
 
     // MARK: - Local computation (replaces retired server endpoints)
 
+    private var allowanceAccountIds: Set<UUID> {
+        Set(accounts.filter { $0.type == "allowance" }.map { $0.id })
+    }
+
+    /// Whether a transaction should count toward budget spending.
+    /// Excludes transactions FROM allowance accounts (already allocated).
+    /// Includes transfers TO allowance accounts (allocation = expense).
+    func countsAsBudgetExpense(_ tx: Transaction) -> Bool {
+        let allowanceIds = allowanceAccountIds
+        // Transfer TO an allowance account = expense (allocating to envelope)
+        if tx.category.type == "transfer",
+           let toId = tx.toAccount?.id,
+           allowanceIds.contains(toId) {
+            return true
+        }
+        // Regular expense FROM an allowance account = excluded (already counted when allocated)
+        if tx.category.type == "expense",
+           allowanceIds.contains(tx.fromAccount.id) {
+            return false
+        }
+        // Regular expense from non-allowance account = counts
+        return tx.category.type == "expense"
+    }
+
     var totalNetWorth: Int64 {
         accounts
             .filter { $0.status == "active" }
@@ -87,7 +111,7 @@ final class EncryptedDataStore: ObservableObject {
 
     var totalSpent: Int64 {
         periodTransactions
-            .filter { $0.category.type == "expense" }
+            .filter { countsAsBudgetExpense($0) }
             .reduce(0) { $0 + abs($1.amount) }
     }
 
@@ -105,7 +129,7 @@ final class EncryptedDataStore: ObservableObject {
 
     func spendingByCategory() -> [(categoryId: UUID, name: String, icon: String, color: String, spent: Int64)] {
         var grouped: [UUID: Int64] = [:]
-        for tx in periodTransactions where tx.category.type == "expense" {
+        for tx in periodTransactions where countsAsBudgetExpense(tx) {
             grouped[tx.category.id, default: 0] += abs(tx.amount)
         }
         return grouped.compactMap { catId, spent in

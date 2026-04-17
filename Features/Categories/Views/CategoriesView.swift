@@ -559,7 +559,7 @@ struct CategoriesView: View {
 
             // Build overview map from data store targets + transactions
             var spentByCategory: [UUID: Int64] = [:]
-            for tx in store.periodTransactions {
+            for tx in store.periodTransactions where store.countsAsBudgetExpense(tx) {
                 spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
             }
 
