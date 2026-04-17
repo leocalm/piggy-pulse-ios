@@ -312,9 +312,8 @@ struct AddTransactionSheet: View {
         isLoadingOptions = true
 
         let store = appState.dataStore
-        // Always refresh to pick up newly created entities
-        if let periodId = appState.selectedPeriod?.id {
-            store.clear()
+        // Reload if not loaded; otherwise use cached data to avoid clearing icons mid-render
+        if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
             try? await store.loadAll(periodId: periodId)
         }
 

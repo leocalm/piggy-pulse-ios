@@ -193,6 +193,7 @@ struct TransactionsView: View {
                 }
             }
             .sheet(isPresented: $showAddSheet, onDismiss: {
+                appState.dataStore.clear()
                 if let periodId = appState.selectedPeriod?.id {
                     Task { await viewModel.refresh(periodId: periodId) }
                 }
