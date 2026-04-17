@@ -1,5 +1,8 @@
 import CryptoKit
 import Foundation
+import os.log
+
+private let logger = Logger(subsystem: "com.piggypulse", category: "Decryption")
 
 @MainActor
 final class DecryptionService {
@@ -42,7 +45,10 @@ final class DecryptionService {
     }
 
     func decrypt(_ accounts: [EncryptedAccount]) throws -> [AccountListItem] {
-        accounts.compactMap { try? decrypt($0) }
+        accounts.compactMap { enc in
+            do { return try decrypt(enc) }
+            catch { logger.error("Failed to decrypt account \(enc.id): \(error.localizedDescription)"); return nil }
+        }
     }
 
     // MARK: - Category decryption
@@ -62,7 +68,10 @@ final class DecryptionService {
     }
 
     func decrypt(_ categories: [EncryptedCategory]) throws -> [CategoryListItem] {
-        categories.compactMap { try? decrypt($0) }
+        categories.compactMap { enc in
+            do { return try decrypt(enc) }
+            catch { logger.error("Failed to decrypt category \(enc.id): \(error.localizedDescription)"); return nil }
+        }
     }
 
     // MARK: - Vendor decryption
@@ -78,7 +87,10 @@ final class DecryptionService {
     }
 
     func decrypt(_ vendors: [EncryptedVendor]) throws -> [VendorListItem] {
-        vendors.compactMap { try? decrypt($0) }
+        vendors.compactMap { enc in
+            do { return try decrypt(enc) }
+            catch { logger.error("Failed to decrypt vendor \(enc.id): \(error.localizedDescription)"); return nil }
+        }
     }
 
     // MARK: - Subscription decryption
@@ -102,7 +114,10 @@ final class DecryptionService {
     }
 
     func decrypt(_ subscriptions: [EncryptedSubscription]) throws -> [Subscription] {
-        subscriptions.compactMap { try? decrypt($0) }
+        subscriptions.compactMap { enc in
+            do { return try decrypt(enc) }
+            catch { logger.error("Failed to decrypt subscription \(enc.id): \(error.localizedDescription)"); return nil }
+        }
     }
 
     // MARK: - Target decryption
@@ -162,6 +177,9 @@ final class DecryptionService {
     }
 
     func decryptTransactions(_ encrypted: [EncryptedTransaction], accounts: [AccountListItem], categories: [CategoryListItem], vendors: [VendorListItem]) throws -> [Transaction] {
-        encrypted.compactMap { try? decrypt($0, accounts: accounts, categories: categories, vendors: vendors) }
+        encrypted.compactMap { enc in
+            do { return try decrypt(enc, accounts: accounts, categories: categories, vendors: vendors) }
+            catch { logger.error("Failed to decrypt transaction \(enc.id): \(error.localizedDescription)"); return nil }
+        }
     }
 }
