@@ -60,7 +60,29 @@ final class DashboardV2ViewModel: ObservableObject {
         fixedCategories = repository.computeFixedCategories()
         subscriptions = repository.computeSubscriptions()
         recentTransactions = repository.computeRecentTransactions()
-        accounts = dataStore.accounts.filter { $0.status == "active" }
+        // Enrich accounts with transaction counts and net change from period data
+        var txCountByAccount: [UUID: Int64] = [:]
+        var netChangeByAccount: [UUID: Int64] = [:]
+        for tx in dataStore.periodTransactions {
+            txCountByAccount[tx.fromAccount.id, default: 0] += 1
+            netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+            if let toAccount = tx.toAccount {
+                txCountByAccount[toAccount.id, default: 0] += 1
+                netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+            }
+            if tx.category.type == "income" {
+                netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2 // undo the subtract above, add the income
+            }
+        }
+        accounts = dataStore.accounts.filter { $0.status == "active" }.map { acct in
+            AccountListItem(
+                id: acct.id, name: acct.name, color: acct.color, icon: acct.icon,
+                type: acct.type, status: acct.status,
+                currentBalance: acct.currentBalance, spendLimit: acct.spendLimit,
+                netChangeThisPeriod: netChangeByAccount[acct.id] ?? 0,
+                numberOfTransactions: txCountByAccount[acct.id] ?? 0
+            )
+        }
 
         isLoading = false
     }
