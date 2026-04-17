@@ -78,9 +78,7 @@ struct SidebarNavigationView: View {
                 Label(String(localized: "more.categories"), systemImage: "tag")
                     .tag(Destination.categories)
                     .listRowBackground(rowBackground(for: .categories))
-                Label(String(localized: "more.targets"), systemImage: "chart.pie")
-                    .tag(Destination.targets)
-                    .listRowBackground(rowBackground(for: .targets))
+                // Targets are now set together with categories
             }
 
             // Tracking
@@ -132,7 +130,7 @@ struct SidebarNavigationView: View {
             case .categories:
                 CategoriesView().environmentObject(appState)
             case .targets:
-                BudgetPlanView().environmentObject(appState)
+                CategoriesView().environmentObject(appState) // Targets now managed in categories
             case .subscriptions:
                 SubscriptionsView().environmentObject(appState)
             case .vendors:
