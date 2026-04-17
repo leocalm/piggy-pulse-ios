@@ -344,8 +344,27 @@ struct VendorsView: View {
         isLoading = true
         errorMessage = nil
         do {
-            let page: PaginatedResponse<EncryptedVendor> = try await appState.apiClient.request(.vendors)
-            vendors = try await appState.decryptionService.decrypt(page.data)
+            let store = appState.dataStore
+            if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+                try await store.loadAll(periodId: periodId)
+            }
+
+            // Compute transaction counts and total spend per vendor
+            var txCountByVendor: [UUID: Int64] = [:]
+            var spendByVendor: [UUID: Int64] = [:]
+            for tx in store.periodTransactions {
+                guard let vendor = tx.vendor else { continue }
+                txCountByVendor[vendor.id, default: 0] += 1
+                spendByVendor[vendor.id, default: 0] += abs(tx.amount)
+            }
+
+            vendors = store.vendors.map { v in
+                VendorListItem(
+                    id: v.id, name: v.name, description: v.description, status: v.status,
+                    numberOfTransactions: txCountByVendor[v.id] ?? 0,
+                    totalSpend: spendByVendor[v.id] ?? 0
+                )
+            }
         } catch {
             errorMessage = String(localized: "Failed to load vendors.")
         }
