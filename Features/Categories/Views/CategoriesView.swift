@@ -595,12 +595,14 @@ struct CategoriesView: View {
             })
 
             let activeExpenseItems = overviewMap.values.filter { $0.type == "expense" && $0.status == "active" }
+            let activeIncomeItems = overviewMap.values.filter { $0.type == "income" && $0.status == "active" }
+            let incomeTarget = activeIncomeItems.reduce(Int64(0)) { $0 + ($1.budgeted ?? 0) }
             overviewSummary = CategoriesOverviewSummary(
                 periodName: appState.selectedPeriod?.name ?? "",
                 periodElapsedPercent: 0,
                 totalSpent: activeExpenseItems.reduce(0) { $0 + $1.actual },
                 totalBudgeted: activeExpenseItems.reduce(0) { $0 + ($1.budgeted ?? 0) },
-                totalBudgetedIncoming: nil,
+                totalBudgetedIncoming: incomeTarget > 0 ? incomeTarget : nil,
                 variance: 0
             )
         } catch {
