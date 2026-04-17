@@ -390,8 +390,36 @@ struct AccountsView: View {
         errorMessage = nil
 
         do {
-            let page: PaginatedResponse<EncryptedAccount> = try await appState.apiClient.request(.accounts)
-            accounts = try await appState.decryptionService.decrypt(page.data)
+            let store = appState.dataStore
+            if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+                try await store.loadAll(periodId: periodId)
+            }
+
+            // Compute transaction counts per account
+            var txCountByAccount: [UUID: Int64] = [:]
+            var netChangeByAccount: [UUID: Int64] = [:]
+            for tx in store.periodTransactions {
+                txCountByAccount[tx.fromAccount.id, default: 0] += 1
+                netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+                if let toAccount = tx.toAccount {
+                    txCountByAccount[toAccount.id, default: 0] += 1
+                    netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+                }
+                if tx.category.type == "income" {
+                    netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2
+                }
+            }
+
+            accounts = store.accounts.map { acct in
+                AccountListItem(
+                    id: acct.id, name: acct.name, color: acct.color, icon: acct.icon,
+                    type: acct.type, status: acct.status,
+                    currentBalance: acct.currentBalance, spendLimit: acct.spendLimit,
+                    netChangeThisPeriod: netChangeByAccount[acct.id] ?? 0,
+                    numberOfTransactions: txCountByAccount[acct.id] ?? 0
+                )
+            }
+
             let active = accounts.filter { $0.status == "active" }
             let assets = active.filter { $0.type != "creditcard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
             let liabilities = active.filter { $0.type == "creditcard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
