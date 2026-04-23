@@ -6326,6 +6326,9 @@
         }
       }
     },
+    "Failed to create transfer category." : {
+
+    },
     "Failed to create vendor." : {
       "comment" : "Error message when vendor creation fails",
       "localizations" : {
@@ -6461,6 +6464,7 @@
     },
     "Failed to load form options." : {
       "comment" : "Error message when transaction form options fail to load",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -8986,6 +8990,9 @@
           }
         }
       }
+    },
+    "No currency configured. Please set a currency in Settings first." : {
+
     },
     "No current period found." : {
       "comment" : "Empty state when no current budget period exists",

@@ -97,11 +97,11 @@ struct AccountsView: View {
                 .background(Color.ppBackground)
                 .refreshable { await Task { @MainActor in await self.load() }.value }
                 .task(id: appState.selectedPeriod?.id) { await load() }
-                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load(force: true) } }) {
                     AddAccountSheet { }.environmentObject(appState)
                 }
                 .sheet(item: $editingAccount) { account in
-                    EditAccountSheet(account: account) { Task { await load() } }
+                    EditAccountSheet(account: account) { Task { await load(force: true) } }
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(accountToArchive?.name ?? "")\"?", isPresented: Binding(get: { accountToArchive != nil }, set: { if !$0 { accountToArchive = nil } }), titleVisibility: .visible) {
@@ -230,7 +230,7 @@ struct AccountsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteAccount(account.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "accounts.delete.failed")
         }
@@ -240,7 +240,7 @@ struct AccountsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveAccount(account.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "accounts.archive.failed")
         }
@@ -385,12 +385,13 @@ struct AccountsView: View {
         .padding(.vertical, PPSpacing.xxxl)
     }
 
-    private func load() async {
+    private func load(force: Bool = false) async {
         isLoading = true
         errorMessage = nil
 
         do {
             let store = appState.dataStore
+            if force { store.isLoaded = false }
             if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
                 try await store.loadAll(periodId: periodId)
             }

@@ -175,11 +175,11 @@ struct VendorsView: View {
                 .background(Color.ppBackground)
                 .refreshable { await Task { @MainActor in await self.load() }.value }
                 .task(id: appState.selectedPeriod?.id) { await load() }
-                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load(force: true) } }) {
                     AddVendorSheet { }.environmentObject(appState)
                 }
                 .sheet(item: $editingVendor) { vendor in
-                    EditVendorSheet(vendor: vendor) { Task { await load() } }
+                    EditVendorSheet(vendor: vendor) { Task { await load(force: true) } }
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
@@ -284,7 +284,7 @@ struct VendorsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "vendors.delete.failed")
         }
@@ -294,7 +294,7 @@ struct VendorsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveVendor(vendor.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "vendors.archive.failed")
         }
@@ -340,11 +340,12 @@ struct VendorsView: View {
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 
-    private func load() async {
+    private func load(force: Bool = false) async {
         isLoading = true
         errorMessage = nil
         do {
             let store = appState.dataStore
+            if force { store.isLoaded = false }
             if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
                 try await store.loadAll(periodId: periodId)
             }
