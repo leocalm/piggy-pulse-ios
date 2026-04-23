@@ -223,21 +223,19 @@ struct EditTransactionSheet: View {
         isTransfer = transaction.toAccount != nil
 
         do {
-            async let catsTask: [CategoryOption] = appState.apiClient.request(.categoryOptions)
-            async let accsTask: [AccountOption] = appState.apiClient.request(.accountOptions)
+            let store = appState.dataStore
+            if let periodId = appState.selectedPeriod?.id, !store.isLoaded {
+                try await store.loadAll(periodId: periodId)
+            }
 
-            let periodId = appState.selectedPeriod?.id
-            async let vendorsTask: PaginatedResponse<VendorOption> = appState.apiClient.request(
-                .vendors,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId?.uuidString ?? "")]
-            )
-
-            let allOptions = try await catsTask
-            transferCategory = allOptions.first(where: { $0.name == "Transfer" })
-            categories = allOptions.filter { $0.name != "Transfer" }
-
-            accounts = try await accsTask
-            vendors = (try? await vendorsTask)?.data ?? []
+            let activeCats = store.categories.filter { $0.status == "active" }
+            transferCategory = activeCats.first(where: { $0.type == "transfer" })
+                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+            categories = activeCats.filter { $0.type != "transfer" }
+                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+            accounts = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
+            vendors = store.vendors.filter { $0.status == "active" }
+                .map { VendorOption(id: $0.id, name: $0.name) }
 
             // Match selections
             if isTransfer {

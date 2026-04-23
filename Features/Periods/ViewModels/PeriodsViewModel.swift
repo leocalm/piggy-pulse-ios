@@ -12,16 +12,14 @@ final class PeriodsViewModel: ObservableObject {
     @Published var hasSchedule = false
 
     private var repository: PeriodRepository?
-
-    init(apiClient: APIClient) {
-        self.repository = PeriodRepository(apiClient: apiClient)
-    }
+    private var dataStore: EncryptedDataStore?
 
     init() {}
 
-    func configure(apiClient: APIClient) {
+    func configure(apiClient: APIClient, dataStore: EncryptedDataStore) {
         guard repository == nil else { return }
         repository = PeriodRepository(apiClient: apiClient)
+        self.dataStore = dataStore
     }
 
     func load() async {
@@ -34,7 +32,21 @@ final class PeriodsViewModel: ObservableObject {
 
         do {
             let all = try await periodsTask
-            currentPeriod = all.first(where: { $0.periodStatus == .active })
+
+            // Enrich active period with transaction count from dataStore
+            let txCount = dataStore?.periodTransactions.count ?? 0
+            currentPeriod = all.first(where: { $0.periodStatus == .active }).map { period in
+                BudgetPeriod(
+                    id: period.id, name: period.name, startDate: period.startDate,
+                    periodType: period.periodType, length: period.length,
+                    remainingDays: period.remainingDays,
+                    numberOfTransactions: txCount,
+                    percentageOfTargetUsed: period.percentageOfTargetUsed,
+                    status: period.status,
+                    totalSpent: dataStore?.totalSpent ?? period.totalSpent,
+                    totalBudgeted: dataStore?.totalBudgeted ?? period.totalBudgeted
+                )
+            }
             upcomingPeriods = all.filter { $0.periodStatus == .upcoming }
             pastPeriods = all.filter { $0.periodStatus == .ended }.reversed()
         } catch {

@@ -114,9 +114,9 @@ struct NetPositionCard: View {
 
     private func accountColor(_ type: String) -> Color {
         switch type {
-        case "CreditCard": return theme.secondary
-        case "Savings": return theme.primary
-        case "Allowance": return theme.secondary
+        case "creditcard": return theme.secondary
+        case "savings": return theme.primary
+        case "allowance": return theme.secondary
         default: return theme.tertiary
         }
     }

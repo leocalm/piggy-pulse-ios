@@ -46,7 +46,7 @@ struct EditProfileSheet: View {
                             VStack(alignment: .leading, spacing: PPSpacing.sm) {
                                 Text(String(localized: "field.email"))
                                     .font(.ppCallout).fontWeight(.semibold).foregroundColor(.ppTextPrimary)
-                                Text(profile?.email ?? "")
+                                Text(profile?.email ?? appState.currentUser?.email ?? "")
                                     .font(.ppBody)
                                     .foregroundColor(.ppTextTertiary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -118,8 +118,9 @@ struct EditProfileSheet: View {
             }
             .task {
                 name = profile?.name ?? ""
-                timezone = profile?.timezone ?? ""
-                selectedCurrencyId = profile?.defaultCurrencyId
+                timezone = profile?.timezone ?? TimeZone.current.identifier
+                selectedCurrencyId = profile?.defaultCurrencyId ?? appState.currencyId
+                // Show current user's email from AppState if profile doesn't have it
                 await loadCurrencies()
             }
         }
@@ -138,11 +139,13 @@ struct EditProfileSheet: View {
             let name: String
             let timezone: String
             let defaultCurrencyId: UUID?
+            let currency: String
         }
 
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), timezone: timezone, defaultCurrencyId: selectedCurrencyId)
+        let currencyCode = currencies.first(where: { $0.id == selectedCurrencyId })?.code ?? appState.currencyCode
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), timezone: timezone, defaultCurrencyId: selectedCurrencyId, currency: currencyCode)
         do {
-            let _: ProfileResponse = try await appState.apiClient.request(.updateProfile, body: req)
+            try await appState.apiClient.request(.updateProfile, body: req) as Void
             await appState.loadUserCurrency()
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             dismiss()

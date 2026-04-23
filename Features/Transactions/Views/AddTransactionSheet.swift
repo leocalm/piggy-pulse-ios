@@ -153,7 +153,11 @@ struct AddTransactionSheet: View {
             .accessibilityIdentifier("transaction-transfer-toggle")
             .onChange(of: isTransfer) { _, transfer in
                 if transfer {
-                    selectedCategory = transferCategory
+                    if transferCategory == nil {
+                        Task { await createTransferCategory() }
+                    } else {
+                        selectedCategory = transferCategory
+                    }
                     selectedVendor = nil
                 } else {
                     selectedToAccount = nil
@@ -307,40 +311,42 @@ struct AddTransactionSheet: View {
     private func loadOptions() async {
         isLoadingOptions = true
 
-        guard let periodId = appState.selectedPeriod?.id else {
-            isLoadingOptions = false
-            return
+        let store = appState.dataStore
+        // Reload if not loaded; otherwise use cached data to avoid clearing icons mid-render
+        if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+            try? await store.loadAll(periodId: periodId)
         }
 
-        do {
-            // Fetch accounts
-            let accountsResponse: [AccountOption] = try await appState.apiClient.request(
-                .accountOptions
-            )
-            accounts = accountsResponse
-
-            // Fetch categories (options endpoint) — now includes transfer category
-            let allOptions: [CategoryOption] = try await appState.apiClient.request(.categoryOptions)
-            transferCategory = allOptions.first(where: { $0.name == "Transfer" })
-            categories = allOptions.filter { $0.name != "Transfer" }
-
-
-
-            // Fetch vendors (paginated)
-            let vendorsResponse: PaginatedResponse<VendorOption> = try await appState.apiClient.request(
-                .vendors,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            vendors = vendorsResponse.data
-        } catch {
-            errorMessage = String(localized: "Failed to load form options.")
-            UINotificationFeedbackGenerator().notificationOccurred(.error)
-        }
+        accounts = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
+        let activeCats = store.categories.filter { $0.status == "active" }
+        transferCategory = activeCats.first(where: { $0.type == "transfer" })
+            .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+        categories = activeCats.filter { $0.type != "transfer" }
+            .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+        vendors = store.vendors.filter { $0.status == "active" }
+            .map { VendorOption(id: $0.id, name: $0.name) }
 
         isLoadingOptions = false
     }
 
     // MARK: - Create Transaction
+
+    private func createTransferCategory() async {
+        struct Req: Encodable { let name: String; let icon: String; let type: String; let color: String }
+        struct Resp: Decodable { let id: UUID }
+        do {
+            let resp: Resp = try await appState.apiClient.request(
+                .createCategory,
+                body: Req(name: "Transfer", icon: "🔄", type: "transfer", color: "#868E96")
+            )
+            let option = CategoryOption(id: resp.id, name: "Transfer", icon: "🔄", color: "#868E96")
+            transferCategory = option
+            selectedCategory = option
+            appState.dataStore.clear()
+        } catch {
+            errorMessage = String(localized: "Failed to create transfer category.")
+        }
+    }
 
     private func createTransaction() async {
         isLoading = true

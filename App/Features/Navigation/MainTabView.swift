@@ -44,9 +44,7 @@ struct MainTabView: View {
                             CategoriesView().environmentObject(appState)
                         }
                         .accessibilityIdentifier("more-categories")
-                        moreLink("more.targets", icon: "chart.pie") {
-                            BudgetPlanView().environmentObject(appState)
-                        }
+                        // Targets are now set together with categories
                     }
 
                     // Tracking section

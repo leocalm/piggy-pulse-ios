@@ -902,14 +902,18 @@ struct OverlayFormSheet: View {
         isLoadingOptions = true
         defer { isLoadingOptions = false }
 
-        async let accountsFetch: [AccountOption] = (try? appState.apiClient.request(.accountOptions)) ?? []
-        async let categoriesFetch: [CategoryOption] = (try? appState.apiClient.request(.categoryOptions)) ?? []
-        async let vendorsFetch: PaginatedResponse<VendorOption> = (try? appState.apiClient.request(.vendors)) ?? PaginatedResponse(data: [], totalCount: nil, hasMore: nil, nextCursor: nil)
-
-        let (accounts, categories, vendorsPage) = await (accountsFetch, categoriesFetch, vendorsFetch)
-        accountOptions = accounts
-        categoryOptions = categories
-        vendorOptions = vendorsPage.data
+        let store = appState.dataStore
+        if store.isLoaded {
+            accountOptions = store.accounts.map { AccountOption(id: $0.id, name: $0.name, color: $0.color) }
+            categoryOptions = store.categories.filter { $0.status == "active" }
+                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+            vendorOptions = store.vendors.filter { $0.status == "active" }
+                .map { VendorOption(id: $0.id, name: $0.name) }
+        } else {
+            accountOptions = (try? await appState.apiClient.request(.accountOptions) as [AccountOption]) ?? []
+            categoryOptions = (try? await appState.apiClient.request(.categoryOptions) as [CategoryOption]) ?? []
+            vendorOptions = []
+        }
     }
 
     // MARK: - Prefill (Edit Mode)

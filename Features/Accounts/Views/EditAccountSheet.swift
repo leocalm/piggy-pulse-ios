@@ -11,13 +11,13 @@ struct EditAccountSheet: View {
 
     @State private var name = ""
     @State private var color = ""
-    @State private var accountType = "Checking"
+    @State private var accountType = "checking"
     @State private var spendLimitText = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
 
-    private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
-    private let typeLabels = ["Checking": "Checking", "Savings": "Savings", "CreditCard": "Credit Card", "Wallet": "Wallet", "Allowance": "Allowance"]
+    private let accountTypes = ["checking", "savings", "creditcard", "wallet", "allowance"]
+    private let typeLabels = ["checking": "Checking", "savings": "Savings", "creditcard": "Credit Card", "wallet": "Wallet", "allowance": "Allowance"]
     private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
     private var currencySymbol: String {
@@ -27,13 +27,13 @@ struct EditAccountSheet: View {
         return fmt.currencySymbol ?? appState.currencyCode
     }
 
-    private var showSpendLimit: Bool { accountType == "CreditCard" || accountType == "Allowance" }
+    private var showSpendLimit: Bool { accountType == "creditcard" || accountType == "allowance" }
     private var isDisabled: Bool { name.trimmingCharacters(in: .whitespaces).count < 3 || isLoading }
 
     private var defaultIcon: String {
         switch accountType {
-        case "Checking": return "🏦"; case "Savings": return "💰"; case "CreditCard": return "💳"
-        case "Wallet": return "👛"; case "Allowance": return "🎯"; default: return "🏦"
+        case "checking": return "🏦"; case "savings": return "💰"; case "creditcard": return "💳"
+        case "wallet": return "👛"; case "allowance": return "🎯"; default: return "🏦"
         }
     }
 
@@ -166,9 +166,9 @@ struct EditAccountSheet: View {
         }()
 
         struct Req: Encodable {
-            let name: String; let color: String; let type: String; let initialBalance: Int64; let spendLimit: Int32?
+            let name: String; let color: String; let accountType: String; let initialBalance: Int64; let spendLimit: Int32?
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, type: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit)
         do {
             try await appState.apiClient.request(.updateAccount(account.id), body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

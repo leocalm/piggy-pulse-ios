@@ -149,28 +149,27 @@ struct AddCategorySheet: View {
     private func create() async {
         isLoading = true; errorMessage = nil
         struct Req: Encodable {
-            let name: String; let color: String; let icon: String; let type: String; let target: Int64?; let behavior: String?
-            enum CodingKeys: String, CodingKey { case name, color, icon, type, target, behavior }
-            func encode(to encoder: Encoder) throws {
-                var c = encoder.container(keyedBy: CodingKeys.self)
-                try c.encode(name, forKey: .name)
-                try c.encode(color, forKey: .color)
-                try c.encode(icon, forKey: .icon)
-                try c.encode(type, forKey: .type)
-                try c.encodeIfPresent(target, forKey: .target)
-                try c.encodeIfPresent(behavior, forKey: .behavior)
-            }
+            let name: String; let color: String; let icon: String; let type: String; let behavior: String?
+        }
+        struct CategoryCreatedResponse: Decodable {
+            let id: UUID
         }
         let targetCents: Int64? = {
             let cleaned = targetAmountText.replacingOccurrences(of: ",", with: ".")
             guard let decimal = Decimal(string: cleaned), decimal > 0 else { return nil }
             return NSDecimalNumber(decimal: decimal * 100).int64Value
         }()
-        // Map UI types to v2 types
         let v2Type = categoryType == "Incoming" ? "income" : "expense"
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: "#000000", icon: icon, type: v2Type, target: targetCents, behavior: behavior.isEmpty ? nil : behavior)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: "#000000", icon: icon, type: v2Type, behavior: behavior.isEmpty ? nil : behavior)
         do {
-            try await appState.apiClient.request(.createCategory, body: req)
+            let created: CategoryCreatedResponse = try await appState.apiClient.request(.createCategory, body: req)
+            // Create target as a separate API call if a value was entered
+            if let cents = targetCents {
+                try await appState.apiClient.request(
+                    .createCategoryTarget,
+                    body: CreateTargetRequest(categoryId: created.id, value: cents)
+                )
+            }
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated(); dismiss()
         } catch let e as APIError {

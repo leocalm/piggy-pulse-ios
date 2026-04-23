@@ -217,16 +217,16 @@ struct AddSubscriptionSheet: View {
 
     private func loadOptions() async {
         isLoadingOptions = true
-        async let catsTask: [CategoryOption] = apiClient.request(.categoryOptions)
-        async let vendorsTask: PaginatedResponse<VendorOption> = apiClient.request(.vendors, queryItems: [URLQueryItem(name: "limit", value: "250")])
-
-        do {
-            categories = try await catsTask
-        } catch { categories = [] }
-
-        do {
-            vendors = try await vendorsTask.data
-        } catch { vendors = [] }
+        let store = appState.dataStore
+        if store.isLoaded {
+            categories = store.categories.filter { $0.status == "active" }
+                .map { CategoryOption(id: $0.id, name: $0.name, icon: $0.icon, color: $0.color) }
+            vendors = store.vendors.filter { $0.status == "active" }
+                .map { VendorOption(id: $0.id, name: $0.name) }
+        } else {
+            categories = (try? await apiClient.request(.categoryOptions) as [CategoryOption]) ?? []
+            vendors = []
+        }
 
         // Pre-select fixed category if provided
         if let fixedId = fixedCategoryId {
@@ -251,7 +251,7 @@ struct AddSubscriptionSheet: View {
         )
 
         do {
-            let _: Subscription = try await apiClient.request(.createSubscription, body: req)
+            try await apiClient.request(.createSubscription, body: req) as Void
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             onCreated(); dismiss()
         } catch let e as APIError {

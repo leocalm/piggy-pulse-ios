@@ -87,9 +87,9 @@ struct AccountsView: View {
                         }
 
                         // Grouped by type
-                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Checking" || $0.accountType == "Wallet" || $0.accountType == "Allowance" })
-                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "Savings" || $0.accountType == "Investment" || $0.accountType == "Protected" })
-                        accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
+                        accountSection(String(localized: "LIQUID ACCOUNTS"), accounts: accounts.filter { $0.accountType == "checking" || $0.accountType == "wallet" || $0.accountType == "allowance" })
+                        accountSection(String(localized: "PROTECTED ACCOUNTS"), accounts: accounts.filter { $0.accountType == "savings" || $0.accountType == "Investment" || $0.accountType == "Protected" })
+                        accountSection(String(localized: "DEBT ACCOUNTS"), accounts: accounts.filter { $0.accountType == "creditcard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" })
                     }
                 }
                 .listStyle(.plain)
@@ -97,11 +97,11 @@ struct AccountsView: View {
                 .background(Color.ppBackground)
                 .refreshable { await Task { @MainActor in await self.load() }.value }
                 .task(id: appState.selectedPeriod?.id) { await load() }
-                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load(force: true) } }) {
                     AddAccountSheet { }.environmentObject(appState)
                 }
                 .sheet(item: $editingAccount) { account in
-                    EditAccountSheet(account: account) { Task { await load() } }
+                    EditAccountSheet(account: account) { Task { await load(force: true) } }
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(accountToArchive?.name ?? "")\"?", isPresented: Binding(get: { accountToArchive != nil }, set: { if !$0 { accountToArchive = nil } }), titleVisibility: .visible) {
@@ -230,7 +230,7 @@ struct AccountsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteAccount(account.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "accounts.delete.failed")
         }
@@ -240,7 +240,7 @@ struct AccountsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveAccount(account.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "accounts.archive.failed")
         }
@@ -307,15 +307,15 @@ struct AccountsView: View {
     }
 
     private var liquidTotal: Int64 {
-        accounts.filter { $0.accountType == "Checking" || $0.accountType == "Wallet" || $0.accountType == "Allowance" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "checking" || $0.accountType == "wallet" || $0.accountType == "allowance" }.reduce(0) { $0 + $1.balance }
     }
 
     private var protectedTotal: Int64 {
-        accounts.filter { $0.accountType == "Savings" || $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "savings" || $0.accountType == "Investment" || $0.accountType == "Protected" }.reduce(0) { $0 + $1.balance }
     }
 
     private var debtTotal: Int64 {
-        accounts.filter { $0.accountType == "CreditCard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" }.reduce(0) { $0 + $1.balance }
+        accounts.filter { $0.accountType == "creditcard" || $0.accountType == "Credit" || $0.accountType == "Debt" || $0.accountType == "Loan" }.reduce(0) { $0 + $1.balance }
     }
 
     private func netPositionBar(_ s: AccountsSummary) -> some View {
@@ -385,20 +385,45 @@ struct AccountsView: View {
         .padding(.vertical, PPSpacing.xxxl)
     }
 
-    private func load() async {
-        guard let periodId = appState.selectedPeriod?.id else { return }
+    private func load(force: Bool = false) async {
         isLoading = true
         errorMessage = nil
 
         do {
-            let response: PaginatedResponse<AccountListItem> = try await appState.apiClient.request(
-                .accountsSummary,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            accounts = response.data
-            // Compute summary from accounts
-            let assets = accounts.filter { $0.type != "CreditCard" && $0.status == "active" }.reduce(Int64(0)) { $0 + $1.currentBalance }
-            let liabilities = accounts.filter { $0.type == "CreditCard" && $0.status == "active" }.reduce(Int64(0)) { $0 + $1.currentBalance }
+            let store = appState.dataStore
+            if force { store.isLoaded = false }
+            if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+                try await store.loadAll(periodId: periodId)
+            }
+
+            // Compute transaction counts per account
+            var txCountByAccount: [UUID: Int64] = [:]
+            var netChangeByAccount: [UUID: Int64] = [:]
+            for tx in store.periodTransactions {
+                txCountByAccount[tx.fromAccount.id, default: 0] += 1
+                netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+                if let toAccount = tx.toAccount {
+                    txCountByAccount[toAccount.id, default: 0] += 1
+                    netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+                }
+                if tx.category.type == "income" {
+                    netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2
+                }
+            }
+
+            accounts = store.accounts.map { acct in
+                AccountListItem(
+                    id: acct.id, name: acct.name, color: acct.color, icon: acct.icon,
+                    type: acct.type, status: acct.status,
+                    currentBalance: acct.currentBalance, spendLimit: acct.spendLimit,
+                    netChangeThisPeriod: netChangeByAccount[acct.id] ?? 0,
+                    numberOfTransactions: txCountByAccount[acct.id] ?? 0
+                )
+            }
+
+            let active = accounts.filter { $0.status == "active" }
+            let assets = active.filter { $0.type != "creditcard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
+            let liabilities = active.filter { $0.type == "creditcard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
             summary = AccountsSummary(totalNetWorth: assets - liabilities, totalAssets: assets, totalLiabilities: liabilities)
         } catch {
             errorMessage = String(localized: "Failed to load accounts.")

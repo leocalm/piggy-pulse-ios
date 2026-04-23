@@ -6,6 +6,7 @@ struct CategorySubscriptionSection: View {
     let currencyCode: String
     var onSubscriptionChanged: (() -> Void)? = nil
 
+    @EnvironmentObject private var appState: AppState
     @StateObject private var viewModel = SubscriptionsViewModel()
     @State private var showAddSheet = false
     @State private var editingSubscription: Subscription?
@@ -88,7 +89,7 @@ struct CategorySubscriptionSection: View {
             }
         }
         .task {
-            viewModel.configure(apiClient: apiClient)
+            viewModel.configure(apiClient: apiClient, decryptionService: appState.decryptionService)
             await viewModel.loadForCategory(categoryId: categoryId)
         }
         .sheet(isPresented: $showAddSheet, onDismiss: {

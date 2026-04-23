@@ -198,28 +198,33 @@ struct EditCategorySheet: View {
     private func save() async {
         isLoading = true; errorMessage = nil
         struct Req: Encodable {
-            let name: String; let color: String; let icon: String; let type: String; let target: Int64?; let behavior: String?
-            enum CodingKeys: String, CodingKey { case name, color, icon, type, target, behavior }
-            func encode(to encoder: Encoder) throws {
-                var c = encoder.container(keyedBy: CodingKeys.self)
-                try c.encode(name, forKey: .name)
-                try c.encode(color, forKey: .color)
-                try c.encode(icon, forKey: .icon)
-                try c.encode(type, forKey: .type)
-                try c.encodeIfPresent(target, forKey: .target)
-                try c.encodeIfPresent(behavior, forKey: .behavior)
-            }
+            let name: String; let color: String; let icon: String; let type: String; let behavior: String?
         }
         let targetCents: Int64? = {
             let cleaned = targetAmountText.replacingOccurrences(of: ",", with: ".")
             guard let decimal = Decimal(string: cleaned), decimal > 0 else { return nil }
             return NSDecimalNumber(decimal: decimal * 100).int64Value
         }()
-        // Map UI types to v2 types
         let v2Type = categoryType == "Incoming" ? "income" : "expense"
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: "#000000", icon: icon, type: v2Type, target: targetCents, behavior: behavior.isEmpty ? nil : behavior)
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: "#000000", icon: icon, type: v2Type, behavior: behavior.isEmpty ? nil : behavior)
         do {
             try await appState.apiClient.request(.updateCategory(category.id), body: req)
+            // Create or update target separately
+            if let cents = targetCents {
+                let existingTarget = appState.dataStore.targets.first(where: { $0.categoryId == category.id })
+                if let existing = existingTarget {
+                    try await appState.apiClient.request(
+                        .updateCategoryTarget(existing.id),
+                        body: UpdateTargetRequest(value: cents)
+                    )
+                } else {
+                    try await appState.apiClient.request(
+                        .createCategoryTarget,
+                        body: CreateTargetRequest(categoryId: category.id, value: cents)
+                    )
+                }
+                appState.dataStore.clear()
+            }
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             onUpdated(); dismiss()
         } catch let e as APIError {

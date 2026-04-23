@@ -69,22 +69,21 @@ struct GettingStartedCard: View {
     }
 
     private func checkProgress() async {
-        let api = appState.apiClient
+        let store = appState.dataStore
 
-        struct SimpleAccount: Codable { let id: UUID }
-        async let accountsTask: PaginatedResponse<SimpleAccount>? = try? api.request(.accounts, queryItems: [URLQueryItem(name: "limit", value: "1")])
-        async let periodsTask = try? PeriodRepository(apiClient: api).fetchPeriods()
-        async let catsTask: PaginatedResponse<CategoryListItem>? = try? api.request(.categories, queryItems: [URLQueryItem(name: "limit", value: "1")])
-        async let txnsTask: HasTransactionsResponse? = try? TransactionRepository(apiClient: api).fetchHasAnyTransactions()
+        // Use already-loaded data when available (avoids extra API calls)
+        if store.isLoaded {
+            hasAccounts = !store.accounts.isEmpty
+            hasCategories = !store.categories.isEmpty
+            hasTransactions = !store.periodTransactions.isEmpty
+        } else {
+            let txns: HasTransactionsResponse? = try? await appState.apiClient.request(.transactionsHasAny)
+            hasTransactions = txns?.hasTransactions ?? false
+            hasAccounts = ((try? await appState.apiClient.request(.accounts) as PaginatedResponse<EncryptedAccount>)?.data.isEmpty == false)
+            hasCategories = ((try? await appState.apiClient.request(.categories) as PaginatedResponse<EncryptedCategory>)?.data.isEmpty == false)
+        }
 
-        let accounts = await accountsTask
-        let periods = await periodsTask
-        let cats = await catsTask
-        let txns = await txnsTask
-
-        hasAccounts = !(accounts?.data.isEmpty ?? true)
-        hasPeriods = !(periods ?? []).isEmpty
-        hasCategories = !(cats?.data.isEmpty ?? true)
-        hasTransactions = txns?.hasTransactions ?? false
+        // Period selector already fetches periods — just check if one is selected
+        hasPeriods = appState.selectedPeriod != nil
     }
 }

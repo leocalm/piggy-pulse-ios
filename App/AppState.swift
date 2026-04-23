@@ -9,6 +9,8 @@ final class AppState: ObservableObject {
     let periodRepository: PeriodRepository
     let overlayRepository: OverlayRepository
     let notificationScheduler: NotificationScheduler
+    let decryptionService: DecryptionService
+    let dataStore: EncryptedDataStore
 
     @Published var isAuthenticated = false
     @Published var currentUser: User?
@@ -16,7 +18,8 @@ final class AppState: ObservableObject {
     @Published var isLoading = true
     @Published var onboardingCompleted = true
     @Published var currencyCode: String = "EUR"
-    
+    @Published var currencyId: UUID?
+    @Published var isEncryptionUnlocked = false
 
     var currencySymbol: String {
         Locale.availableIdentifiers
@@ -27,7 +30,6 @@ final class AppState: ObservableObject {
     }
     let themeManager = ThemeManager.shared
 
-    /// Legacy proxy — reads from ThemeManager. Use themeManager.colorScheme directly in new code.
     var appColorScheme: ColorScheme? { themeManager.colorScheme }
     @Published var isBiometricLocked = false
     @Published var biometricAuthFailed = false
@@ -42,10 +44,6 @@ final class AppState: ObservableObject {
     }
 
     func loadUserCurrency() async {
-        // Try to get from settings profile
-        struct SettingsResponse: Codable {
-            let defaultCurrencyId: UUID?
-        }
         struct CurrencyItem: Codable, Identifiable {
             let id: UUID
             let code: String
@@ -53,11 +51,20 @@ final class AppState: ObservableObject {
 
         do {
             let profile: ProfileResponse = try await apiClient.request(.profile)
-            if let currencyId = profile.defaultCurrencyId {
-                let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
-                if let match = currencies.first(where: { $0.id == currencyId }) {
+            let currencies: [CurrencyItem] = try await apiClient.request(.currencies)
+
+            if let cId = profile.defaultCurrencyId {
+                self.currencyId = cId
+                if let match = currencies.first(where: { $0.id == cId }) {
                     currencyCode = match.code
                 }
+            } else if let code = profile.currency,
+                      let match = currencies.first(where: { $0.code == code }) {
+                self.currencyId = match.id
+                currencyCode = match.code
+            } else if let first = currencies.first {
+                self.currencyId = first.id
+                currencyCode = first.code
             }
         } catch {
             // Keep default EUR
@@ -65,7 +72,7 @@ final class AppState: ObservableObject {
     }
 
     func loadTheme() {
-        // Now handled by ThemeManager — this method is kept for backward compat
+        // Handled by ThemeManager
     }
 
     func applyTheme(_ value: String) {
@@ -76,8 +83,6 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Pure logic: determines whether the app should lock.
-    /// Static for unit-testability without an AppState instance.
     nonisolated static func shouldLock(
         biometricEnabled: Bool,
         lastBackgroundedAt: Date?,
@@ -87,7 +92,6 @@ final class AppState: ObservableObject {
         return Date().timeIntervalSince(backgroundedAt) > gracePeriod
     }
 
-    /// Called when the app comes to foreground. Locks if grace period elapsed.
     func lockIfNeeded() {
         guard !isBiometricLocked else { return }
         if Self.shouldLock(biometricEnabled: biometricEnabled, lastBackgroundedAt: lastBackgroundedAt) {
@@ -95,35 +99,54 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Attempts biometric authentication. Sets `isBiometricLocked = false` on success,
-    /// sets `biometricAuthFailed = true` on failure so the UI can show "Try Again".
     func unlockWithBiometrics() async {
         biometricAuthFailed = false
         do {
             try await BiometricHelper.authenticate()
             lastBackgroundedAt = nil
             isBiometricLocked = false
+
+            if !isEncryptionUnlocked {
+                try await unlockEncryptionFromKeychain()
+            }
         } catch {
             biometricAuthFailed = true
         }
     }
 
+    // MARK: - Encryption unlock from Keychain (biometric-protected)
+
+    func unlockEncryptionFromKeychain() async throws {
+        let dek = try KeyManager.loadDEK()
+        decryptionService.setDEK(dek)
+
+        let dekBase64 = try decryptionService.dekBase64()
+        try await apiClient.request(.unlock, body: UnlockRequest(dek: dekBase64))
+        isEncryptionUnlocked = true
+    }
+
+    // MARK: - Init
+
     init() {
         let tm = TokenManager()
+        let client = APIClient(tokenManager: tm)
+        let ds = DecryptionService()
+
         self.tokenManager = tm
-        self.apiClient = APIClient(tokenManager: tm)
-        self.periodRepository = PeriodRepository(apiClient: apiClient)
-        self.overlayRepository = OverlayRepository(apiClient: apiClient)
+        self.apiClient = client
+        self.periodRepository = PeriodRepository(apiClient: client)
+        self.overlayRepository = OverlayRepository(apiClient: client)
         self.notificationScheduler = NotificationScheduler()
+        self.decryptionService = ds
+        self.dataStore = EncryptedDataStore(apiClient: client, decryptionService: ds)
         self.isAuthenticated = tm.isAuthenticated
         loadTheme()
         WatchSessionManager.shared.activate()
     }
 
-    /// Called on app launch to validate existing tokens
     func checkAuth() async {
         let token = tokenManager.getAccessToken()
-        
+
         guard token != nil else {
             isLoading = false
             return
@@ -133,16 +156,27 @@ final class AppState: ObservableObject {
             let user: User = try await apiClient.request(.me)
             currentUser = user
             isAuthenticated = true
-            if biometricEnabled {
+
+            if KeyManager.hasDEKStored() {
+                do {
+                    try await unlockEncryptionFromKeychain()
+                } catch KeyManagerError.biometricRequired {
+                    isBiometricLocked = true
+                } catch {
+                    // DEK stored but can't unlock — will need password re-entry
+                }
+            }
+
+            if biometricEnabled && !isEncryptionUnlocked {
                 isBiometricLocked = true
             }
+
             await loadUserCurrency()
             await checkOnboardingStatus()
             await scheduleNotifications()
-            // Sync auth token to Apple Watch and widgets
+
             if let token = tokenManager.getAccessToken() {
                 WatchSessionManager.shared.sendAuthToken(token, currencyCode: currencyCode)
-                WidgetTokenStore.syncFromApp(token: token, currencyCode: currencyCode)
             }
         } catch {
             tokenManager.clearTokens()
@@ -152,6 +186,7 @@ final class AppState: ObservableObject {
         isLoading = false
         loadTheme()
     }
+
     func checkOnboardingStatus() async {
         struct OnboardingStatus: Codable {
             let status: String
@@ -160,19 +195,16 @@ final class AppState: ObservableObject {
             let response: OnboardingStatus = try await apiClient.request(.onboardingStatus)
             onboardingCompleted = response.status == "completed"
         } catch {
-            // If endpoint fails, assume completed (existing user)
             onboardingCompleted = true
         }
     }
 
     func scheduleNotifications() async {
         do {
-            async let periodsTask = periodRepository.fetchPeriods()
-            async let overlaysTask = overlayRepository.fetchOverlays()
-            let (periods, overlays) = try await (periodsTask, overlaysTask)
-            try await notificationScheduler.scheduleAll(periods: periods, overlays: overlays)
+            let periods = try await periodRepository.fetchPeriods()
+            try await notificationScheduler.scheduleAll(periods: periods, overlays: [])
         } catch {
-            // Notifications are best-effort; do not surface errors to user
+            // Notifications are best-effort
         }
     }
 
@@ -182,13 +214,7 @@ final class AppState: ObservableObject {
         }
         try await apiClient.request(.deleteUserAccount, body: DeleteAccountRequest(confirmation: confirmation))
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        tokenManager.clearTokens()
-        WidgetTokenStore.clearAndReload()
-        currentUser = nil
-        selectedPeriod = nil
-        isAuthenticated = false
-        isBiometricLocked = false
-        biometricAuthFailed = false
+        clearSession()
     }
 
     func logout() async {
@@ -198,13 +224,19 @@ final class AppState: ObservableObject {
             }
             try? await apiClient.request(.revokeToken, body: RevokeRequest(refreshToken: refreshToken))
         }
+        clearSession()
+    }
 
+    private func clearSession() {
         tokenManager.clearTokens()
+        KeyManager.deleteDEK()
+        decryptionService.clearDEK()
+        dataStore.clear()
         WatchSessionManager.shared.clearAuth()
-        WidgetTokenStore.clearAndReload()
         currentUser = nil
         selectedPeriod = nil
         isAuthenticated = false
+        isEncryptionUnlocked = false
         isBiometricLocked = false
         biometricAuthFailed = false
     }

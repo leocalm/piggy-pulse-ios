@@ -134,6 +134,28 @@ struct ChangePasswordSheet: View {
                 .changePassword,
                 body: PasswordRequest(currentPassword: currentPassword, newPassword: newPassword)
             )
+
+            // Re-wrap DEK with new password
+            let dek = try appState.decryptionService.getDEK()
+            let salt = CryptoManager.generateRandomBytes(16)
+            let wrapNonce = CryptoManager.generateRandomBytes(12)
+            let params = DekWrapParams(
+                salt: salt.base64EncodedString(),
+                m: 65536, t: 3, p: 4,
+                wrapNonce: wrapNonce.base64EncodedString()
+            )
+            let kek = try KeyManager.deriveKEK(password: newPassword, params: params)
+            let wrapped = try KeyManager.wrapDEK(dek, with: kek, nonce: wrapNonce)
+
+            struct UpdateWrappedDekRequest: Encodable {
+                let wrappedDek: String
+                let dekWrapParams: DekWrapParams
+            }
+            try await appState.apiClient.request(
+                .updateWrappedDek,
+                body: UpdateWrappedDekRequest(wrappedDek: wrapped.base64EncodedString(), dekWrapParams: params)
+            )
+
             success = true
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         } catch let error as APIError {

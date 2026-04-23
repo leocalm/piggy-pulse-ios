@@ -170,9 +170,9 @@ struct BudgetPlanView: View {
                     }
                 }
                 .task(id: appState.selectedPeriod?.id) {
-                    viewModel.configure(apiClient: appState.apiClient)
-                    if let periodId = appState.selectedPeriod?.id {
-                        await viewModel.load(periodId: periodId)
+                    viewModel.configure(apiClient: appState.apiClient, dataStore: appState.dataStore)
+                    if let period = appState.selectedPeriod {
+                        await viewModel.load(periodId: period.id, period: period)
                     }
                 }
                 .navigationTitle(String(localized: "more.targets"))

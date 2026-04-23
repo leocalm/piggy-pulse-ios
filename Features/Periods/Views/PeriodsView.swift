@@ -83,7 +83,7 @@ struct PeriodsView: View {
             .background(Color.ppBackground)
             .refreshable { let vm = viewModel; await Task { @MainActor in await vm.load() }.value }
             .task {
-                viewModel.configure(apiClient: appState.apiClient)
+                viewModel.configure(apiClient: appState.apiClient, dataStore: appState.dataStore)
                 await viewModel.load()
             }
             .sheet(isPresented: $showCreateSheet, onDismiss: {

@@ -1,4 +1,5 @@
 import SwiftUI
+import CryptoKit
 internal import Combine
 
 @MainActor
@@ -22,6 +23,10 @@ final class AuthViewModel: ObservableObject {
     @Published var twoFactorToken = ""
     @Published var twoFactorCode = ""
     @Published var twoFactorUseRecovery = false
+
+    // Encryption unlock
+    @Published var needsEncryptionUnlock = false
+    @Published var encryptionUnlockError: String?
 
     // Shared
     @Published var isLoading = false
@@ -84,9 +89,12 @@ final class AuthViewModel: ObservableObject {
             let twoFactorToken: String?
         }
 
+        let trimmedEmail = email.trimmingCharacters(in: .whitespaces).lowercased()
+        let currentPassword = password
+
         let request = LoginRequest(
-            email: email.trimmingCharacters(in: .whitespaces).lowercased(),
-            password: password
+            email: trimmedEmail,
+            password: currentPassword
         )
 
         do {
@@ -97,9 +105,12 @@ final class AuthViewModel: ObservableObject {
             } else if let user = response.user, let token = response.token {
                 appState.tokenManager.setTokens(access: token, refresh: token)
                 appState.currentUser = user
+                try await performEncryptionUnlock(password: currentPassword)
                 appState.isAuthenticated = true
             }
         } catch let error as APIError {
+            errorMessage = error.errorDescription
+        } catch let error as KeyManagerError {
             errorMessage = error.errorDescription
         } catch {
             errorMessage = String(localized: "Something went wrong. Please try again.")
@@ -136,9 +147,12 @@ final class AuthViewModel: ObservableObject {
                 appState.tokenManager.setTokens(access: token, refresh: token)
             }
             appState.currentUser = response.user
+            try await performEncryptionUnlock(password: password)
             appState.isAuthenticated = true
             Task { await appState.loadUserCurrency() }
         } catch let error as APIError {
+            errorMessage = error.errorDescription
+        } catch let error as KeyManagerError {
             errorMessage = error.errorDescription
         } catch {
             errorMessage = String(localized: "Something went wrong. Please try again.")
@@ -154,48 +168,96 @@ final class AuthViewModel: ObservableObject {
         errorMessage = nil
         successMessage = nil
 
-        // Client-side validation
         guard registerPassword == registerConfirmPassword else {
             errorMessage = String(localized: "Passwords do not match.")
             isLoading = false
             return
         }
 
-        struct RegisterRequest: Encodable {
-            let name: String
-            let email: String
-            let password: String
-        }
-
-        // Reuse the same response shape as login — v2 register auto-authenticates
-        struct RegisterResponse: Decodable {
-            let requiresTwoFactor: Bool
-            let user: User?
-            let token: String?
-        }
-
-        let request = RegisterRequest(
-            name: registerName.trimmingCharacters(in: .whitespaces),
-            email: registerEmail.trimmingCharacters(in: .whitespaces).lowercased(),
-            password: registerPassword
-        )
-
         do {
+            let (dek, wrappedDekBase64, params) = try KeyManager.generateWrappedDEK(password: registerPassword)
+
+            struct RegisterRequest: Encodable {
+                let name: String
+                let email: String
+                let password: String
+                let wrappedDek: String
+                let dekWrapParams: DekWrapParams
+            }
+
+            struct RegisterResponse: Decodable {
+                let requiresTwoFactor: Bool
+                let user: User?
+                let token: String?
+            }
+
+            let request = RegisterRequest(
+                name: registerName.trimmingCharacters(in: .whitespaces),
+                email: registerEmail.trimmingCharacters(in: .whitespaces).lowercased(),
+                password: registerPassword,
+                wrappedDek: wrappedDekBase64,
+                dekWrapParams: params
+            )
+
             let response: RegisterResponse = try await appState.apiClient.request(.register, body: request)
             guard let token = response.token else {
                 errorMessage = String(localized: "auth.register.errorGeneric")
                 isLoading = false
                 return
             }
+
             appState.tokenManager.setTokens(access: token, refresh: token)
+
+            appState.decryptionService.setDEK(dek)
+            try KeyManager.storeDEK(dek)
+
+            let dekBase64 = dek.withUnsafeBytes { Data($0).base64EncodedString() }
+            try await appState.apiClient.request(.unlock, body: UnlockRequest(dek: dekBase64))
+
             await appState.checkAuth()
         } catch let error as APIError {
+            errorMessage = error.errorDescription
+        } catch let error as KeyManagerError {
             errorMessage = error.errorDescription
         } catch {
             errorMessage = String(localized: "Something went wrong. Please try again.")
         }
 
         isLoading = false
+    }
+
+    // MARK: - Encryption Unlock Flow
+
+    private func performEncryptionUnlock(password: String) async throws {
+        let response: WrappedDekResponse = try await appState.apiClient.request(.wrappedDek)
+
+        let dek: SymmetricKey
+
+        if let wrappedDekBase64 = response.wrappedDek, let params = response.dekWrapParams {
+            dek = try KeyManager.unwrapFromServer(
+                password: password,
+                wrappedDekBase64: wrappedDekBase64,
+                params: params
+            )
+        } else {
+            let (newDek, wrappedDekBase64, params) = try KeyManager.generateWrappedDEK(password: password)
+            dek = newDek
+
+            struct UpdateWrappedDekRequest: Encodable {
+                let wrappedDek: String
+                let dekWrapParams: DekWrapParams
+            }
+            try await appState.apiClient.request(
+                .updateWrappedDek,
+                body: UpdateWrappedDekRequest(wrappedDek: wrappedDekBase64, dekWrapParams: params)
+            )
+        }
+
+        appState.decryptionService.setDEK(dek)
+        try KeyManager.storeDEK(dek)
+
+        let dekBase64 = dek.withUnsafeBytes { Data($0).base64EncodedString() }
+        try await appState.apiClient.request(.unlock, body: UnlockRequest(dek: dekBase64))
     }
 
     // MARK: - Forgot Password
@@ -214,11 +276,9 @@ final class AuthViewModel: ObservableObject {
         )
 
         do {
-            // This always succeeds (server doesn't reveal if email exists)
             let _: ForgotPasswordResponse = try await appState.apiClient.request(.forgotPassword, body: request)
             forgotPasswordSent = true
         } catch {
-            // Even on error, show success to prevent email enumeration
             forgotPasswordSent = true
         }
 
@@ -242,6 +302,8 @@ final class AuthViewModel: ObservableObject {
         twoFactorToken = ""
         twoFactorCode = ""
         twoFactorUseRecovery = false
+        needsEncryptionUnlock = false
+        encryptionUnlockError = nil
         isLoading = false
     }
 }

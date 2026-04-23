@@ -175,11 +175,11 @@ struct VendorsView: View {
                 .background(Color.ppBackground)
                 .refreshable { await Task { @MainActor in await self.load() }.value }
                 .task(id: appState.selectedPeriod?.id) { await load() }
-                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load() } }) {
+                .sheet(isPresented: $showAddSheet, onDismiss: { Task { await load(force: true) } }) {
                     AddVendorSheet { }.environmentObject(appState)
                 }
                 .sheet(item: $editingVendor) { vendor in
-                    EditVendorSheet(vendor: vendor) { Task { await load() } }
+                    EditVendorSheet(vendor: vendor) { Task { await load(force: true) } }
                         .environmentObject(appState)
                 }
                 .confirmationDialog("Archive \"\(vendorToArchive?.name ?? "")\"?", isPresented: Binding(get: { vendorToArchive != nil }, set: { if !$0 { vendorToArchive = nil } }), titleVisibility: .visible) {
@@ -284,7 +284,7 @@ struct VendorsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.deleteVendor(vendor.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "vendors.delete.failed")
         }
@@ -294,7 +294,7 @@ struct VendorsView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         do {
             try await appState.apiClient.requestVoid(.archiveVendor(vendor.id))
-            await load()
+            await load(force: true)
         } catch {
             errorMessage = String(localized: "vendors.archive.failed")
         }
@@ -340,16 +340,32 @@ struct VendorsView: View {
         .overlay(RoundedRectangle(cornerRadius: PPRadius.md).stroke(Color.ppBorder, lineWidth: 1))
     }
 
-    private func load() async {
-        guard let periodId = appState.selectedPeriod?.id else { return }
+    private func load(force: Bool = false) async {
         isLoading = true
         errorMessage = nil
         do {
-            let response: PaginatedResponse<VendorListItem> = try await appState.apiClient.request(
-                .vendors,
-                queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)]
-            )
-            vendors = response.data
+            let store = appState.dataStore
+            if force { store.isLoaded = false }
+            if !store.isLoaded, let periodId = appState.selectedPeriod?.id {
+                try await store.loadAll(periodId: periodId)
+            }
+
+            // Compute transaction counts and total spend per vendor
+            var txCountByVendor: [UUID: Int64] = [:]
+            var spendByVendor: [UUID: Int64] = [:]
+            for tx in store.periodTransactions {
+                guard let vendor = tx.vendor else { continue }
+                txCountByVendor[vendor.id, default: 0] += 1
+                spendByVendor[vendor.id, default: 0] += abs(tx.amount)
+            }
+
+            vendors = store.vendors.map { v in
+                VendorListItem(
+                    id: v.id, name: v.name, description: v.description, status: v.status,
+                    numberOfTransactions: txCountByVendor[v.id] ?? 0,
+                    totalSpend: spendByVendor[v.id] ?? 0
+                )
+            }
         } catch {
             errorMessage = String(localized: "Failed to load vendors.")
         }

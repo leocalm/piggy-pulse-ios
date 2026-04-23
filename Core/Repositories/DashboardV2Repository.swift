@@ -1,70 +1,171 @@
 import Foundation
 
+@MainActor
 final class DashboardV2Repository {
-    private let apiClient: APIClient
+    private let dataStore: EncryptedDataStore
 
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
+    init(dataStore: EncryptedDataStore) {
+        self.dataStore = dataStore
     }
 
-    func fetchCurrentPeriod(periodId: UUID) async throws -> DashboardCurrentPeriod {
-        try await apiClient.request(.dashboardCurrentPeriod, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
-    }
+    func computeCurrentPeriod(period: BudgetPeriod) -> DashboardCurrentPeriod {
+        let spent = dataStore.totalSpent
+        let budgeted = dataStore.totalBudgeted
+        let incomeTarget = dataStore.targets
+            .filter { $0.type == "income" && !$0.isExcluded }
+            .reduce(Int64(0)) { $0 + Int64($1.budgetedValue) }
 
-    func fetchNetPosition(periodId: UUID) async throws -> DashboardNetPosition {
-        try await apiClient.request(.dashboardNetPosition, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
-    }
+        let daysInPeriod = max(period.length, 1)
+        let daysRemaining = period.remainingDays ?? 0
+        let elapsed = max(daysInPeriod - daysRemaining, 1)
+        let projectedSpend = (spent * Int64(daysInPeriod)) / Int64(elapsed)
 
-    func fetchCashFlow(periodId: UUID) async throws -> DashboardCashFlow {
-        try await apiClient.request(.dashboardCashFlow, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
-    }
-
-    func fetchSpendingTrend(periodId: UUID) async throws -> DashboardSpendingTrend {
-        try await apiClient.request(.dashboardSpendingTrend, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
-    }
-
-    func fetchTopVendors(periodId: UUID) async throws -> [TopVendorItem] {
-        try await apiClient.request(.dashboardTopVendors, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
-    }
-
-    func fetchFixedCategories(periodId: UUID) async throws -> DashboardFixedCategories {
-        try await apiClient.request(
-            .dashboardFixedCategories,
-            queryItems: [
-                URLQueryItem(name: "periodId", value: periodId.uuidString),
-                URLQueryItem(name: "responseFormat", value: "wrapped"),
-            ]
+        return DashboardCurrentPeriod(
+            spent: spent,
+            target: budgeted,
+            incomeTarget: incomeTarget,
+            daysRemaining: daysRemaining,
+            daysInPeriod: daysInPeriod,
+            projectedSpend: projectedSpend
         )
     }
 
-    func fetchVariableCategories(periodId: UUID) async throws -> DashboardVariableCategories {
-        // Uses categories overview endpoint (same as web) — no dedicated variable-categories endpoint
-        let overview: CategoriesOverviewResponse = try await apiClient.request(.categoriesOverview, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
-        let variable = overview.categories.filter { $0.type == "expense" && $0.status == "active" && ($0.budgeted ?? 0) > 0 }
-        let totalBudgeted = variable.reduce(Int64(0)) { $0 + ($1.budgeted ?? 0) }
-        let totalSpent = variable.reduce(Int64(0)) { $0 + $1.actual }
-        return DashboardVariableCategories(
-            totalBudgeted: totalBudgeted,
-            totalSpent: totalSpent,
-            categories: variable.map {
-                VariableCategoryItem(id: $0.id, name: $0.name, icon: $0.icon, budgeted: $0.budgeted ?? 0, spent: $0.actual)
+    func computeNetPosition() -> DashboardNetPosition {
+        let accounts = dataStore.accounts.filter { $0.status == "active" }
+        let liquid = accounts.filter { $0.type == "checking" || $0.type == "wallet" }
+            .reduce(Int64(0)) { $0 + $1.currentBalance }
+        let protected = accounts.filter { $0.type == "savings" }
+            .reduce(Int64(0)) { $0 + $1.currentBalance }
+        let debt = accounts.filter { $0.type == "creditcard" }
+            .reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
+        let total = dataStore.totalNetWorth
+        let income = dataStore.totalIncome
+        let spent = dataStore.totalSpent
+        let difference = income - spent
+
+        return DashboardNetPosition(
+            total: total,
+            differenceThisPeriod: difference,
+            numberOfAccounts: accounts.count,
+            liquidAmount: liquid,
+            protectedAmount: protected,
+            debtAmount: debt
+        )
+    }
+
+    func computeCashFlow() -> DashboardCashFlow {
+        DashboardCashFlow(
+            inflows: dataStore.totalIncome,
+            outflows: dataStore.totalSpent,
+            net: dataStore.totalIncome - dataStore.totalSpent
+        )
+    }
+
+    func computeTopVendors(limit: Int = 5) -> [TopVendorItem] {
+        dataStore.spendingByVendor()
+            .prefix(limit)
+            .map { TopVendorItem(vendorId: $0.vendorId, vendorName: $0.name, totalSpent: $0.spent, transactionCount: $0.count) }
+    }
+
+    func computeFixedCategories() -> DashboardFixedCategories {
+        let fixedTargets = dataStore.targets.filter { !$0.isExcluded }
+        let fixedCategoryIds = Set(
+            dataStore.categories
+                .filter { $0.behavior == "fixed" }
+                .map { $0.id }
+        )
+
+        var spentByCategory: [UUID: Int64] = [:]
+        for tx in dataStore.periodTransactions where dataStore.countsAsBudgetExpense(tx) {
+            if fixedCategoryIds.contains(tx.category.id) {
+                spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
             }
+        }
+
+        let categories = fixedTargets
+            .filter { fixedCategoryIds.contains($0.categoryId) }
+            .map { target in
+                let paid = spentByCategory[target.categoryId] ?? 0
+                let budgeted = Int64(target.budgetedValue)
+                let status: String
+                if paid >= budgeted { status = "paid" }
+                else if paid > 0 { status = "partial" }
+                else { status = "pending" }
+                return FixedCategoryItem(id: target.categoryId, name: target.name, budgeted: budgeted, paid: paid, status: status)
+            }
+
+        return DashboardFixedCategories(
+            totalBudgeted: categories.reduce(0) { $0 + $1.budgeted },
+            totalPaid: categories.reduce(0) { $0 + $1.paid },
+            categories: categories
         )
     }
 
-    func fetchSubscriptions(periodId: UUID) async throws -> DashboardSubscriptions {
-        try await apiClient.request(.dashboardSubscriptions, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
+    func computeVariableCategories() -> DashboardVariableCategories {
+        let variableCategoryIds = Set(
+            dataStore.categories
+                .filter { $0.behavior == "variable" && $0.status == "active" }
+                .map { $0.id }
+        )
+
+        var spentByCategory: [UUID: Int64] = [:]
+        for tx in dataStore.periodTransactions where dataStore.countsAsBudgetExpense(tx) {
+            if variableCategoryIds.contains(tx.category.id) {
+                spentByCategory[tx.category.id, default: 0] += abs(tx.amount)
+            }
+        }
+
+        let categories = dataStore.targets
+            .filter { variableCategoryIds.contains($0.categoryId) && !$0.isExcluded }
+            .map { target in
+                let cat = dataStore.categories.first { $0.id == target.categoryId }
+                return VariableCategoryItem(
+                    id: target.categoryId,
+                    name: target.name,
+                    icon: cat?.icon ?? "📁",
+                    budgeted: Int64(target.budgetedValue),
+                    spent: spentByCategory[target.categoryId] ?? 0
+                )
+            }
+
+        return DashboardVariableCategories(
+            totalBudgeted: categories.reduce(0) { $0 + $1.budgeted },
+            totalSpent: categories.reduce(0) { $0 + $1.spent },
+            categories: categories
+        )
     }
 
-    func fetchBudgetStability(periodId: UUID) async throws -> DashboardBudgetStabilityV2 {
-        try await apiClient.request(.dashboardBudgetStability, queryItems: [URLQueryItem(name: "periodId", value: periodId.uuidString)])
+    func computeSubscriptions() -> DashboardSubscriptions {
+        let active = dataStore.subscriptions.filter { $0.status == .active }
+        let monthlyTotal = dataStore.monthlySubscriptionTotal
+        let yearlyTotal = monthlyTotal * 12
+
+        let items = active
+            .sorted { $0.nextChargeDate < $1.nextChargeDate }
+            .map { sub in
+                SubscriptionDashboardItem(
+                    id: sub.id,
+                    name: sub.name,
+                    billingAmount: sub.billingAmount,
+                    billingCycle: sub.billingCycle.rawValue,
+                    nextChargeDate: sub.nextChargeDate,
+                    displayStatus: "upcoming"
+                )
+            }
+
+        return DashboardSubscriptions(
+            activeCount: active.count,
+            monthlyTotal: monthlyTotal,
+            yearlyTotal: yearlyTotal,
+            subscriptions: items
+        )
     }
 
-    func fetchRecentTransactions(periodId: UUID, limit: Int = 5) async throws -> [Transaction] {
-        let result: CursorPaginatedTransactions = try await apiClient.request(.dashboardRecentTransactions, queryItems: [
-            URLQueryItem(name: "periodId", value: periodId.uuidString),
-            URLQueryItem(name: "limit", value: String(limit))
-        ])
-        return result.data
+    func computeRecentTransactions(limit: Int = 5) -> [Transaction] {
+        Array(
+            dataStore.periodTransactions
+                .sorted { $0.date > $1.date }
+                .prefix(limit)
+        )
     }
 }

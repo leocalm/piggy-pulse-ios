@@ -9,16 +9,16 @@ struct AddAccountSheet: View {
     @State private var name = ""
     @State private var spendLimitText = ""
     @State private var color = "#007AFF"
-    @State private var accountType = "Checking"
+    @State private var accountType = "checking"
     @State private var balanceText = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
 
     var onCreated: () -> Void
 
-    private let accountTypes = ["Checking", "Savings", "CreditCard", "Wallet", "Allowance"]
+    private let accountTypes = ["checking", "savings", "creditcard", "wallet", "allowance"]
     private var typeLabels: [String: String] {
-        ["Checking": String(localized: "Checking"), "Savings": String(localized: "Savings"), "CreditCard": String(localized: "Credit Card"), "Wallet": String(localized: "Wallet"), "Allowance": String(localized: "Allowance")]
+        ["checking": String(localized: "Checking"), "savings": String(localized: "Savings"), "creditcard": String(localized: "Credit Card"), "wallet": String(localized: "Wallet"), "allowance": String(localized: "Allowance")]
     }
     private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
@@ -41,17 +41,17 @@ struct AddAccountSheet: View {
     
     private var defaultIcon: String {
         switch accountType {
-        case "Checking": return "🏦"
-        case "Savings": return "💰"
-        case "CreditCard": return "💳"
-        case "Wallet": return "👛"
-        case "Allowance": return "🎯"
+        case "checking": return "🏦"
+        case "savings": return "💰"
+        case "creditcard": return "💳"
+        case "wallet": return "👛"
+        case "allowance": return "🎯"
         default: return "🏦"
         }
     }
 
     private var showSpendLimit: Bool {
-        accountType == "CreditCard" || accountType == "Allowance"
+        accountType == "creditcard" || accountType == "allowance"
     }
 
     var body: some View {
@@ -199,10 +199,15 @@ struct AddAccountSheet: View {
         
         struct Req: Encodable {
             let name: String; let color: String
-            let type: String; let initialBalance: Int64; let spendLimit: Int32?
-            let currencyId: String?
+            let accountType: String; let initialBalance: Int64; let spendLimit: Int32?
+            let currencyId: UUID
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, type: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: nil)
+        guard let cId = appState.currencyId else {
+            errorMessage = String(localized: "No currency configured. Please set a currency in Settings first.")
+            isLoading = false
+            return
+        }
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: balanceInCents, spendLimit: spendLimit, currencyId: cId)
         do {
             try await appState.apiClient.request(.createAccount, body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
