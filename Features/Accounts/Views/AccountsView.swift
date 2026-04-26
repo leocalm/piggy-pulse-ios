@@ -396,18 +396,37 @@ struct AccountsView: View {
                 try await store.loadAll(periodId: periodId)
             }
 
-            // Compute transaction counts per account
+            // Compute transaction counts per account.
+            // Credit cards require inverted signs: expenses increase the balance
+            // (more owed) and income decreases it (payment/refund). Transfers
+            // to/from credit cards are also inverted so that paying off a card
+            // reduces the balance.
             var txCountByAccount: [UUID: Int64] = [:]
             var netChangeByAccount: [UUID: Int64] = [:]
+            let accountTypeById: [UUID: String] = Dictionary(uniqueKeysWithValues: store.accounts.map { ($0.id, $0.type) })
             for tx in store.periodTransactions {
                 txCountByAccount[tx.fromAccount.id, default: 0] += 1
-                netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+                let fromIsCredit = accountTypeById[tx.fromAccount.id] == "creditcard"
+                if fromIsCredit {
+                    netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount)
+                } else {
+                    netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+                }
                 if let toAccount = tx.toAccount {
                     txCountByAccount[toAccount.id, default: 0] += 1
-                    netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+                    let toIsCredit = accountTypeById[toAccount.id] == "creditcard"
+                    if toIsCredit {
+                        netChangeByAccount[toAccount.id, default: 0] -= abs(tx.amount)
+                    } else {
+                        netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+                    }
                 }
                 if tx.category.type == "income" {
-                    netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2
+                    if fromIsCredit {
+                        netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount) * 2
+                    } else {
+                        netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2
+                    }
                 }
             }
 
@@ -423,7 +442,7 @@ struct AccountsView: View {
 
             let active = accounts.filter { $0.status == "active" }
             let assets = active.filter { $0.type != "creditcard" }.reduce(Int64(0)) { $0 + max(0, $1.currentBalance) }
-            let liabilities = active.filter { $0.type == "creditcard" }.reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
+            let liabilities = active.filter { $0.type == "creditcard" }.reduce(Int64(0)) { $0 + $1.currentBalance }
             summary = AccountsSummary(totalNetWorth: assets - liabilities, totalAssets: assets, totalLiabilities: liabilities)
         } catch {
             errorMessage = String(localized: "Failed to load accounts.")

@@ -81,7 +81,7 @@ struct PeriodsView: View {
                 .padding(PPSpacing.lg)
             }
             .background(Color.ppBackground)
-            .refreshable { let vm = viewModel; await Task { @MainActor in await vm.load() }.value }
+            .refreshable { await viewModel.load() }
             .task {
                 viewModel.configure(apiClient: appState.apiClient, dataStore: appState.dataStore)
                 await viewModel.load()
@@ -220,12 +220,10 @@ struct PeriodsView: View {
                 }
                 .buttonStyle(.plain)
                 .contextMenu {
-                    if period.periodStatus != .active {
-                        Button(role: .destructive) {
-                            periodToDelete = period
-                        } label: {
-                            Label(String(localized: "common.delete"), systemImage: "trash")
-                        }
+                    Button(role: .destructive) {
+                        periodToDelete = period
+                    } label: {
+                        Label(String(localized: "common.delete"), systemImage: "trash")
                     }
                 }
             }

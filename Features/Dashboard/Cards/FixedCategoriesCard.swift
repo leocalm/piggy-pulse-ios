@@ -8,22 +8,25 @@ struct FixedCategoriesCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             HStack {
-                Text(String(localized: "widget.fixedCategories.name").uppercased())
+                Text(String(localized: "widget.fixedSpending.name").uppercased())
                     .font(.ppOverline)
                     .foregroundColor(.ppTextSecondary)
                     .tracking(1)
                 Spacer()
-                Text("\(formatCurrency(data.totalPaid, code: currencyCode)) / \(formatCurrency(data.totalBudgeted, code: currencyCode))")
+                let totalBudgeted = data.totalBudgeted + data.allowanceTotalBudgeted
+                let totalPaid = data.totalPaid + data.allowanceTotalPaid
+                Text("\(formatCurrency(totalPaid, code: currencyCode)) / \(formatCurrency(totalBudgeted, code: currencyCode))")
                     .font(.ppCaption)
                     .fontDesign(.monospaced)
                     .foregroundColor(.ppTextTertiary)
             }
 
-            if data.categories.isEmpty {
-                Text(String(localized: "widget.fixedCategories.empty"))
+            if data.categories.isEmpty && data.allowances.isEmpty {
+                Text(String(localized: "widget.fixedSpending.empty"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextTertiary)
             } else {
+                // Fixed category items
                 ForEach(data.categories, id: \.id) { cat in
                     HStack {
                         Image(systemName: statusIcon(cat.status))
@@ -41,6 +44,38 @@ struct FixedCategoriesCard: View {
                             .font(.ppCaption)
                             .fontDesign(.monospaced)
                             .foregroundColor(.ppTextSecondary)
+                    }
+                }
+
+                // Allowance envelope items
+                if !data.allowances.isEmpty {
+                    if !data.categories.isEmpty {
+                        Divider()
+                            .overlay(Color.ppBorder)
+                    }
+
+                    ForEach(data.allowances, id: \.id) { allowance in
+                        HStack {
+                            Image(systemName: statusIcon(allowance.status))
+                                .font(.system(size: 14))
+                                .foregroundColor(statusColor(allowance.status))
+
+                            Text(allowance.name)
+                                .font(.ppCallout)
+                                .foregroundColor(.ppTextPrimary)
+                                .lineLimit(1)
+
+                            Text(String(localized: "widget.fixedSpending.allowance"))
+                                .font(.ppCaption)
+                                .foregroundColor(.ppTextTertiary)
+
+                            Spacer()
+
+                            Text(formatCurrency(allowance.paid, code: currencyCode))
+                                .font(.ppCaption)
+                                .fontDesign(.monospaced)
+                                .foregroundColor(.ppTextSecondary)
+                        }
                     }
                 }
             }

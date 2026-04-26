@@ -60,18 +60,36 @@ final class DashboardV2ViewModel: ObservableObject {
         fixedCategories = repository.computeFixedCategories()
         subscriptions = repository.computeSubscriptions()
         recentTransactions = repository.computeRecentTransactions()
-        // Enrich accounts with transaction counts and net change from period data
+        // Enrich accounts with transaction counts and net change from period data.
+        // Credit cards require inverted signs: expenses increase the balance
+        // (more owed) and income decreases it (payment/refund). Transfers
+        // to/from credit cards are also inverted.
         var txCountByAccount: [UUID: Int64] = [:]
         var netChangeByAccount: [UUID: Int64] = [:]
+        let accountTypeById: [UUID: String] = Dictionary(uniqueKeysWithValues: dataStore.accounts.map { ($0.id, $0.type) })
         for tx in dataStore.periodTransactions {
             txCountByAccount[tx.fromAccount.id, default: 0] += 1
-            netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+            let fromIsCredit = accountTypeById[tx.fromAccount.id] == "creditcard"
+            if fromIsCredit {
+                netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount)
+            } else {
+                netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount)
+            }
             if let toAccount = tx.toAccount {
                 txCountByAccount[toAccount.id, default: 0] += 1
-                netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+                let toIsCredit = accountTypeById[toAccount.id] == "creditcard"
+                if toIsCredit {
+                    netChangeByAccount[toAccount.id, default: 0] -= abs(tx.amount)
+                } else {
+                    netChangeByAccount[toAccount.id, default: 0] += abs(tx.amount)
+                }
             }
             if tx.category.type == "income" {
-                netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2 // undo the subtract above, add the income
+                if fromIsCredit {
+                    netChangeByAccount[tx.fromAccount.id, default: 0] -= abs(tx.amount) * 2
+                } else {
+                    netChangeByAccount[tx.fromAccount.id, default: 0] += abs(tx.amount) * 2
+                }
             }
         }
         accounts = dataStore.accounts.filter { $0.status == "active" }.map { acct in

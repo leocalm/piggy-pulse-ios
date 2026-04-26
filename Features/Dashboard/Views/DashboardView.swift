@@ -132,7 +132,7 @@ struct DashboardView: View {
             )
         case "fixed_categories":
             FixedCategoriesCard(
-                data: viewModel.fixedCategories ?? DashboardFixedCategories(totalBudgeted: 0, totalPaid: 0, categories: []),
+                data: viewModel.fixedCategories ?? DashboardFixedCategories(totalBudgeted: 0, totalPaid: 0, categories: [], allowances: [], allowanceTotalBudgeted: 0, allowanceTotalPaid: 0),
                 currencyCode: appState.currencyCode
             )
         case "subscriptions":
@@ -184,14 +184,14 @@ struct DashboardView: View {
 
             // Type-specific info rows
             if account.type == "allowance" {
+                let spentThisCycle = appState.dataStore.periodTransactions
+                    .filter { $0.fromAccount.id == account.id && $0.category.type == "expense" }
+                    .reduce(Int64(0)) { $0 + abs($1.amount) }
+
                 VStack(spacing: 0) {
                     infoRow(String(localized: "account.card.availableToSpend"), value: formatCurrency(max(account.currentBalance, 0), code: appState.currencyCode))
                     Divider().background(Color.ppBorder)
-                    infoRow(String(localized: "account.card.nextTopUp"), value: account.nextTransfer.map { formatDateString($0) } ?? "—")
-                    Divider().background(Color.ppBorder)
-                    infoRow(String(localized: "account.card.balanceAfterTopUp"), value: formatCurrency(account.balanceAfterNextTransfer ?? account.currentBalance, code: appState.currencyCode))
-                    Divider().background(Color.ppBorder)
-                    infoRow(String(localized: "account.card.spentThisCycle"), value: formatCurrency(abs(account.netChangeThisPeriod), code: appState.currencyCode))
+                    infoRow(String(localized: "account.card.spentThisCycle"), value: formatCurrency(spentThisCycle, code: appState.currencyCode))
                 }
                 .background(Color.ppElevated)
                 .clipShape(RoundedRectangle(cornerRadius: PPRadius.sm))

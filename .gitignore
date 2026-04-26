@@ -34,3 +34,7 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 deploy_to_phone.sh
 .superpowers/
+
+.letta/
+.nvmrc
+.opencode/

@@ -10,7 +10,9 @@ final class DashboardV2Repository {
 
     func computeCurrentPeriod(period: BudgetPeriod) -> DashboardCurrentPeriod {
         let spent = dataStore.totalSpent
-        let budgeted = dataStore.totalBudgeted
+        let categoryBudget = dataStore.totalBudgeted
+        let allowanceBudget = dataStore.totalAllowanceBudget
+        let target = categoryBudget + allowanceBudget
         let incomeTarget = dataStore.targets
             .filter { $0.type == "income" && !$0.isExcluded }
             .reduce(Int64(0)) { $0 + Int64($1.budgetedValue) }
@@ -22,7 +24,9 @@ final class DashboardV2Repository {
 
         return DashboardCurrentPeriod(
             spent: spent,
-            target: budgeted,
+            target: target,
+            categoryBudget: categoryBudget,
+            allowanceBudget: allowanceBudget,
             incomeTarget: incomeTarget,
             daysRemaining: daysRemaining,
             daysInPeriod: daysInPeriod,
@@ -37,7 +41,7 @@ final class DashboardV2Repository {
         let protected = accounts.filter { $0.type == "savings" }
             .reduce(Int64(0)) { $0 + $1.currentBalance }
         let debt = accounts.filter { $0.type == "creditcard" }
-            .reduce(Int64(0)) { $0 + abs(min(0, $1.currentBalance)) }
+            .reduce(Int64(0)) { $0 + $1.currentBalance }
         let total = dataStore.totalNetWorth
         let income = dataStore.totalIncome
         let spent = dataStore.totalSpent
@@ -68,7 +72,7 @@ final class DashboardV2Repository {
     }
 
     func computeFixedCategories() -> DashboardFixedCategories {
-        let fixedTargets = dataStore.targets.filter { !$0.isExcluded }
+        let fixedTargets = dataStore.targets.filter { !$0.isExcluded && $0.type == "expense" }
         let fixedCategoryIds = Set(
             dataStore.categories
                 .filter { $0.behavior == "fixed" }
@@ -94,10 +98,38 @@ final class DashboardV2Repository {
                 return FixedCategoryItem(id: target.categoryId, name: target.name, budgeted: budgeted, paid: paid, status: status)
             }
 
+        // Allowance accounts (envelope budgeting)
+        let allowanceAccounts = dataStore.accounts.filter { $0.status == "active" && $0.type == "allowance" }
+        let allowanceIds = Set(allowanceAccounts.map { $0.id })
+
+        // Compute how much was transferred TO each allowance account this period
+        var transferredToAllowance: [UUID: Int64] = [:]
+        for tx in dataStore.periodTransactions {
+            if tx.category.type == "transfer",
+               let toId = tx.toAccount?.id,
+               allowanceIds.contains(toId) {
+                transferredToAllowance[toId, default: 0] += abs(tx.amount)
+            }
+        }
+
+        let allowances = allowanceAccounts.compactMap { acct -> AllowanceItem? in
+            guard let limit = acct.spendLimit, limit > 0 else { return nil }
+            let paid = transferredToAllowance[acct.id] ?? 0
+            let budgeted = Int64(limit)
+            let status: String
+            if paid >= budgeted { status = "paid" }
+            else if paid > 0 { status = "partial" }
+            else { status = "pending" }
+            return AllowanceItem(id: acct.id, name: acct.name, budgeted: budgeted, paid: paid, status: status)
+        }
+
         return DashboardFixedCategories(
             totalBudgeted: categories.reduce(0) { $0 + $1.budgeted },
             totalPaid: categories.reduce(0) { $0 + $1.paid },
-            categories: categories
+            categories: categories,
+            allowances: allowances,
+            allowanceTotalBudgeted: allowances.reduce(0) { $0 + $1.budgeted },
+            allowanceTotalPaid: allowances.reduce(0) { $0 + $1.paid }
         )
     }
 
@@ -116,7 +148,7 @@ final class DashboardV2Repository {
         }
 
         let categories = dataStore.targets
-            .filter { variableCategoryIds.contains($0.categoryId) && !$0.isExcluded }
+            .filter { variableCategoryIds.contains($0.categoryId) && !$0.isExcluded && $0.type == "expense" }
             .map { target in
                 let cat = dataStore.categories.first { $0.id == target.categoryId }
                 return VariableCategoryItem(

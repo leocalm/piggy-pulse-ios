@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0219877C2F9A4AAC00A4D719 /* Argon2Kit in Frameworks */ = {isa = PBXBuildFile; productRef = E1C0A00000000001AAAA0001 /* Argon2Kit */; };
 		027201B02F9142CA00A53A8E /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027201AF2F9142C700A53A8E /* AppConstants.swift */; };
 		027201B12F91437200A53A8E /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027201AF2F9142C700A53A8E /* AppConstants.swift */; };
 		027B346A2F5B21DA00E96DF6 /* PeriodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34692F5B21D300E96DF6 /* PeriodsView.swift */; };
@@ -35,6 +36,7 @@
 		027B34A72F5B647C00E96DF6 /* EditProfileSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */; };
 		027B34A92F5B67B800E96DF6 /* EditTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */; };
 		027B34AB2F5B699300E96DF6 /* EditAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AA2F5B699200E96DF6 /* EditAccountSheet.swift */; };
+		DB01514D0CAB460F9D8C6FA8 /* EditPeriodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */; };
 		027B34AD2F5B69A700E96DF6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */; };
 		027B34AD2F5B700000E96DF6 /* TransactionFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B700000E96DF6 /* TransactionFilterSheet.swift */; };
 		027B34AF2F5B69B600E96DF6 /* EditVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AE2F5B69B600E96DF6 /* EditVendorSheet.swift */; };
@@ -153,6 +155,11 @@
 		D5F42F028E63A5901C39662D /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */; };
 		DD2D49A2851C67CF68991EF2 /* CashFlowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2273D6A650B1C2CE0C6C2D0E /* CashFlowCard.swift */; };
 		E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */; };
+		E1F100020000000100000001 /* CryptoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000100000001 /* CryptoManager.swift */; };
+		E1F100020000000200000002 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000200000002 /* KeyManager.swift */; };
+		E1F100020000000300000003 /* EncryptedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000300000003 /* EncryptedModels.swift */; };
+		E1F100020000000400000004 /* DecryptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000400000004 /* DecryptionService.swift */; };
+		E1F100020000000500000005 /* EncryptedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000500000005 /* EncryptedDataStore.swift */; };
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
 		E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */; };
 		E9DFADC3D3A8F9181D5063B9 /* PiggyPulseWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */; };
@@ -162,11 +169,6 @@
 		FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */; };
 		FEA03AD1124CC45545E6885C /* RecentTransactionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4790C04DAFA9C73B120E7711 /* RecentTransactionsCard.swift */; };
 		O1AQ1O5V45H9PNJPTDFKF81P /* OverlayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */; };
-		E1F100020000000100000001 /* CryptoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000100000001 /* CryptoManager.swift */; };
-		E1F100020000000200000002 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000200000002 /* KeyManager.swift */; };
-		E1F100020000000300000003 /* EncryptedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000300000003 /* EncryptedModels.swift */; };
-		E1F100020000000400000004 /* DecryptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000400000004 /* DecryptionService.swift */; };
-		E1F100020000000500000005 /* EncryptedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000500000005 /* EncryptedDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +264,7 @@
 		027B34752F5B324000E96DF6 /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		027B34782F5B325500E96DF6 /* BudgetPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPlanView.swift; sourceTree = "<group>"; };
 		027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailView.swift; sourceTree = "<group>"; };
+		DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPeriodSheet.swift; sourceTree = "<group>"; };
 		027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSchedule.swift; sourceTree = "<group>"; };
 		027B347E2F5B466B00E96DF6 /* AutoCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCreationView.swift; sourceTree = "<group>"; };
 		027B34802F5B4A2900E96DF6 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -389,6 +392,11 @@
 		D3D51332D241F3AA3E677D80 /* WidgetAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetAPIClient.swift; sourceTree = "<group>"; };
 		DD4606778C5D507AC02A1B6D /* WidgetTokenStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetTokenStore.swift; sourceTree = "<group>"; };
 		DEC8F45593269B73F9767AA8 /* AppTips.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppTips.swift; sourceTree = "<group>"; };
+		E1F100010000000100000001 /* CryptoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoManager.swift; sourceTree = "<group>"; };
+		E1F100010000000200000002 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
+		E1F100010000000300000003 /* EncryptedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedModels.swift; sourceTree = "<group>"; };
+		E1F100010000000400000004 /* DecryptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptionService.swift; sourceTree = "<group>"; };
+		E1F100010000000500000005 /* EncryptedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedDataStore.swift; sourceTree = "<group>"; };
 		E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailView.swift; path = Features/Subscriptions/Views/SubscriptionDetailView.swift; sourceTree = "<group>"; };
 		E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardV2Models.swift; sourceTree = "<group>"; };
 		EE19A667CD5DB6C85DF57776 /* CurrentPeriodWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrentPeriodWidget.swift; sourceTree = "<group>"; };
@@ -399,11 +407,6 @@
 		FEAAC4950F7605762F10A451 /* PiggyPulseWatchWidgets-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PiggyPulseWatchWidgets-Info.plist"; sourceTree = "<group>"; };
 		FFEF4D0E1942DF267446A9BE /* WidgetCurrencyFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetCurrencyFormatter.swift; sourceTree = "<group>"; };
 		PHVUZVL6W2KWURT8UTDBC4PI /* OverlayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayRepository.swift; sourceTree = "<group>"; };
-		E1F100010000000100000001 /* CryptoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoManager.swift; sourceTree = "<group>"; };
-		E1F100010000000200000002 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
-		E1F100010000000300000003 /* EncryptedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedModels.swift; sourceTree = "<group>"; };
-		E1F100010000000400000004 /* DecryptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptionService.swift; sourceTree = "<group>"; };
-		E1F100010000000500000005 /* EncryptedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -419,6 +422,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0219877C2F9A4AAC00A4D719 /* Argon2Kit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +599,7 @@
 			children = (
 				027B347E2F5B466B00E96DF6 /* AutoCreationView.swift */,
 				027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */,
+				DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */,
 				027B346B2F5B237100E96DF6 /* CreatePeriodSheet.swift */,
 				027B34692F5B21D300E96DF6 /* PeriodsView.swift */,
 			);
@@ -1385,6 +1390,7 @@
 				02AB12352F5B320E00E96DF6 /* EditCategoryTargetSheet.swift in Sources */,
 				02F038C22F5984F1008DD1E7 /* ForgotPasswordView.swift in Sources */,
 				027B346C2F5B237400E96DF6 /* CreatePeriodSheet.swift in Sources */,
+				DB01514D0CAB460F9D8C6FA8 /* EditPeriodSheet.swift in Sources */,
 				027B347D2F5B463F00E96DF6 /* PeriodSchedule.swift in Sources */,
 				027B349F2F5B4FD900E96DF6 /* OverlaysView.swift in Sources */,
 				027B34C12F5C000000E96DF6 /* OverlayFormSheet.swift in Sources */,
@@ -1710,6 +1716,7 @@
 		020853B32F5898F9004E2FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				API_BASE_URL = "https://api.piggy-pulse.com/v2";
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1862,6 +1869,7 @@
 		02948E842F912E2C00694014 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				API_BASE_URL = "https://api.piggy-pulse.com/v2";
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
