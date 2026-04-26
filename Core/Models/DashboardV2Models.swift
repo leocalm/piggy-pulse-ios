@@ -5,6 +5,8 @@ import Foundation
 struct DashboardCurrentPeriod: Codable {
     let spent: Int64
     let target: Int64
+    let categoryBudget: Int64
+    let allowanceBudget: Int64
     let incomeTarget: Int64
     let daysRemaining: Int
     let daysInPeriod: Int
@@ -53,10 +55,21 @@ struct FixedCategoryItem: Codable, Identifiable {
     let status: String // "paid", "partial", "pending"
 }
 
+struct AllowanceItem: Codable, Identifiable {
+    let id: UUID
+    let name: String
+    let budgeted: Int64   // spend limit
+    let paid: Int64       // amount transferred this period
+    let status: String    // "paid", "partial", "pending"
+}
+
 struct DashboardFixedCategories: Codable {
     let totalBudgeted: Int64
     let totalPaid: Int64
     let categories: [FixedCategoryItem]
+    let allowances: [AllowanceItem]
+    let allowanceTotalBudgeted: Int64
+    let allowanceTotalPaid: Int64
 }
 
 struct VariableCategoryItem: Codable {

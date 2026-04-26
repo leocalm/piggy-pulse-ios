@@ -92,9 +92,13 @@ final class EncryptedDataStore: ObservableObject {
     }
 
     var totalNetWorth: Int64 {
-        accounts
-            .filter { $0.status == "active" }
-            .reduce(0) { $0 + $1.currentBalance }
+        let assets = accounts
+            .filter { $0.status == "active" && $0.type != "creditcard" }
+            .reduce(Int64(0)) { $0 + $1.currentBalance }
+        let debt = accounts
+            .filter { $0.status == "active" && $0.type == "creditcard" }
+            .reduce(Int64(0)) { $0 + $1.currentBalance }
+        return assets - debt
     }
 
     var totalAssets: Int64 {
@@ -106,7 +110,7 @@ final class EncryptedDataStore: ObservableObject {
     var totalLiabilities: Int64 {
         accounts
             .filter { $0.status == "active" && $0.type == "creditcard" }
-            .reduce(0) { $0 + abs(min(0, $1.currentBalance)) }
+            .reduce(0) { $0 + $1.currentBalance }
     }
 
     var totalSpent: Int64 {
@@ -123,8 +127,15 @@ final class EncryptedDataStore: ObservableObject {
 
     var totalBudgeted: Int64 {
         targets
-            .filter { !$0.isExcluded }
+            .filter { !$0.isExcluded && $0.type == "expense" }
             .reduce(0) { $0 + Int64($1.budgetedValue) }
+    }
+
+    /// Sum of spend limits on active allowance accounts (envelope budgeting).
+    var totalAllowanceBudget: Int64 {
+        accounts
+            .filter { $0.status == "active" && $0.type == "allowance" }
+            .reduce(Int64(0)) { $0 + Int64($1.spendLimit ?? 0) }
     }
 
     func spendingByCategory() -> [(categoryId: UUID, name: String, icon: String, color: String, spent: Int64)] {

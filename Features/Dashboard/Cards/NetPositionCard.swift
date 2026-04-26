@@ -101,10 +101,11 @@ struct NetPositionCard: View {
                     .foregroundColor(.ppTextTertiary)
                     .tracking(0.5)
             }
-            Text(formatCurrency(amount, code: currencyCode))
+            Text(formatCurrency(amount, code: currencyCode).replacingOccurrences(of: "\u{00a0}", with: " "))
                 .font(.ppCallout)
                 .fontDesign(.monospaced)
                 .foregroundColor(.ppTextPrimary)
+                .lineLimit(1)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PPSpacing.sm)

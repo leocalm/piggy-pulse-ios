@@ -8,7 +8,7 @@ struct VariableCategoriesCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: PPSpacing.lg) {
             HStack {
-                Text(String(localized: "widget.variableCategories.name").uppercased())
+                Text(String(localized: "widget.variableSpending.name").uppercased())
                     .font(.ppOverline)
                     .foregroundColor(.ppTextSecondary)
                     .tracking(1)
@@ -20,7 +20,7 @@ struct VariableCategoriesCard: View {
             }
 
             if data.categories.isEmpty {
-                Text(String(localized: "widget.variableCategories.empty"))
+                Text(String(localized: "widget.variableSpending.empty"))
                     .font(.ppCallout)
                     .foregroundColor(.ppTextTertiary)
             } else {

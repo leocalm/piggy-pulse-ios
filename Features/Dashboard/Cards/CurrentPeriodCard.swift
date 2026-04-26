@@ -17,9 +17,24 @@ struct CurrentPeriodCard: View {
                 .foregroundColor(.ppTextPrimary)
                 .accessibilityIdentifier("dashboard-spent-value")
 
-            Text(String(localized: "widget.currentPeriod.ofTarget \(formatCurrency(data.target, code: currencyCode))"))
-                .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary)
+            // Target breakdown: categories + allowances
+            if data.allowanceBudget > 0 {
+                VStack(alignment: .leading, spacing: PPSpacing.xs) {
+                    Text(String(localized: "widget.currentPeriod.ofTarget \(formatCurrency(data.target, code: currencyCode))"))
+                        .font(.ppCallout)
+                        .foregroundColor(.ppTextSecondary)
+                    Text(String(localized: "widget.currentPeriod.categoryBudget \(formatCurrency(data.categoryBudget, code: currencyCode))"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextTertiary)
+                    Text(String(localized: "widget.currentPeriod.allowanceBudget \(formatCurrency(data.allowanceBudget, code: currencyCode))"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextTertiary)
+                }
+            } else {
+                Text(String(localized: "widget.currentPeriod.ofTarget \(formatCurrency(data.target, code: currencyCode))"))
+                    .font(.ppCallout)
+                    .foregroundColor(.ppTextSecondary)
+            }
 
             Text(String(localized: "widget.currentPeriod.remaining \(data.daysRemaining)"))
                 .font(.ppCallout)

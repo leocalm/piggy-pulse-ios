@@ -210,6 +210,8 @@ struct BudgetPlanView: View {
         let incomeTargets = withTarget.filter { $0.type == "income" }
         let expenseBudget = expenseTargets.reduce(Int64(0)) { $0 + Int64($1.currentTarget ?? 0) }
         let incomeTarget = incomeTargets.reduce(Int64(0)) { $0 + Int64($1.currentTarget ?? 0) }
+        let allowanceBudget = (appState.dataStore.totalAllowanceBudget)
+        let totalBudget = expenseBudget + allowanceBudget
         let totalCategories = withTarget.count + noTarget.count + excluded.count
         let withTargetCount = withTarget.count
 
@@ -222,13 +224,13 @@ struct BudgetPlanView: View {
 
             HStack(spacing: 0) {
                 VStack(spacing: 4) {
-                    Text(formatCurrency(expenseBudget, code: appState.currencyCode))
+                    Text(formatCurrency(totalBudget, code: appState.currencyCode))
                         .font(.ppCallout)
                         .fontWeight(.semibold)
                         .foregroundColor(.ppTextPrimary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                    Text(String(localized: "budget.stats.expenseBudget"))
+                    Text(String(localized: "budget.stats.totalBudget"))
                         .font(.ppCaption)
                         .foregroundColor(.ppTextSecondary)
                 }
@@ -255,6 +257,23 @@ struct BudgetPlanView: View {
                         .foregroundColor(.ppTextSecondary)
                 }
                 .frame(maxWidth: .infinity)
+            }
+
+            // Allowance breakdown
+            if allowanceBudget > 0 {
+                HStack(spacing: PPSpacing.xs) {
+                    Image(systemName: "envelope")
+                        .font(.system(size: 12))
+                        .foregroundColor(.ppTextTertiary)
+                    Text(String(localized: "budget.stats.allowanceEnvelopes"))
+                        .font(.ppCaption)
+                        .foregroundColor(.ppTextTertiary)
+                    Spacer()
+                    Text(formatCurrency(allowanceBudget, code: appState.currencyCode))
+                        .font(.ppCaption)
+                        .fontDesign(.monospaced)
+                        .foregroundColor(.ppTextTertiary)
+                }
             }
         }
         .padding(PPSpacing.md)

@@ -85,7 +85,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@ · %2$@"
           }
         }
@@ -95,7 +95,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@ · %2$@ %3$@"
           }
         }
@@ -105,7 +105,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@ / %2$@"
           }
         }
@@ -115,7 +115,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@ %2$@"
           }
         },
@@ -132,7 +132,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@ %2$@ — %3$@"
           }
         },
@@ -158,7 +158,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@, step %2$lld of %3$lld%4$@"
           }
         },
@@ -174,7 +174,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@: %2$@"
           }
         }
@@ -184,7 +184,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@%2$@"
           }
         },
@@ -200,7 +200,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@%2$@ %3$@"
           }
         }
@@ -211,7 +211,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@%2$@ this period"
           }
         },
@@ -237,7 +237,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$lld %2$@"
           }
         }
@@ -268,7 +268,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$lld days remaining. %2$@ remaining in this period."
           }
         },
@@ -303,7 +303,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$lld of %2$lld periods within range"
           }
         },
@@ -320,7 +320,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$lld of the last %2$lld closed periods were outside tolerance."
           }
         },
@@ -367,7 +367,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$lld/%2$lld"
           }
         }
@@ -2752,7 +2752,24 @@
         }
       }
     },
+    "budget.stats.allowanceEnvelopes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allowance envelopes"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envelopes de Allowance"
+          }
+        }
+      }
+    },
     "budget.stats.expenseBudget" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2780,6 +2797,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meta Receita"
+          }
+        }
+      }
+    },
+    "budget.stats.totalBudget" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Budget"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orcamento Total"
           }
         }
       }
@@ -8035,7 +8068,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "Liquid %1$@ · Protected %2$@ · Debt %3$@"
           }
         },
@@ -15686,6 +15719,38 @@
         }
       }
     },
+    "widget.currentPeriod.allowanceBudget %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envelopes: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envelopes: %@"
+          }
+        }
+      }
+    },
+    "widget.currentPeriod.categoryBudget %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorias: %@"
+          }
+        }
+      }
+    },
     "widget.currentPeriod.desc" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -15785,6 +15850,7 @@
       }
     },
     "widget.fixedCategories.empty" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -15801,6 +15867,7 @@
       }
     },
     "widget.fixedCategories.name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -15812,6 +15879,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Categorias Fixas"
+          }
+        }
+      }
+    },
+    "widget.fixedSpending.allowance" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "envelope"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "envelope"
+          }
+        }
+      }
+    },
+    "widget.fixedSpending.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No fixed spending configured."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum gasto fixo configurado."
+          }
+        }
+      }
+    },
+    "widget.fixedSpending.name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fixed Spending"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos Fixos"
           }
         }
       }
@@ -16241,6 +16356,7 @@
       }
     },
     "widget.variableCategories.empty" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -16257,6 +16373,7 @@
       }
     },
     "widget.variableCategories.name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -16268,6 +16385,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Categorias Variáveis"
+          }
+        }
+      }
+    },
+    "widget.variableSpending.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No variable spending configured."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum gasto variavel configurado."
+          }
+        }
+      }
+    },
+    "widget.variableSpending.name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variable Spending"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos Variaveis"
           }
         }
       }

@@ -2,8 +2,10 @@ import SwiftUI
 
 struct PeriodDetailView: View {
     let period: BudgetPeriod
+    @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.themeManager) private var theme
+    @State private var showEditSheet = false
 
     var body: some View {
         ScrollView {
@@ -91,6 +93,19 @@ struct PeriodDetailView: View {
         }
         .background(Color.ppBackground)
         .navigationTitle(period.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showEditSheet = true
+                } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+        }
+        .sheet(isPresented: $showEditSheet, onDismiss: nil) {
+            EditPeriodSheet(period: period)
+                .environmentObject(appState)
+        }
     }
 
     // MARK: - Status Badge
