@@ -26,6 +26,7 @@ struct SettingsView: View {
     @State private var biometricUnavailableReason = ""
     @State private var biometricLabel = "Biometrics"
     @State private var showDeleteAccount = false
+    @State private var showFeedback = false
 
     var body: some View {
         ScrollView {
@@ -58,6 +59,9 @@ struct SettingsView: View {
                         // App info
                         appInfoCard
 
+                        // Feedback
+                        feedbackCard
+
                         // Danger zone
                         dangerZoneCard
                     }
@@ -71,6 +75,10 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showDeleteAccount) {
                 DeleteAccountSheet()
+                    .environmentObject(appState)
+            }
+            .sheet(isPresented: $showFeedback) {
+                FeedbackSheet()
                     .environmentObject(appState)
             }
             .sheet(isPresented: $showEditProfile, onDismiss: { Task { await load() } }) {
@@ -473,6 +481,41 @@ struct SettingsView: View {
         let symbol = fmt.currencySymbol ?? code
         let name = Locale.current.localizedString(forCurrencyCode: code) ?? code
         return "\(symbol) \(name)"
+    }
+
+    // MARK: - Feedback
+
+    private var feedbackCard: some View {
+        VStack(alignment: .leading, spacing: PPSpacing.lg) {
+            Text(String(localized: "section.feedback"))
+                .font(.ppOverline)
+                .foregroundColor(.ppTextSecondary)
+                .tracking(1)
+
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                showFeedback = true
+            } label: {
+                HStack {
+                    Label(String(localized: "button.sendFeedback"), systemImage: "paperplane")
+                        .font(.ppBody)
+                        .foregroundColor(themeManager.primary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.ppTextTertiary)
+                }
+            }
+
+            Text(String(localized: "settings.feedbackDesc"))
+                .font(.ppCaption)
+                .foregroundColor(.ppTextSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(PPSpacing.xl)
+        .background(Color.ppCard)
+        .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
+        .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
     }
 
     // MARK: - Danger Zone

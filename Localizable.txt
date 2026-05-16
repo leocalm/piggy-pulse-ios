@@ -942,7 +942,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "%lld transactions"
+            "value": "%lld opérations"
           }
         }
       }
@@ -1312,7 +1312,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verfügbar %@, Rücklagen %@, Schulden %@"
+            "value": "Liquide %@, Geschützt %@, Schulden %@"
           }
         },
         "fr-FR": {
@@ -1622,13 +1622,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zum Ausgeben verfügbar"
+            "value": "Verfügbar zum Ausgeben"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Disponible"
+            "value": "Disponible à dépenser"
           }
         }
       }
@@ -1817,7 +1817,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dépensé sur cette période"
+            "value": "Dépensé ce cycle"
           }
         }
       }
@@ -1863,7 +1863,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Transactions"
+            "value": "Opérations"
           }
         }
       }
@@ -2191,13 +2191,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wo liegt dein Geld? Konten bilden deine echten Konten ab, sind aber nicht mit deiner Bank verbunden."
+            "value": "Wo liegt dein Geld? Konten stehen für deine echten Konten und sind nicht mit deiner Bank verbunden."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Où se trouve votre argent ? Les comptes correspondent à vos vrais comptes, sans connexion à votre banque."
+            "value": "Où se trouve votre argent ? Les comptes représentent vos comptes réels et ne sont pas connectés à votre banque."
           }
         }
       }
@@ -2237,13 +2237,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Füge so viele hinzu, wie du möchtest — oder überspringe diesen Schritt und ergänze sie später."
+            "value": "Füge so viele hinzu, wie du möchtest — oder überspringe und ergänze sie später."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajoutez-en autant que nécessaire, ou passez cette étape et ajoutez-les plus tard."
+            "value": "Ajoutez-en autant que vous le souhaitez — ou passez et ajoutez-les plus tard."
           }
         }
       }
@@ -2375,7 +2375,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wähle den Kontotyp und gib einen Namen sowie den Anfangssaldo ein."
+            "value": "Wähle den Kontotyp und gib einen Namen und das Startsaldo ein."
           }
         },
         "fr-FR": {
@@ -2473,7 +2473,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisissez votre solde réel pour que l’app reflète votre véritable situation financière."
+            "value": "Saisissez votre solde réel pour que l’app corresponde à vos finances réelles."
           }
         }
       }
@@ -2565,7 +2565,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lors de chaque transaction, indiquez de quel compte provient l’argent ou vers lequel il est versé."
+            "value": "Lors de l’enregistrement d’une opération, indiquez de quel compte provient ou vers quel compte va l’argent."
           }
         }
       }
@@ -2611,7 +2611,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les utiliser dans vos transactions"
+            "value": "Utiliser dans les opérations"
           }
         }
       }
@@ -2657,7 +2657,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous pouvez ajouter des comptes courants, des comptes d’épargne, des cartes de crédit, des portefeuilles ou des enveloppes dédiées."
+            "value": "Vous pouvez ajouter des comptes courants, d’épargne, de carte de crédit, des portefeuilles ou des comptes d’allocation."
           }
         }
       }
@@ -2703,7 +2703,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définissez votre solde actuel à la création d’un compte — il se met à jour à mesure que vous ajoutez des transactions."
+            "value": "Définissez votre solde actuel à la création d’un compte — il se met à jour à mesure que vous ajoutez des opérations."
           }
         }
       }
@@ -2835,7 +2835,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verfügbar"
+            "value": "Liquide"
           }
         },
         "fr-FR": {
@@ -2881,7 +2881,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "NETTOPOSITION"
+            "value": "NETTOVERMÖGEN"
           }
         },
         "fr-FR": {
@@ -2927,7 +2927,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rücklagen"
+            "value": "Geschützt"
           }
         },
         "fr-FR": {
@@ -3137,7 +3137,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "AJUSTEMENTS TEMPORAIRES ACTIFS"
+            "value": "SURCOUCHES ACTIVES"
           }
         }
       }
@@ -3321,7 +3321,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enveloppe"
+            "value": "Allocation"
           }
         }
       }
@@ -3641,12 +3641,6 @@
             "state": "translated",
             "value": "Tem certeza?"
           }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voulez-vous continuer ?"
-          }
         }
       }
     },
@@ -3766,7 +3760,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Consultez vos e-mails"
+            "value": "Vérifiez vos e-mails"
           }
         }
       }
@@ -3812,7 +3806,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Si un compte existe pour cette adresse, un lien de réinitialisation vous a été envoyé. Consultez votre boîte de réception et vos courriers indésirables."
+            "value": "Si un compte existe pour cette adresse, nous avons envoyé un lien de réinitialisation. Consultez votre boîte de réception et le dossier des spams."
           }
         }
       }
@@ -3949,7 +3943,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gib deine Anmeldedaten ein, um fortzufahren."
+            "value": "Anmeldedaten eingeben, um fortzufahren"
           }
         },
         "fr-FR": {
@@ -4508,7 +4502,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez votre compte PiggyPulse pour mieux suivre vos finances."
+            "value": "Rejoignez PiggyPulse pour prendre le contrôle de vos finances."
           }
         }
       }
@@ -4611,7 +4605,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wir helfen dir, wieder Zugriff zu bekommen."
+            "value": "Wir helfen dir, wieder hineinzukommen."
           }
         },
         "fr-FR": {
@@ -4657,13 +4651,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Willkommen zurück. Dein Finanzüberblick wartet."
+            "value": "Willkommen zurück. Dein finanzieller Puls wartet."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Content de vous revoir. Le pouls de vos finances vous attend."
+            "value": "Bon retour. Votre pouls financier vous attend."
           }
         }
       }
@@ -4703,13 +4697,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bring heute Ordnung in deine Finanzen."
+            "value": "Starte heute deine finanzielle Reise."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Commencez à suivre vos finances dès aujourd’hui."
+            "value": "Lancez votre parcours financier dès aujourd’hui."
           }
         }
       }
@@ -5435,7 +5429,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Création automatique désactivée"
+            "value": "Création auto désactivée"
           }
         }
       }
@@ -5481,7 +5475,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activez une planification pour générer automatiquement les prochaines périodes."
+            "value": "Activez une planification pour générer automatiquement les périodes futures."
           }
         }
       }
@@ -5619,7 +5613,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ne pas déplacer"
+            "value": "Conserver"
           }
         }
       }
@@ -5757,7 +5751,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "périodes générées"
+            "value": "périodes préparées"
           }
         }
       }
@@ -6018,12 +6012,6 @@
             "state": "translated",
             "value": "DETALHAMENTO DO ORÇAMENTO"
           }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "BUDGETÜBERSICHT"
-          }
         }
       }
     },
@@ -6087,7 +6075,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Budget consommé"
+            "value": "Budget utilisé"
           }
         }
       }
@@ -6127,7 +6115,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "BUDGETÜBERSICHT"
+            "value": "BUDGETAUFSCHLÜSSELUNG"
           }
         },
         "fr-FR": {
@@ -6225,7 +6213,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dépensé à ce jour"
+            "value": "Dépensé actuellement"
           }
         }
       }
@@ -6409,7 +6397,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez des catégories pour définir des objectifs budgétaires."
+            "value": "Créez des catégories pour définir des objectifs de budget."
           }
         }
       }
@@ -6633,13 +6621,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Taschengeld-Budgets"
+            "value": "Taschengeld-Umschläge"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enveloppes budgétaires"
+            "value": "Enveloppes d’allocation"
           }
         }
       }
@@ -6794,7 +6782,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Avec objectif"
+            "value": "Avec objectifs"
           }
         }
       }
@@ -7382,7 +7370,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Désactiver la création automatique"
+            "value": "Désactiver la création auto"
           }
         }
       }
@@ -7428,7 +7416,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier l’ajustement temporaire"
+            "value": "Modifier la surcouche"
           }
         }
       }
@@ -7520,7 +7508,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activer la création automatique"
+            "value": "Activer la création auto"
           }
         }
       }
@@ -7721,7 +7709,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Se connecter"
+            "value": "Connexion"
           }
         }
       }
@@ -8089,7 +8077,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configurer la création automatique"
+            "value": "Configurer la création auto"
           }
         }
       }
@@ -8477,7 +8465,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "prévu au budget"
+            "value": "budgétisé"
           }
         }
       }
@@ -8712,7 +8700,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez votre première catégorie pour classer vos transactions et structurer votre budget."
+            "value": "Créez votre première catégorie pour commencer à classer vos opérations et définir votre structure de budget."
           }
         }
       }
@@ -8758,7 +8746,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisissez entre revenu et dépense, donnez un nom à la catégorie, puis sélectionnez une icône et une couleur."
+            "value": "Choisissez revenu ou dépense, donnez-lui un nom et sélectionnez une icône et une couleur."
           }
         }
       }
@@ -8896,7 +8884,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définir un objectif budgétaire (facultatif)"
+            "value": "Définir un objectif de budget (facultatif)"
           }
         }
       }
@@ -8942,7 +8930,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lorsque vous ajoutez une transaction, choisissez une catégorie pour organiser automatiquement vos dépenses."
+            "value": "Lorsque vous ajoutez une opération, choisissez une catégorie pour organiser automatiquement vos dépenses."
           }
         }
       }
@@ -8988,7 +8976,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Associer aux transactions"
+            "value": "Attribuer aux opérations"
           }
         }
       }
@@ -9034,7 +9022,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les catégories peuvent correspondre à des revenus ou à des dépenses."
+            "value": "Les catégories se répartissent en revenus (entrants) et dépenses (sortants)."
           }
         }
       }
@@ -9080,7 +9068,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définissez des objectifs budgétaires par catégorie pour comparer vos dépenses à ce que vous aviez prévu."
+            "value": "Définissez des objectifs de budget par catégorie pour comparer vos dépenses à votre plan."
           }
         }
       }
@@ -9378,7 +9366,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Budget prévu pour les dépenses"
+            "value": "Budget de dépenses"
           }
         }
       }
@@ -9464,7 +9452,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Insgesamt ausgegeben"
+            "value": "Gesamt ausgegeben"
           }
         },
         "fr-FR": {
@@ -10098,7 +10086,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "L’objectif budgétaire sera calculé automatiquement à partir des abonnements actifs après enregistrement."
+            "value": "L’objectif de budget sera calculé automatiquement à partir des abonnements actifs après enregistrement."
           }
         }
       }
@@ -10420,7 +10408,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définissez un objectif budgétaire mensuel pour cette catégorie. Laissez vide pour ne pas en fixer."
+            "value": "Définissez un objectif de budget mensuel pour cette catégorie. Laissez vide pour ne pas en fixer."
           }
         }
       }
@@ -10606,12 +10594,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Alterar o intervalo de datas ou o modo de inclusão atualiza quais transações podem pertencer a esta sobreposição."
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wenn du den Datumsbereich oder die Auswahlregeln änderst, wird angepasst, welche Buchungen zu diesem Overlay gehören."
           }
         }
       }
@@ -11715,7 +11697,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créer un ajustement temporaire"
+            "value": "Créer une surcouche"
           }
         }
       }
@@ -11773,13 +11755,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die Grenzen des Zeitraums wirken sich darauf aus, welchen Buchungen dieser Zeitraum zugeordnet wird."
+            "value": "Zeitraumgrenzen sind strukturell und können Buchungen neu zuordnen."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les limites de période sont structurelles et peuvent reclasser les transactions."
+            "value": "Les limites de période sont structurelles et peuvent reclasser les opérations."
           }
         }
       }
@@ -12011,7 +11993,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tous vos comptes et transactions utiliseront cette devise."
+            "value": "Tous vos comptes et opérations utiliseront cette devise."
           }
         }
       }
@@ -12051,7 +12033,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "PiggyPulse unterstützt derzeit noch keine mehreren Währungen. Diese Funktion folgt später."
+            "value": "Aktuell unterstützt PiggyPulse keine mehreren Währungen. Diese Funktion folgt in Kürze."
           }
         },
         "fr-FR": {
@@ -12284,12 +12266,6 @@
             "state": "translated",
             "value": "ZONA DE PERIGO"
           }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "KRITISCHER BEREICH"
-          }
         }
       }
     },
@@ -12416,7 +12392,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter une transaction"
+            "value": "Ajouter une opération"
           }
         }
       }
@@ -13034,7 +13010,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tippe **LÖSCHEN**, um zu bestätigen."
+            "value": "Tippe **LÖSCHEN**, um zu bestätigen"
           }
         },
         "fr-FR": {
@@ -13602,12 +13578,6 @@
             "state": "translated",
             "value": "Editar Sobreposição"
           }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Modifier l’ajustement temporaire"
-          }
         }
       }
     },
@@ -13967,12 +13937,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ative um agendamento para gerar períodos futuros automaticamente."
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Activez une planification pour générer automatiquement les prochaines périodes."
           }
         }
       }
@@ -14544,7 +14508,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la création de la transaction."
+            "value": "Échec de la création de l’opération."
           }
         }
       }
@@ -14592,7 +14556,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la création du bénéficiaire."
+            "value": "Échec de la création du commerçant."
           }
         }
       }
@@ -14719,7 +14683,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la désactivation de la création automatique."
+            "value": "Échec de la désactivation de la création auto."
           }
         }
       }
@@ -15030,7 +14994,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec du chargement des ajustements temporaires."
+            "value": "Échec du chargement des surcouches."
           }
         }
       }
@@ -15171,7 +15135,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec du chargement des transactions."
+            "value": "Échec du chargement des opérations."
           }
         }
       }
@@ -15218,7 +15182,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec du chargement des bénéficiaires."
+            "value": "Échec du chargement des commerçants."
           }
         }
       }
@@ -15298,7 +15262,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de l’enregistrement de l’ajustement temporaire."
+            "value": "Échec de l’enregistrement de la surcouche."
           }
         }
       }
@@ -15574,7 +15538,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la mise à jour de la transaction."
+            "value": "Échec de la mise à jour de l’opération."
           }
         }
       }
@@ -15621,7 +15585,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la mise à jour du bénéficiaire."
+            "value": "Échec de la mise à jour du commerçant."
           }
         }
       }
@@ -16489,7 +16453,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quellkonto"
+            "value": "Von Konto"
           }
         },
         "fr-FR": {
@@ -17277,7 +17241,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le n-ième jour ouvré de la période"
+            "value": "Le N-ième jour ouvré de début de période"
           }
         }
       }
@@ -17593,7 +17557,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zielkonto"
+            "value": "Zu Konto"
           }
         },
         "fr-FR": {
@@ -17691,7 +17655,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bénéficiaire"
+            "value": "Commerçant"
           }
         }
       }
@@ -17777,7 +17741,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Filtres, %lld actif(s)"
+            "value": "Filtre, %lld actif(s)"
           }
         }
       }
@@ -17847,7 +17811,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quellkonto"
+            "value": "Von Konto"
           }
         },
         "fr-FR": {
@@ -17935,7 +17899,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enregistrez une transaction pour commencer à suivre vos dépenses"
+            "value": "Enregistrez une opération pour commencer à suivre vos dépenses"
           }
         }
       }
@@ -17981,7 +17945,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajoutez votre première transaction"
+            "value": "Ajoutez votre première opération"
           }
         }
       }
@@ -18119,7 +18083,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez une fenêtre temporelle pour vos transactions et objectifs"
+            "value": "Créez une fenêtre temporelle pour vos opérations et objectifs"
           }
         }
       }
@@ -18442,7 +18406,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inclure toutes les transactions dans la plage de dates."
+            "value": "Inclure toutes les opérations dans la plage de dates."
           }
         }
       }
@@ -18536,7 +18500,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inclure automatiquement les transactions selon des règles de catégorie, de bénéficiaire ou de compte."
+            "value": "Inclure automatiquement les opérations selon des règles de catégorie, de commerçant ou de compte."
           }
         }
       }
@@ -18577,7 +18541,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Einbeziehen"
+            "value": "Einbeziehung"
           }
         },
         "fr-FR": {
@@ -18595,12 +18559,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Regras de Inclusão"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Auswahlregeln"
           }
         }
       }
@@ -18778,12 +18736,6 @@
             "state": "translated",
             "value": "Manter"
           }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conserver"
-          }
         }
       }
     },
@@ -18829,7 +18781,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ne pas déplacer le week-end"
+            "value": "Conserver le week-end"
           }
         }
       }
@@ -18927,7 +18879,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "VERFÜGBARE KONTEN"
+            "value": "LIQUIDE KONTEN"
           }
         },
         "fr-FR": {
@@ -19116,7 +19068,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Voulez-vous continuer ?"
+            "value": "Êtes-vous sûr ?"
           }
         }
       }
@@ -19710,7 +19662,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bénéficiaires"
+            "value": "Commerçants"
           }
         }
       }
@@ -20014,7 +19966,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter une transaction"
+            "value": "Ajouter une opération"
           }
         }
       }
@@ -20060,7 +20012,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter un bénéficiaire"
+            "value": "Ajouter un commerçant"
           }
         }
       }
@@ -20106,7 +20058,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Création automatique"
+            "value": "Création auto"
           }
         }
       }
@@ -20382,7 +20334,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier l’ajustement temporaire"
+            "value": "Modifier la surcouche"
           }
         }
       }
@@ -20474,7 +20426,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier la transaction"
+            "value": "Modifier l’opération"
           }
         }
       }
@@ -20520,7 +20472,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier le bénéficiaire"
+            "value": "Modifier le commerçant"
           }
         }
       }
@@ -20612,7 +20564,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouvel ajustement temporaire"
+            "value": "Nouvelle surcouche"
           }
         }
       }
@@ -20658,7 +20610,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajustements temporaires"
+            "value": "Surcouches"
           }
         }
       }
@@ -20816,12 +20768,6 @@
             "state": "translated",
             "value": "POSIÇÃO LÍQUIDA"
           }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NETTOPOSITION"
-          }
         }
       }
     },
@@ -20832,12 +20778,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nova Sobreposição"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nouvel ajustement temporaire"
           }
         }
       }
@@ -21269,7 +21209,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sélectionnez ou créez une période de budget pour afficher cette page. Les périodes définissent la fenêtre temporelle de vos transactions et objectifs."
+            "value": "Sélectionnez ou créez une période de budget pour afficher cette page. Les périodes définissent la fenêtre temporelle de vos opérations et objectifs."
           }
         }
       }
@@ -21637,7 +21577,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les catégories organisent vos transactions. Commencez avec au moins une — vous pourrez en ajouter d’autres plus tard."
+            "value": "Les catégories organisent vos opérations. Commencez avec au moins une — vous pourrez en ajouter d’autres plus tard."
           }
         }
       }
@@ -22254,12 +22194,6 @@
             "state": "translated",
             "value": "Detalhes da Sobreposição"
           }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Détails de l’ajustement temporaire"
-          }
         }
       }
     },
@@ -22270,12 +22204,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ciclo de vida da sobreposição"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cycle de vie des ajustements temporaires"
           }
         }
       }
@@ -22315,13 +22243,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wenn du den Datumsbereich oder die Auswahlregeln änderst, wird angepasst, welche Buchungen zu diesem Overlay gehören."
+            "value": "Wenn du den Datumsbereich oder den Einschlussmodus änderst, wird angepasst, welche Buchungen zu diesem Overlay gehören."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier la plage de dates ou le mode d’inclusion met à jour les transactions pouvant relever de cet ajustement temporaire."
+            "value": "Modifier la plage de dates ou le mode d’inclusion met à jour les opérations susceptibles d’appartenir à cette surcouche."
           }
         }
       }
@@ -22367,7 +22295,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les ajustements temporaires nécessitent toujours une date de début et une date de fin."
+            "value": "Les surcouches sont temporaires et nécessitent toujours une date de début et de fin."
           }
         }
       }
@@ -22413,7 +22341,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Détails de l’ajustement temporaire"
+            "value": "Détails de la surcouche"
           }
         }
       }
@@ -22453,7 +22381,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auswahlregeln"
+            "value": "Einschlussregeln"
           }
         },
         "fr-FR": {
@@ -22597,7 +22525,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Limitez les dépenses par catégorie pour cet ajustement temporaire."
+            "value": "Limitez les dépenses par catégorie dans cette surcouche."
           }
         }
       }
@@ -22821,7 +22749,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gesamtlimit"
+            "value": "Gesamtbetragslimit"
           }
         },
         "fr-FR": {
@@ -22873,7 +22801,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définissez un plafond de dépenses pour l’ensemble de cet ajustement temporaire."
+            "value": "Définissez un plafond de dépenses pour l’ensemble de la surcouche."
           }
         }
       }
@@ -22892,12 +22820,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sobreposições"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajustements temporaires"
           }
         }
       }
@@ -22954,7 +22876,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucun ajustement temporaire pour l’instant"
+            "value": "Aucune surcouche pour l’instant"
           }
         }
       }
@@ -23000,7 +22922,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Appuyez sur + pour créer votre premier ajustement temporaire."
+            "value": "Appuyez sur + pour créer votre première surcouche."
           }
         }
       }
@@ -23046,7 +22968,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "AJUSTEMENTS TEMPORAIRES PASSÉS"
+            "value": "SURCOUCHES PASSÉES"
           }
         }
       }
@@ -23171,12 +23093,6 @@
             "state": "translated",
             "value": "SOBREPOSIÇÕES PASSADAS"
           }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AJUSTEMENTS TEMPORAIRES PASSÉS"
-          }
         }
       }
     },
@@ -23252,12 +23168,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Os limites de período são estruturais e podem reclassificar transações."
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Die Grenzen des Zeitraums wirken sich darauf aus, welchen Buchungen dieser Zeitraum zugeordnet wird."
           }
         }
       }
@@ -23455,7 +23365,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Création automatique"
+            "value": "Création auto"
           }
         }
       }
@@ -23593,7 +23503,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Génération automatique activée"
+            "value": "Génération auto active"
           }
         }
       }
@@ -23639,7 +23549,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Génération automatique inactive"
+            "value": "Génération auto inactive"
           }
         }
       }
@@ -23823,7 +23733,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "3 périodes générées à l’avance"
+            "value": "3 périodes préparées à l’avance"
           }
         }
       }
@@ -23863,13 +23773,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wir verwenden zunächst diese Standardvorgabe:"
+            "value": "Wir richten dich mit der Standardvorgabe ein:"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nous utiliserons les réglages par défaut :"
+            "value": "Nous appliquons les réglages par défaut :"
           }
         }
       }
@@ -23915,7 +23825,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Périodes mensuelles commençant le 1er du mois"
+            "value": "Périodes mensuelles, commençant le 1er"
           }
         }
       }
@@ -24047,13 +23957,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Budgetzeiträume strukturieren deine Buchungen nach Zeitfenstern."
+            "value": "Zeiträume sind Zeitfenster, die deine Buchungen strukturieren."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les périodes permettent d’organiser vos transactions dans le temps."
+            "value": "Les périodes sont des fenêtres temporelles qui organisent vos opérations."
           }
         }
       }
@@ -24099,7 +24009,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les transactions sont associées automatiquement aux périodes selon leur date. Aucune affectation manuelle n’est nécessaire."
+            "value": "Les opérations sont rattachées aux périodes selon leur date — aucune affectation manuelle n’est nécessaire."
           }
         }
       }
@@ -24191,7 +24101,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez votre première période budgétaire pour organiser vos finances dans le temps."
+            "value": "Créez votre première période de budget pour commencer à organiser vos finances par fenêtre temporelle."
           }
         }
       }
@@ -24375,7 +24285,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activer la génération automatique (facultatif)"
+            "value": "Activer la génération auto (facultatif)"
           }
         }
       }
@@ -24559,7 +24469,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activez la génération automatique pour créer de nouvelles périodes lorsque l’actuelle se termine."
+            "value": "Activez la génération auto pour créer de nouvelles périodes lorsque l’actuelle se termine."
           }
         }
       }
@@ -24783,13 +24693,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wie PiggyPulse mit Zeiträumen arbeitet"
+            "value": "Wie PiggyPulse die Zeit erfasst"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comment PiggyPulse organise vos périodes"
+            "value": "Comment PiggyPulse suit le temps"
           }
         }
       }
@@ -24835,7 +24745,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "%lld transactions"
+            "value": "%lld opérations"
           }
         }
       }
@@ -25166,7 +25076,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "RÜCKLAGEN-KONTEN"
+            "value": "GESCHÜTZTE KONTEN"
           }
         },
         "fr-FR": {
@@ -25364,7 +25274,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Selon des règles"
+            "value": "Basé sur des règles"
           }
         }
       }
@@ -25793,7 +25703,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "KRITISCHER BEREICH"
+            "value": "GEFAHRENZONE"
           }
         },
         "fr-FR": {
@@ -26397,7 +26307,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Détails du bénéficiaire"
+            "value": "Détails du commerçant"
           }
         }
       }
@@ -26957,7 +26867,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Thème"
+            "value": "Thème de couleur"
           }
         }
       }
@@ -27095,7 +27005,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cycle de vie des ajustements temporaires"
+            "value": "Cycle de vie de la surcouche"
           }
         }
       }
@@ -27141,7 +27051,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Au début ou à la fin d’un ajustement temporaire"
+            "value": "Au début ou à la fin d’une surcouche"
           }
         }
       }
@@ -27643,7 +27553,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wähle einen Bereich in der Seitenleiste aus."
+            "value": "Wähle einen Bereich in der Seitenleiste"
           }
         },
         "fr-FR": {
@@ -28028,7 +27938,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Transactions"
+            "value": "Opérations"
           }
         }
       }
@@ -28500,7 +28410,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kündigen"
+            "value": "Abbrechen"
           }
         },
         "fr-FR": {
@@ -28638,7 +28548,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "GEKÜNDIGT"
+            "value": "STORNIERT"
           }
         },
         "fr-FR": {
@@ -29144,7 +29054,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gekündigt am"
+            "value": "Storniert am"
           }
         },
         "fr-FR": {
@@ -30034,7 +29944,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bénéficiaire"
+            "value": "Commerçant"
           }
         }
       }
@@ -30442,7 +30352,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gekündigt"
+            "value": "Storniert"
           }
         },
         "fr-FR": {
@@ -30649,7 +30559,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suivez vos prélèvements récurrents, comme les services de streaming, les abonnements et les factures."
+            "value": "Suivez vos prélèvements récurrents, comme les services de streaming, les adhésions et les factures."
           }
         }
       }
@@ -30833,7 +30743,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définir le calendrier de facturation"
+            "value": "Définissez la planification de facturation"
           }
         }
       }
@@ -30919,13 +30829,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Anstehende Kosten im Blick behalten"
+            "value": "Anstehende Kosten im Blick"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suivre les prochains prélèvements"
+            "value": "Suivez les prochains frais"
           }
         }
       }
@@ -30971,7 +30881,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les abonnements sont distincts des transactions classiques — ils représentent des engagements récurrents."
+            "value": "Les abonnements sont distincts des opérations classiques — ils représentent des engagements récurrents."
           }
         }
       }
@@ -31386,7 +31296,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Transactions"
+            "value": "Opérations"
           }
         }
       }
@@ -32169,7 +32079,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les comptes représentent l’endroit où se trouve votre argent : compte courant, épargne, cartes de crédit ou portefeuilles. Leur solde est mis à jour à mesure que vous ajoutez des transactions."
+            "value": "Les comptes représentent l’endroit où se trouve votre argent : compte courant, épargne, cartes de crédit ou portefeuilles. Leur solde est mis à jour à mesure que vous ajoutez des opérations."
           }
         }
       }
@@ -32261,7 +32171,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les catégories vous aident à organiser vos transactions et à définir des objectifs budgétaires. Créez des catégories de revenus et de dépenses pour structurer votre budget."
+            "value": "Les catégories vous aident à organiser vos opérations et à définir des objectifs de budget. Créez des catégories de revenus et de dépenses pour structurer votre budget."
           }
         }
       }
@@ -32445,7 +32355,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les périodes sont des fenêtres temporelles pour votre budget — généralement mensuelles. Toutes les transactions et tous les objectifs sont limités à la période active."
+            "value": "Les périodes sont des fenêtres temporelles pour votre budget — généralement mensuelles. Toutes les opérations et tous les objectifs sont limités à la période active."
           }
         }
       }
@@ -32531,7 +32441,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abos erfassen wiederkehrende Abbuchungen wie Streamingdienste, Mitgliedschaften und Rechnungen. Sobald du sie hier hinzufügst, siehst du anstehende Kosten auf einen Blick."
+            "value": "Abos erfassen wiederkehrende Abbuchungen wie Streamingdienste, Mitgliedschaften und Rechnungen. Hier hinzugefügt, siehst du anstehende Kosten auf einen Blick."
           }
         },
         "fr-FR": {
@@ -32629,7 +32539,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les transactions sont au cœur de votre budget. Chacune est liée à une catégorie et à un compte, ce qui vous permet de voir où va votre argent à chaque période."
+            "value": "Les opérations sont au cœur de votre budget. Chacune est liée à une catégorie et à un compte, ce qui vous permet de voir où va votre argent à chaque période."
           }
         }
       }
@@ -32675,7 +32585,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suivre les transactions"
+            "value": "Suivre les opérations"
           }
         }
       }
@@ -32721,7 +32631,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les bénéficiaires représentent les endroits où vous dépensez. Lier vos transactions aux bénéficiaires vous aide à voir les tendances de dépense dans le temps."
+            "value": "Les commerçants représentent les endroits où vous dépensez. Lier vos opérations aux commerçants vous aide à voir les tendances de dépense dans le temps."
           }
         }
       }
@@ -32767,7 +32677,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suivre les bénéficiaires"
+            "value": "Suivre les commerçants"
           }
         }
       }
@@ -32808,7 +32718,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zielkonto"
+            "value": "Zu Konto"
           }
         },
         "fr-FR": {
@@ -32826,12 +32736,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Limite Total"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gesamtbetrag-Limit"
           }
         }
       }
@@ -32989,7 +32893,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Transactions"
+            "value": "Opérations"
           }
         }
       }
@@ -33035,7 +32939,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la suppression de la transaction."
+            "value": "Échec de la suppression de l’opération."
           }
         }
       }
@@ -33081,7 +32985,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cette transaction sera définitivement supprimée."
+            "value": "Cette opération sera définitivement supprimée."
           }
         }
       }
@@ -33127,7 +33031,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supprimer la transaction ?"
+            "value": "Supprimer l’opération ?"
           }
         }
       }
@@ -33173,7 +33077,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter une transaction"
+            "value": "Ajouter une opération"
           }
         }
       }
@@ -33219,7 +33123,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Commencez à suivre vos dépenses en ajoutant votre première transaction."
+            "value": "Commencez à suivre vos dépenses en ajoutant votre première opération."
           }
         }
       }
@@ -33265,7 +33169,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisez le bouton ci-dessus pour enregistrer votre première transaction."
+            "value": "Utilisez le bouton ci-dessus pour enregistrer votre première opération."
           }
         }
       }
@@ -33311,7 +33215,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter une transaction"
+            "value": "Ajouter une opération"
           }
         }
       }
@@ -33357,7 +33261,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisissez une catégorie de revenu ou de dépense pour que la transaction compte dans votre budget."
+            "value": "Choisissez une catégorie de revenu ou de dépense pour que l’opération compte dans votre budget."
           }
         }
       }
@@ -33449,7 +33353,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vos transactions apparaîtront dans des widgets du tableau de bord comme Trésorerie et Transactions récentes."
+            "value": "Vos opérations apparaîtront dans des widgets du tableau de bord comme Trésorerie et Opérations récentes."
           }
         }
       }
@@ -33541,7 +33445,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisez le bouton + pour saisir rapidement vos transactions."
+            "value": "Utilisez le bouton + pour saisir rapidement vos opérations."
           }
         }
       }
@@ -33587,7 +33491,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chaque transaction est liée à une catégorie qui détermine sa place dans votre budget."
+            "value": "Chaque opération est liée à une catégorie qui détermine sa place dans votre budget."
           }
         }
       }
@@ -33633,7 +33537,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisez les filtres de sens et de catégorie pour retrouver des transactions précises."
+            "value": "Utilisez les filtres de sens et de catégorie pour retrouver des opérations précises."
           }
         }
       }
@@ -33679,7 +33583,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucune transaction pour l’instant"
+            "value": "Aucune opération pour l’instant"
           }
         }
       }
@@ -33742,7 +33646,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rechercher des transactions"
+            "value": "Rechercher des opérations"
           }
         }
       }
@@ -33884,12 +33788,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Digite **EXCLUIR** para confirmar"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tippe **LÖSCHEN**, um zu bestätigen."
           }
         }
       }
@@ -34324,7 +34222,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "AJUSTEMENTS TEMPORAIRES À VENIR"
+            "value": "SURCOUCHES À VENIR"
           }
         }
       }
@@ -34436,7 +34334,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bénéficiaire"
+            "value": "Commerçant"
           }
         }
       }
@@ -34501,7 +34399,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nom du bénéficiaire"
+            "value": "Nom du commerçant"
           }
         }
       }
@@ -34583,7 +34481,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de l’archivage du bénéficiaire."
+            "value": "Échec de l’archivage du commerçant."
           }
         }
       }
@@ -34629,7 +34527,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ce bénéficiaire sera masqué, mais son historique sera conservé."
+            "value": "Ce commerçant sera masqué, mais son historique sera conservé."
           }
         }
       }
@@ -34675,7 +34573,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la suppression du bénéficiaire."
+            "value": "Échec de la suppression du commerçant."
           }
         }
       }
@@ -34721,7 +34619,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ce bénéficiaire sera définitivement supprimé."
+            "value": "Ce commerçant sera définitivement supprimé."
           }
         }
       }
@@ -34767,7 +34665,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter un bénéficiaire"
+            "value": "Ajouter un commerçant"
           }
         }
       }
@@ -34813,7 +34711,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les bénéficiaires vous aident à voir où va votre argent. Ajoutez votre premier bénéficiaire pour commencer à classer vos dépenses."
+            "value": "Les commerçants vous aident à voir où va votre argent. Ajoutez votre premier commerçant pour commencer à classer vos dépenses."
           }
         }
       }
@@ -34859,7 +34757,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajoutez le nom d’un magasin, service ou bénéficiaire avec lequel vous effectuez régulièrement des transactions."
+            "value": "Ajoutez le nom d’un magasin, service ou bénéficiaire avec lequel vous effectuez régulièrement des opérations."
           }
         }
       }
@@ -34905,7 +34803,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créer un bénéficiaire"
+            "value": "Créer un commerçant"
           }
         }
       }
@@ -34951,7 +34849,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lorsque vous ajoutez une transaction, choisissez un bénéficiaire pour associer la dépense."
+            "value": "Lorsque vous ajoutez une opération, choisissez un commerçant pour associer la dépense."
           }
         }
       }
@@ -34997,7 +34895,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Associer aux transactions"
+            "value": "Associer aux opérations"
           }
         }
       }
@@ -35043,7 +34941,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Consultez la page de détail pour voir combien vous dépensez par bénéficiaire dans le temps."
+            "value": "Consultez la page de détail pour voir combien vous dépensez par commerçant dans le temps."
           }
         }
       }
@@ -35135,7 +35033,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les bénéficiaires vous montrent où vous dépensez le plus au fil du temps."
+            "value": "Les commerçants vous montrent où vous dépensez le plus au fil du temps."
           }
         }
       }
@@ -35181,7 +35079,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Si vous avez des bénéficiaires en double, vous pouvez les fusionner en un seul."
+            "value": "Si vous avez des commerçants en double, vous pouvez les fusionner en un seul."
           }
         }
       }
@@ -35227,7 +35125,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Archivez les bénéficiaires que vous n’utilisez plus pour garder votre liste claire."
+            "value": "Archivez les commerçants que vous n’utilisez plus pour garder votre liste claire."
           }
         }
       }
@@ -35273,7 +35171,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucun bénéficiaire pour l’instant"
+            "value": "Aucun commerçant pour l’instant"
           }
         }
       }
@@ -35336,7 +35234,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rechercher des bénéficiaires…"
+            "value": "Rechercher des commerçants…"
           }
         }
       }
@@ -35382,7 +35280,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "TOUS LES BÉNÉFICIAIRES"
+            "value": "TOUS LES COMMERÇANTS"
           }
         }
       }
@@ -35794,7 +35692,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Klare Sicht"
+            "value": "Einfach Klarheit"
           }
         },
         "fr-FR": {
@@ -35840,13 +35738,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Daten sehen, Muster verstehen."
+            "value": "Daten sehen, Muster verstehen"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Voyez vos données, comprenez vos habitudes"
+            "value": "voyez vos données, comprenez vos habitudes"
           }
         }
       }
@@ -35886,7 +35784,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ohne Bewertung"
+            "value": "Ohne Urteil"
           }
         },
         "fr-FR": {
@@ -35932,13 +35830,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wir bewerten Ausgaben nicht als gut oder schlecht."
+            "value": "wir bewerten Ausgaben nicht als gut oder schlecht"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nous ne jugeons pas vos dépenses"
+            "value": "nous ne qualifions pas les dépenses de bonnes ou mauvaises"
           }
         }
       }
@@ -35978,13 +35876,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "PiggyPulse zeigt dir deine finanzielle Realität in Zahlen. Wir loben nicht und kritisieren nicht — du entscheidest, was deine Zahlen bedeuten."
+            "value": "PiggyPulse zeigt dir die Realität durch Daten. Wir loben nicht und kritisieren nicht — du entscheidest, was deine Zahlen bedeuten."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "PiggyPulse vous montre vos finances telles qu’elles sont. Pas de jugement, pas de célébration forcée : c’est vous qui décidez du sens de vos chiffres."
+            "value": "PiggyPulse vous montre la réalité par les données. Nous ne célébrons rien et ne critiquons rien — c’est vous qui décidez du sens de vos chiffres."
           }
         }
       }
@@ -36024,13 +35922,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dein finanzieller Puls — ruhig, klar und ganz bei dir."
+            "value": "Dein finanzieller Puls — ruhig, klar und ganz dein eigener."
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le pouls de vos finances — calme, clair, et entièrement à vous."
+            "value": "Votre pouls financier — calme, clair et entièrement le vôtre."
           }
         }
       }
@@ -36162,13 +36060,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Du entscheidest, was deine Zahlen bedeuten."
+            "value": "du entscheidest, was deine Zahlen bedeuten"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous décidez du sens de vos chiffres"
+            "value": "vous décidez du sens de vos chiffres"
           }
         }
       }
@@ -36310,7 +36208,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Flux de trésorerie"
+            "value": "Trésorerie"
           }
         }
       }
@@ -36649,7 +36547,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dépenses projetées : %@"
+            "value": "Dépense prévue : %@"
           }
         }
       }
@@ -37159,7 +37057,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verfügbar"
+            "value": "Liquide"
           }
         },
         "fr-FR": {
@@ -37205,7 +37103,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nettoposition"
+            "value": "Nettovermögen"
           }
         },
         "fr-FR": {
@@ -37251,7 +37149,7 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rücklagen"
+            "value": "Geschützt"
           }
         },
         "fr-FR": {
@@ -37297,13 +37195,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "in diesem Zeitraum"
+            "value": "dieser Zeitraum"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "sur cette période"
+            "value": "cette période"
           }
         }
       }
@@ -37366,7 +37264,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucune transaction dans cette période pour l’instant."
+            "value": "Aucune opération dans cette période pour l’instant."
           }
         }
       }
@@ -37412,7 +37310,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Transactions récentes"
+            "value": "Opérations récentes"
           }
         }
       }
@@ -37452,13 +37350,13 @@
         "de-DE": {
           "stringUnit": {
             "state": "translated",
-            "value": "Durchschnitt: %@ pro Zeitraum"
+            "value": "Durchschnitt: %@/Zeitraum"
           }
         },
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Moyenne : %@ par période"
+            "value": "Moyenne : %@/période"
           }
         }
       }
@@ -37785,7 +37683,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucune donnée de bénéficiaire pour cette période."
+            "value": "Aucune donnée de commerçant dans cette période pour l’instant."
           }
         }
       }
@@ -37831,7 +37729,7 @@
         "fr-FR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Principaux bénéficiaires"
+            "value": "Principaux commerçants"
           }
         }
       }
@@ -38208,374 +38106,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Votre mot de passe"
-          }
-        }
-      }
-    },
-    "nav.feedback": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feedback"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feedback"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Comentários"
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Comentarios"
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feedback"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feedback"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Commentaires"
-          }
-        }
-      }
-    },
-    "feedback.subtitle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tell us what's working, what isn't, or anything you'd like to share. We read every message."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conte o que está funcionando, o que não está ou qualquer ideia que queira compartilhar. A gente lê tudo."
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Diga-nos o que está a funcionar, o que não está ou qualquer ideia que queira partilhar. Lemos todas as mensagens."
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cuéntanos qué funciona, qué no, o lo que quieras compartir. Leemos todos los mensajes."
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vertel ons wat werkt, wat niet, of waar je verder over wilt vertellen. We lezen elk bericht."
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sag uns, was funktioniert, was nicht, oder was du sonst noch loswerden möchtest. Wir lesen jede Nachricht."
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dites-nous ce qui fonctionne, ce qui ne fonctionne pas, ou tout ce que vous voulez partager. Nous lisons chaque message."
-          }
-        }
-      }
-    },
-    "field.message": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Message"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensagem"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensagem"
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensaje"
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bericht"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nachricht"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Message"
-          }
-        }
-      }
-    },
-    "feedback.messagePlaceholder": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Type your feedback here…"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escreva seu feedback aqui…"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escreva os seus comentários aqui…"
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escribe tus comentarios aquí…"
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Typ je feedback hier…"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Schreib hier dein Feedback…"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Écrivez vos commentaires ici…"
-          }
-        }
-      }
-    },
-    "feedback.success": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Thanks for the feedback!"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Valeu pelo feedback!"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Obrigado pelos comentários!"
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¡Gracias por tus comentarios!"
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bedankt voor je feedback!"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Danke für dein Feedback!"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Merci pour vos commentaires !"
-          }
-        }
-      }
-    },
-    "button.sendFeedback": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send feedback"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enviar feedback"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enviar comentários"
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enviar comentarios"
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feedback versturen"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feedback senden"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Envoyer des commentaires"
-          }
-        }
-      }
-    },
-    "section.feedback": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "FEEDBACK"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "FEEDBACK"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "COMENTÁRIOS"
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "COMENTARIOS"
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "FEEDBACK"
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "FEEDBACK"
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "COMMENTAIRES"
-          }
-        }
-      }
-    },
-    "settings.feedbackDesc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Help us make PiggyPulse better — bugs, ideas, translation fixes, anything."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajude a melhorar o PiggyPulse — bugs, ideias, traduções, o que quiser."
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajude-nos a melhorar o PiggyPulse — erros, ideias, correções de tradução, qualquer coisa."
-          }
-        },
-        "es-ES": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ayúdanos a mejorar PiggyPulse: errores, ideas, correcciones de traducción, lo que sea."
-          }
-        },
-        "nl-NL": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Help ons PiggyPulse beter te maken — bugs, ideeën, vertaalfixes, alles welkom."
-          }
-        },
-        "de-DE": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hilf uns, PiggyPulse besser zu machen — Bugs, Ideen, Übersetzungskorrekturen, alles willkommen."
-          }
-        },
-        "fr-FR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aidez-nous à améliorer PiggyPulse — bugs, idées, corrections de traduction, tout est bienvenu."
           }
         }
       }

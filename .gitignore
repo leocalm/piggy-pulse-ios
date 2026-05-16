@@ -1,3 +1,6 @@
+# Local secrets
+Config/Secrets.xcconfig
+
 # Xcode
 *.xcodeproj/project.xcworkspace/
 *.xcodeproj/xcuserdata/

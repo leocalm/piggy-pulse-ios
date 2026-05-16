@@ -17,7 +17,13 @@ struct EditAccountSheet: View {
     @State private var errorMessage: String?
 
     private let accountTypes = ["checking", "savings", "creditcard", "wallet", "allowance"]
-    private let typeLabels = ["checking": "Checking", "savings": "Savings", "creditcard": "Credit Card", "wallet": "Wallet", "allowance": "Allowance"]
+    private let typeLabels = [
+        "checking": String(localized: "Checking"),
+        "savings": String(localized: "Savings"),
+        "creditcard": String(localized: "Credit Card"),
+        "wallet": String(localized: "Wallet"),
+        "allowance": String(localized: "Allowance"),
+    ]
     private let colorOptions = ["#007AFF", "#00B894", "#E17055", "#0984E3", "#FDCB6E", "#E84393", "#00CEC9", "#636E72"]
 
     private var currencySymbol: String {
@@ -165,10 +171,16 @@ struct EditAccountSheet: View {
             return Int32(value * 100)
         }()
 
-        struct Req: Encodable {
-            let name: String; let color: String; let accountType: String; let initialBalance: Int64; let spendLimit: Int32?
+        guard let currencyId = appState.currencyId else {
+            errorMessage = String(localized: "No currency configured. Please set a currency in Settings first.")
+            isLoading = false
+            return
         }
-        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit)
+
+        struct Req: Encodable {
+            let name: String; let color: String; let accountType: String; let initialBalance: Int64; let spendLimit: Int32?; let currencyId: UUID
+        }
+        let req = Req(name: name.trimmingCharacters(in: .whitespaces), color: color, accountType: accountType, initialBalance: account.currentBalance, spendLimit: spendLimit, currencyId: currencyId)
         do {
             try await appState.apiClient.request(.updateAccount(account.id), body: req)
             UINotificationFeedbackGenerator().notificationOccurred(.success)

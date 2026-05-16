@@ -8,6 +8,11 @@
 	<array>
 		<string>en</string>
 		<string>pt-BR</string>
+		<string>pt-PT</string>
+		<string>es-ES</string>
+		<string>nl-NL</string>
+		<string>de-DE</string>
+		<string>fr-FR</string>
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
@@ -15,6 +20,8 @@
 	</array>
 	<key>APIBaseURL</key>
 	<string>$(API_BASE_URL)</string>
+	<key>SentryDSN</key>
+	<string>$(SENTRY_DSN)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>
