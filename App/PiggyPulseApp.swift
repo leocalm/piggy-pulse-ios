@@ -10,6 +10,8 @@ struct PiggyPulseApp: App {
     private static let bgTaskIdentifier = "com.piggypulse.notifications.refresh"
 
     init() {
+        SentryService.start()
+
         #if DEBUG
         try? Tips.configure([.displayFrequency(.immediate)])
         #else

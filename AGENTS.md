@@ -87,6 +87,36 @@ Not applicable in this repo.
 
 Use the Xcode commands above. Do not invent `pod`, `tuist`, `fastlane`, or Swift Package commands unless the repo adds those files.
 
+## App Store screenshot automation
+
+When working on screenshot automation:
+
+- Keep production behavior unchanged.
+- Screenshot/demo mode must only activate through explicit launch arguments, environment variables, or test-only configuration.
+- All screenshot data must be deterministic.
+- All localized screenshot copy must live in a single structured source of truth.
+- Every locale must contain the same keys.
+- Add validation for missing locale keys.
+- Prefer existing i18n and fixture patterns already used in the app.
+- Do not hardcode localized screenshot data directly inside UI components.
+- Do not introduce external services for screenshot generation.
+- Do not upload to App Store Connect unless explicitly requested.
+
+### Required screenshot locales
+
+- `en-US`
+- `en-GB`
+- `pt-BR`
+- `pt-PT`
+- `es-ES`
+- `fr-FR`
+- `nl-NL`
+- `de-DE`
+
+### Validation expectations
+
+Before finishing screenshot automation work, run the relevant checks available in the repo, such as typecheck, lint, tests, and build. If a check cannot be run, explain why.
+
 ## Conventions
 
 - Follow MVVM + Repository and existing `@EnvironmentObject` app state patterns.

@@ -36,7 +36,6 @@
 		027B34A72F5B647C00E96DF6 /* EditProfileSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */; };
 		027B34A92F5B67B800E96DF6 /* EditTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34A82F5B67B600E96DF6 /* EditTransactionSheet.swift */; };
 		027B34AB2F5B699300E96DF6 /* EditAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AA2F5B699200E96DF6 /* EditAccountSheet.swift */; };
-		DB01514D0CAB460F9D8C6FA8 /* EditPeriodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */; };
 		027B34AD2F5B69A700E96DF6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B69A500E96DF6 /* EditCategorySheet.swift */; };
 		027B34AD2F5B700000E96DF6 /* TransactionFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AC2F5B700000E96DF6 /* TransactionFilterSheet.swift */; };
 		027B34AF2F5B69B600E96DF6 /* EditVendorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B34AE2F5B69B600E96DF6 /* EditVendorSheet.swift */; };
@@ -74,7 +73,6 @@
 		02F038DA2F59A15D008DD1E7 /* TransactionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038D92F59A159008DD1E7 /* TransactionRepository.swift */; };
 		02F038DE2F59A195008DD1E7 /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038DD2F59A193008DD1E7 /* TransactionsViewModel.swift */; };
 		02F038E22F59A1CD008DD1E7 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E12F59A1CC008DD1E7 /* TransactionsView.swift */; };
-		02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
 		02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F038E62F5B2109008DD1E7 /* PeriodsViewModel.swift */; };
 		0478809786A7E3893AC8B020 /* AdaptiveNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34586628093E9F2F08581B5 /* AdaptiveNavigationView.swift */; };
 		05F2FB52C2B657C06B876239 /* WatchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6620EB698A2E39C8B06488 /* WatchModels.swift */; };
@@ -113,7 +111,6 @@
 		82EE09342522CA6F1F6C52D8 /* DashboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBCA62AA85E9444E9E35E4 /* DashboardLayout.swift */; };
 		8367AE29ACA29298FDE44B5E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3D56099E7A4C5BEF5D3C87FF /* Localizable.xcstrings */; };
 		8A578ECD8C416132C18565E6 /* DashboardV2Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C236FD4C23778FF2BC89954E /* DashboardV2Repository.swift */; };
-		8E67BF695BFD43B1F40C6A89 /* PiggyPulseWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8833B32D19B195C8F1710402 /* PiggyPulseWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9514F846680B3E2DB7734D79 /* SubscriptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24113472B37FCBFA9F8BBB3B /* SubscriptionsViewModel.swift */; };
 		96D752B0E90525B83ED74702 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 725B407C3A39D1D4DC2DDFAA /* Foundation.framework */; };
 		9A3387EC3F3EB66039A8331F /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6A07769210E81EC2760287 /* AccountsListView.swift */; };
@@ -153,8 +150,12 @@
 		D01A17166265CD52858BAE16 /* NumberStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6209A42534C14F2167B98336 /* NumberStepperView.swift */; };
 		D2A6D9629A6935A89D85D271 /* DashboardV2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B04CD580FDD5146F488E5A /* DashboardV2Models.swift */; };
 		D5F42F028E63A5901C39662D /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EE29037A32BAB43B3ABD2 /* SubscriptionsView.swift */; };
+		DB01514D0CAB460F9D8C6FA8 /* EditPeriodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */; };
 		DD2D49A2851C67CF68991EF2 /* CashFlowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2273D6A650B1C2CE0C6C2D0E /* CashFlowCard.swift */; };
 		E19A30630C388F93AE202F85 /* CategorySubscriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BE9A123A2AFABE2938AF63 /* CategorySubscriptionSection.swift */; };
+		E1C0A00000000005BBBB0005 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = E1C0A00000000003BBBB0003 /* Sentry */; };
+		E1C0A00000000006BBBB0006 /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0A00000000007BBBB0007 /* SentryService.swift */; };
+		E1C0A0000000000DDDDD000D /* FeedbackSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0A0000000000EDDDD000E /* FeedbackSheet.swift */; };
 		E1F100020000000100000001 /* CryptoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000100000001 /* CryptoManager.swift */; };
 		E1F100020000000200000002 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000200000002 /* KeyManager.swift */; };
 		E1F100020000000300000003 /* EncryptedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000300000003 /* EncryptedModels.swift */; };
@@ -162,7 +163,6 @@
 		E1F100020000000500000005 /* EncryptedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F100010000000500000005 /* EncryptedDataStore.swift */; };
 		E6F24A9D2ABF9150AF47D601 /* GettingStartedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB38652D510C85ABFC99F87 /* GettingStartedCard.swift */; };
 		E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */; };
-		E9DFADC3D3A8F9181D5063B9 /* PiggyPulseWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B93C0AC887BFDD9A11818256 /* PiggyPulseWatch.app */; };
 		F6700F6B42CBDE524592AA2A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D1517FF30A220625F17AE2 /* Foundation.framework */; };
 		F9D517BB4070E270736EE1D8 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42006A1DBA74372FFFB8EFB /* SubscriptionDetailView.swift */; };
 		FDD9598DA080E89DFD23C7E3 /* CategoriesStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125697D5718FA1710F492888 /* CategoriesStepView.swift */; };
@@ -186,13 +186,6 @@
 			remoteGlobalIDString = 020853A62F5898F7004E2FD4;
 			remoteInfo = PiggyPulse;
 		};
-		BFFC7CBCE075F54046B3D328 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1344D5D7D5E0F17BD64E0B74;
-			remoteInfo = PiggyPulseWatch;
-		};
 		CDEB719E417BB2D60847EBCD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
@@ -200,38 +193,9 @@
 			remoteGlobalIDString = F871A6718F83B5F206CE0CC7;
 			remoteInfo = PiggyPulseWatchWidgets;
 		};
-		D3E593127326AB4D98EBA674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0208539F2F5898F7004E2FD4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1FF08A46BBB33609254AF57C;
-			remoteInfo = PiggyPulseWidgets;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1D3DCDDB667F3891F0A84437 /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				E9DFADC3D3A8F9181D5063B9 /* PiggyPulseWatch.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		35CCA5029CCC9F54098AB4A2 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				8E67BF695BFD43B1F40C6A89 /* PiggyPulseWidgets.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		63513C9C838A977655700262 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,7 +228,6 @@
 		027B34752F5B324000E96DF6 /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		027B34782F5B325500E96DF6 /* BudgetPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetPlanView.swift; sourceTree = "<group>"; };
 		027B347A2F5B425F00E96DF6 /* PeriodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailView.swift; sourceTree = "<group>"; };
-		DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPeriodSheet.swift; sourceTree = "<group>"; };
 		027B347C2F5B463D00E96DF6 /* PeriodSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSchedule.swift; sourceTree = "<group>"; };
 		027B347E2F5B466B00E96DF6 /* AutoCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCreationView.swift; sourceTree = "<group>"; };
 		027B34802F5B4A2900E96DF6 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -390,8 +353,13 @@
 		CDC4C0CEDA71C0DDB386DB28 /* EmojiPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		CE6A07769210E81EC2760287 /* AccountsListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
 		D3D51332D241F3AA3E677D80 /* WidgetAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetAPIClient.swift; sourceTree = "<group>"; };
+		DB01514D0CAB460F9D8C6FA9 /* EditPeriodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPeriodSheet.swift; sourceTree = "<group>"; };
 		DD4606778C5D507AC02A1B6D /* WidgetTokenStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetTokenStore.swift; sourceTree = "<group>"; };
 		DEC8F45593269B73F9767AA8 /* AppTips.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppTips.swift; sourceTree = "<group>"; };
+		E1C0A00000000007BBBB0007 /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
+		E1C0A00000000008CCCC0008 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		E1C0A00000000009CCCC0009 /* Secrets.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.sample; sourceTree = "<group>"; };
+		E1C0A0000000000EDDDD000E /* FeedbackSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSheet.swift; sourceTree = "<group>"; };
 		E1F100010000000100000001 /* CryptoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoManager.swift; sourceTree = "<group>"; };
 		E1F100010000000200000002 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		E1F100010000000300000003 /* EncryptedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedModels.swift; sourceTree = "<group>"; };
@@ -423,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0219877C2F9A4AAC00A4D719 /* Argon2Kit in Frameworks */,
+				E1C0A00000000005BBBB0005 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +439,7 @@
 		0208539E2F5898F7004E2FD4 = {
 			isa = PBXGroup;
 			children = (
+				E1C0A0000000000ACCCC000A /* Config */,
 				02F038C62F598D2B008DD1E7 /* Features */,
 				02AAAAAA2F5B6D5900E96DF7 /* Localizable.xcstrings */,
 				02F038BE2F58E9D3008DD1E7 /* PiggyPulse-Info.plist */,
@@ -701,6 +671,7 @@
 				027B34A62F5B647B00E96DF6 /* EditProfileSheet.swift */,
 				027B34982F5B4EB200E96DF6 /* ChangePasswordSheet.swift */,
 				FE0DA1C72F830A0000ABCDEF /* DeleteAccountSheet.swift */,
+				E1C0A0000000000EDDDD000E /* FeedbackSheet.swift */,
 				027B34962F5B4E9E00E96DF6 /* SettingsView.swift */,
 			);
 			path = Views;
@@ -729,6 +700,7 @@
 			children = (
 				027B34B62F5B764C00E96DF6 /* CurrencyHelper.swift */,
 				9D345ACC7079F29AADBABDE4 /* DateHelper.swift */,
+				E1C0A00000000007BBBB0007 /* SentryService.swift */,
 				AFCD87BCA0CF65E222473B43 /* WatchSessionManager.swift */,
 			);
 			path = Utilities;
@@ -1135,6 +1107,15 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		E1C0A0000000000ACCCC000A /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				E1C0A00000000008CCCC0008 /* Secrets.xcconfig */,
+				E1C0A00000000009CCCC0009 /* Secrets.xcconfig.sample */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		E1F100030000000600000006 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
@@ -1157,18 +1138,16 @@
 				020853A32F5898F7004E2FD4 /* Sources */,
 				020853A42F5898F7004E2FD4 /* Frameworks */,
 				020853A52F5898F7004E2FD4 /* Resources */,
-				1D3DCDDB667F3891F0A84437 /* Embed Watch Content */,
-				35CCA5029CCC9F54098AB4A2 /* Embed App Extensions */,
+				E1C0A0000000000BCCCC000B /* Upload dSYMs to Sentry */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D11FB25AF7ED16B1140613EC /* PBXTargetDependency */,
-				439A081628F32F8AA576045C /* PBXTargetDependency */,
 			);
 			name = PiggyPulse;
 			packageProductDependencies = (
 				E1C0A00000000001AAAA0001 /* Argon2Kit */,
+				E1C0A00000000003BBBB0003 /* Sentry */,
 			);
 			productName = PiggyPulse;
 			productReference = 020853A72F5898F7004E2FD4 /* PiggyPulse.app */;
@@ -1292,12 +1271,18 @@
 			knownRegions = (
 				en,
 				"pt-BR",
+				"pt-PT",
+				"es-ES",
+				"nl-NL",
+				"de-DE",
+				"fr-FR",
 				Base,
 			);
 			mainGroup = 0208539E2F5898F7004E2FD4;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E1C0A00000000002AAAA0002 /* XCRemoteSwiftPackageReference "Argon2Kit" */,
+				E1C0A00000000004BBBB0004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 020853A82F5898F7004E2FD4 /* Products */;
@@ -1321,7 +1306,6 @@
 			files = (
 				02BBBBBB2F5B6D5900E96DF7 /* Localizable.xcstrings in Resources */,
 				027B34B12F5B6D5900E96DF6 /* LaunchScreen.storyboard in Resources */,
-				02F038E72F5B2110008DD1E7 /* PeriodsViewModel.swift in Resources */,
 				02F038BD2F58E87A008DD1E7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1360,6 +1344,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E1C0A0000000000BCCCC000B /* Upload dSYMs to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${CONFIGURATION_BUILD_DIR}/Sentry.framework.dSYM",
+			);
+			name = "Upload dSYMs to Sentry";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$CONFIGURATION\" = \"Debug\" ]; then\n  echo \"Sentry: skipping dSYM upload for Debug\"\n  exit 0\nfi\n\n# Xcode does not copy dSYMs from SPM binary frameworks (like Sentry.framework)\n# into the archive's dSYMs folder. Mirror them in so the archive is complete\n# and sentry-cli can find every dSYM it needs.\nif [ -n \"${CONFIGURATION_BUILD_DIR:-}\" ] && [ -n \"${DWARF_DSYM_FOLDER_PATH:-}\" ]; then\n  for DSYM in \"${CONFIGURATION_BUILD_DIR}\"/*.dSYM; do\n    [ -d \"$DSYM\" ] || continue\n    NAME=$(basename \"$DSYM\")\n    if [ ! -d \"${DWARF_DSYM_FOLDER_PATH}/${NAME}\" ]; then\n      cp -R \"$DSYM\" \"${DWARF_DSYM_FOLDER_PATH}/\"\n      echo \"Sentry: copied ${NAME} into archive dSYMs\"\n    fi\n  done\nfi\n\nif [ -z \"${SENTRY_AUTH_TOKEN:-}\" ] || [ -z \"${SENTRY_ORG:-}\" ] || [ -z \"${SENTRY_PROJECT:-}\" ]; then\n  echo \"warning: Sentry credentials missing in Config/Secrets.xcconfig — skipping dSYM upload\"\n  exit 0\nfi\n\nexport PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\n\nif ! command -v sentry-cli >/dev/null 2>&1; then\n  echo \"warning: sentry-cli not installed (run: brew install getsentry/tools/sentry-cli) — skipping dSYM upload\"\n  exit 0\nfi\n\nsentry-cli debug-files upload --auth-token \"$SENTRY_AUTH_TOKEN\" --org \"$SENTRY_ORG\" --project \"$SENTRY_PROJECT\" \"$DWARF_DSYM_FOLDER_PATH\" || echo \"warning: Sentry dSYM upload failed\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		020853A32F5898F7004E2FD4 /* Sources */ = {
@@ -1429,6 +1437,7 @@
 				02F038B02F58DFCD008DD1E7 /* TokenManager.swift in Sources */,
 				027B34992F5B4EB300E96DF6 /* ChangePasswordSheet.swift in Sources */,
 				FE0DA1C82F830A0000ABCDEF /* DeleteAccountSheet.swift in Sources */,
+				E1C0A0000000000DDDDD000D /* FeedbackSheet.swift in Sources */,
 				027B34892F5B4AA700E96DF6 /* AccountsView.swift in Sources */,
 				027B34A12F5B532600E96DF6 /* AddAccountSheet.swift in Sources */,
 				02F038C02F5984DF008DD1E7 /* RegisterView.swift in Sources */,
@@ -1488,6 +1497,7 @@
 				E7A4170D7FC43AEA8D395C5A /* AdaptiveWidgetGrid.swift in Sources */,
 				CE79EDB74AD040EA1D5E4D95 /* WideLayoutModifier.swift in Sources */,
 				5FB95914B73451D6E74836DA /* WatchSessionManager.swift in Sources */,
+				E1C0A00000000006BBBB0006 /* SentryService.swift in Sources */,
 				2F37BEC59AF9A515A9F9AB85 /* WidgetTokenStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1564,28 +1574,17 @@
 			target = F871A6718F83B5F206CE0CC7 /* PiggyPulseWatchWidgets */;
 			targetProxy = CDEB719E417BB2D60847EBCD /* PBXContainerItemProxy */;
 		};
-		439A081628F32F8AA576045C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PiggyPulseWidgets;
-			target = 1FF08A46BBB33609254AF57C /* PiggyPulseWidgets */;
-			targetProxy = D3E593127326AB4D98EBA674 /* PBXContainerItemProxy */;
-		};
 		AA00000C000000000000AA0C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 020853A62F5898F7004E2FD4 /* PiggyPulse */;
 			targetProxy = AA00000D000000000000AA0D /* PBXContainerItemProxy */;
-		};
-		D11FB25AF7ED16B1140613EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PiggyPulseWatch;
-			target = 1344D5D7D5E0F17BD64E0B74 /* PiggyPulseWatch */;
-			targetProxy = BFFC7CBCE075F54046B3D328 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		020853B02F5898F9004E2FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1C0A00000000008CCCC0008 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				API_BASE_URL = "http://localhost:8000/v2";
@@ -1624,7 +1623,7 @@
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1654,6 +1653,7 @@
 		};
 		020853B12F5898F9004E2FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1C0A00000000008CCCC0008 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				API_BASE_URL = "https://api.piggy-pulse.com/v2";
@@ -1692,7 +1692,7 @@
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1716,7 +1716,6 @@
 		020853B32F5898F9004E2FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				API_BASE_URL = "https://api.piggy-pulse.com/v2";
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1741,7 +1740,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.piggypulse.ios$(PRODUCT_BUNDLE_IDENTIFIER_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1786,7 +1785,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.piggypulse.ios$(PRODUCT_BUNDLE_IDENTIFIER_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1806,6 +1805,7 @@
 		};
 		02948E832F912E2C00694014 /* Staging */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1C0A00000000008CCCC0008 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				API_BASE_URL = "https://staging-api.piggy-pulse.com/v2";
@@ -1844,7 +1844,7 @@
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1894,7 +1894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.piggypulse.ios$(PRODUCT_BUNDLE_IDENTIFIER_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2368,6 +2368,14 @@
 				minimumVersion = 0.1.1;
 			};
 		};
+		E1C0A00000000004BBBB0004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2375,6 +2383,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E1C0A00000000002AAAA0002 /* XCRemoteSwiftPackageReference "Argon2Kit" */;
 			productName = Argon2Kit;
+		};
+		E1C0A00000000003BBBB0003 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1C0A00000000004BBBB0004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

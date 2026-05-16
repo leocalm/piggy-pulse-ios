@@ -1,0 +1,40 @@
+wing: piggy_pulse_ios
+rooms:
+- name: piggypulse.xcodeproj
+  description: Files from PiggyPulse.xcodeproj/
+- name: design
+  description: Files from Design/
+- name: core
+  description: Files from Core/
+- name: app
+  description: Files from App/
+- name: piggypulsewatch
+  description: Files from PiggyPulseWatch/
+- name: features
+  description: Files from Features/
+- name: assets.xcassets
+  description: Files from Assets.xcassets/
+- name: shared
+  description: Files from Shared/
+- name: piggypulsewidgets
+  description: Files from PiggyPulseWidgets/
+- name: documentation
+  description: Files from docs/
+- name: piggypulseuitests
+  description: Files from PiggyPulseUITests/
+- name: piggypulsetests
+  description: Files from PiggyPulseTests/
+- name: scripts
+  description: Files from scripts/
+- name: backend
+  description: Files from Models/
+- name: frontend
+  description: Files from Views/
+- name: configuration
+  description: Files from Settings/
+- name: costs
+  description: Files from Budget/
+- name: testing
+  description: Files from Tests/
+- name: general
+  description: Files that don't fit other rooms
