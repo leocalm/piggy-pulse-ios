@@ -24,6 +24,13 @@ final class ScreenshotDemoDataTests: XCTestCase {
         XCTAssertEqual(first.allTransactions.map(\.amount), second.allTransactions.map(\.amount))
     }
 
+    func testDemoTransactionsUsePositiveDisplayAmounts() {
+        for locale in ScreenshotLocaleID.allCases {
+            let profile = ScreenshotDemoCatalog.profile(for: locale)
+            XCTAssertTrue(profile.allTransactions.allSatisfy { $0.amount >= 0 }, locale.rawValue)
+        }
+    }
+
     func testScreenshotModeIsOffByDefaultDuringUnitTests() {
         XCTAssertNil(ScreenshotModeConfiguration.current())
     }

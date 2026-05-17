@@ -74,7 +74,7 @@ It includes:
 
 The data is applied to the existing decrypted in-memory data store only when screenshot mode is explicitly enabled.
 
-The period configuration screenshot uses the app's existing localized automatic-period labels. The current iOS app does not expose a carry-over category budget setting, so Phase 1 does not add one to the screenshot state.
+The period configuration screenshot uses the app's existing localized `AutoCreationView` form with deterministic day-of-month settings. The current iOS app does not expose a carry-over category budget setting, so Phase 1 does not add one to the screenshot state.
 
 ## Adding A Locale
 

@@ -19,6 +19,22 @@ struct AutoCreationView: View {
     @State private var namePattern = "{MONTH} {YEAR}"
     @State private var generateAhead = 3
     @State private var isSaving = false
+    private let screenshotSchedule: PeriodSchedule?
+
+    init(screenshotSchedule: PeriodSchedule? = nil) {
+        self.screenshotSchedule = screenshotSchedule
+        _schedule = State(initialValue: screenshotSchedule)
+        _isLoading = State(initialValue: screenshotSchedule == nil)
+        _isDisabled = State(initialValue: false)
+        _recurrenceMethod = State(initialValue: screenshotSchedule?.recurrenceMethod ?? "dayOfMonth")
+        _startDay = State(initialValue: screenshotSchedule?.startDayOfTheMonth ?? 1)
+        _durationValue = State(initialValue: screenshotSchedule?.periodDuration ?? 1)
+        _durationUnit = State(initialValue: screenshotSchedule?.durationUnit ?? "months")
+        _saturdayAdj = State(initialValue: screenshotSchedule?.saturdayPolicy ?? "keep")
+        _sundayAdj = State(initialValue: screenshotSchedule?.sundayPolicy ?? "keep")
+        _namePattern = State(initialValue: screenshotSchedule?.namePattern ?? "{MONTH} {YEAR}")
+        _generateAhead = State(initialValue: screenshotSchedule?.generateAhead ?? 3)
+    }
 
     var body: some View {
         ScrollView {
@@ -41,6 +57,7 @@ struct AutoCreationView: View {
         .background(Color.ppBackground)
         .navigationTitle(String(localized: "nav.autoCreation"))
         .task {
+            guard screenshotSchedule == nil else { return }
             await loadSchedule()
         }
     }

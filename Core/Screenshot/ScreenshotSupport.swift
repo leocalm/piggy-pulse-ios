@@ -520,7 +520,7 @@ private struct ScreenshotDemoBuilder {
         func add(_ date: String, _ amount: Int64, _ description: String, _ category: CategoryListItem, _ from: AccountListItem, _ to: AccountListItem? = nil, _ vendor: VendorListItem? = nil) {
             items.append(Transaction(
                 id: uuid(700, index),
-                amount: amount,
+                amount: category.type == "income" ? amount : abs(amount),
                 description: description,
                 date: date,
                 transactionType: to == nil ? "regular" : "transfer",
@@ -724,9 +724,7 @@ struct ScreenshotStateView: View {
             case .transactions:
                 TransactionsView()
             case .periodConfiguration:
-                NavigationStack {
-                    ScreenshotPeriodConfigurationView(profile: configuration.profile)
-                }
+                ScreenshotPeriodConfigurationView()
             case .categories:
                 NavigationStack {
                     CategoriesView()
@@ -738,65 +736,35 @@ struct ScreenshotStateView: View {
 }
 
 struct ScreenshotPeriodConfigurationView: View {
-    @Environment(\.themeManager) private var theme
-    let profile: ScreenshotDemoProfile
+    enum Route: Hashable {
+        case autoCreation
+    }
+
+    @State private var path: [Route] = [.autoCreation]
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: PPSpacing.xl) {
-                VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    HStack(spacing: PPSpacing.sm) {
-                        Circle()
-                            .fill(theme.tertiary)
-                            .frame(width: 9, height: 9)
-                        Text(String(localized: "periods.autoGeneration.active"))
-                            .font(.ppCaption)
-                            .fontWeight(.semibold)
-                            .foregroundColor(theme.tertiary)
+        NavigationStack(path: $path) {
+            Color.ppBackground
+                .ignoresSafeArea()
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .autoCreation:
+                        AutoCreationView(screenshotSchedule: Self.schedule)
                     }
-
-                    Text(profile.content.periodScheduleName)
-                        .font(.ppTitle)
-                        .foregroundColor(.ppTextPrimary)
-
-                    Text(String(localized: "periods.autoCreationDesc"))
-                        .font(.ppCallout)
-                        .foregroundColor(.ppTextSecondary)
                 }
-                .padding(PPSpacing.lg)
-                .background(Color.ppCard)
-                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
-
-                VStack(alignment: .leading, spacing: PPSpacing.md) {
-                    settingRow(String(localized: "autoCreation.recurrenceMethod"), profile.content.automaticPeriodFrequency)
-                    settingRow(String(localized: "field.startDate"), "2026-05-25")
-                    settingRow(String(localized: "field.duration"), String(localized: "periods.daysCount \(14)"))
-                    settingRow(String(localized: "periods.autoCreation"), String(localized: "periods.enabled"))
-                    settingRow(String(localized: "field.generateAhead"), String(localized: "periods.daysCount \(3)"))
-                }
-                .padding(PPSpacing.lg)
-                .background(Color.ppCard)
-                .clipShape(RoundedRectangle(cornerRadius: PPRadius.lg))
-                .overlay(RoundedRectangle(cornerRadius: PPRadius.lg).stroke(Color.ppBorder, lineWidth: 1))
-            }
-            .padding(PPSpacing.lg)
         }
-        .background(Color.ppBackground)
-        .navigationTitle(String(localized: "nav.autoCreation"))
     }
 
-    private func settingRow(_ title: String, _ value: String) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(title)
-                .font(.ppCallout)
-                .foregroundColor(.ppTextSecondary)
-            Spacer(minLength: PPSpacing.lg)
-            Text(value)
-                .font(.ppHeadline)
-                .foregroundColor(.ppTextPrimary)
-                .multilineTextAlignment(.trailing)
-        }
-        .padding(.vertical, PPSpacing.sm)
-    }
+    private static let schedule = PeriodSchedule(
+        id: UUID(uuidString: "00000000-0500-0000-0500-000000000001")!,
+        scheduleType: "automatic",
+        recurrenceMethod: "dayOfMonth",
+        startDayOfTheMonth: 25,
+        periodDuration: 1,
+        durationUnit: "months",
+        saturdayPolicy: "keep",
+        sundayPolicy: "keep",
+        namePattern: "{MONTH} {YEAR}",
+        generateAhead: 3
+    )
 }
