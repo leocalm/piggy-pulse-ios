@@ -7,7 +7,9 @@ struct RootView: View {
     var body: some View {
         ZStack {
             Group {
-                if appState.isLoading {
+                if let screenshotConfiguration = appState.screenshotConfiguration {
+                    ScreenshotStateView(configuration: screenshotConfiguration)
+                } else if appState.isLoading {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Color.ppBackground)

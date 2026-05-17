@@ -20,6 +20,9 @@ final class AppState: ObservableObject {
     @Published var currencyCode: String = "EUR"
     @Published var currencyId: UUID?
     @Published var isEncryptionUnlocked = false
+    @Published var screenshotConfiguration: ScreenshotModeConfiguration?
+
+    var isScreenshotMode: Bool { screenshotConfiguration != nil }
 
     var currencySymbol: String {
         Locale.availableIdentifiers
@@ -142,9 +145,23 @@ final class AppState: ObservableObject {
         self.isAuthenticated = tm.isAuthenticated
         loadTheme()
         WatchSessionManager.shared.activate()
+
+        if let screenshotResult = ScreenshotModeConfiguration.current() {
+            switch screenshotResult {
+            case .success(let configuration):
+                applyScreenshotMode(configuration)
+            case .failure(let message):
+                fatalError(message)
+            }
+        }
     }
 
     func checkAuth() async {
+        if isScreenshotMode {
+            isLoading = false
+            return
+        }
+
         let token = tokenManager.getAccessToken()
 
         guard token != nil else {
@@ -200,6 +217,8 @@ final class AppState: ObservableObject {
     }
 
     func scheduleNotifications() async {
+        guard !isScreenshotMode else { return }
+
         do {
             let periods = try await periodRepository.fetchPeriods()
             try await notificationScheduler.scheduleAll(periods: periods, overlays: [])
@@ -239,5 +258,26 @@ final class AppState: ObservableObject {
         isEncryptionUnlocked = false
         isBiometricLocked = false
         biometricAuthFailed = false
+    }
+
+    private func applyScreenshotMode(_ configuration: ScreenshotModeConfiguration) {
+        screenshotConfiguration = configuration
+        isAuthenticated = true
+        isLoading = false
+        onboardingCompleted = true
+        isEncryptionUnlocked = true
+        isBiometricLocked = false
+        currentUser = User(
+            id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+            name: "PiggyPulse Demo",
+            email: "demo@piggypulse.local",
+            currency: configuration.profile.content.currency,
+            twoFactorEnabled: true,
+            onboardingStatus: "completed"
+        )
+        currencyCode = configuration.profile.content.currency
+        selectedPeriod = configuration.profile.activePeriod
+        themeManager.applyTransientTheme(configuration.stateID.theme, appearanceMode: .dark)
+        dataStore.applyScreenshotProfile(configuration.profile)
     }
 }

@@ -56,6 +56,28 @@ final class TransactionsViewModel: ObservableObject {
             try? await dataStore.loadAll(periodId: periodId)
         }
 
+        if dataStore.isScreenshotDemoData {
+            var filtered = dataStore.periodTransactions.sorted { lhs, rhs in
+                if lhs.date == rhs.date { return lhs.id.uuidString > rhs.id.uuidString }
+                return lhs.date > rhs.date
+            }
+            if let dirValue = selectedDirection.queryValue {
+                filtered = filtered.filter { tx in
+                    switch dirValue {
+                    case "income": return tx.category.type == "income"
+                    case "expense": return tx.category.type == "expense"
+                    case "transfer": return tx.toAccount != nil
+                    default: return true
+                    }
+                }
+            }
+            transactions = filtered
+            nextCursor = nil
+            hasMore = false
+            isLoading = false
+            return
+        }
+
         do {
             let response = try await repository.fetchTransactions(
                 periodId: periodId,

@@ -216,6 +216,14 @@ struct PeriodSelectorSidebarRow: View {
         }
         .task(id: appState.isAuthenticated) {
             if appState.isAuthenticated {
+                if let profile = appState.screenshotConfiguration?.profile {
+                    periods = profile.periods
+                    if appState.selectedPeriod == nil {
+                        appState.selectedPeriod = profile.activePeriod
+                    }
+                    return
+                }
+
                 let repo = PeriodRepository(apiClient: appState.apiClient)
                 periods = (try? await repo.fetchPeriods()) ?? []
                 if appState.selectedPeriod == nil {

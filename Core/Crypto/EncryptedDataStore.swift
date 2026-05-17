@@ -10,6 +10,7 @@ final class EncryptedDataStore: ObservableObject {
     @Published var targets: [CategoryTarget] = []
     @Published var periodTransactions: [Transaction] = []
     @Published var isLoaded = false
+    @Published var isScreenshotDemoData = false
 
     private let apiClient: APIClient
     private let decryptionService: DecryptionService
@@ -63,6 +64,7 @@ final class EncryptedDataStore: ObservableObject {
         targets = []
         periodTransactions = []
         isLoaded = false
+        isScreenshotDemoData = false
     }
 
     // MARK: - Local computation (replaces retired server endpoints)

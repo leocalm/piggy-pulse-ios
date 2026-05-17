@@ -132,6 +132,8 @@
 		AA00001E000000000000AA1E /* PasswordStrengthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F000000000000AA1F /* PasswordStrengthBar.swift */; };
 		AA100001000000000000BB01 /* WelcomeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002000000000000BB02 /* WelcomeStepView.swift */; };
 		AA100003000000000000BB03 /* CurrencyStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004000000000000BB04 /* CurrencyStepView.swift */; };
+		AA200002000000000000CC02 /* ScreenshotSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA200001000000000000CC01 /* ScreenshotSupport.swift */; };
+		AA200004000000000000CC04 /* ScreenshotDemoDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA200003000000000000CC03 /* ScreenshotDemoDataTests.swift */; };
 		AD39A29ABDC2072820FB52A9 /* WatchAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7887857EDA414E961916B54B /* WatchAPIClient.swift */; };
 		AD3A592A0E854B3603816430 /* WidgetDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C6C5B6DE4558721E8C6FCA /* WidgetDefinition.swift */; };
 		AD4563FAC47738BC583B3A91 /* PeriodStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA6862EBC54B090D8654EB /* PeriodStepView.swift */; };
@@ -342,6 +344,8 @@
 		AA00001F000000000000AA1F /* PasswordStrengthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrengthBar.swift; sourceTree = "<group>"; };
 		AA100002000000000000BB02 /* WelcomeStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeStepView.swift; sourceTree = "<group>"; };
 		AA100004000000000000BB04 /* CurrencyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CurrencyStepView.swift; sourceTree = "<group>"; };
+		AA200001000000000000CC01 /* ScreenshotSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotSupport.swift; sourceTree = "<group>"; };
+		AA200003000000000000CC03 /* ScreenshotDemoDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotDemoDataTests.swift; sourceTree = "<group>"; };
 		AF8F77F7AEBF7471F481A14F /* AdaptiveWidgetGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveWidgetGrid.swift; sourceTree = "<group>"; };
 		AFCD87BCA0CF65E222473B43 /* WatchSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		B3742CEFE751DF09D6519AB4 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -531,6 +535,7 @@
 		02218DFB2F589B3500E8DCEF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AA200005000000000000CC05 /* Screenshot */,
 				AA00000E000000000000AA0E /* Notifications */,
 				AA000019000000000000AA19 /* Biometrics */,
 				E1F100030000000600000006 /* Crypto */,
@@ -540,6 +545,14 @@
 				02218DFC2F589B3C00E8DCEF /* Models */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		AA200005000000000000CC05 /* Screenshot */ = {
+			isa = PBXGroup;
+			children = (
+				AA200001000000000000CC01 /* ScreenshotSupport.swift */,
+			);
+			path = Screenshot;
 			sourceTree = "<group>";
 		};
 		02218DFC2F589B3C00E8DCEF /* Models */ = {
@@ -1045,6 +1058,7 @@
 				AA000003000000000000AA03 /* NotificationPreferencesTests.swift */,
 				AA000013000000000000AA13 /* NotificationSchedulerTests.swift */,
 				AA000017000000000000AA17 /* BiometricPreferenceTests.swift */,
+				AA200003000000000000CC03 /* ScreenshotDemoDataTests.swift */,
 			);
 			path = PiggyPulseTests;
 			sourceTree = "<group>";
@@ -1383,6 +1397,7 @@
 				02F038E82F5B2146008DD1E7 /* PeriodsViewModel.swift in Sources */,
 				02F038C92F598D78008DD1E7 /* PeriodSelectorBar.swift in Sources */,
 				02F038DE2F59A195008DD1E7 /* TransactionsViewModel.swift in Sources */,
+				AA200002000000000000CC02 /* ScreenshotSupport.swift in Sources */,
 				027B346A2F5B21DA00E96DF6 /* PeriodsView.swift in Sources */,
 				027B34AB2F5B699300E96DF6 /* EditAccountSheet.swift in Sources */,
 				027B34912F5B4ADE00E96DF6 /* VendorsView.swift in Sources */,
@@ -1531,6 +1546,7 @@
 				AA000004000000000000AA04 /* NotificationPreferencesTests.swift in Sources */,
 				AA000014000000000000AA14 /* NotificationSchedulerTests.swift in Sources */,
 				AA000018000000000000AA18 /* BiometricPreferenceTests.swift in Sources */,
+				AA200004000000000000CC04 /* ScreenshotDemoDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
