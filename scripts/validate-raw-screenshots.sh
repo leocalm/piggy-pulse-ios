@@ -9,6 +9,8 @@ SMOKE=0
 REQUESTED_DEVICE_FAMILY=""
 REQUESTED_LOCALE=""
 REQUESTED_STATE=""
+REQUESTED_IPHONE_DIMENSIONS="${SCREENSHOT_ACCEPTED_IPHONE_DIMENSIONS:-}"
+REQUESTED_IPAD_DIMENSIONS="${SCREENSHOT_ACCEPTED_IPAD_DIMENSIONS:-}"
 
 ALL_DEVICE_FAMILIES=("iphone" "ipad")
 ALL_LOCALES=("en-US" "en-GB" "pt-BR" "pt-PT" "es-ES" "fr-FR" "nl-NL" "de-DE")
@@ -22,6 +24,19 @@ ALL_STATES=(
 )
 SMOKE_LOCALES=("en-US" "pt-PT" "de-DE")
 SMOKE_STATES=("01-dashboard-nebula" "04-transactions" "06-categories")
+DEFAULT_IPHONE_DIMENSIONS=(
+    "1320x2868" # iPhone 17 Pro Max / 16 Pro Max, 6.9"
+    "1290x2796" # iPhone 15 Pro Max / 15 Plus class, 6.7"
+    "1179x2556" # iPhone 17/16/15 Pro class
+)
+DEFAULT_IPAD_DIMENSIONS=(
+    "2064x2752" # iPad Pro/Air 13"
+    "2048x2732" # iPad Pro 13" / 12.9"
+    "1488x2266" # iPad Pro 11" M5/M4
+    "1668x2420" # iPad Pro/Air 11"
+    "1668x2388" # iPad Pro 11"
+    "1640x2360" # iPad Air/mini class
+)
 
 usage() {
     cat <<USAGE
@@ -33,7 +48,13 @@ Options:
   --locale LOCALE           Validate only one locale.
   --state STATE             Validate only one screenshot state.
   --output-dir DIR          Override output directory. Default: app-store/raw-screenshots.
+  --iphone-dimensions LIST  Override accepted iPhone dimensions, comma- or space-separated.
+  --ipad-dimensions LIST    Override accepted iPad dimensions, comma- or space-separated.
   -h, --help                Show this help.
+
+Environment overrides:
+  SCREENSHOT_ACCEPTED_IPHONE_DIMENSIONS  Accepted iPhone dimensions, comma- or space-separated.
+  SCREENSHOT_ACCEPTED_IPAD_DIMENSIONS    Accepted iPad dimensions, comma- or space-separated.
 USAGE
 }
 
@@ -57,6 +78,14 @@ while [[ $# -gt 0 ]]; do
             ;;
         --output-dir)
             OUTPUT_DIR="${2:-}"
+            shift 2
+            ;;
+        --iphone-dimensions)
+            REQUESTED_IPHONE_DIMENSIONS="${2:-}"
+            shift 2
+            ;;
+        --ipad-dimensions)
+            REQUESTED_IPAD_DIMENSIONS="${2:-}"
             shift 2
             ;;
         -h|--help)
@@ -88,6 +117,50 @@ validate_requested() {
         echo "Unsupported value: $requested" >&2
         exit 2
     fi
+}
+
+split_dimensions() {
+    local values="$1"
+    local normalized="${values//,/ }"
+    local dimensions=()
+    local dimension
+
+    for dimension in $normalized; do
+        dimensions+=("$dimension")
+    done
+
+    printf '%s\n' "${dimensions[@]}"
+}
+
+accepted_dimensions_for_family() {
+    local family="$1"
+
+    if [[ "$family" == "iphone" ]]; then
+        if [[ -n "$REQUESTED_IPHONE_DIMENSIONS" ]]; then
+            split_dimensions "$REQUESTED_IPHONE_DIMENSIONS"
+        else
+            printf '%s\n' "${DEFAULT_IPHONE_DIMENSIONS[@]}"
+        fi
+    else
+        if [[ -n "$REQUESTED_IPAD_DIMENSIONS" ]]; then
+            split_dimensions "$REQUESTED_IPAD_DIMENSIONS"
+        else
+            printf '%s\n' "${DEFAULT_IPAD_DIMENSIONS[@]}"
+        fi
+    fi
+}
+
+join_dimensions() {
+    local separator=""
+    local output=""
+    local dimension
+
+    for dimension in "$@"; do
+        output="$output$separator$dimension"
+        separator=", "
+    done
+
+    printf '%s' "$output"
 }
 
 png_dimensions() {
@@ -143,6 +216,11 @@ TOTAL=0
 for family in "${DEVICE_FAMILIES[@]}"; do
     family_dir="$OUTPUT_DIR/$family"
     expected_dimensions=""
+    family_accepted_dimensions=()
+    while IFS= read -r dimension; do
+        [[ -n "$dimension" ]] && family_accepted_dimensions+=("$dimension")
+    done < <(accepted_dimensions_for_family "$family")
+    accepted_dimensions_text="$(join_dimensions "${family_accepted_dimensions[@]}")"
 
     if [[ ! -d "$family_dir" ]]; then
         echo "Missing device folder: $family_dir" >&2
@@ -186,6 +264,11 @@ for family in "${DEVICE_FAMILIES[@]}"; do
                 echo "Could not read PNG dimensions: $file" >&2
                 ERRORS=$((ERRORS + 1))
                 continue
+            fi
+
+            if ! contains "$dimensions" "${family_accepted_dimensions[@]}"; then
+                echo "Unsupported dimensions for $family screenshot: $file got $dimensions; expected one of: $accepted_dimensions_text" >&2
+                ERRORS=$((ERRORS + 1))
             fi
 
             if [[ -z "$expected_dimensions" ]]; then

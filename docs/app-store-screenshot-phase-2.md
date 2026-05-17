@@ -169,7 +169,41 @@ Validation checks:
 - required screenshot filenames
 - PNG format
 - non-empty files
+- App Store-accepted raw screenshot dimensions
 - consistent image dimensions per device family
+
+Accepted iPhone portrait dimensions:
+
+- `1320x2868` for iPhone 17 Pro Max / 16 Pro Max 6.9-inch captures
+- `1290x2796` for 6.7-inch captures
+- `1179x2556` for modern non-Max iPhone captures
+
+Accepted iPad portrait dimensions:
+
+- `2064x2752` for iPad Pro/Air 13-inch captures
+- `2048x2732` for iPad Pro 13-inch / 12.9-inch captures
+- `1488x2266` for iPad Pro 11-inch M5/M4 captures
+- `1668x2420` for iPad Pro/Air 11-inch captures
+- `1668x2388` for iPad Pro 11-inch captures
+- `1640x2360` for iPad Air/mini class captures
+
+These defaults cover the simulator families selected by `scripts/capture-raw-screenshots.sh`. To override them for a future simulator/runtime:
+
+```bash
+SCREENSHOT_ACCEPTED_IPHONE_DIMENSIONS="1320x2868,1290x2796" \
+  ./scripts/validate-raw-screenshots.sh --device-family iphone
+
+SCREENSHOT_ACCEPTED_IPAD_DIMENSIONS="2064x2752,2048x2732" \
+  ./scripts/validate-raw-screenshots.sh --device-family ipad
+```
+
+The same overrides are also available as command options:
+
+```bash
+./scripts/validate-raw-screenshots.sh \
+  --device-family iphone \
+  --iphone-dimensions "1320x2868,1290x2796"
+```
 
 ## Phase 3 Handoff
 
