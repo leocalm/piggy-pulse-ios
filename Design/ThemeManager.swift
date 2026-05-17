@@ -8,11 +8,13 @@ import WidgetKit
 final class ThemeManager {
     private static let themeKey = "ppColorTheme"
     private static let modeKey = "appTheme"
+    private var persistenceSuspended = false
 
     // MARK: - Published State
 
     var colorTheme: ColorTheme {
         didSet {
+            guard !persistenceSuspended else { return }
             UserDefaults.standard.set(colorTheme.rawValue, forKey: Self.themeKey)
             updateAppIcon()
             WidgetTokenStore.save(colorTheme.rawValue, for: .colorTheme)
@@ -22,6 +24,7 @@ final class ThemeManager {
 
     var appearanceMode: AppearanceMode {
         didSet {
+            guard !persistenceSuspended else { return }
             UserDefaults.standard.set(appearanceMode.rawValue, forKey: Self.modeKey)
         }
     }
@@ -60,6 +63,14 @@ final class ThemeManager {
         // Sync theme to widget App Group
         WidgetTokenStore.save(colorTheme.rawValue, for: .colorTheme)
     }
+
+    func applyTransientTheme(_ theme: ColorTheme, appearanceMode: AppearanceMode) {
+        persistenceSuspended = true
+        colorTheme = theme
+        self.appearanceMode = appearanceMode
+        persistenceSuspended = false
+    }
+
     // MARK: - App Icon
 
     func updateAppIcon() {

@@ -534,7 +534,7 @@ struct CategoriesView: View {
         do {
             let store = appState.dataStore
             // Always reload to pick up mutations (create/edit/delete)
-            if let periodId = appState.selectedPeriod?.id {
+            if let periodId = appState.selectedPeriod?.id, !store.isScreenshotDemoData {
                 store.clear()
                 try await store.loadAll(periodId: periodId)
             }

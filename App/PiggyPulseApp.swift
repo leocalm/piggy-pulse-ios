@@ -10,7 +10,9 @@ struct PiggyPulseApp: App {
     private static let bgTaskIdentifier = "com.piggypulse.notifications.refresh"
 
     init() {
-        SentryService.start()
+        if !ScreenshotModeConfiguration.isRequested {
+            SentryService.start()
+        }
 
         #if DEBUG
         try? Tips.configure([.displayFrequency(.immediate)])
@@ -32,10 +34,13 @@ struct PiggyPulseApp: App {
             RootView()
                 .environmentObject(appState)
                 .environment(\.themeManager, appState.themeManager)
+                .environment(\.locale, Locale(identifier: appState.screenshotConfiguration?.localeID.foundationIdentifier ?? Locale.current.identifier))
                 .preferredColorScheme(appState.themeManager.colorScheme)
                 .task {
                     await appState.checkAuth()
-                    scheduleNextBackgroundRefresh()
+                    if !appState.isScreenshotMode {
+                        scheduleNextBackgroundRefresh()
+                    }
                 }
                 .onChange(of: scenePhase) { _, phase in
                     switch phase {
