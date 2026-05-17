@@ -36,6 +36,8 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 app-store/raw-screenshots/
+app-store/final-screenshots/
+app-store/figma-export-payload.json
 test-results/screenshots/
 deploy_to_phone.sh
 .superpowers/

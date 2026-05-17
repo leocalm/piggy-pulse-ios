@@ -1,0 +1,305 @@
+{
+  "fileKey": "J7z9DMAHQ1O7gsUoPt84Vj",
+  "workflow": "plugin-payload",
+  "layerNamingStatus": "base-templates-renamed",
+  "notes": [
+    "Base iPhone and iPad Figma template frames were inspected and renamed to stable appstore.* role names.",
+    "The payload workflow targets these base templates and can now identify title, subtitle, and screenshot slots without relying on visible copy or layer order.",
+    "Localized duplicate rows in the Figma file may still use legacy names; they are not used by the Phase 3 payload workflow."
+  ],
+  "requiredLayerNames": {
+    "standard": [
+      "appstore.title",
+      "appstore.subtitle",
+      "appstore.screenshot"
+    ],
+    "themes": [
+      "appstore.title",
+      "appstore.subtitle",
+      "appstore.screenshot.nebula",
+      "appstore.screenshot.electric-neon",
+      "appstore.screenshot.tropical"
+    ]
+  },
+  "locales": [
+    "en-US",
+    "en-GB",
+    "pt-BR",
+    "pt-PT",
+    "es-ES",
+    "fr-FR",
+    "nl-NL",
+    "de-DE"
+  ],
+  "rawStates": [
+    "01-dashboard-nebula",
+    "02-dashboard-electric-neon",
+    "03-dashboard-tropical",
+    "04-transactions",
+    "05-period-configuration",
+    "06-categories"
+  ],
+  "finalFrames": {
+    "dashboard": {
+      "outputFile": "01-dashboard.png",
+      "copyState": "01-dashboard-nebula",
+      "rawStates": [
+        "01-dashboard-nebula"
+      ]
+    },
+    "themes": {
+      "outputFile": "02-themes.png",
+      "copyState": "02-dashboard-electric-neon",
+      "rawStates": [
+        "01-dashboard-nebula",
+        "02-dashboard-electric-neon",
+        "03-dashboard-tropical"
+      ]
+    },
+    "transactions": {
+      "outputFile": "03-transactions.png",
+      "copyState": "04-transactions",
+      "rawStates": [
+        "04-transactions"
+      ]
+    },
+    "periods": {
+      "outputFile": "04-periods.png",
+      "copyState": "05-period-configuration",
+      "rawStates": [
+        "05-period-configuration"
+      ]
+    },
+    "categories": {
+      "outputFile": "05-categories.png",
+      "copyState": "06-categories",
+      "rawStates": [
+        "06-categories"
+      ]
+    }
+  },
+  "deviceFamilies": {
+    "iphone": {
+      "pageNodeId": "670:519",
+      "pageName": "iPhone App Store Frames",
+      "finalExportDimensions": "1290x2796",
+      "frames": {
+        "dashboard": {
+          "templateNodeId": "670:540",
+          "templateName": "01-Dashboard-6.7",
+          "currentLayers": {
+            "title": {
+              "id": "670:542",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "670:543",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "670:544",
+              "name": "appstore.screenshot",
+              "rawState": "01-dashboard-nebula"
+            }
+          }
+        },
+        "themes": {
+          "templateNodeId": "670:525",
+          "templateName": "02-Themes-6.7",
+          "currentLayers": {
+            "title": {
+              "id": "670:527",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "670:528",
+              "name": "appstore.subtitle"
+            },
+            "screenshots": {
+              "01-dashboard-nebula": {
+                "id": "670:529",
+                "name": "appstore.screenshot.nebula"
+              },
+              "02-dashboard-electric-neon": {
+                "id": "670:547",
+                "name": "appstore.screenshot.electric-neon"
+              },
+              "03-dashboard-tropical": {
+                "id": "670:546",
+                "name": "appstore.screenshot.tropical"
+              }
+            }
+          }
+        },
+        "transactions": {
+          "templateNodeId": "670:535",
+          "templateName": "03-Transactions-6.7",
+          "currentLayers": {
+            "title": {
+              "id": "670:537",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "670:538",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "670:539",
+              "name": "appstore.screenshot",
+              "rawState": "04-transactions"
+            }
+          }
+        },
+        "periods": {
+          "templateNodeId": "670:530",
+          "templateName": "04-Periods-6.7",
+          "currentLayers": {
+            "title": {
+              "id": "670:532",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "670:533",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "670:534",
+              "name": "appstore.screenshot",
+              "rawState": "05-period-configuration"
+            }
+          }
+        },
+        "categories": {
+          "templateNodeId": "670:520",
+          "templateName": "05-Categories-6.7",
+          "currentLayers": {
+            "title": {
+              "id": "670:521",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "670:522",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "670:523",
+              "name": "appstore.screenshot",
+              "rawState": "06-categories"
+            }
+          }
+        }
+      }
+    },
+    "ipad": {
+      "pageNodeId": "687:548",
+      "pageName": "iPad App Store Frames",
+      "finalExportDimensions": "2048x2732",
+      "frames": {
+        "dashboard": {
+          "templateNodeId": "691:2",
+          "templateName": "01-Dashboard-iPad",
+          "currentLayers": {
+            "title": {
+              "id": "691:4",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "691:5",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "691:6",
+              "name": "appstore.screenshot",
+              "rawState": "01-dashboard-nebula"
+            }
+          }
+        },
+        "themes": {
+          "templateNodeId": "691:17",
+          "templateName": "02-Themes-iPad",
+          "currentLayers": {
+            "title": {
+              "id": "691:19",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "691:20",
+              "name": "appstore.subtitle"
+            },
+            "screenshots": {
+              "01-dashboard-nebula": {
+                "id": "691:21",
+                "name": "appstore.screenshot.nebula"
+              },
+              "02-dashboard-electric-neon": {
+                "id": "691:22",
+                "name": "appstore.screenshot.electric-neon"
+              },
+              "03-dashboard-tropical": {
+                "id": "691:23",
+                "name": "appstore.screenshot.tropical"
+              }
+            }
+          }
+        },
+        "transactions": {
+          "templateNodeId": "691:7",
+          "templateName": "03-Transactions-iPad",
+          "currentLayers": {
+            "title": {
+              "id": "691:9",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "691:10",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "691:11",
+              "name": "appstore.screenshot",
+              "rawState": "04-transactions"
+            }
+          }
+        },
+        "periods": {
+          "templateNodeId": "691:12",
+          "templateName": "04-Periods-iPad",
+          "currentLayers": {
+            "title": {
+              "id": "691:14",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "691:15",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "691:16",
+              "name": "appstore.screenshot",
+              "rawState": "05-period-configuration"
+            }
+          }
+        },
+        "categories": {
+          "templateNodeId": "691:24",
+          "templateName": "05-Categories-iPad",
+          "currentLayers": {
+            "title": {
+              "id": "691:26",
+              "name": "appstore.title"
+            },
+            "subtitle": {
+              "id": "691:27",
+              "name": "appstore.subtitle"
+            },
+            "screenshot": {
+              "id": "691:28",
+              "name": "appstore.screenshot",
+              "rawState": "06-categories"
+            }
+          }
+        }
+      }
+    }
+  }
+}
