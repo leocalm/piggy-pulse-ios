@@ -35,6 +35,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+app-store/raw-screenshots/
+test-results/screenshots/
 deploy_to_phone.sh
 .superpowers/
 

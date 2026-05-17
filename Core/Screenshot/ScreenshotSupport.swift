@@ -55,6 +55,19 @@ enum ScreenshotStateID: String, CaseIterable, Identifiable {
             return .nebula
         }
     }
+
+    var screenshotAccessibilityIdentifier: String {
+        switch destination {
+        case .dashboard:
+            return "screenshot.dashboard"
+        case .transactions:
+            return "screenshot.transactions"
+        case .periodConfiguration:
+            return "screenshot.periodConfiguration"
+        case .categories:
+            return "screenshot.categories"
+        }
+    }
 }
 
 struct ScreenshotModeConfiguration {
@@ -732,6 +745,15 @@ struct ScreenshotStateView: View {
             }
         }
         .environmentObject(appState)
+        .accessibilityIdentifier(configuration.stateID.screenshotAccessibilityIdentifier)
+        .overlay(alignment: .topLeading) {
+            Text("screenshot.ready")
+                .font(.system(size: 1))
+                .foregroundColor(.clear)
+                .accessibilityIdentifier("screenshot.ready")
+                .accessibilityLabel("screenshot.ready")
+                .allowsHitTesting(false)
+        }
     }
 }
 
