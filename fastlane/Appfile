@@ -1,0 +1,5 @@
+app_identifier(ENV.fetch("APP_STORE_APP_IDENTIFIER", "com.piggypulse.ios"))
+
+apple_id(ENV["APP_STORE_CONNECT_APPLE_ID"]) if ENV["APP_STORE_CONNECT_APPLE_ID"]
+itc_team_id(ENV["APP_STORE_CONNECT_TEAM_ID"]) if ENV["APP_STORE_CONNECT_TEAM_ID"]
+team_id(ENV["APP_STORE_TEAM_ID"]) if ENV["APP_STORE_TEAM_ID"]

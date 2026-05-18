@@ -1,0 +1,1 @@
+Adicionamos traduções, monitoramento e melhorias no suporte a capturas da App Store.

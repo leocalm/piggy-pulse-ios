@@ -1,0 +1,1 @@
+presupuesto,control,gastos,finanzas,dinero,periodo,personalizado,planificador,ahorro,cuentas

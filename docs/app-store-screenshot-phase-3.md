@@ -1,39 +1,25 @@
 # App Store Screenshot Automation Phase 3
 
-Phase 3 prepares final App Store screenshot export from the existing PiggyPulse Figma App Store frames. Figma remains the source of truth for layout, typography, spacing, backgrounds, device framing, and visual design.
+Phase 3 generates final PiggyPulse App Store framed screenshots directly in code from the validated raw simulator screenshots captured in Phase 2.
 
-This phase does not recreate the frame design in code, generate App Store Connect uploads, or change production app behavior.
+This workflow does not open Figma, require a Figma token, upload to App Store Connect, or change production app behavior.
 
 ## Workflow Chosen
 
-This repo implements a Figma plugin payload workflow, not a custom frame renderer.
-
-The base iPhone and iPad Figma template frames have been renamed to stable `appstore.*` role names, so a Figma plugin can safely identify title, subtitle, and screenshot layers. The current Codex/Figma bridge can inspect and rename the file and prepare structured data, but it is not a reliable local-file exporter for final PNGs. The final export step still happens in Figma through a plugin workflow.
-
-The safe Phase 3 workflow is:
-
-```bash
-./scripts/prepare-figma-screenshot-payload.sh
-# Run/import app-store/figma-export-payload.json in the Figma plugin workflow.
-./scripts/validate-final-screenshots.sh
-```
-
-For the available Phase 2 smoke screenshots:
-
-```bash
-./scripts/prepare-figma-screenshot-payload.sh --smoke
-```
-
-## Prerequisites
-
-Generate and validate raw screenshots from Phase 2 first:
+The primary workflow is a local Python/Pillow frame generator:
 
 ```bash
 ./scripts/capture-raw-screenshots.sh
 ./scripts/validate-raw-screenshots.sh
+./scripts/generate-app-store-frames.sh
+./scripts/validate-final-screenshots.sh
 ```
 
-Expected raw screenshot input:
+The previous Figma payload workflow is no longer the primary Phase 3 path. `scripts/prepare-figma-screenshot-payload.sh` and `app-store/figma-frame-map.json` may remain useful as a legacy/manual reference, but final App Store frames are generated locally by `scripts/generate-app-store-frames.sh`.
+
+## Inputs
+
+Raw screenshots must exist under:
 
 ```text
 app-store/raw-screenshots/
@@ -52,180 +38,26 @@ Required locales:
 - `nl-NL`
 - `de-DE`
 
-## Figma File
+Required raw states:
 
-File key:
+- `01-dashboard-nebula`
+- `02-dashboard-electric-neon`
+- `03-dashboard-tropical`
+- `04-transactions`
+- `05-period-configuration`
+- `06-categories`
 
-```text
-J7z9DMAHQ1O7gsUoPt84Vj
-```
-
-File URL:
-
-```text
-https://www.figma.com/design/J7z9DMAHQ1O7gsUoPt84Vj/PiggyPulse
-```
-
-Frame mapping is stored in:
-
-```text
-app-store/figma-frame-map.json
-```
-
-## Figma Node Mapping
-
-iPhone page:
-
-```text
-670:519
-```
-
-iPhone template frames:
-
-- Dashboard: `670:540`
-- Themes: `670:525`
-- Transactions: `670:535`
-- Periods: `670:530`
-- Categories: `670:520`
-
-iPad page:
-
-```text
-687:548
-```
-
-iPad template frames:
-
-- Dashboard: `691:2`
-- Themes: `691:17`
-- Transactions: `691:7`
-- Periods: `691:12`
-- Categories: `691:24`
-
-## Template Layer Names
-
-The Phase 3 payload targets the base template frames listed above. Those templates now use these stable layer names.
-
-Standard frames:
-
-- `appstore.title`
-- `appstore.subtitle`
-- `appstore.screenshot`
-
-Themes frame:
-
-- `appstore.title`
-- `appstore.subtitle`
-- `appstore.screenshot.nebula`
-- `appstore.screenshot.electric-neon`
-- `appstore.screenshot.tropical`
-
-Localized duplicate rows in the Figma file may still use legacy layer names. They are not used by this workflow unless the frame map is changed to point at them.
-
-## Screenshot State Mapping
-
-There are six raw states and five final frames:
-
-- `01-dashboard-nebula` -> Dashboard frame and Themes Nebula slot
-- `02-dashboard-electric-neon` -> Themes Electric Neon slot
-- `03-dashboard-tropical` -> Themes Tropical slot
-- `04-transactions` -> Transactions frame
-- `05-period-configuration` -> Periods frame
-- `06-categories` -> Categories frame
-
-Final output names:
-
-- `01-dashboard.png`
-- `02-themes.png`
-- `03-transactions.png`
-- `04-periods.png`
-- `05-categories.png`
-
-## Frame Copy Mapping
-
-Localized title/subtitle copy is derived from the centralized Phase 1 Swift source:
+Localized title/subtitle copy is read from the centralized Phase 1 source:
 
 ```text
 Core/Screenshot/ScreenshotSupport.swift
 ```
 
-The payload generator reads `ScreenshotDemoBuilder.frameCopy`; it does not duplicate localized copy.
+The generator reads `ScreenshotDemoBuilder.frameCopy`; it does not duplicate localized frame copy.
 
-Frame copy mapping:
+## Output
 
-- Dashboard frame -> `01-dashboard-nebula`
-- Themes frame -> `02-dashboard-electric-neon`
-- Transactions frame -> `04-transactions`
-- Periods frame -> `05-period-configuration`
-- Categories frame -> `06-categories`
-
-If copy is missing for a locale/state, payload generation fails.
-
-## Payload Generation
-
-Generate the full Figma plugin payload:
-
-```bash
-./scripts/prepare-figma-screenshot-payload.sh
-```
-
-Generate a single locale/device payload:
-
-```bash
-./scripts/prepare-figma-screenshot-payload.sh \
-  --device-family iphone \
-  --locale en-US
-```
-
-Generate a single frame payload:
-
-```bash
-./scripts/prepare-figma-screenshot-payload.sh \
-  --device-family ipad \
-  --locale pt-PT \
-  --frame periods
-```
-
-Output:
-
-```text
-app-store/figma-export-payload.json
-```
-
-The payload includes:
-
-- Figma file key
-- page and template frame node IDs
-- target locale
-- localized title/subtitle
-- raw screenshot paths
-- expected final output path
-- expected final export dimensions
-- current layer inspection
-- required stable layer names
-
-Generated payloads are ignored by Git.
-
-## Plugin Consumption
-
-A Figma plugin should consume `app-store/figma-export-payload.json` and, for each item:
-
-1. Open the file `J7z9DMAHQ1O7gsUoPt84Vj`.
-2. Duplicate or target the listed template frame.
-3. Find role layers by the stable `appstore.*` names.
-4. Replace the screenshot layer fills with the referenced raw PNGs.
-5. Update `appstore.title` and `appstore.subtitle` with payload copy.
-6. Export the frame as PNG to the listed `outputPath`.
-
-For Themes frames, the plugin must use:
-
-- `appstore.screenshot.nebula` for `01-dashboard-nebula`
-- `appstore.screenshot.electric-neon` for `02-dashboard-electric-neon`
-- `appstore.screenshot.tropical` for `03-dashboard-tropical`
-
-## Final Output
-
-Expected final screenshot output:
+Final screenshots are written to:
 
 ```text
 app-store/final-screenshots/
@@ -236,6 +68,7 @@ app-store/final-screenshots/
       03-transactions.png
       04-periods.png
       05-categories.png
+    ...
   ipad/
     en-US/
       01-dashboard.png
@@ -243,9 +76,102 @@ app-store/final-screenshots/
       03-transactions.png
       04-periods.png
       05-categories.png
+    ...
 ```
 
-The same locale structure is expected for every required locale. Generated final screenshots are ignored by Git.
+Generated final screenshots are ignored by Git.
+
+## Frame Mapping
+
+There are six raw states and five final frames:
+
+- `01-dashboard.png` uses `01-dashboard-nebula`
+- `02-themes.png` uses `01-dashboard-nebula`, `02-dashboard-electric-neon`, and `03-dashboard-tropical`
+- `03-transactions.png` uses `04-transactions`
+- `04-periods.png` uses `05-period-configuration`
+- `05-categories.png` uses `06-categories`
+
+Frame copy mapping:
+
+- `01-dashboard.png` uses copy from `01-dashboard-nebula`
+- `02-themes.png` uses copy from `02-dashboard-electric-neon`
+- `03-transactions.png` uses copy from `04-transactions`
+- `04-periods.png` uses copy from `05-period-configuration`
+- `05-categories.png` uses copy from `06-categories`
+
+## Visual Design
+
+The generated frames use a polished dark PiggyPulse layout:
+
+- background: `#0D1117`
+- card: `#161B22`
+- primary: `#8B7EC8`
+- secondary: `#C48BA0`
+- tertiary: `#7CA8C4`
+
+Every final frame includes:
+
+- localized title and subtitle at the top
+- rounded screenshot cards
+- subtle shadows and accent glows
+- responsive text wrapping for longer localized copy
+- final output dimensions matching the raw App Store screenshot size for the device family
+
+The Themes frame places all three dashboard theme screenshots in one overlapping composition, with the center screenshot in front and no background card behind the devices.
+
+## Generate Final Frames
+
+Generate all locales and both device families:
+
+```bash
+./scripts/generate-app-store-frames.sh
+```
+
+Generate the smoke subset:
+
+```bash
+./scripts/generate-app-store-frames.sh --smoke
+```
+
+Generate one locale/device/frame:
+
+```bash
+./scripts/generate-app-store-frames.sh \
+  --device-family iphone \
+  --locale en-US \
+  --frame dashboard
+```
+
+Options:
+
+```text
+--smoke
+--device-family iphone|ipad
+--locale en-US|en-GB|pt-BR|pt-PT|es-ES|fr-FR|nl-NL|de-DE
+--frame dashboard|themes|transactions|periods|categories
+--input-dir app-store/raw-screenshots
+--output-dir app-store/final-screenshots
+--copy-source Core/Screenshot/ScreenshotSupport.swift
+--font-path /path/to/font.ttf
+```
+
+## Font Handling
+
+No font files are committed.
+
+By default, the generator uses macOS system fonts in this order:
+
+- SF Pro Display Semibold / SF Pro Text
+- SFNS
+- Arial fallback
+
+To force a specific local font:
+
+```bash
+APPSTORE_FRAME_FONT_PATH="/path/to/font.ttf" ./scripts/generate-app-store-frames.sh
+```
+
+The same value can be passed with `--font-path`.
 
 ## Validation
 
@@ -255,12 +181,10 @@ Validate final screenshots:
 ./scripts/validate-final-screenshots.sh
 ```
 
-Validate a subset:
+Validate the smoke subset:
 
 ```bash
-./scripts/validate-final-screenshots.sh \
-  --device-family iphone \
-  --locale en-US
+./scripts/validate-final-screenshots.sh --smoke
 ```
 
 Validation checks:
@@ -269,51 +193,51 @@ Validation checks:
 - every required locale folder exists
 - all five final PNG files exist
 - PNG files are non-empty
-- PNG dimensions match expected Figma/App Store export dimensions
+- PNG dimensions are App Store-valid for the device family
 - files are under the configured file size limit
-- no extra `.png` files exist in expected locale folders
+- no extra `.png` files exist in expected locale folders during full validation
 
-Default final export dimensions:
+Default accepted final dimensions:
 
-- iPhone: `1290x2796`
-- iPad: `2048x2732`
+- iPhone: `1320x2868`, `1290x2796`, `1179x2556`
+- iPad: `2064x2752`, `2048x2732`, `1488x2266`, `1668x2420`, `1668x2388`, `1640x2360`
 
-Override dimensions for future Figma templates:
+Override dimensions if a future simulator produces another App Store-valid size:
 
 ```bash
-SCREENSHOT_FINAL_IPHONE_DIMENSIONS="1290x2796,1320x2868" \
+SCREENSHOT_FINAL_IPHONE_DIMENSIONS="1320x2868,1290x2796" \
   ./scripts/validate-final-screenshots.sh --device-family iphone
 
-SCREENSHOT_FINAL_IPAD_DIMENSIONS="2048x2732,2064x2752" \
+SCREENSHOT_FINAL_IPAD_DIMENSIONS="2064x2752,2048x2732" \
   ./scripts/validate-final-screenshots.sh --device-family ipad
 ```
 
 ## Troubleshooting
 
-If payload generation fails, check:
+If generation fails, check:
 
-- raw screenshots exist under `app-store/raw-screenshots/`
-- the requested locale/device/state exists
+- Phase 2 raw screenshots exist under `app-store/raw-screenshots/`
+- raw screenshot validation passes
 - `Core/Screenshot/ScreenshotSupport.swift` still contains `ScreenshotDemoBuilder.frameCopy`
-- `app-store/figma-frame-map.json` still matches the Figma templates
+- every locale has title/subtitle copy for the mapped states
+- Pillow is available in the Python environment
+- the selected font path exists if `APPSTORE_FRAME_FONT_PATH` or `--font-path` is used
 
-If plugin export fails, check:
+If validation fails, check:
 
-- the Figma frame map still points at the renamed base template frames
-- Figma layers still use the required `appstore.*` names
-- Themes screenshot layers were assigned explicitly
-- the plugin can read local raw PNG paths
-- the plugin writes to `app-store/final-screenshots/`
+- final files are under `app-store/final-screenshots/{device}/{locale}/`
+- filenames match exactly and are not localized
+- generated dimensions are in the accepted dimension list
+- the output directory does not contain stale or extra `.png` files during full validation
 
 ## Adding A Locale
 
 1. Add the locale to Phase 1 screenshot data and frame copy.
 2. Run Phase 1 screenshot data validation tests.
 3. Capture raw screenshots for the locale with Phase 2.
-4. Run `./scripts/prepare-figma-screenshot-payload.sh --locale <locale>`.
-5. Export final Figma frames for that locale.
-6. Run `./scripts/validate-final-screenshots.sh --locale <locale>`.
+4. Run `./scripts/generate-app-store-frames.sh --locale <locale>`.
+5. Run `./scripts/validate-final-screenshots.sh --locale <locale>`.
 
 ## Out Of Scope
 
-Phase 3 does not upload to App Store Connect. It also does not replace the existing Figma frame design with a code renderer.
+Phase 3 does not upload to App Store Connect. It also does not open Figma or generate Figma payloads as the primary workflow.

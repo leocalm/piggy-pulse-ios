@@ -1,0 +1,47 @@
+PiggyPulse est une application de budget personnel qui s’adapte à votre rythme — pas à des cycles mensuels fixes, mais à des périodes personnalisées qui correspondent à votre vraie vie.
+
+Que vous soyez payé toutes les deux semaines, que vous souhaitiez suivre vos dépenses par projet ou que vous préfériez simplement un autre rythme, PiggyPulse vous permet de définir vos propres périodes de budget et de suivre chaque euro, livre sterling ou dollar.
+
+SUIVEZ VOS DÉPENSES
+
+Enregistrez vos revenus, dépenses et virements entre comptes  
+Classez vos transactions avec des catégories et des icônes personnalisées  
+Associez des marchands pour savoir où part votre argent  
+Filtrez et recherchez dans toutes vos transactions  
+
+PÉRIODES DE BUDGET PERSONNALISÉES
+
+Créez des périodes de n’importe quelle durée — hebdomadaires, bimensuelles, mensuelles ou personnalisées  
+Configurez la création automatique de périodes récurrentes  
+Comparez la régularité de vos dépenses d’une période à l’autre  
+
+PLANIFICATION DU BUDGET
+
+Attribuez des budgets à vos catégories  
+Suivez vos dépenses par rapport aux limites grâce à des barres de progression visuelles  
+Consultez en un coup d’œil votre rythme de dépense prévu et le budget restant  
+
+PLUSIEURS COMPTES
+
+Gérez vos comptes courants, comptes d’épargne, cartes de crédit et comptes d’argent de poche  
+Consultez votre position nette sur l’ensemble de vos comptes  
+Suivez l’évolution des soldes par période  
+
+CONFIDENTIALITÉ AVANT TOUT
+
+Aucune connexion bancaire — vous contrôlez les données que vous saisissez  
+Aucune analyse ni aucun suivi  
+Aucune publicité  
+Vos données sont chiffrées lorsqu’elles sont stockées  
+Vos données sont stockées en Europe  
+Exportez ou supprimez vos données à tout moment  
+
+CONÇU POUR VOUS
+
+Thèmes sombres conçus pour un usage quotidien confortable  
+Sélecteur de période personnalisé accessible depuis chaque écran  
+Tirez pour actualiser et utilisez les actions par glissement dans toute l’app  
+Authentification avec Face ID / biométrie  
+Notifications push pour les alertes de budget  
+
+PiggyPulse vous aide à suivre votre argent manuellement, en toute confidentialité et à votre rythme.

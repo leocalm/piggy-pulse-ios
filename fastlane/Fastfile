@@ -1,0 +1,136 @@
+require "shellwords"
+require "fileutils"
+
+opt_out_usage
+
+default_platform(:ios)
+
+PROJECT_ROOT = File.expand_path("..", __dir__)
+
+def run_from_project_root(command)
+  sh("cd #{Shellwords.escape(PROJECT_ROOT)} && #{command}")
+end
+
+def comma_separated_env(name)
+  value = ENV[name]
+  return nil if value.nil? || value.strip.empty?
+
+  value.split(",").map(&:strip).reject(&:empty?)
+end
+
+def scoped_upload_paths(locales)
+  metadata_path = "./fastlane/metadata"
+  screenshots_path = "./fastlane/screenshots"
+  return [metadata_path, screenshots_path] if locales.nil? || locales.empty?
+
+  scope_root = File.join(PROJECT_ROOT, "fastlane", ".upload-scope")
+  scoped_metadata = File.join(scope_root, "metadata")
+  scoped_screenshots = File.join(scope_root, "screenshots")
+
+  FileUtils.rm_rf(scope_root)
+  FileUtils.mkdir_p(scoped_metadata)
+  FileUtils.mkdir_p(scoped_screenshots)
+
+  locales.each do |locale|
+    source_metadata = File.join(PROJECT_ROOT, "fastlane", "metadata", locale)
+    source_screenshots = File.join(PROJECT_ROOT, "fastlane", "screenshots", locale)
+
+    UI.user_error!("Missing metadata locale directory: #{source_metadata}") unless Dir.exist?(source_metadata)
+    UI.user_error!("Missing screenshot locale directory: #{source_screenshots}") unless Dir.exist?(source_screenshots)
+
+    FileUtils.cp_r(source_metadata, File.join(scoped_metadata, locale))
+    FileUtils.cp_r(source_screenshots, File.join(scoped_screenshots, locale))
+  end
+
+  ["./fastlane/.upload-scope/metadata", "./fastlane/.upload-scope/screenshots"]
+end
+
+def configure_fastlane_upload_threads
+  threads = ENV.fetch("DELIVER_NUMBER_OF_THREADS", "1").to_i
+  threads = 1 if threads < 1
+
+  require "fastlane_core/queue_worker"
+  FastlaneCore::QueueWorker.send(:remove_const, :NUMBER_OF_THREADS) if FastlaneCore::QueueWorker.const_defined?(:NUMBER_OF_THREADS)
+  FastlaneCore::QueueWorker.const_set(:NUMBER_OF_THREADS, threads)
+
+  require "deliver/app_screenshot_iterator"
+  Deliver::AppScreenshotIterator.send(:remove_const, :NUMBER_OF_THREADS) if Deliver::AppScreenshotIterator.const_defined?(:NUMBER_OF_THREADS)
+  Deliver::AppScreenshotIterator.const_set(:NUMBER_OF_THREADS, [threads, 10].min)
+
+  UI.message("Configured Fastlane screenshot upload threads: #{threads}")
+end
+
+def configure_fastlane_screenshot_settle_wait
+  settle_seconds = ENV.fetch("APP_STORE_SCREENSHOT_SETTLE_SECONDS", "90").to_i
+  return if settle_seconds <= 0
+
+  require "deliver/upload_screenshots"
+
+  Deliver::UploadScreenshots.class_eval do
+    unless method_defined?(:piggypulse_original_wait_for_complete)
+      alias_method :piggypulse_original_wait_for_complete, :wait_for_complete
+
+      define_method(:wait_for_complete) do |iterator, timeout_seconds|
+        seconds = ENV.fetch("APP_STORE_SCREENSHOT_SETTLE_SECONDS", "90").to_i
+        if seconds > 0
+          UI.message("Waiting #{seconds} seconds for App Store Connect screenshot visibility before verification...")
+          sleep(seconds)
+        end
+
+        piggypulse_original_wait_for_complete(iterator, timeout_seconds)
+      end
+    end
+  end
+end
+
+platform :ios do
+  desc "Sync generated App Store screenshots into Fastlane and validate the upload package"
+  lane :prepare_app_store_assets do
+    run_from_project_root("./scripts/sync-app-store-assets.sh")
+    run_from_project_root("./scripts/validate-app-store-upload-package.sh")
+  end
+
+  desc "Validate Fastlane screenshots and metadata without contacting App Store Connect"
+  lane :validate_app_store_assets do
+    run_from_project_root("./scripts/validate-app-store-upload-package.sh")
+  end
+
+  desc "Upload screenshots and available metadata to App Store Connect without uploading a binary or submitting for review"
+  lane :upload_app_store_metadata do
+    prepare_app_store_assets
+
+    # App Store Connect's screenshot endpoints are fragile under concurrent uploads.
+    # Keep the default conservative; callers can still override these env vars.
+    ENV["DELIVER_NUMBER_OF_THREADS"] ||= "1"
+    ENV["FL_NUMBER_OF_THREADS"] ||= ENV["DELIVER_NUMBER_OF_THREADS"]
+    ENV["FL_MAX_NUMBER_OF_THREADS"] ||= ENV["DELIVER_NUMBER_OF_THREADS"]
+    ENV["SPACESHIP_SCREENSHOT_UPLOAD_TIMEOUT"] ||= "20"
+    configure_fastlane_upload_threads
+    configure_fastlane_screenshot_settle_wait
+
+    languages = comma_separated_env("APP_STORE_UPLOAD_LOCALES")
+    metadata_path, screenshots_path = scoped_upload_paths(languages)
+
+    deliver_options = {
+      metadata_path: metadata_path,
+      screenshots_path: screenshots_path,
+      app_identifier: ENV.fetch("APP_STORE_APP_IDENTIFIER", "com.piggypulse.ios"),
+      skip_binary_upload: true,
+      skip_screenshots: ENV["APP_STORE_SKIP_SCREENSHOTS"] == "true",
+      skip_metadata: ENV["APP_STORE_SKIP_METADATA"] == "true",
+      skip_app_version_update: true,
+      submit_for_review: false,
+      automatic_release: false,
+      screenshot_processing_timeout: ENV.fetch("APP_STORE_SCREENSHOT_PROCESSING_TIMEOUT", "900").to_i,
+      overwrite_screenshots: ENV["APP_STORE_OVERWRITE_SCREENSHOTS"] == "true",
+      run_precheck_before_submit: false,
+      force: ENV["APP_STORE_DELIVER_FORCE"] == "true"
+    }
+
+    deliver_options[:languages] = languages if languages
+
+    deliver_options[:api_key_path] = ENV["APP_STORE_CONNECT_API_KEY_PATH"] if ENV["APP_STORE_CONNECT_API_KEY_PATH"]
+
+    deliver(deliver_options)
+  end
+end

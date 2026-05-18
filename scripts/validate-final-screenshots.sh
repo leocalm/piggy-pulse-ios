@@ -25,8 +25,19 @@ FINAL_FILES_themes="02-themes.png"
 FINAL_FILES_transactions="03-transactions.png"
 FINAL_FILES_periods="04-periods.png"
 FINAL_FILES_categories="05-categories.png"
-DEFAULT_IPHONE_DIMENSIONS=("1290x2796")
-DEFAULT_IPAD_DIMENSIONS=("2048x2732")
+DEFAULT_IPHONE_DIMENSIONS=(
+    "1320x2868" # iPhone 17 Pro Max / 16 Pro Max raw capture size
+    "1290x2796" # iPhone 15 Pro Max / 15 Plus class, 6.7"
+    "1179x2556" # iPhone 17/16/15 Pro class
+)
+DEFAULT_IPAD_DIMENSIONS=(
+    "2064x2752" # iPad Pro/Air 13" raw capture size
+    "2048x2732" # iPad Pro 13" / 12.9"
+    "1488x2266" # iPad Pro 11" M5/M4
+    "1668x2420" # iPad Pro/Air 11"
+    "1668x2388" # iPad Pro 11"
+    "1640x2360" # iPad Air/mini class
+)
 
 usage() {
     cat <<USAGE
@@ -176,6 +187,20 @@ png_format() {
         | awk '/format:/ { print $2; exit }'
 }
 
+png_has_alpha() {
+    local file="$1"
+    python3 - "$file" <<'PY'
+from pathlib import Path
+import sys
+from PIL import Image
+
+path = Path(sys.argv[1])
+with Image.open(path) as image:
+    has_alpha = image.mode in {"RGBA", "LA", "PA"} or "transparency" in image.info
+print("yes" if has_alpha else "no")
+PY
+}
+
 file_size_bytes() {
     stat -f%z "$1"
 }
@@ -265,6 +290,11 @@ for family in "${DEVICE_FAMILIES[@]}"; do
                 echo "Final screenshot is not PNG: $file (format: ${format:-unknown})" >&2
                 ERRORS=$((ERRORS + 1))
                 continue
+            fi
+
+            if [[ "$(png_has_alpha "$file")" == "yes" ]]; then
+                echo "Final screenshot has an alpha channel, which App Store Connect rejects: $file" >&2
+                ERRORS=$((ERRORS + 1))
             fi
 
             dimensions="$(png_dimensions "$file")"

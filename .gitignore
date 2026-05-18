@@ -21,6 +21,9 @@ xcuserdata/
 # Swift Package Manager
 .build/
 .swiftpm/
+vendor/
+.bundle/
+__pycache__/
 
 # CocoaPods (not using, but just in case)
 Pods/
@@ -33,6 +36,7 @@ Pods/
 # Fastlane (future)
 fastlane/report.xml
 fastlane/Preview.html
+fastlane/.upload-scope/
 fastlane/screenshots/**/*.png
 fastlane/test_output
 app-store/raw-screenshots/
