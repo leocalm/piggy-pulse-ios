@@ -1,0 +1,47 @@
+PiggyPulse es una app de presupuesto personal que se adapta a tu ritmo: no a ciclos mensuales fijos, sino a periodos personalizados que encajan con tu vida real.
+
+Tanto si cobras cada dos semanas, quieres controlar gastos por proyecto o simplemente prefieres otro ritmo, PiggyPulse te permite definir tus propios periodos de presupuesto y hacer seguimiento de cada euro, libra o dólar dentro de ellos.
+
+CONTROLA TUS GASTOS
+
+Registra ingresos, gastos y transferencias entre cuentas  
+Categoriza transacciones con categorías e iconos personalizados  
+Asigna comercios para saber dónde va tu dinero  
+Filtra y busca en todas tus transacciones  
+
+PERIODOS DE PRESUPUESTO PERSONALIZADOS
+
+Crea periodos de cualquier duración: semanales, quincenales, mensuales o personalizados  
+Configura la creación automática para generar periodos de forma recurrente  
+Compara la consistencia de tus gastos entre periodos  
+
+PLANIFICACIÓN DEL PRESUPUESTO
+
+Asigna presupuestos a categorías  
+Controla el gasto frente a los límites con barras de progreso visuales  
+Consulta de un vistazo el ritmo de gasto previsto y el presupuesto restante  
+
+VARIAS CUENTAS
+
+Gestiona cuentas corrientes, cuentas de ahorro, tarjetas de crédito y cuentas de paga  
+Consulta tu posición neta en todas las cuentas  
+Sigue los cambios de saldo por periodo  
+
+PRIVACIDAD ANTE TODO
+
+Sin conexiones bancarias: tú controlas qué datos introduces  
+Sin analíticas ni seguimiento  
+Sin anuncios  
+Tus datos se cifran cuando se almacenan  
+Tus datos se almacenan en Europa  
+Exporta o elimina tus datos cuando quieras  
+
+HECHA PARA TI
+
+Temas oscuros diseñados para un uso diario cómodo  
+Selector de periodo personalizado accesible desde cualquier pantalla  
+Tirar para actualizar y acciones por deslizamiento en toda la app  
+Autenticación con Face ID / biometría  
+Notificaciones push para alertas de presupuesto  
+
+PiggyPulse te ayuda a controlar tu dinero manualmente, con privacidad y a tu ritmo.

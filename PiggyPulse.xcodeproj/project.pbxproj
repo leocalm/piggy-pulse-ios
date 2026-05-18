@@ -547,14 +547,6 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		AA200005000000000000CC05 /* Screenshot */ = {
-			isa = PBXGroup;
-			children = (
-				AA200001000000000000CC01 /* ScreenshotSupport.swift */,
-			);
-			path = Screenshot;
-			sourceTree = "<group>";
-		};
 		02218DFC2F589B3C00E8DCEF /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1069,6 +1061,14 @@
 				AA000015000000000000AA15 /* BiometricHelper.swift */,
 			);
 			path = Biometrics;
+			sourceTree = "<group>";
+		};
+		AA200005000000000000CC05 /* Screenshot */ = {
+			isa = PBXGroup;
+			children = (
+				AA200001000000000000CC01 /* ScreenshotSupport.swift */,
+			);
+			path = Screenshot;
 			sourceTree = "<group>";
 		};
 		C674B2B097DC5246C5D29B8A /* Views */ = {
@@ -1739,7 +1739,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiggyPulse.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1784,7 +1784,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiggyPulse.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1893,7 +1893,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiggyPulse.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 742MF6AGHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

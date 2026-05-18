@@ -1,0 +1,11 @@
+metadata_path("./fastlane/metadata")
+screenshots_path("./fastlane/screenshots")
+
+skip_binary_upload(true)
+skip_screenshots(false)
+skip_metadata(false)
+skip_app_version_update(true)
+
+submit_for_review(false)
+automatic_release(false)
+force(false)
