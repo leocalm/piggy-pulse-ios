@@ -19,6 +19,7 @@ Built with SwiftUI, targeting iOS 26+.
 - **Overlays** — Temporary spending plans with cap tracking, active/upcoming/past grouping
 
 ### Settings & Security
+- **Encryption at rest** — All financial data encrypted with AES-256-GCM using per-user keys; client-side encryption/decryption via CryptoKit
 - **Profile** — Edit name, timezone, view email
 - **Password** — Change password from within the app
 - **Preferences** — View theme, date format, number format settings
