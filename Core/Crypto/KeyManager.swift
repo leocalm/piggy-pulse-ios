@@ -162,6 +162,11 @@ enum KeyManager {
             return SymmetricKey(data: data)
         case errSecItemNotFound:
             throw KeyManagerError.noDEKStored
+        case errSecInteractionNotAllowed:
+            // Device is locked, biometrics unavailable, or running in a restricted
+            // environment (e.g. App Review sandbox). Treat as no DEK — the caller
+            // will fall through to the password unlock flow.
+            throw KeyManagerError.noDEKStored
         case errSecUserCanceled, errSecAuthFailed:
             throw KeyManagerError.biometricRequired
         default:
