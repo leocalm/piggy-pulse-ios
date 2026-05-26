@@ -2,7 +2,7 @@
 Config/Secrets.xcconfig
 
 # Xcode
-*.xcodeproj/project.xcworkspace/
+*.xcodeproj/project.xcworkspace/xcuserdata/
 *.xcodeproj/xcuserdata/
 *.xcworkspace/xcuserdata/
 DerivedData/
