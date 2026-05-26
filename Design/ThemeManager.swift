@@ -74,17 +74,9 @@ final class ThemeManager {
     // MARK: - App Icon
 
     func updateAppIcon() {
-        func updateAppIcon() {
-            #if STAGING
-            // Staging and Debug builds don't ship alternate icons;
-            // the staging ribbon icon is the primary and only icon.
-            return
-            #else
-            let iconName = colorTheme.alternateAppIconName
-            guard UIApplication.shared.alternateIconName != iconName else { return }
-            UIApplication.shared.setAlternateIconName(iconName)
-            #endif
-        }
+        let iconName = colorTheme.alternateAppIconName
+        guard UIApplication.shared.alternateIconName != iconName else { return }
+        UIApplication.shared.setAlternateIconName(iconName)
     }
 }
 

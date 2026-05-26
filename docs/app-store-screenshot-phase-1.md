@@ -46,14 +46,14 @@ Example:
 SCREENSHOT_MODE=true SCREENSHOT_LOCALE=pt-BR SCREENSHOT_STATE=04-transactions
 ```
 
-For local simulator launches, install the app through Xcode, then launch it with the selected state. Debug builds use the staging bundle suffix:
+For local simulator launches, install the app through Xcode, then launch it with the selected state:
 
 ```bash
 xcrun simctl launch --terminate-running-process \
   --env SCREENSHOT_MODE true \
   --env SCREENSHOT_LOCALE en-US \
   --env SCREENSHOT_STATE 01-dashboard-nebula \
-  booted com.piggypulse.ios.staging
+  booted com.piggypulse.ios
 ```
 
 To switch states, change only `SCREENSHOT_STATE`. To switch locale, change only `SCREENSHOT_LOCALE`.
