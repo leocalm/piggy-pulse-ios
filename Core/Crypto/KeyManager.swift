@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import Argon2Kit
+import LocalAuthentication
 
 struct DekWrapParams: Codable {
     let salt: String
@@ -21,7 +22,8 @@ enum KeyManagerError: LocalizedError {
         switch self {
         case .kekDerivationFailed: return "Failed to derive encryption key from password"
         case .dekUnwrapFailed: return "Failed to unwrap data encryption key — wrong password?"
-        case .keychainError(let status): return "Keychain error: \(status)"
+        case .keychainError(let status):
+            return String(localized: "Unable to securely store data on this device. Please try again. (OSStatus \(status))")
         case .noDEKStored: return "No encryption key stored on device"
         case .biometricRequired: return "Biometric authentication required to access encryption key"
         }
@@ -32,6 +34,13 @@ enum KeyManager {
 
     private static let keychainService = "com.piggypulse.encryption"
     private static let keychainDEKAccount = "dek"
+
+    /// Whether the device currently has biometric authentication (Face ID / Touch ID) available.
+    /// Returns false on devices without biometric hardware, or when biometrics are not enrolled.
+    static var biometricsAvailable: Bool {
+        var error: NSError?
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+    }
 
     // MARK: - KEK Derivation (Argon2id)
 
@@ -124,17 +133,18 @@ enum KeyManager {
             kSecAttrService as String: keychainService,
             kSecAttrAccount as String: keychainDEKAccount,
             kSecValueData as String: dekData,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
         ]
 
-        if let accessControl = SecAccessControlCreateWithFlags(
-            nil,
-            kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-            .biometryCurrentSet,
-            nil
-        ) {
+        if biometricsAvailable,
+           let accessControl = SecAccessControlCreateWithFlags(
+               nil,
+               kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+               .biometryCurrentSet,
+               nil
+           ) {
             query[kSecAttrAccessControl as String] = accessControl
-            query.removeValue(forKey: kSecAttrAccessible as String)
+        } else {
+            query[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         }
 
         let status = SecItemAdd(query as CFDictionary, nil)
