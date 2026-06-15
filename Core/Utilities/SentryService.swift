@@ -23,8 +23,6 @@ enum SentryService {
     private static var currentEnvironment: String {
         #if DEBUG
         return "debug"
-        #elseif STAGING
-        return "staging"
         #else
         return "production"
         #endif
